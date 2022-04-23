@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="258.0" prefWidth="214.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ProductController">
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#goToProductView" onMouseEntered="#mouseOnProduct" onMouseExited="#mouseOffProduct" prefHeight="258.0" prefWidth="214.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ProductController">
    <children>
       <ImageView fx:id="image" fitHeight="140.0" fitWidth="140.0" layoutX="37.0" layoutY="42.0" onMouseClicked="#goToProductView" pickOnBounds="true" preserveRatio="true" />
       <Button fx:id="button" layoutX="90.0" layoutY="212.0" mnemonicParsing="false" onAction="#addToCart" prefHeight="32.0" prefWidth="107.0" style="-fx-background-color: #fff44f;" text="add to cart">
