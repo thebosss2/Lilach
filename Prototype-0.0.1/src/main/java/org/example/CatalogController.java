@@ -18,8 +18,8 @@ package org.example;
 
 public class CatalogController extends Controller{
 
-    //All plants in the catalog.
-    private List<Product> plants = new ArrayList<Product>();
+    //All products in the catalog.
+    private List<Product> products = new ArrayList<Product>();
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -41,9 +41,9 @@ public class CatalogController extends Controller{
 
         this.setSkeleton(skeleton);
         try{
-            mainPane.getChildren().clear();
-            for(int i = 0; i < plants.size(); i++){
-                displayPreMadeProduct(plants.get(i));
+            //mainPane.getChildren().clear();
+            for (Product product : products) {
+                displayPreMadeProduct(product);
             }
 
         }catch (IOException e){
@@ -51,29 +51,29 @@ public class CatalogController extends Controller{
         }
     }
 
-    private void createProducts(){
-        plants.add(new Product());
-        plants.add(new Product());
-        plants.add(new Product());
-        plants.add(new Product());
-        plants.add(new Product());
-        plants.add(new Product());
-        plants.add(new Product());
+    protected void createProducts(){
+        products.add(new Product());
+        products.add(new Product());
+        products.add(new Product());
+        products.add(new Product());
+        products.add(new Product());
+        products.add(new Product());
+        products.add(new Product());
 
-        plants.get(0).setImage(new Image("C:\\Users\\galh9\\IdeaProjects\\Lilach\\Prototype-0.0.1\\src\\main\\resources\\Images\\pexels-jonas-kakaroto-736230.jpg", 140, 140, false, false ));
-        plants.get(0).setName("Rakefet");
-        plants.get(0).setPrice(55);
-        plants.get(1).setImage(new Image("C:\\Users\\galh9\\IdeaProjects\\Lilach\\Prototype-0.0.1\\src\\main\\resources\\Images\\pexels-pixabay-60597.jpg", 140, 140, false, false ));
-        plants.get(1).setName("Chrysanthemum");
-        plants.get(1).setPrice(45);
-        plants.get(2).setImage(new Image("C:\\Users\\galh9\\IdeaProjects\\Lilach\\Prototype-0.0.1\\src\\main\\resources\\Images\\photo-1604085572504-a392ddf0d86a.jpg", 140, 140, false, false ));
-        plants.get(2).setName("Sunflower");
-        plants.get(2).setPrice(555);
+        products.get(0).setImage(new Image("C:\\Users\\tahel\\Lilach\\Prototype-0.0.1\\src\\main\\resources\\Images\\pexels-jonas-kakaroto-736230.jpg", 140, 140, false, false ));
+        products.get(0).setName("Rakefet");
+        products.get(0).setPrice(55);
+        products.get(1).setImage(new Image("C:\\Users\\tahel\\Lilach\\Prototype-0.0.1\\src\\main\\resources\\Images\\pexels-pixabay-60597.jpg", 140, 140, false, false ));
+        products.get(1).setName("Chrysanthemum");
+        products.get(1).setPrice(45);
+        products.get(2).setImage(new Image("C:\\Users\\tahel\\Lilach\\Prototype-0.0.1\\src\\main\\resources\\Images\\photo-1604085572504-a392ddf0d86a.jpg", 140, 140, false, false ));
+        products.get(2).setName("Sunflower");
+        products.get(2).setPrice(555);
 
         for (int i = 1 ; i < 5 ; i++){
-            plants.get(2+i).setImage(new Image("C:\\Users\\galh9\\IdeaProjects\\Lilach\\Prototype-0.0.1\\src\\main\\resources\\Images\\tahelStupid" + i + ".jpg", 140, 140, false, false ));
-            plants.get(2 + i).setName("tahel Stupid" + i);
-            plants.get(2 + i).setPrice(i * 27);
+            products.get(2+i).setImage(new Image("C:\\Users\\tahel\\Lilach\\Prototype-0.0.1\\src\\main\\resources\\Images\\tahelStupid" + i + ".jpg", 140, 140, false, false ));
+            products.get(2 + i).setName("tahel Stupid" + i);
+            products.get(2 + i).setPrice(i * 27);
         }
     }
 
@@ -84,7 +84,7 @@ public class CatalogController extends Controller{
      * Function adding instance of pre-made product to the screen.
      * Note to self: VERY IMPORTANT to load before using the "getController" method (else you'll get null).
      */
-    private void displayPreMadeProduct(Product product) throws IOException {
+    protected void displayPreMadeProduct(Product product) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("product.fxml"));
         mainPane.getChildren().add(fxmlLoader.load());  //Adds new product pane to the screen.
         ProductController controller = fxmlLoader.getController();
