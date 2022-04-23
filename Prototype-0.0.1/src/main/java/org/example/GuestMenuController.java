@@ -26,7 +26,7 @@ public class GuestMenuController extends Controller{
         this.getSkeleton().changeCenter("catalog");
     }
 
-    private void coolButtonClick(Button button) throws InterruptedException{
+    protected void coolButtonClick(Button button) throws InterruptedException{
         Executor executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
             button.setStyle("-fx-background-color: #62a74d");
