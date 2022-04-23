@@ -7,7 +7,7 @@ import javafx.scene.control.Button;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-public class GuestMenuController {
+public class GuestMenuController extends Controller{
 
     @FXML
     private Button cartBtn;
@@ -23,7 +23,7 @@ public class GuestMenuController {
     @FXML
     void goToCatalog(ActionEvent event) throws InterruptedException {
         coolButtonClick((Button)event.getTarget());
-
+        this.getSkeleton().changeCenter("catalog");
     }
 
     private void coolButtonClick(Button button) throws InterruptedException{

@@ -34,20 +34,7 @@ public class CatalogController extends Controller{
     void initialize() {
         assert mainPane != null : "fx:id=\"mainPane\" was not injected: check your FXML file 'Catalog.fxml'.";
 
-
-        plants.add(new Product());
-        plants.add(new Product());
-        plants.add(new Product());
-
-        plants.get(0).setImage(new Image("C:\\Users\\galh9\\IdeaProjects\\Prototype-0.0.1\\src\\main\\resources\\Images\\pexels-jonas-kakaroto-736230.jpg", 140, 140, false, false ));
-        plants.get(0).setName("Rakefet");
-        plants.get(0).setPrice(55);
-        plants.get(1).setImage(new Image("C:\\Users\\galh9\\IdeaProjects\\Prototype-0.0.1\\src\\main\\resources\\Images\\pexels-pixabay-60597.jpg", 140, 140, false, false ));
-        plants.get(1).setName("Chrysanthemum");
-        plants.get(1).setPrice(45);
-        plants.get(2).setImage(new Image("C:\\Users\\galh9\\IdeaProjects\\Prototype-0.0.1\\src\\main\\resources\\Images\\photo-1604085572504-a392ddf0d86a.jpg", 140, 140, false, false ));
-        plants.get(2).setName("Sunflower");
-        plants.get(2).setPrice(555);
+        createProducts();
     }
 
     public void setCatalog(StoreSkeleton skeleton){
@@ -61,6 +48,32 @@ public class CatalogController extends Controller{
 
         }catch (IOException e){
             e.printStackTrace();
+        }
+    }
+
+    private void createProducts(){
+        plants.add(new Product());
+        plants.add(new Product());
+        plants.add(new Product());
+        plants.add(new Product());
+        plants.add(new Product());
+        plants.add(new Product());
+        plants.add(new Product());
+
+        plants.get(0).setImage(new Image("C:\\Users\\galh9\\IdeaProjects\\Lilach\\Prototype-0.0.1\\src\\main\\resources\\Images\\pexels-jonas-kakaroto-736230.jpg", 140, 140, false, false ));
+        plants.get(0).setName("Rakefet");
+        plants.get(0).setPrice(55);
+        plants.get(1).setImage(new Image("C:\\Users\\galh9\\IdeaProjects\\Lilach\\Prototype-0.0.1\\src\\main\\resources\\Images\\pexels-pixabay-60597.jpg", 140, 140, false, false ));
+        plants.get(1).setName("Chrysanthemum");
+        plants.get(1).setPrice(45);
+        plants.get(2).setImage(new Image("C:\\Users\\galh9\\IdeaProjects\\Lilach\\Prototype-0.0.1\\src\\main\\resources\\Images\\photo-1604085572504-a392ddf0d86a.jpg", 140, 140, false, false ));
+        plants.get(2).setName("Sunflower");
+        plants.get(2).setPrice(555);
+
+        for (int i = 1 ; i < 5 ; i++){
+            plants.get(2+i).setImage(new Image("C:\\Users\\galh9\\IdeaProjects\\Lilach\\Prototype-0.0.1\\src\\main\\resources\\Images\\tahelStupid" + i + ".jpg", 140, 140, false, false ));
+            plants.get(2 + i).setName("tahel Stupid" + i);
+            plants.get(2 + i).setPrice(i * 27);
         }
     }
 

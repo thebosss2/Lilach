@@ -83,8 +83,11 @@ public class StoreSkeleton {
     private void changeLeft(String name){
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(name + ".fxml"));
         mainScreen.getChildren().remove(mainScreen.getLeft()); //remove existing fxml from left.
+        Controller controller = null;
         try {
             mainScreen.setLeft(fxmlLoader.load());
+            controller = fxmlLoader.getController();
+            controller.setSkeleton(this);
         } catch (IOException e) {
             e.printStackTrace();
         }
