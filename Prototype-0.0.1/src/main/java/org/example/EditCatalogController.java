@@ -12,9 +12,6 @@ import java.util.ResourceBundle;
 
 public class EditCatalogController extends CatalogController {
 
-    //All products in the catalog.
-    private List<Product> products = new ArrayList<Product>();
-
     @FXML
     private Button addProduct;
 

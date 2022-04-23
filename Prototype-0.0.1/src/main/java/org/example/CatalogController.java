@@ -19,7 +19,7 @@ package org.example;
 public class CatalogController extends Controller{
 
     //All products in the catalog.
-    private List<Product> products = new ArrayList<Product>();
+    protected List<Product> products = new ArrayList<Product>();
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -28,7 +28,7 @@ public class CatalogController extends Controller{
     private URL location;
 
     @FXML // fx:id="mainPane"
-    private FlowPane mainPane; // Value injected by FXMLLoader
+    protected FlowPane mainPane; // Value injected by FXMLLoader
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -60,18 +60,18 @@ public class CatalogController extends Controller{
         products.add(new Product());
         products.add(new Product());
 
-        products.get(0).setImage(new Image("C:\\Users\\tahel\\Lilach\\Prototype-0.0.1\\src\\main\\resources\\Images\\pexels-jonas-kakaroto-736230.jpg", 140, 140, false, false ));
+        products.get(0).setImage(new Image("C:\\Users\\galh9\\IdeaProjects\\Lilach\\Prototype-0.0.1\\src\\main\\resources\\Images\\pexels-jonas-kakaroto-736230.jpg", 140, 140, false, false ));
         products.get(0).setName("Rakefet");
         products.get(0).setPrice(55);
-        products.get(1).setImage(new Image("C:\\Users\\tahel\\Lilach\\Prototype-0.0.1\\src\\main\\resources\\Images\\pexels-pixabay-60597.jpg", 140, 140, false, false ));
+        products.get(1).setImage(new Image("C:\\Users\\galh9\\IdeaProjects\\Lilach\\Prototype-0.0.1\\src\\main\\resources\\Images\\pexels-pixabay-60597.jpg", 140, 140, false, false ));
         products.get(1).setName("Chrysanthemum");
         products.get(1).setPrice(45);
-        products.get(2).setImage(new Image("C:\\Users\\tahel\\Lilach\\Prototype-0.0.1\\src\\main\\resources\\Images\\photo-1604085572504-a392ddf0d86a.jpg", 140, 140, false, false ));
+        products.get(2).setImage(new Image("C:\\Users\\galh9\\IdeaProjects\\Lilach\\Prototype-0.0.1\\src\\main\\resources\\Images\\photo-1604085572504-a392ddf0d86a.jpg", 140, 140, false, false ));
         products.get(2).setName("Sunflower");
         products.get(2).setPrice(555);
 
         for (int i = 1 ; i < 5 ; i++){
-            products.get(2+i).setImage(new Image("C:\\Users\\tahel\\Lilach\\Prototype-0.0.1\\src\\main\\resources\\Images\\tahelStupid" + i + ".jpg", 140, 140, false, false ));
+            products.get(2+i).setImage(new Image("C:\\Users\\galh9\\IdeaProjects\\Lilach\\Prototype-0.0.1\\src\\main\\resources\\Images\\tahelStupid" + i + ".jpg", 140, 140, false, false ));
             products.get(2 + i).setName("tahel Stupid" + i);
             products.get(2 + i).setPrice(i * 27);
         }
