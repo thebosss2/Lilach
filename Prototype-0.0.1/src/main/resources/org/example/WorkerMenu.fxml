@@ -39,7 +39,7 @@
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </VBox.margin>
         </Button>
-      <Button fx:id="catalogBtn1" alignment="BASELINE_CENTER" mnemonicParsing="false" onAction="#goToCatalog" prefHeight="53.0" prefWidth="220.0" style="-fx-background-color: #9bc98c;" text="Edit Catalog" textFill="WHITE">
+      <Button fx:id="editCatalogBtn" alignment="BASELINE_CENTER" mnemonicParsing="false" onAction="#goToEditCatalog" prefHeight="53.0" prefWidth="220.0" style="-fx-background-color: #9bc98c;" text="Edit Catalog" textFill="WHITE">
          <font>
             <Font size="20.0" />
          </font>

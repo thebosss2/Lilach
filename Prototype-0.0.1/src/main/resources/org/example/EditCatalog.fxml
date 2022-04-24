@@ -2,33 +2,19 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.EditCatalogController">
     <children>
         <ScrollPane fitToHeight="true" fitToWidth="true" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <content>
-                <FlowPane fx:id="mainPane" hgap="10.0" maxHeight="20000.0" maxWidth="1920.0" prefHeight="398.0" prefWidth="561.0" prefWrapLength="0.0" style="-fx-background-color: #ffffff;" vgap="10.0">
+                <FlowPane fx:id="mainPane" hgap="10.0" maxHeight="20000.0" maxWidth="1920.0" prefHeight="373.0" prefWidth="597.0" prefWrapLength="0.0" style="-fx-background-color: #ffffff;" vgap="10.0">
                     <padding>
                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                     </padding>
                 </FlowPane>
             </content>
         </ScrollPane>
-      <ImageView fx:id="image" fitHeight="140.0" fitWidth="140.0" layoutX="57.0" layoutY="62.0" onMouseClicked="#goToProductView" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../../../../../Documents/פרויקט/images/green%20plus.jpg" />
-         </image>
-      </ImageView>
-      <Text fx:id="flowerName" boundsType="LOGICAL_VERTICAL_CENTER" layoutX="20.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="add item" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="214.0">
-         <font>
-            <Font name="Cambria" size="21.0" />
-         </font>
-      </Text>
     </children>
 </AnchorPane>
