@@ -1,13 +1,16 @@
 
 package org.client;
 
-        import javafx.application.Application;
-        import javafx.fxml.FXMLLoader;
-        import javafx.scene.Parent;
-        import javafx.scene.Scene;
-        import javafx.stage.Stage;
-        import java.util.Scanner;
-        import java.io.IOException;
+import org.entities.*;
+
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import java.util.Scanner;
+import java.io.IOException;
 
 /**
  * JavaFX App
@@ -35,17 +38,19 @@ public class App extends Application {
         return fxmlLoader.load();
     }
 
-    public static void main(String[] args) throws IOException{
-        launch();
+    public static void main(String[] args) throws IOException {
+
         Client client = new Client("localhost", 3000);
         client.openConnection();
         Scanner s = new Scanner(System.in);
         String str;
-        while(true){
+        //launch();
+        while (true) {
             str = s.nextLine();
             client.sendToServer(str);
 
         }
+
     }
 
 }

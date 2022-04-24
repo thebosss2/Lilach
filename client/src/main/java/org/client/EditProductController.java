@@ -1,10 +1,9 @@
 package org.client;
-
+import org.entities.Product;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 
 public class EditProductController extends Controller{
 

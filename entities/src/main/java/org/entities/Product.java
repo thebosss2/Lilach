@@ -1,11 +1,17 @@
-package org.client;
+package org.entities;
 
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
+import javax.persistence.*;
+import java.util.*;
 
+@Entity
+@Table(name = "poducts")
 public class Product{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String name;
-    private Image image;
+    //private Image image;
     private double price;
     private double priceBeforeDiscount;
 
@@ -26,13 +32,13 @@ public class Product{
         this.priceBeforeDiscount = priceBeforeDiscount;
     }
 
-    public Image getImage() {
+/*    public Image getImage() {
         return image;
-    }
+    }*/
 
-    public void setImage(Image image) {
+    /*public void setImage(Image image) {
         this.image = image;
-    }
+    }*/
 
     public String getName() {
         return name;

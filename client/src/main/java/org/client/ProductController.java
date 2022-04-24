@@ -1,4 +1,5 @@
 package org.client;
+import org.entities.Product;
 
 /**
  * Sample Skeleton for 'Product.fxml' Controller Class
@@ -7,15 +8,11 @@ package org.client;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 public class ProductController extends ItemController{

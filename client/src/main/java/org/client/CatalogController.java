@@ -1,5 +1,7 @@
 package org.client;
 
+import org.entities.Product;
+import org.entities.Catalog;
 
 /**
  * Sample Skeleton for 'Catalog.fxml' Controller Class
@@ -19,7 +21,8 @@ package org.client;
 public class CatalogController extends Controller{
 
     //All products in the catalog.
-    protected List<Product> products = new ArrayList<Product>();
+    protected List<Product> products=Catalog.getProducts();
+
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -34,7 +37,7 @@ public class CatalogController extends Controller{
     void initialize() {
         assert mainPane != null : "fx:id=\"mainPane\" was not injected: check your FXML file 'Catalog.fxml'.";
 
-        createProducts();
+        PullProducts();
     }
 
     public void setCatalog(StoreSkeleton skeleton){
@@ -65,30 +68,11 @@ public class CatalogController extends Controller{
         controller.setProduct(product, this);
     }
 
-    protected void createProducts(){
-        products.add(new Product());
-        products.add(new Product());
-        products.add(new Product());
-        products.add(new Product());
-        products.add(new Product());
-        products.add(new Product());
-        products.add(new Product());
+    protected void PullProducts(){
 
-        products.get(0).setImage(new Image("C:\\Users\\itaiz\\Desktop\\Dropbox\\Homework\\SoftwareEngineering\\Lilach\\client\\src\\main\\resources\\Images\\pexels-jonas-kakaroto-736230.jpg", 140, 140, false, false ));
-        products.get(0).setName("Rakefet");
-        products.get(0).setPrice(55);
-        products.get(1).setImage(new Image("C:\\Users\\itaiz\\Desktop\\Dropbox\\Homework\\SoftwareEngineering\\Lilach\\client\\src\\main\\resources\\Images\\pexels-pixabay-60597.jpg", 140, 140, false, false ));
-        products.get(1).setName("Chrysanthemum");
-        products.get(1).setPrice(45);
-        products.get(2).setImage(new Image("C:\\Users\\itaiz\\Desktop\\Dropbox\\Homework\\SoftwareEngineering\\Lilach\\client\\src\\main\\resources\\Images\\photo-1604085572504-a392ddf0d86a.jpg", 140, 140, false, false ));
-        products.get(2).setName("Sunflower");
-        products.get(2).setPrice(555);
 
-        for (int i = 1 ; i < 5 ; i++){
-            products.get(2+i).setImage(new Image("C:\\Users\\itaiz\\Desktop\\Dropbox\\Homework\\SoftwareEngineering\\Lilach\\client\\src\\main\\resources\\Images\\tahelStupid" + i + ".jpg", 140, 140, false, false ));
-            products.get(2 + i).setName("tahel Stupid" + i);
-            products.get(2 + i).setPrice(i * 27);
-        }
+
+
     }
 
 }

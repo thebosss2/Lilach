@@ -1,5 +1,6 @@
 package org.client;
 
+import org.entities.Product;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -7,8 +8,6 @@ import javafx.scene.layout.FlowPane;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class EditCatalogController extends CatalogController {
@@ -30,7 +29,7 @@ public class EditCatalogController extends CatalogController {
     void initialize() {
         assert mainPane != null : "fx:id=\"mainPane\" was not injected: check your FXML file 'Catalog.fxml'.";
 
-        createProducts();
+        PullProducts();
     }
 
     @Override
