@@ -2,7 +2,7 @@ package org.example;
 
 public abstract class Controller {
 
-    private StoreSkeleton globalSkeleton;
+    protected StoreSkeleton globalSkeleton;
 
     public void setSkeleton(StoreSkeleton skeleton){
         this.globalSkeleton = skeleton;

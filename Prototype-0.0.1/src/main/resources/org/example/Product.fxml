@@ -13,7 +13,7 @@
          <font>
             <Font name="Cambria" size="15.0" />
          </font></Button>
-      <Text fx:id="flowerName" boundsType="LOGICAL_VERTICAL_CENTER" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rakefet" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="214.0">
+      <Text fx:id="name" boundsType="LOGICAL_VERTICAL_CENTER" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rakefet" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="214.0">
          <font>
             <Font name="Cambria" size="21.0" />
          </font>

@@ -18,10 +18,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
-public class ProductController extends Controller{
-
-    @FXML
-    private Pane pane;
+public class ProductController extends ItemController{
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -32,15 +29,9 @@ public class ProductController extends Controller{
     @FXML // fx:id="button"
     private Button button; // Value injected by FXMLLoader
 
-    @FXML // fx:id="image"
-    private ImageView image; // Value injected by FXMLLoader
-
     @FXML // fx:id="price"
     private Text price; // Value injected by FXMLLoader
-
-    @FXML // fx:id="flowerName"
-    private Text flowerName; // Value injected by FXMLLoader
-
+    
     private Product product;
 
     @FXML // fx:id="priceBeforeDiscount"
@@ -50,7 +41,7 @@ public class ProductController extends Controller{
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert button != null : "fx:id=\"button\" was not injected: check your FXML file 'Product.fxml'.";
-        assert flowerName != null : "fx:id=\"flowerName\" was not injected: check your FXML file 'Product.fxml'.";
+        assert name != null : "fx:id=\"name\" was not injected: check your FXML file 'Product.fxml'.";
         assert image != null : "fx:id=\"image\" was not injected: check your FXML file 'Product.fxml'.";
         assert price != null : "fx:id=\"price\" was not injected: check your FXML file 'Product.fxml'.";
         assert priceBeforeDiscount != null : "fx:id=\"priceBeforeDiscount\" was not injected: check your FXML file 'Product.fxml'.";
@@ -70,7 +61,7 @@ public class ProductController extends Controller{
         this.product = product;
         image.setImage(product.getImage());
         price.setText(product.getPrice() + " ₪");
-        flowerName.setText(product.getName());
+        name.setText(product.getName());
         if(product.getPriceBeforeDiscount() != 0){
             priceBeforeDiscount.setText(product.getPriceBeforeDiscount() + " ₪");
         }
@@ -87,45 +78,4 @@ public class ProductController extends Controller{
         productView = (ProductViewController) controller;
         productView.setProduct(this.product);
     }
-
-    private void coolButtonClick(Button button) throws InterruptedException{
-        Executor executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
-            button.setStyle("-fx-background-color: #f0a5b3");
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            button.setStyle("-fx-background-color: #FFC1CC");
-        });
-    }
-
-    @FXML
-    void mouseOnProduct(MouseEvent event)  {
-        pane.setStyle("-fx-background-color: #c7ff96");
-    }
-
-    @FXML
-    void mouseOffProduct(MouseEvent event)  {
-        pane.setStyle("-fx-background-color: #ffffff");
-    }
-
-    @FXML
-    void clickOnProductEffect(MouseEvent event) throws InterruptedException {
-
-         pane.setStyle("-fx-background-color: #8fb66a");
-         try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        pane.setStyle("-fx-background-color: #ffffff");
-        try {
-            Thread.sleep(50);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
 }

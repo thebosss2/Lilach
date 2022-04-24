@@ -1,6 +1,7 @@
 package org.example;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.FlowPane;
 
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class EditCatalogController extends CatalogController {
+
 
     @FXML
     private Button addProduct;
@@ -23,20 +25,33 @@ public class EditCatalogController extends CatalogController {
 
     @FXML // fx:id="mainPane"
     private FlowPane mainPane; // Value injected by FXMLLoader
-    
+
+    @FXML // This method is called by the FXMLLoader when initialization is complete
+    void initialize() {
+        assert mainPane != null : "fx:id=\"mainPane\" was not injected: check your FXML file 'Catalog.fxml'.";
+
+        createProducts();
+    }
+
     @Override
-    public void setCatalog(StoreSkeleton skeleton){
+    public void setCatalog(StoreSkeleton skeleton) {
 
         this.setSkeleton(skeleton);
-        try{
+        try {
+            displayAddItem();
             //mainPane.getChildren().clear();
-            for (Product product : products) {
-                displayPreMadeProduct(product);
-            }
-
-
+            for (Product product : products)
+                displayProduct(product);
         }catch (IOException e){
             e.printStackTrace();
         }
     }
+
+    public void displayAddItem() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("addItem.fxml"));
+        mainPane.getChildren().add(fxmlLoader.load());  //Adds new product pane to the screen.
+        AddItemController controller = fxmlLoader.getController();
+        controller.setSkeleton(this.getSkeleton());
+    }
+
 }

@@ -49,7 +49,7 @@ public class StoreSkeleton {
     @FXML
     void moveToImage(ActionEvent event) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ImageOnly.fxml"));
-        FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("GuestMenu.fxml"));
+        FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("WorkerMenu.fxml"));
         mainScreen.getChildren().remove(mainScreen.getCenter()); //remove existing fxml from center.
         mainScreen.getChildren().remove(mainScreen.getLeft()); //remove existing fxml from center.
         try {
@@ -100,7 +100,7 @@ public class StoreSkeleton {
         assert cartBtn != null : "fx:id=\"openImage\" was not injected: check your FXML file 'First catalog try.fxml'.";
 
         changeCenter("Catalog");
-        changeLeft("GuestMenu");
+        changeLeft("WorkerMenu");
     }
 
 }
