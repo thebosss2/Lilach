@@ -24,6 +24,7 @@ public class GuestMenuController extends Controller{
     void goToCatalog(ActionEvent event) throws InterruptedException {
         coolButtonClick((Button)event.getTarget());
         this.getSkeleton().changeCenter("catalog");
+
     }
 
     protected void coolButtonClick(Button button) throws InterruptedException{

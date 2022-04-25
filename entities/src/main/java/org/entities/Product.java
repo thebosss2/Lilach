@@ -15,6 +15,17 @@ public class Product{
     private double price;
     private double priceBeforeDiscount;
 
+    public Product(Product product) {
+        this.name=product.getName();
+        //image=product.getImage();
+        this.price=product.getPrice();
+        this.priceBeforeDiscount=product.getPriceBeforeDiscount();
+    }
+
+    public Product() {
+
+    }
+
     public void setPrice(double price) {
         this.price = price;
     }

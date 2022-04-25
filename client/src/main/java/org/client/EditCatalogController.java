@@ -29,7 +29,7 @@ public class EditCatalogController extends CatalogController {
     void initialize() {
         assert mainPane != null : "fx:id=\"mainPane\" was not injected: check your FXML file 'Catalog.fxml'.";
 
-        PullProducts();
+        pullProductsToClient("#PULLCATALOG");
     }
 
     @Override
