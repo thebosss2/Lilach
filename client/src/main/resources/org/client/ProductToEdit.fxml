@@ -13,11 +13,11 @@
             <Font name="Guttman Aharoni" size="21.0" />
          </font>
       </Text>
-      <Text fx:id="price" layoutX="96.0" layoutY="273.0" onMouseClicked="#goToEditProduct" strokeType="OUTSIDE" strokeWidth="0.0" text="30₪" textAlignment="CENTER" wrappingWidth="78.51947021484375">
+      <Text fx:id="price" layoutX="78.0" layoutY="273.0" onMouseClicked="#goToEditProduct" strokeType="OUTSIDE" strokeWidth="0.0" text="30₪" textAlignment="CENTER" wrappingWidth="78.51947021484375">
          <font>
             <Font size="24.0" />
          </font>
       </Text>
-      <Text fx:id="priceBeforeDiscount" layoutX="52.0" layoutY="269.0" onMouseClicked="#goToEditProduct" strikethrough="true" strokeType="OUTSIDE" strokeWidth="0.0" text="50₪" textAlignment="CENTER" wrappingWidth="55.3194580078125" />
+      <Text fx:id="priceBeforeDiscount" layoutX="11.0" layoutY="269.0" onMouseClicked="#goToEditProduct" strikethrough="true" strokeType="OUTSIDE" strokeWidth="0.0" text="50₪" textAlignment="CENTER" wrappingWidth="55.3194580078125" />
    </children>
 </Pane>

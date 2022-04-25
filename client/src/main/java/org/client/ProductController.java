@@ -60,7 +60,7 @@ public class ProductController extends ItemController{
     public void setProduct(Product product) {
         this.product = product;
         image.setImage(product.getImage());
-        price.setText(product.getPrice() + " ₪");
+        price.setText(product.getPrice() + "₪");
         name.setText(product.getName());
 
         if(product.getPriceBeforeDiscount() != 0)
