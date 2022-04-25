@@ -33,7 +33,7 @@ public class EditProductController extends Controller{
     void setProductView(Product product){
         this.product = product;
         this.nameText.setText(product.getName());
-        this.mainImage.setImage(product.getImage());
+        //this.mainImage.setImage(product.getImage());
         this.priceText.setText(Double.toString(product.getPrice()));
         if(product.getPriceBeforeDiscount() != 0)
             this.priceBeforeDiscountText.setText(Double.toString(product.getPriceBeforeDiscount()));

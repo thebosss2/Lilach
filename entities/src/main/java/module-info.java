@@ -3,6 +3,7 @@ module org.entities{
     requires javafx.fxml;
     requires javafx.graphics;
     requires java.persistence;
+    requires org.hibernate.orm.core;
     exports org.entities;
 
 

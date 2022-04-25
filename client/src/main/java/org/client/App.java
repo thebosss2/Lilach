@@ -23,6 +23,8 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         //Add here title set (Lilach Store).
+        Client client = new Client("localhost", 3000);
+        client.openConnection();
         scene = new Scene(loadFXML("StoreSkeleton"), 1000, 600);
         stage.setScene(scene);
         stage.show();
@@ -40,16 +42,9 @@ public class App extends Application {
 
     public static void main(String[] args) throws IOException {
 
-        Client client = new Client("localhost", 3000);
-        client.openConnection();
-        Scanner s = new Scanner(System.in);
-        String str;
-        //launch();
-        while (true) {
-            str = s.nextLine();
-            client.sendToServer(str);
 
-        }
+        launch();
+
 
     }
 
