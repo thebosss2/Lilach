@@ -41,7 +41,7 @@ public class EditCatalogController extends CatalogController {
             displayAddItem();
             //mainPane.getChildren().clear();
             for (Product product : products)
-                displayProduct(product);
+                displayProduct(product, this);
         }catch (IOException e){
             e.printStackTrace();
         }

@@ -9,7 +9,7 @@
 
 <VBox maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="220.0" style="-fx-background-color: #9bc98c; -fx-background-radius: 0 0 20 0;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.GuestMenuController">
    <children>
-      <Button fx:id="cartBtn" alignment="BASELINE_CENTER" mnemonicParsing="false" onAction="#goToCart" prefHeight="53.0" prefWidth="220.0" style="-fx-background-color: #9bc98c;" text="Cart" textFill="WHITE">
+      <Button fx:id="cartBtn" alignment="BASELINE_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#goToCart" onMouseEntered="#mouseOnBtn" onMouseExited="#mouseOffBtn" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: #9bc98c;" text="Cart" textFill="WHITE">
          <font>
             <Font size="20.0" />
          </font>
@@ -21,10 +21,10 @@
             </ImageView>
          </graphic>
          <VBox.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="10.0" />
+            <Insets top="10.0" />
          </VBox.margin>
       </Button>
-      <Button fx:id="catalogBtn" alignment="BASELINE_CENTER" mnemonicParsing="false" onAction="#goToCatalog" prefHeight="53.0" prefWidth="220.0" style="-fx-background-color: #9bc98c;" text="Catalog" textFill="WHITE">
+      <Button fx:id="catalogBtn" alignment="BASELINE_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#goToCatalog" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: #9bc98c;" text="Catalog" textFill="WHITE">
          <font>
             <Font size="20.0" />
          </font>
@@ -36,7 +36,7 @@
             </ImageView>
          </graphic>
          <VBox.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            <Insets top="5.0" />
          </VBox.margin>
       </Button>
    </children>

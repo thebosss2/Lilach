@@ -6,23 +6,22 @@ import javafx.scene.text.Text;
 public class Product{
     private String name;
     private Image image;
-    private double price;
-    private double priceBeforeDiscount;
+    private int price;
+    private int priceBeforeDiscount;
 
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 
-
-    public double getPriceBeforeDiscount() {
+    public int getPriceBeforeDiscount() {
         return priceBeforeDiscount;
     }
 
-    public void setPriceBeforeDiscount(double priceBeforeDiscount) {
+    public void setPriceBeforeDiscount(int priceBeforeDiscount) {
         this.priceBeforeDiscount = priceBeforeDiscount;
     }
 
