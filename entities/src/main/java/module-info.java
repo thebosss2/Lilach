@@ -6,5 +6,4 @@ module org.entities{
     requires org.hibernate.orm.core;
     exports org.entities;
 
-
 }

@@ -1,4 +1,5 @@
 package org.client;
+import javafx.scene.image.Image;
 import org.entities.Product;
 
 /**
@@ -58,7 +59,7 @@ public class ProductController extends ItemController{
 
     public void setProduct(Product product, CatalogController catalog) {
         this.product = product;
-        //image.setImage(product.getImage());
+        image.setImage(/*product.getImage()*/new Image("C:\\Users\\sagim\\IdeaProjects\\Project\\Lilach-V1\\client\\src\\main\\resources\\Images\\green_plus4.png"));
         price.setText(product.getPrice() + " ₪");
         name.setText(product.getName());
         currentCatalog = catalog;

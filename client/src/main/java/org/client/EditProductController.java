@@ -1,4 +1,5 @@
 package org.client;
+import javafx.scene.image.Image;
 import org.entities.Product;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -33,7 +34,7 @@ public class EditProductController extends Controller{
     void setProductView(Product product){
         this.product = product;
         this.nameText.setText(product.getName());
-        //this.mainImage.setImage(product.getImage());
+        this.mainImage.setImage(/*product.getImage()*/ new Image("C:\\Users\\sagim\\IdeaProjects\\Project\\Lilach-V1\\client\\src\\main\\resources\\Images\\green_plus4.png"));
         this.priceText.setText(Double.toString(product.getPrice()));
         if(product.getPriceBeforeDiscount() != 0)
             this.priceBeforeDiscountText.setText(Double.toString(product.getPriceBeforeDiscount()));

@@ -144,8 +144,11 @@ cache errors.
     private static Server server;
     public static void main( String[] args ) throws IOException
     {
-
-        server = new Server(3000);
-        server.listen();
+        if (args.length != 1) {
+            System.out.println("Required argument: <port>");
+        } else {
+            Server server = new Server(Integer.parseInt(args[0]));
+            server.listen();
+        }
     }
 }
