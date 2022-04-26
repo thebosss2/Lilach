@@ -1,7 +1,25 @@
 package org.server;
 import org.entities.*;
+//import org.hibernate.SessionFactory;
+
 import javax.persistence.*;
 import java.io.IOException;
+import java.util.List;
+import java.util.Random;
+
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
+import org.hibernate.FlushMode;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
+import org.server.ocsf.ConnectionToClient;
 
 /**
  * Hello world!
@@ -10,145 +28,61 @@ import java.io.IOException;
 public class App
 {
 
-
-/*    private static Session session;
+    private static Session session;
 
     private static SessionFactory getSessionFactory() throws HibernateException {
         Configuration configuration = new Configuration();
         // Add ALL of your entities here. You can also try adding a whole package.
-        configuration.addAnnotatedClass(Car.class);
-        configuration.addAnnotatedClass(Person.class);
-        configuration.addAnnotatedClass(Car_image.class);
-        configuration.addAnnotatedClass(Garage.class);
-
+        configuration.addAnnotatedClass(Product.class);
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
 
         return configuration.buildSessionFactory(serviceRegistry);
     }
-
-    private static void generateCars() throws Exception {
+    private static void generateProducts() throws Exception {
         Random random = new Random();
-        List<Garage> garages = getAllGarages();
+        double price = random.nextInt(1000);
         for (int i = 0; i < 5; i++) {
-            Car car1 = new Car("MOO-" + random.nextInt(), 100000, 2000 + random.nextInt(19));
-            Car car2 = new Car("MOO-" + random.nextInt(), 100000, 2000 + random.nextInt(19));
-            Person person1= new Person("itai","zeitouni","1234","dgfhd");
-            Person person2 = new Person("Tahel" + Integer.toString(i), "Lazar", Integer.toString(random.nextInt(99999)), "t" + Integer.toString(i) + "@gmail.com");
-            Car_image img1 = new Car_image("\\src\\main\\resources\\Images"+ i + ".jpg" );
-            Car_image img2 = new Car_image("\\src\\main\\resources\\Images"+ i+5 + ".jpg" );
-            car1.setImg(img1);
-            person1.addCars(car1);
-            car2.setImg(img2);
-            person2.addCars(car2);
-            for (int j=0; j< (random.nextInt(2)+1);j++){
-                car1.addGarage(garages.get(random.nextInt(3)));
-                person1.addGarage(garages.get(random.nextInt(3)));
-                car2.addGarage(garages.get(random.nextInt(3)));
-                person2.addGarage(garages.get(random.nextInt(3)));
-            }
-            session.save(img1);
-            session.save(car1);
-            session.save(person1);
-            session.save(img2);
-            session.save(car2);
-            session.save(person2);
+            String img1 = "\\src\\main\\resources\\Images" + i + ".jpg";
+            Product p1 = new Product("rakefet", img1, price, (price - random.nextInt(500)));
 
-
-
- *//*
- * The call to session.flush() updates the DB immediately without ending the transaction.
- * Recommended to do after an arbitrary unit of work.
- * MANDATORY to do if you are saving a large amount of data - otherwise you may get
-cache errors.
- *//*
+            session.save(p1);
             session.flush();
         }
     }
-    private static void generateGarages() throws Exception {
-        Random random = new Random();
-
-        for (int i = 0; i < 3; i++) {
-            Garage garage = new Garage("Derech Haatzmaut " + random.nextInt(999), "0" + Integer.toString(random.nextInt(999999999)));
-            session.save(garage);
-
-
-
- *//*
- * The call to session.flush() updates the DB immediately without ending the transaction.
- * Recommended to do after an arbitrary unit of work.
- * MANDATORY to do if you are saving a large amount of data - otherwise you may get
-cache errors.
- *//*
-            session.flush();
-        }
-    }
-    private static List<Garage> getAllGarages() throws Exception {
+    static List<Product> getAllProducts() throws IOException {
         CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<Garage> query = builder.createQuery(Garage.class);
-        query.from(Garage.class);
-        List<Garage> data = session.createQuery(query).getResultList();
+        CriteriaQuery<Product> query = builder.createQuery(Product.class);
+        query.from(Product.class);
+        List<Product> data = session.createQuery(query).getResultList();
         return data;
     }
-    private static List<Car> getAllCars() throws Exception {
-        CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<Car> query = builder.createQuery(Car.class);
-        query.from(Car.class);
-        List<Car> data = session.createQuery(query).getResultList();
-        return data;
-    }
-
-    private static void printAllCars() throws Exception {
-        System.out.println("Cars:");
-        List<Car> cars = getAllCars();
-        for (Car car : cars) {
-            car.printCarInfo();
-*//*            System.out.print("Id: ");
-            System.out.print(car.getId());
-            System.out.print(", License plate: ");
-            System.out.print(car.getLicensePlate());
-            System.out.print(", Price: ");
-            System.out.print(car.getPrice());
-            System.out.print(", Year: ");
-            System.out.print(car.getYear());
-            System.out.print('\n');*//*
-        }
-    }
-    private static void printAllGarages() throws Exception {
-        System.out.println("Garages:");
-        List<Garage> garages = getAllGarages();
-        for (Garage garage : garages) {
-            System.out.println("Address: " + garage.getAddress());
-            List<Car> cars = garage.getCars();
-            System.out.println("Number of cars in garage: "+ cars.size());
-            System.out.println("Cars:");
-            for (Car car : cars) {
-                System.out.print("Id: ");
-                System.out.print(car.getId());
-                System.out.print(", License plate: ");
-                System.out.print(car.getLicensePlate());
-                System.out.print(", Price: ");
-                System.out.print(car.getPrice());
-                System.out.print(", Year: ");
-                System.out.print(car.getYear());
-                System.out.print('\n');
-            }
-        }
-    }*/
-
-
-
-
-
 
 
     private static Server server;
     public static void main( String[] args ) throws IOException
     {
-        if (args.length != 1) {
-            System.out.println("Required argument: <port>");
-        } else {
-            Server server = new Server(Integer.parseInt(args[0]));
+        try {
+            SessionFactory sessionFactory = getSessionFactory();
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+
+            generateProducts();
+            session.getTransaction().commit(); // Save everything.
+          
+            server = new Server(3000);
             server.listen();
+        } catch (Exception e) {
+            if (session != null) {
+                session.getTransaction().rollback();
+            }
+            System.err.println("An error occured, changes have been rolled back.");
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+                session.getSessionFactory().close();
+            }
         }
+
     }
 }

@@ -14,16 +14,15 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>15</maven.compiler.source>
-    <maven.compiler.target>15</maven.compiler.target>
+    <maven.compiler.source>13</maven.compiler.source>
+    <maven.compiler.target>13</maven.compiler.target>
   </properties>
 
   <dependencies>
-
     <dependency>
-      <groupId>org.entities</groupId>
-      <artifactId>entities</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>8.0.28</version>
     </dependency>
     <dependency>
       <groupId>org.hibernate</groupId>
@@ -31,14 +30,9 @@
       <version>5.4.12.Final</version>
     </dependency>
     <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>8.0.28</version>
-    </dependency>
-    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.13.1</version>
+      <version>4.11</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -88,9 +82,7 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
           <version>3.8.0</version>
-          <configuration>
-            <release>14</release>
-          </configuration>
+
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -128,8 +120,8 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <source>14</source>
-          <target>14</target>
+          <source>17</source>
+          <target>17</target>
         </configuration>
       </plugin>
     </plugins>
