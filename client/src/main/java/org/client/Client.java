@@ -7,10 +7,13 @@ import org.entities.Product;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Client extends AbstractClient {
 
     private StoreSkeleton storeSkeleton;
+
+    protected static LinkedList<Product> products = new LinkedList<Product>();//(LinkedList<Product>) Catalog.getProducts();
 
     private Controller controller;
 
@@ -37,12 +40,11 @@ public class Client extends AbstractClient {
 
     @Override
     protected void handleMessageFromServer(Object msg){
-        System.out.println("Hello from client");;
 
 
         //msg = ((LinkedList<Object>) msg);
         try{
-            switch(((ArrayList<Object>) msg).get(0).toString()){
+            switch(((LinkedList<Object>) msg).get(0).toString()){
                 case "#PULLCATALOG"-> {pushToCatalog(msg);}
             }
         }catch (Exception e){
@@ -58,11 +60,9 @@ public class Client extends AbstractClient {
     }
 
     private void pushToCatalog(Object msg) throws IOException {
-        System.out.println("Hello from push1");
+        products = (LinkedList<Product>)((LinkedList<Object>)msg).get(1);
         CatalogController catalogController = (CatalogController) controller;
-        System.out.println("Hello from push2");
-        catalogController.pullProductsToClient((ArrayList<Product>)(((ArrayList<Object>)msg).get(1)));
-        System.out.println("Hello from push3");
+        catalogController.pullProductsToClient();
     }
 
 

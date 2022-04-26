@@ -4,6 +4,7 @@ import org.entities.*;
 
 import javax.persistence.*;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -53,8 +54,12 @@ public class App
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Product> query = builder.createQuery(Product.class);
         query.from(Product.class);
-        List<Product> data = session.createQuery(query).getResultList();
-        return data;
+        List<Product> data =  session.createQuery(query).getResultList();
+        LinkedList<Product> list = new LinkedList<Product>();
+        for(Product product: data){
+            list.add(product);
+        }
+        return list;
     }
 
 

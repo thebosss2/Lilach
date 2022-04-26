@@ -1,5 +1,7 @@
 package org.client;
 
+import javafx.application.Platform;
+import org.client.*;
 import org.entities.Product;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,7 +10,7 @@ import javafx.scene.layout.FlowPane;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
 
 public class EditCatalogController extends CatalogController {
@@ -30,7 +32,7 @@ public class EditCatalogController extends CatalogController {
     void initialize() {
         assert mainPane != null : "fx:id=\"mainPane\" was not injected: check your FXML file 'Catalog.fxml'.";
         try {
-            ArrayList<Object> msg = new ArrayList<Object>();
+            LinkedList<Object> msg = new LinkedList<Object>();
             msg.add("#PULLCATALOG");
             App.client.setController(this);
             App.client.sendToServer(msg); //Sends a msg contains the command and the controller for the catalog.
@@ -41,13 +43,23 @@ public class EditCatalogController extends CatalogController {
 
     @Override
     public void setCatalog(StoreSkeleton skeleton) {
-
+        mainPane.getChildren().clear();
         this.setSkeleton(skeleton);
         try {
             displayAddItem();
-            //mainPane.getChildren().clear();
-            for (Product product : products)
-                displayProduct(product);
+            /*Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    for (Product product : Client.products) {
+                        try {
+                            displayProduct(product);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });*/
+
         }catch (IOException e){
             e.printStackTrace();
         }

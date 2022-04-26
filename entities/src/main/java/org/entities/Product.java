@@ -36,7 +36,15 @@ public class Product implements Serializable {
         this.priceBeforeDiscount=priceBeforeDiscount;
     }
 
- /*   public Product() {
+    public Product() {
+
+    }
+
+/*    public Product() {
+
+    }*/
+
+/*    public Product() {
         this.name = "Sagi's flower";
         this.price = 500000000;
         this.priceBeforeDiscount = 500000000;

@@ -1,8 +1,10 @@
 package org.client;
 
+import javafx.application.Platform;
 import org.entities.Product;
 import org.entities.Catalog;
 import org.client.Client;
+import org.client.*;
 
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -24,7 +26,8 @@ import java.util.LinkedList;
 public class CatalogController extends Controller {
 
     //All products in the catalog.
-    protected static List<Product> products = Catalog.getProducts();
+    //protected static ArrayList<Product> products = null; //Catalog.getProducts();
+
 
 
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -40,15 +43,12 @@ public class CatalogController extends Controller {
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert mainPane != null : "fx:id=\"mainPane\" was not injected: check your FXML file 'Catalog.fxml'.";
+        LinkedList<Object> msg = new LinkedList<Object>();
+        msg.add("#PULLCATALOG");
+        // msg.add(this);
+        App.client.setController(this);
         try {
-            ArrayList<Object> msg = new ArrayList<Object>();
-            msg.add("#PULLCATALOG");
-           // msg.add(this);
-            App.client.setController(this);
             App.client.sendToServer(msg); //Sends a msg contains the command and the controller for the catalog.
-            //App.client.wait();
-            System.out.println(App.client.toString());
-            System.out.println(App.client.getInetAddress());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -59,15 +59,15 @@ public class CatalogController extends Controller {
     public void setCatalog(StoreSkeleton skeleton) {
 
         this.setSkeleton(skeleton);
-        try {
-            //mainPane.getChildren().clear();
-            for (Product product : products) {
+
+/*        try {
+           for (Product product : Client.products) {
                 displayProduct(product);
             }
 
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     /**
@@ -84,13 +84,27 @@ public class CatalogController extends Controller {
     }
 
 
-    public void pullProductsToClient(List<Product> data) throws IOException {
-        products = data;
-        for (Product product : products) {
-            this.displayProduct(product);
-            System.out.println("Hello there");
-        }
-        System.out.println("Hello there");
+    public void pullProductsToClient() throws IOException {
+
+/*        products = new LinkedList<Product>();
+        for(Product product : data){
+            products.add(product);
+        }*/
+/*        products = data;*/
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                for (Product product : Client.products) {
+                    try {
+                        displayProduct(product);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        });
+
 
         //this.displayProduct(new Product());
 

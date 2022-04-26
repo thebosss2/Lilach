@@ -11,7 +11,7 @@ import org.server.ocsf.ConnectionToClient;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.LinkedList;
 
@@ -29,14 +29,14 @@ public class Server extends AbstractServer {
      */
     protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
 
-        System.out.println("Hello server");
+
         try {
 
-                switch(((ArrayList<Object>) msg).get(0).toString()){
-                    case "#PULLCATALOG" -> {pullProducts(((ArrayList<Object>) msg) ,client);}
+                switch(((LinkedList<Object>) msg).get(0).toString()){
+                    case "#PULLCATALOG" -> {pullProducts(((LinkedList<Object>) msg) ,client);}
             }
-                System.out.println("Hello there server");
-           /*    pullProducts(((ArrayList<Object>) msg) ,client);*/
+
+           /*    pullProducts(((LinkedList<Object>) msg) ,client);*/
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -57,11 +57,11 @@ public class Server extends AbstractServer {
 //        System.out.println(client.getName());
 //        client.sendToClient(msg);
         
-      List<Product> products = App.getAllProducts();
+        List<Product> products = App.getAllProducts();
         String commandToClient = "#PULLCATALOG";
-        List<Object> msgToClient = new ArrayList<Object>();
+        List<Object> msgToClient = new LinkedList<Object>();
         msgToClient.add(commandToClient);
-        msgToClient.add(products);System.out.println("Sending products");
+        msgToClient.add(products);
         client.sendToClient(msgToClient);
 
     }
@@ -84,6 +84,7 @@ public class Server extends AbstractServer {
 
 
     public static void main(String[] args) throws IOException {
+
 
         if (args.length != 1) {
             System.out.println("Required argument: <port>");

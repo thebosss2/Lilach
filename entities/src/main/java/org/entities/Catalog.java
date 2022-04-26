@@ -12,9 +12,9 @@ public class Catalog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String name = "catalog";
     @OneToMany
-    protected static List<Product> products = new ArrayList<Product>();
+    protected static LinkedList<Product> products = new LinkedList<Product>();
 
-    public static List<Product> getProducts(){
+    public static LinkedList<Product> getProducts(){
         return products;
     }
 
