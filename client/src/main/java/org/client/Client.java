@@ -42,12 +42,9 @@ public class Client extends AbstractClient {
 
         //msg = ((LinkedList<Object>) msg);
         try{
-            /*switch(((LinkedList<Object>) msg).getFirst().toString()){
-                case "#PULLCATALOG"-> pushToCatalog(msg);
-            }*/
-            System.out.println("Hello client");
-            pushToCatalog(msg);
-            System.out.println("Hello client");
+            switch(((ArrayList<Object>) msg).get(0).toString()){
+                case "#PULLCATALOG"-> {pushToCatalog(msg);}
+            }
         }catch (Exception e){
             System.out.println("Hello client error");
             e.getStackTrace();

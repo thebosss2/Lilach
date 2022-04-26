@@ -32,11 +32,11 @@ public class Server extends AbstractServer {
         System.out.println("Hello server");
         try {
 
- /*switch(((LinkedList<Object>) msg).getFirst().toString()){
-                case "#PULLCATALOG"->pullProducts(((ArrayList<Object>) msg) ,client);
-            }*/
-            System.out.println("Hello there server");
-            pullProducts(((ArrayList<Object>) msg) ,client);
+                switch(((ArrayList<Object>) msg).get(0).toString()){
+                    case "#PULLCATALOG" -> {pullProducts(((ArrayList<Object>) msg) ,client);}
+            }
+                System.out.println("Hello there server");
+           /*    pullProducts(((ArrayList<Object>) msg) ,client);*/
         }
         catch (IOException e) {
             e.printStackTrace();
