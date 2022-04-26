@@ -3,6 +3,7 @@ package org.entities;
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import javax.persistence.*;
+import java.io.IOException;
 import java.util.*;
 
 @Entity
@@ -10,8 +11,12 @@ import java.util.*;
 public class Product{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @Column(name = "product_name")
     private String name;
     //private Image image;
+    @Column(name = "image")
+    private String image;
     private double price;
     private double priceBeforeDiscount;
 
@@ -20,6 +25,14 @@ public class Product{
         //image=product.getImage();
         this.price=product.getPrice();
         this.priceBeforeDiscount=product.getPriceBeforeDiscount();
+    }
+
+    public Product(String name, String image, double price, double priceBeforeDiscount) {
+        this.name=name;
+        //image=image;
+        this.image=image;
+        this.price=price;
+        this.priceBeforeDiscount=priceBeforeDiscount;
     }
 
     public Product() {
