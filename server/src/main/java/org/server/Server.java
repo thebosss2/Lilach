@@ -11,6 +11,7 @@ import org.server.ocsf.ConnectionToClient;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.LinkedList;
 
@@ -23,39 +24,46 @@ public class Server extends AbstractServer {
 
 
     @Override
+    /**
+     * Msg contains at least a command (string) for the switch to handle.
+     */
     protected void handleMessageFromClient(Object msg, ConnectionToClient client) {
 
-        msg = ((LinkedList<Object>) msg);
+        System.out.println("Hello server");
         try {
-            switch (((LinkedList<Object>) msg).getFirst().toString()) {
-                case "#PULLCATALOG" -> pullProducts(client);
-            }
 
-        } catch (IOException e) {
+ /*switch(((LinkedList<Object>) msg).getFirst().toString()){
+                case "#PULLCATALOG"->pullProducts(((ArrayList<Object>) msg) ,client);
+            }*/
+            System.out.println("Hello there server");
+            pullProducts(((ArrayList<Object>) msg) ,client);
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
 
 
 
 
-/*        System.out.println("Received Message: " + msg.toString());
-        try {
-            client.sendToClient("server recieved:"+msg.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
+
     }
 
-
-
-
-    private static void pullProducts(ConnectionToClient client) throws IOException {
-        List<Product> products = App.getAllProducts();
+    private static void pullProducts(List<Object> msg, ConnectionToClient client) throws IOException{
+        System.out.println("Sending products");
+        List<Product> products = null ;//= getAllProducts();
+        msg.add(products);
+        System.out.println(client.getId());
+        System.out.println(client.getInetAddress());
+        System.out.println(client.getName());
+        client.sendToClient(msg);
+        
+      /*List<Product> products = App.getAllProducts();
         String commandToClient = "#PULLCATALOG";
         List<Object> msgToClient = new LinkedList<Object>();
         msgToClient.add(commandToClient);
         msgToClient.add(products);
-        client.sendToClient(msgToClient);
+        client.sendToClient(msgToClient);*/
+
     }
 
 

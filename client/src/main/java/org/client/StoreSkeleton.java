@@ -83,11 +83,14 @@ public class StoreSkeleton {
         }
     }
 
+
+
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() throws IOException {
         assert catalogBtn != null : "fx:id=\"catalog\" was not injected: check your FXML file 'First catalog try.fxml'.";
         assert mainScreen != null : "fx:id=\"mainScreen\" was not injected: check your FXML file 'First catalog try.fxml'.";
         assert cartBtn != null : "fx:id=\"openImage\" was not injected: check your FXML file 'First catalog try.fxml'.";
+
 
         changeCenter("Catalog");
         changeLeft("WorkerMenu");

@@ -3,6 +3,8 @@ package org.client;
 import org.entities.Product;
 import org.entities.Catalog;
 import org.client.Client;
+
+import java.io.Serializable;
 import java.util.LinkedList;
 
 /**
@@ -11,9 +13,9 @@ import java.util.LinkedList;
 
     import java.io.IOException;
     import java.net.URL;
-import java.util.*;
+    import java.util.*;
 
-import javafx.fxml.FXML;
+    import javafx.fxml.FXML;
     import javafx.fxml.FXMLLoader;
     import javafx.scene.image.Image;
     import javafx.scene.layout.FlowPane;
@@ -39,7 +41,14 @@ public class CatalogController extends Controller {
     void initialize() {
         assert mainPane != null : "fx:id=\"mainPane\" was not injected: check your FXML file 'Catalog.fxml'.";
         try {
-            client.sendToServer("#PULLCATALOG");
+            ArrayList<Object> msg = new ArrayList<Object>();
+            msg.add("#PULLCATALOG");
+           // msg.add(this);
+            App.client.setController(this);
+            App.client.sendToServer(msg); //Sends a msg contains the command and the controller for the catalog.
+            //App.client.wait();
+            System.out.println(App.client.toString());
+            System.out.println(App.client.getInetAddress());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -75,10 +84,15 @@ public class CatalogController extends Controller {
     }
 
 
-    public static void pullProductsToClient(Object msg) {
-        msg = ((LinkedList<Object>) msg);
-        ((LinkedList<?>) msg).remove(0);
-        products = ((ArrayList<Product>) ((LinkedList<Object>) msg).pop());
+    public void pullProductsToClient(List<Product> data) throws IOException {
+        /*products = data;
+        for (Product product : products) {
+            this.displayProduct(product);
+            System.out.println("Hello there");
+        }
+        System.out.println("Hello there");
+*/
+        this.displayProduct(new Product());
 
 
 /*        for(int i=0;i<((LinkedList<?>) msg).size();i++){

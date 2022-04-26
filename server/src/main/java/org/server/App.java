@@ -68,9 +68,7 @@ public class App
 
             generateProducts();
             session.getTransaction().commit(); // Save everything.
-
-
-
+          
             server = new Server(3000);
             server.listen();
         } catch (Exception e) {

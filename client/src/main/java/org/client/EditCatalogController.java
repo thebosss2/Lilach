@@ -8,6 +8,7 @@ import javafx.scene.layout.FlowPane;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class EditCatalogController extends CatalogController {
@@ -28,8 +29,14 @@ public class EditCatalogController extends CatalogController {
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert mainPane != null : "fx:id=\"mainPane\" was not injected: check your FXML file 'Catalog.fxml'.";
-
-        pullProductsToClient("#PULLCATALOG");
+        try {
+            ArrayList<Object> msg = new ArrayList<Object>();
+            msg.add("#PULLCATALOG");
+            msg.add(this);
+            App.client.sendToServer(msg); //Sends a msg contains the command and the controller for the catalog.
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -36,6 +36,9 @@ public class Product{
     }
 
     public Product() {
+        this.name = "Sagi's flower";
+        this.price = 500000000;
+        this.priceBeforeDiscount = 500000000;
 
     }
 
@@ -71,5 +74,6 @@ public class Product{
     public void setName(String name) {
         this.name = name;
     }
+
 }
 
