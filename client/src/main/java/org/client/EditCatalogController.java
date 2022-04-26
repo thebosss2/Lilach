@@ -32,7 +32,7 @@ public class EditCatalogController extends CatalogController {
         try {
             ArrayList<Object> msg = new ArrayList<Object>();
             msg.add("#PULLCATALOG");
-            msg.add(this);
+
             App.client.sendToServer(msg); //Sends a msg contains the command and the controller for the catalog.
         } catch (IOException e) {
             e.printStackTrace();

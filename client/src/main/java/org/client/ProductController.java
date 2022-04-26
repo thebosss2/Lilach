@@ -59,7 +59,7 @@ public class ProductController extends ItemController{
 
     public void setProduct(Product product, CatalogController catalog) {
         this.product = product;
-        image.setImage(/*product.getImage()*/new Image("C:\\Users\\sagim\\IdeaProjects\\Project\\Lilach-V1\\client\\src\\main\\resources\\Images\\green_plus4.png"));
+        //image.setImage(/*product.getImage()*/new Image("C:\\Users\\itaiz\\Desktop\\Dropbox\\Homework\\SoftwareEngineering\\Lilach\\client\\src\\main\\resources\\Images\\tahelStupid2.jpg"));
         price.setText(product.getPrice() + " ₪");
         name.setText(product.getName());
         currentCatalog = catalog;

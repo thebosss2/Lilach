@@ -49,20 +49,20 @@ public class Server extends AbstractServer {
     }
 
     private static void pullProducts(List<Object> msg, ConnectionToClient client) throws IOException{
-        System.out.println("Sending products");
-        List<Product> products = null ;//= getAllProducts();
-        msg.add(products);
-        System.out.println(client.getId());
-        System.out.println(client.getInetAddress());
-        System.out.println(client.getName());
-        client.sendToClient(msg);
+
+//        List<Product> products = null ;//= getAllProducts();
+//        msg.add(products);
+//        System.out.println(client.getId());
+//        System.out.println(client.getInetAddress());
+//        System.out.println(client.getName());
+//        client.sendToClient(msg);
         
-      /*List<Product> products = App.getAllProducts();
+      List<Product> products = App.getAllProducts();
         String commandToClient = "#PULLCATALOG";
-        List<Object> msgToClient = new LinkedList<Object>();
+        List<Object> msgToClient = new ArrayList<Object>();
         msgToClient.add(commandToClient);
-        msgToClient.add(products);
-        client.sendToClient(msgToClient);*/
+        msgToClient.add(products);System.out.println("Sending products");
+        client.sendToClient(msgToClient);
 
     }
 
@@ -90,7 +90,6 @@ public class Server extends AbstractServer {
         } else {
 
             Server server = new Server(Integer.parseInt(args[0]));
-
             server.listen();
         }
     }

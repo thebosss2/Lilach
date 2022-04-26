@@ -64,7 +64,7 @@ public class Client extends AbstractClient {
         System.out.println("Hello from push1");
         CatalogController catalogController = (CatalogController) controller;
         System.out.println("Hello from push2");
-        catalogController.pullProductsToClient(/*(ArrayList<Product>)((ArrayList<Object>)msg).get(1)*/ null);
+        catalogController.pullProductsToClient((ArrayList<Product>)(((ArrayList<Object>)msg).get(1)));
         System.out.println("Hello from push3");
     }
 

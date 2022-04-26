@@ -85,14 +85,14 @@ public class CatalogController extends Controller {
 
 
     public void pullProductsToClient(List<Product> data) throws IOException {
-        /*products = data;
+        products = data;
         for (Product product : products) {
             this.displayProduct(product);
             System.out.println("Hello there");
         }
         System.out.println("Hello there");
-*/
-        this.displayProduct(new Product());
+
+        //this.displayProduct(new Product());
 
 
 /*        for(int i=0;i<((LinkedList<?>) msg).size();i++){

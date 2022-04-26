@@ -4,11 +4,12 @@ import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import javax.persistence.*;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.*;
 
 @Entity
 @Table(name = "poducts")
-public class Product{
+public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -35,12 +36,12 @@ public class Product{
         this.priceBeforeDiscount=priceBeforeDiscount;
     }
 
-    public Product() {
+ /*   public Product() {
         this.name = "Sagi's flower";
         this.price = 500000000;
         this.priceBeforeDiscount = 500000000;
 
-    }
+    }*/
 
     public void setPrice(double price) {
         this.price = price;

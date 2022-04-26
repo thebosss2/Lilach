@@ -40,10 +40,10 @@ public class App
     }
     private static void generateProducts() throws Exception {
         Random random = new Random();
-        double price = random.nextInt(1000);
+        double price;
         for (int i = 0; i < 5; i++) {
             String img1 = "\\src\\main\\resources\\Images" + i + ".jpg";
-            Product p1 = new Product("rakefet", img1, price, (price - random.nextInt(500)));
+            Product p1 = new Product("rakefet", img1, price = random.nextInt(1000), (price - random.nextInt(500)));
 
             session.save(p1);
             session.flush();
@@ -79,6 +79,7 @@ public class App
             e.printStackTrace();
         } finally {
             if (session != null) {
+                while(!server.isClosed());
                 session.close();
                 session.getSessionFactory().close();
             }
