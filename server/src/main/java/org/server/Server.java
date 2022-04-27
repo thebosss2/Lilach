@@ -58,7 +58,6 @@ public class Server extends AbstractServer {
         App.session.merge(productBefore);
         App.session.flush();
         App.session.getTransaction().commit(); // Save everything.
-        System.out.println("all is well");
     }
 
     private static void changeParam(Product p, Product p2){

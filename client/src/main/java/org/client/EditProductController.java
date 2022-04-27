@@ -42,9 +42,9 @@ public class EditProductController extends Controller{
         this.product = product;
         this.nameText.setText(product.getName());
         this.mainImage.setImage(product.getImage());
-        this.priceText.setText(Double.toString(product.getPrice()));
+        this.priceText.setText(Integer.toString(product.getPrice()));
         if(product.getPriceBeforeDiscount() != 0)
-            this.priceBeforeDiscountText.setText(Double.toString(product.getPriceBeforeDiscount()));
+            this.priceBeforeDiscountText.setText(Integer.toString(product.getPriceBeforeDiscount()));
     }
 
     @FXML
@@ -83,7 +83,7 @@ public class EditProductController extends Controller{
         String save="#SAVE";
         LinkedList<Object> msg = new LinkedList<Object>();
 
-        Product p = new Product(this.nameText.getText(), this.product.getByteImage(),  Double.parseDouble(this.priceText.getText()), Double.parseDouble(this.priceBeforeDiscountText.getText()));
+        Product p = new Product(this.nameText.getText(), this.product.getByteImage(), Integer.parseInt(this.priceText.getText()), Integer.parseInt(this.priceBeforeDiscountText.getText()));
         //need to update image
 
         msg.add(save);

@@ -17,10 +17,10 @@ public class Product implements Serializable {
     //private Image image;
     @Column(name = "image", length = 6555500)
     private byte[] image;
-    private double price;
-    private double priceBeforeDiscount;
+    private int price;
+    private int priceBeforeDiscount;
 
-    public Product(String name, String path, double price, double priceBeforeDiscount) {
+    public Product(String name, String path, int price, int priceBeforeDiscount) {
         this.name = name;
         //image=image;
         this.price = price;
@@ -39,7 +39,7 @@ public class Product implements Serializable {
         }
     }
 
-    public Product(String name, byte[] image, double price, double priceBeforeDiscount) {
+    public Product(String name, byte[] image, int price, int priceBeforeDiscount) {
         this.name = name;
         //image=image;
         this.price = price;
@@ -56,20 +56,20 @@ public class Product implements Serializable {
 
     }
 
-    public void setPrice(double price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 
 
-    public double getPriceBeforeDiscount() {
+    public int getPriceBeforeDiscount() {
         return priceBeforeDiscount;
     }
 
-    public void setPriceBeforeDiscount(double priceBeforeDiscount) {
+    public void setPriceBeforeDiscount(int priceBeforeDiscount) {
         this.priceBeforeDiscount = priceBeforeDiscount;
     }
 

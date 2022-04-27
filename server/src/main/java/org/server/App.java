@@ -41,10 +41,10 @@ public class App
 
     private static void generateProducts() throws Exception {
         Random random = new Random();
-        double price;
+        int price;
         for (int i = 0; i < 5; i++) {
-            String img1 = "C:\\Users\\itaiz\\Desktop\\Dropbox\\Homework\\SoftwareEngineering\\Lilach\\client\\src\\main\\resources\\Images\\tahelStupid" + i + ".jpg";
-            Product p1 = new Product("tahelStupid" + i, img1, price = random.nextInt(1000), (price - random.nextInt(500)));
+            String img1 = "C:\\Users\\itaiz\\Desktop\\Dropbox\\Homework\\SoftwareEngineering\\Lilach\\client\\src\\main\\resources\\Images\\Flower" + i + ".jpg";
+            Product p1 = new Product("Flower" + i, img1, price = random.nextInt(1000), (price - random.nextInt(500)));
 
             session.save(p1);
             session.flush();

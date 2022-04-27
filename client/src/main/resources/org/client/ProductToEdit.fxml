@@ -8,7 +8,7 @@
 <Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#goToEditProduct" onMouseEntered="#mouseOnProduct" onMouseExited="#mouseOffProduct" prefHeight="285.0" prefWidth="234.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.ProductToEditController">
    <children>
       <ImageView fx:id="image" fitHeight="204.0" fitWidth="204.0" layoutX="15.0" layoutY="41.0" onMouseClicked="#goToEditProduct" pickOnBounds="true" preserveRatio="true" />
-      <Text fx:id="name" boundsType="LOGICAL_VERTICAL_CENTER" layoutX="10.0" layoutY="20.0" onMouseClicked="#goToEditProduct" strokeType="OUTSIDE" strokeWidth="0.0" text="Rakefet" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="214.0">
+      <Text fx:id="name" boundsType="LOGICAL_VERTICAL_CENTER" layoutY="24.0" onMouseClicked="#goToEditProduct" strokeType="OUTSIDE" strokeWidth="0.0" text="Rakefet" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="234.0">
          <font>
             <Font name="Guttman Aharoni" size="21.0" />
          </font>
