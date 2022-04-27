@@ -24,7 +24,7 @@ public class GuestMenuController extends Controller{
     @FXML
     void goToCatalog(ActionEvent event) throws InterruptedException {
         coolButtonClick((Button)event.getTarget());
-        this.getSkeleton().changeCenter("catalog");
+        this.getSkeleton().changeCenter("Catalog");
 
     }
 

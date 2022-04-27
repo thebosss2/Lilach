@@ -57,7 +57,7 @@ public class EditProductController extends Controller{
 
         if(alert.showAndWait().get() == ButtonType.OK){
             saveChanges();
-            this.globalSkeleton.changeCenter("editCatalog");
+            this.globalSkeleton.changeCenter("EditCatalog");
         }
     }
 

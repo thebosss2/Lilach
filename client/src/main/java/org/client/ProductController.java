@@ -69,7 +69,7 @@ public class ProductController extends ItemController{
 
     public void goToProductView (MouseEvent event) throws InterruptedException {
         clickOnProductEffect(event);
-        Controller controller  = this.getSkeleton().changeCenter("productView");
+        Controller controller  = this.getSkeleton().changeCenter("ProductView");
         ProductViewController productView = (ProductViewController) controller;
         productView.setProductView(this.product);
     }

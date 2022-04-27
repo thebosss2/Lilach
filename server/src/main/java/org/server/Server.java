@@ -31,7 +31,6 @@ public class Server extends AbstractServer {
 
 
         try {
-
                 switch(((LinkedList<Object>) msg).get(0).toString()){
                     case "#PULLCATALOG" -> {pullProducts(((LinkedList<Object>) msg) ,client);}
                     case "#SAVE" -> {updateProduct((LinkedList<Object>)msg);}
@@ -75,7 +74,6 @@ public class Server extends AbstractServer {
         msgToClient.add(commandToClient);
         msgToClient.add(products);
         client.sendToClient(msgToClient);
-
     }
 
 

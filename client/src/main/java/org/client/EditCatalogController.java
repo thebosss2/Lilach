@@ -54,7 +54,7 @@ public class EditCatalogController extends CatalogController {
     }
 
     public void displayAddItem() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("addItem.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AddItem.fxml"));
         mainPane.getChildren().add(fxmlLoader.load());  //Adds new product pane to the screen.
         AddItemController controller = fxmlLoader.getController();
         controller.setSkeleton(this.getSkeleton());

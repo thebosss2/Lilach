@@ -40,9 +40,6 @@ public class Client extends AbstractClient {
 
     @Override
     protected void handleMessageFromServer(Object msg){
-
-
-
         try{
             switch(((LinkedList<Object>) msg).get(0).toString()){
                 case "#PULLCATALOG"-> {pushToCatalog(msg);}

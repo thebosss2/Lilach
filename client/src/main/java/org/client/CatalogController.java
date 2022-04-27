@@ -40,6 +40,7 @@ public class CatalogController extends Controller {
         LinkedList<Object> msg = new LinkedList<Object>();
         msg.add("#PULLCATALOG");
         // msg.add(this);
+        System.out.println("send to server");
         App.client.setController(this);
         try {
             App.client.sendToServer(msg); //Sends a msg contains the command and the controller for the catalog.
@@ -62,7 +63,7 @@ public class CatalogController extends Controller {
         FXMLLoader fxmlLoader;
 
         if (currentCatalog instanceof EditCatalogController) {
-            fxmlLoader = new FXMLLoader(getClass().getResource("productToEdit.fxml"));
+            fxmlLoader = new FXMLLoader(getClass().getResource("ProductToEdit.fxml"));
             mainPane.getChildren().add(fxmlLoader.load());  //Adds new product pane to the screen.
             ProductToEditController controller = fxmlLoader.getController();
             controller.setSkeleton(this.getSkeleton());
@@ -70,7 +71,7 @@ public class CatalogController extends Controller {
         }
 
         else {
-            fxmlLoader = new FXMLLoader(getClass().getResource("product.fxml"));
+            fxmlLoader = new FXMLLoader(getClass().getResource("Product.fxml"));
             mainPane.getChildren().add(fxmlLoader.load());  //Adds new product pane to the screen.
             ProductController controller = fxmlLoader.getController();
             controller.setSkeleton(this.getSkeleton());

@@ -11,7 +11,7 @@ public class WorkerMenuController extends GuestMenuController{
     @FXML
     void goToEditCatalog(ActionEvent event) throws InterruptedException {
         coolButtonClick((Button)event.getTarget());
-        this.getSkeleton().changeCenter("editCatalog");
+        this.getSkeleton().changeCenter("EditCatalog");
     }
 
     @Override
