@@ -42,7 +42,7 @@ public class Client extends AbstractClient {
     protected void handleMessageFromServer(Object msg){
 
 
-        //msg = ((LinkedList<Object>) msg);
+
         try{
             switch(((LinkedList<Object>) msg).get(0).toString()){
                 case "#PULLCATALOG"-> {pushToCatalog(msg);}
@@ -51,11 +51,6 @@ public class Client extends AbstractClient {
             System.out.println("Hello client error");
             e.getStackTrace();
         }
-
-
-
-
-        /*System.out.println(" Client Received Message: " + msg.toString());*/
 
     }
 

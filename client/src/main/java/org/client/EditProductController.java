@@ -84,9 +84,6 @@ public class EditProductController extends Controller{
         LinkedList<Object> msg = new LinkedList<Object>();
 
         Product p = new Product(this.nameText.getText(), this.product.getByteImage(),  Double.parseDouble(this.priceText.getText()), Double.parseDouble(this.priceBeforeDiscountText.getText()));
-/*        product.setName();
-        product.setPrice(Double.parseDouble(t));
-        product.setPriceBeforeDiscount(Double.parseDouble());*/
         //need to update image
 
         msg.add(save);

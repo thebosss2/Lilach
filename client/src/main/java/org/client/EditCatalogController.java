@@ -47,18 +47,6 @@ public class EditCatalogController extends CatalogController {
         this.setSkeleton(skeleton);
         try {
             displayAddItem();
-            /*Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    for (Product product : Client.products) {
-                        try {
-                            displayProduct(product);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            });*/
 
         }catch (IOException e){
             e.printStackTrace();
