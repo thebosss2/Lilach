@@ -84,5 +84,8 @@ public class Product implements Serializable {
         this.name = name;
     }
 
+    public int getId(){
+        return id;
+    }
 }
 

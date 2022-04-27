@@ -4,7 +4,7 @@ import java.util.Random;
 
 import org.entities.Product;
 import javax.persistence.*;
-
+import org.server.App;
 
 import org.server.ocsf.AbstractServer;
 import org.server.ocsf.ConnectionToClient;
@@ -34,6 +34,7 @@ public class Server extends AbstractServer {
 
                 switch(((LinkedList<Object>) msg).get(0).toString()){
                     case "#PULLCATALOG" -> {pullProducts(((LinkedList<Object>) msg) ,client);}
+                    case "#SAVE" -> {updateProduct((LinkedList<Object>)msg);}
             }
 
            /*    pullProducts(((LinkedList<Object>) msg) ,client);*/
@@ -47,6 +48,29 @@ public class Server extends AbstractServer {
 
 
     }
+
+    private static void updateProduct(Object msg)throws IOException{
+        App.session.beginTransaction();
+        Product productBefore = (Product) ((LinkedList<Object>)msg).get(1);
+        Product productAfter = (Product) ((LinkedList<Object>)msg).get(2);
+
+        App.session.evict(productBefore);
+        changeParam(productBefore, productAfter);
+/*        List<Product> products = App.getAllProducts();
+        products.set(p.getId()-1,p);*/
+        App.session.update(productBefore);
+        App.session.flush();
+        App.session.getTransaction().commit(); // Save everything.
+        System.out.println("all is well");
+    }
+
+    private static void changeParam(Product p, Product p2){
+        p.setName(p2.getName());
+        p.setPrice(p2.getPrice());
+        p.setPriceBeforeDiscount(p2.getPriceBeforeDiscount());
+    }
+
+
 
     private static void pullProducts(List<Object> msg, ConnectionToClient client) throws IOException{
 

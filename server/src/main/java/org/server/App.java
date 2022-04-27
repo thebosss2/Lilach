@@ -29,16 +29,16 @@ import org.server.ocsf.ConnectionToClient;
 public class App
 {
 
-    private static Session session;
+   public static Session session;// encapsulation make public function so this can be private
 
     private static SessionFactory getSessionFactory() throws HibernateException {
         Configuration configuration = new Configuration();
         // Add ALL of your entities here. You can also try adding a whole package.
         configuration.addAnnotatedClass(Product.class);
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
-
         return configuration.buildSessionFactory(serviceRegistry);
     }
+
     private static void generateProducts() throws Exception {
         Random random = new Random();
         double price;
@@ -69,11 +69,16 @@ public class App
         try {
             SessionFactory sessionFactory = getSessionFactory();
             session = sessionFactory.openSession();
-            session.beginTransaction();
+/*            session.beginTransaction();
 
             generateProducts();
-            session.getTransaction().commit(); // Save everything.
-          
+            session.getTransaction().commit(); // Save everything.*/
+
+
+
+
+
+
             server = new Server(3000);
             server.listen();
         } catch (Exception e) {
