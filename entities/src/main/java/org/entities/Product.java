@@ -20,13 +20,6 @@ public class Product implements Serializable {
     private double price;
     private double priceBeforeDiscount;
 
-    /*public Product(Product product) {
-        this.name=product.getName();
-        //image=product.getImage();
-        this.price=product.getPrice();
-        this.priceBeforeDiscount=product.getPriceBeforeDiscount();
-    }*/
-
     public Product(String name, String path, double price, double priceBeforeDiscount) {
         this.name = name;
         //image=image;
@@ -62,17 +55,6 @@ public class Product implements Serializable {
     public Product() {
 
     }
-
-/*    public Product() {
-
-    }*/
-
-/*    public Product() {
-        this.name = "Sagi's flower";
-        this.price = 500000000;
-        this.priceBeforeDiscount = 500000000;
-
-    }*/
 
     public void setPrice(double price) {
         this.price = price;
