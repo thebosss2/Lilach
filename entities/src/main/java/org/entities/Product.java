@@ -46,6 +46,19 @@ public class Product implements Serializable {
         }
     }
 
+    public Product(String name, byte[] image, double price, double priceBeforeDiscount) {
+        this.name = name;
+        //image=image;
+        this.price = price;
+        this.priceBeforeDiscount = priceBeforeDiscount;
+        this.image=image;
+
+
+    }
+
+
+
+
     public Product() {
 
     }
@@ -81,6 +94,8 @@ public class Product implements Serializable {
     public Image getImage() {
         return new Image(new ByteArrayInputStream(this.image));
     }
+
+    public byte[] getByteImage(){ return image;}
 
     /*public void setImage(Image image) {
         this.image = image;

@@ -58,7 +58,7 @@ public class Server extends AbstractServer {
         changeParam(productBefore, productAfter);
 /*        List<Product> products = App.getAllProducts();
         products.set(p.getId()-1,p);*/
-        App.session.update(productBefore);
+        App.session.merge(productBefore);
         App.session.flush();
         App.session.getTransaction().commit(); // Save everything.
         System.out.println("all is well");
