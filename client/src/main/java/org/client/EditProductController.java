@@ -1,10 +1,14 @@
 package org.client;
-
+import javafx.scene.image.Image;
+import org.entities.Product;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
+import org.server.App.*;
+
+import java.io.IOException;
+import java.util.LinkedList;
 
 public class EditProductController extends Controller{
 
@@ -54,7 +58,24 @@ public class EditProductController extends Controller{
     }
 
     void saveChanges(){
-        // TODO
+        String save="#SAVE";
+        LinkedList<Object> msg = new LinkedList<Object>();
+
+        Product p = new Product(this.nameText.getText(), this.product.getByteImage(),  Double.parseDouble(this.priceText.getText()), Double.parseDouble(this.priceBeforeDiscountText.getText()));
+/*        product.setName();
+        product.setPrice(Double.parseDouble(t));
+        product.setPriceBeforeDiscount(Double.parseDouble());*/
+        //need to update image
+
+        msg.add(save);
+        msg.add(product);
+        msg.add(p);
+        App.client.setController(this);
+        try {
+            App.client.sendToServer(msg); //Sends a msg contains the command and the controller for the catalog.
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

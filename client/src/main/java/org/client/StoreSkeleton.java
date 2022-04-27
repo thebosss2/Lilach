@@ -3,26 +3,16 @@
  */
 
 package org.client;
-import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.TabPane;
-import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 
 public class StoreSkeleton {
 
@@ -93,11 +83,14 @@ public class StoreSkeleton {
         }
     }
 
+
+
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() throws IOException {
         assert catalogBtn != null : "fx:id=\"catalog\" was not injected: check your FXML file 'First catalog try.fxml'.";
         assert mainScreen != null : "fx:id=\"mainScreen\" was not injected: check your FXML file 'First catalog try.fxml'.";
         assert cartBtn != null : "fx:id=\"openImage\" was not injected: check your FXML file 'First catalog try.fxml'.";
+
 
         changeCenter("Catalog");
         changeLeft("WorkerMenu");

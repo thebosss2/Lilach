@@ -1,7 +1,6 @@
 package org.client;
-
+import org.entities.Product;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

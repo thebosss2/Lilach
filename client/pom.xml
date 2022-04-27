@@ -2,10 +2,12 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <artifactId>client</artifactId>
-  <groupId>org.client</groupId>
-  <version>1.0-SNAPSHOT</version>
   <modelVersion>4.0.0</modelVersion>
+  <version>1.0-SNAPSHOT</version>
+  <groupId>org.client</groupId>
+  <artifactId>client</artifactId>
+
+
 
   <name>client</name>
   <!-- FIXME change it to the project's website -->
@@ -13,17 +15,19 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>11</maven.compiler.source>
-    <maven.compiler.target>11</maven.compiler.target>
+    <maven.compiler.source>15</maven.compiler.source>
+    <maven.compiler.target>15</maven.compiler.target>
   </properties>
 
   <dependencies>
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.13.1</version>
       <scope>test</scope>
     </dependency>
+
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-controls</artifactId>
@@ -50,6 +54,18 @@
       <artifactId>eventbus</artifactId>
       <version>3.2.0</version>
     </dependency>
+    <dependency>
+      <groupId>org.entities</groupId>
+      <artifactId>entities</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <scope>compile</scope>
+    </dependency>
+      <dependency>
+          <groupId>org.server</groupId>
+          <artifactId>server</artifactId>
+          <version>1.0-SNAPSHOT</version>
+          <scope>compile</scope>
+      </dependency>
   </dependencies>
 
   <build>
@@ -71,7 +87,7 @@
         </plugin>
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.22.1</version>
+          <version>2.19.1</version>
         </plugin>
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>

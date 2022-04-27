@@ -1,5 +1,13 @@
 package org.client;
 
+import javafx.application.Platform;
+import org.entities.Product;
+import org.entities.Catalog;
+import org.client.Client;
+import org.client.*;
+
+import java.io.Serializable;
+import java.util.LinkedList;
 
 /**
  * Sample Skeleton for 'Catalog.fxml' Controller Class
@@ -7,19 +15,20 @@ package org.client;
 
     import java.io.IOException;
     import java.net.URL;
-    import java.util.ArrayList;
-    import java.util.List;
-    import java.util.ResourceBundle;
+    import java.util.*;
+
     import javafx.fxml.FXML;
     import javafx.fxml.FXMLLoader;
     import javafx.scene.image.Image;
     import javafx.scene.layout.FlowPane;
 
 
-public class CatalogController extends Controller{
+public class CatalogController extends Controller {
 
     //All products in the catalog.
-    protected List<Product> products = new ArrayList<Product>();
+    //protected static ArrayList<Product> products = null; //Catalog.getProducts();
+
+
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -30,32 +39,41 @@ public class CatalogController extends Controller{
     @FXML // fx:id="mainPane"
     protected FlowPane mainPane; // Value injected by FXMLLoader
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert mainPane != null : "fx:id=\"mainPane\" was not injected: check your FXML file 'Catalog.fxml'.";
+        LinkedList<Object> msg = new LinkedList<Object>();
+        msg.add("#PULLCATALOG");
+        // msg.add(this);
+        App.client.setController(this);
+        try {
+            App.client.sendToServer(msg); //Sends a msg contains the command and the controller for the catalog.
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        createProducts();
+        /*pullProductsToClient("#PULLCATALOG");*/
     }
 
-    public void setCatalog(StoreSkeleton skeleton){
+    public void setCatalog(StoreSkeleton skeleton) {
 
         this.setSkeleton(skeleton);
-        try{
-            //mainPane.getChildren().clear();
-            for (Product product : products) {
+
+/*        try {
+           for (Product product : Client.products) {
                 displayProduct(product);
             }
 
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     /**
      * @param product
-     * @throws IOException
-     * Function adding instance of pre-made product to the screen.
-     * Note to self: VERY IMPORTANT to load before using the "getController" method (else you'll get null).
+     * @throws IOException Function adding instance of pre-made product to the screen.
+     *                     Note to self: VERY IMPORTANT to load before using the "getController" method (else you'll get null).
      */
     protected void displayProduct(Product product) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("product.fxml"));
@@ -65,30 +83,36 @@ public class CatalogController extends Controller{
         controller.setProduct(product, this);
     }
 
-    protected void createProducts(){
-        products.add(new Product());
-        products.add(new Product());
-        products.add(new Product());
-        products.add(new Product());
-        products.add(new Product());
-        products.add(new Product());
-        products.add(new Product());
 
-        products.get(0).setImage(new Image("C:\\Users\\itaiz\\Desktop\\Dropbox\\Homework\\SoftwareEngineering\\Lilach\\client\\src\\main\\resources\\Images\\pexels-jonas-kakaroto-736230.jpg", 140, 140, false, false ));
-        products.get(0).setName("Rakefet");
-        products.get(0).setPrice(55);
-        products.get(1).setImage(new Image("C:\\Users\\itaiz\\Desktop\\Dropbox\\Homework\\SoftwareEngineering\\Lilach\\client\\src\\main\\resources\\Images\\pexels-pixabay-60597.jpg", 140, 140, false, false ));
-        products.get(1).setName("Chrysanthemum");
-        products.get(1).setPrice(45);
-        products.get(2).setImage(new Image("C:\\Users\\itaiz\\Desktop\\Dropbox\\Homework\\SoftwareEngineering\\Lilach\\client\\src\\main\\resources\\Images\\photo-1604085572504-a392ddf0d86a.jpg", 140, 140, false, false ));
-        products.get(2).setName("Sunflower");
-        products.get(2).setPrice(555);
+    public void pullProductsToClient() throws IOException {
 
-        for (int i = 1 ; i < 5 ; i++){
-            products.get(2+i).setImage(new Image("C:\\Users\\itaiz\\Desktop\\Dropbox\\Homework\\SoftwareEngineering\\Lilach\\client\\src\\main\\resources\\Images\\tahelStupid" + i + ".jpg", 140, 140, false, false ));
-            products.get(2 + i).setName("tahel Stupid" + i);
-            products.get(2 + i).setPrice(i * 27);
-        }
+/*        products = new LinkedList<Product>();
+        for(Product product : data){
+            products.add(product);
+        }*/
+/*        products = data;*/
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                for (Product product : Client.products) {
+                    try {
+                        displayProduct(product);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        });
+
+
+        //this.displayProduct(new Product());
+
+
+/*        for(int i=0;i<((LinkedList<?>) msg).size();i++){
+            Product p=new Product((Product) ((LinkedList<Object>) msg).get(i));
+            products.add(p);
+        }*/
+
     }
-
 }
