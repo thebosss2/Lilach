@@ -3,6 +3,7 @@ package org.client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -10,10 +11,10 @@ import java.util.concurrent.Executors;
 public class GuestMenuController extends Controller{
 
     @FXML
-    private Button cartBtn;
+    protected Button cartBtn;
 
     @FXML
-    private Button catalogBtn;
+    protected Button catalogBtn;
 
     @FXML
     void goToCart(ActionEvent event) throws InterruptedException {
@@ -27,17 +28,20 @@ public class GuestMenuController extends Controller{
 
     }
 
+    @FXML
+    void mouseOffBtn(MouseEvent event) {
+        //TODO
+    }
+
+    @FXML
+    void mouseOnBtn(MouseEvent event) {
+        //TODO
+    }
+
     protected void coolButtonClick(Button button) throws InterruptedException{
-        Executor executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
-            button.setStyle("-fx-background-color: #62a74d");
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            button.setStyle("-fx-background-color:  #9bc98c");
-        });
+        cartBtn.setStyle("-fx-background-color: #9bc98c");
+        catalogBtn.setStyle("-fx-background-color: #9bc98c");
+        button.setStyle("-fx-background-color: #62a74d");
     }
 
 }

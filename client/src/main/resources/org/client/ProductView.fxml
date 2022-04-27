@@ -15,14 +15,14 @@
       <ImageView fx:id="image2" fitHeight="53.0" fitWidth="57.0" layoutX="22.0" layoutY="124.0" onMouseClicked="#changeImage" opacity="0.5" pickOnBounds="true" />
       <ImageView fx:id="image3" fitHeight="53.0" fitWidth="57.0" layoutX="22.0" layoutY="194.0" onMouseClicked="#changeImage" opacity="0.5" pickOnBounds="true" />
       <ImageView fx:id="image4" fitHeight="53.0" fitWidth="57.0" layoutX="22.0" layoutY="268.0" onMouseClicked="#changeImage" opacity="0.5" pickOnBounds="true" />
-      <Button fx:id="addToCartBtn" layoutX="405.0" layoutY="292.0" mnemonicParsing="false" onAction="#addToCart" prefHeight="26.0" prefWidth="106.0" style="-fx-background-color: #FFC1CC;" text="add to cart">
+      <Button fx:id="addToCartBtn" layoutX="405.0" layoutY="292.0" mnemonicParsing="false" onAction="#addToCart" prefHeight="26.0" prefWidth="106.0" style="-fx-background-color: #c6acef;" text="add to cart">
          <font>
             <Font name="Cambria" size="15.0" />
          </font>
       </Button>
       <TextField fx:id="orderCount" alignment="CENTER" layoutX="561.0" layoutY="292.0" prefHeight="30.0" prefWidth="47.0" text="1" />
-      <Button fx:id="plusBtn" contentDisplay="CENTER" layoutX="614.0" layoutY="291.0" mnemonicParsing="false" onAction="#plusAction" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: #FFC1CC;" text="+" />
-      <Button fx:id="minusBtn" contentDisplay="CENTER" layoutX="526.0" layoutY="291.0" mnemonicParsing="false" onAction="#minusAction" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: #FFC1CC;" text="-" />
+      <Button fx:id="plusBtn" contentDisplay="CENTER" layoutX="614.0" layoutY="291.0" mnemonicParsing="false" onAction="#plusAction" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: #c6acef;" text="+" />
+      <Button fx:id="minusBtn" contentDisplay="CENTER" layoutX="526.0" layoutY="291.0" mnemonicParsing="false" onAction="#minusAction" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: #c6acef;" text="-" />
       <Label fx:id="productName" alignment="CENTER" layoutX="405.0" layoutY="55.0" prefHeight="43.0" prefWidth="237.0" text="Label">
          <font>
             <Font name="System Bold" size="24.0" />

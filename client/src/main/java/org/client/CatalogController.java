@@ -75,12 +75,26 @@ public class CatalogController extends Controller {
      * @throws IOException Function adding instance of pre-made product to the screen.
      *                     Note to self: VERY IMPORTANT to load before using the "getController" method (else you'll get null).
      */
-    protected void displayProduct(Product product) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("product.fxml"));
-        mainPane.getChildren().add(fxmlLoader.load());  //Adds new product pane to the screen.
-        ProductController controller = fxmlLoader.getController();
-        controller.setSkeleton(this.getSkeleton());
-        controller.setProduct(product, this);
+    protected void displayProduct(Product product, CatalogController currentCatalog) throws IOException {
+        FXMLLoader fxmlLoader;
+
+        if (currentCatalog instanceof EditCatalogController) {
+            fxmlLoader = new FXMLLoader(getClass().getResource("productToEdit.fxml"));
+            mainPane.getChildren().add(fxmlLoader.load());  //Adds new product pane to the screen.
+            ProductToEditController controller = fxmlLoader.getController();
+            controller.setSkeleton(this.getSkeleton());
+            controller.setProduct(product);
+        }
+
+        else {
+            fxmlLoader = new FXMLLoader(getClass().getResource("product.fxml"));
+            mainPane.getChildren().add(fxmlLoader.load());  //Adds new product pane to the screen.
+            ProductController controller = fxmlLoader.getController();
+            controller.setSkeleton(this.getSkeleton());
+            controller.setProduct(product);
+        }
+
+
     }
 
 
@@ -91,12 +105,13 @@ public class CatalogController extends Controller {
             products.add(product);
         }*/
 /*        products = data;*/
+        CatalogController catalogController = this;
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 for (Product product : Client.products) {
                     try {
-                        displayProduct(product);
+                        displayProduct(product, catalogController);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

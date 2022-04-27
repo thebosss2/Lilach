@@ -19,8 +19,6 @@ import javafx.scene.text.Text;
 
 public class ProductController extends ItemController{
 
-    private CatalogController currentCatalog;
-
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
 
@@ -58,12 +56,11 @@ public class ProductController extends ItemController{
     }
 
 
-    public void setProduct(Product product, CatalogController catalog) {
+    public void setProduct(Product product) {
         this.product = product;
         image.setImage(product.getImage());
-        price.setText(product.getPrice() + " ₪");
+        price.setText(product.getPrice() + "₪");
         name.setText(product.getName());
-        currentCatalog = catalog;
 
         if(product.getPriceBeforeDiscount() != 0)
             priceBeforeDiscount.setText(product.getPriceBeforeDiscount() + " ₪");
@@ -73,19 +70,9 @@ public class ProductController extends ItemController{
 
     public void goToProductView (MouseEvent event) throws InterruptedException {
         clickOnProductEffect(event);
-        Controller controller = null;
-
-        if (this.currentCatalog instanceof EditCatalogController) {
-            controller = this.getSkeleton().changeCenter("editProduct");
-            EditProductController editProduct = (EditProductController) controller;
-            editProduct.setProductView(this.product);
-        }
-
-        else {
-            controller = this.getSkeleton().changeCenter("productView");
-            ProductViewController productView = (ProductViewController) controller;
-            productView.setProductView(this.product);
-        }
+        Controller controller  = this.getSkeleton().changeCenter("productView");
+        ProductViewController productView = (ProductViewController) controller;
+        productView.setProductView(this.product);
     }
 
 }

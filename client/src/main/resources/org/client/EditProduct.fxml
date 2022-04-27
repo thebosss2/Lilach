@@ -27,12 +27,12 @@
       <Label layoutX="408.0" layoutY="238.0" text="before discount:" />
       <Label layoutX="531.0" layoutY="238.0" prefHeight="18.0" prefWidth="105.0" text="price:" />
       <Label layoutX="408.0" layoutY="71.0" prefHeight="38.0" prefWidth="234.0" text="description:" />
-      <Button fx:id="saveBtn" layoutX="408.0" layoutY="295.0" mnemonicParsing="false" onAction="#clickedSave" prefHeight="26.0" prefWidth="234.0" style="-fx-background-color: #FFC1CC;" text="save changes">
+      <Button fx:id="saveBtn" layoutX="408.0" layoutY="295.0" mnemonicParsing="false" onAction="#clickedSave" prefHeight="26.0" prefWidth="234.0" style="-fx-background-color: #c6acef;" text="save changes">
          <font>
             <Font name="Cambria" size="15.0" />
          </font>
       </Button>
-      <Button fx:id="changeImageBtn" layoutX="199.0" layoutY="294.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="123.0" style="-fx-background-color: #FFC1CC;" text="change image">
+      <Button fx:id="changeImageBtn" layoutX="199.0" layoutY="294.0" mnemonicParsing="false" onAction="#changeImage" prefHeight="30.0" prefWidth="123.0" style="-fx-background-color: #c6acef;" text="change image">
          <font>
             <Font name="Cambria" size="15.0" />
          </font>
