@@ -38,7 +38,7 @@ public class EditProductController extends Controller{
     void setProductView(Product product){
         this.product = product;
         this.nameText.setText(product.getName());
-        //this.mainImage.setImage(/*product.getImage()*/ new Image("C:\\Users\\sagim\\IdeaProjects\\Project\\Lilach-V1\\client\\src\\main\\resources\\Images\\green_plus4.png"));
+        this.mainImage.setImage(product.getImage());
         this.priceText.setText(Double.toString(product.getPrice()));
         if(product.getPriceBeforeDiscount() != 0)
             this.priceBeforeDiscountText.setText(Double.toString(product.getPriceBeforeDiscount()));

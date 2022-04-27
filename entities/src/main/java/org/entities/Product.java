@@ -3,8 +3,7 @@ package org.entities;
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import javax.persistence.*;
-import java.io.IOException;
-import java.io.Serializable;
+import java.io.*;
 import java.util.*;
 
 @Entity
@@ -16,24 +15,35 @@ public class Product implements Serializable {
     @Column(name = "product_name")
     private String name;
     //private Image image;
-    @Column(name = "image")
-    private String image;
+    @Column(name = "image", length = 6555500)
+    private byte[] image;
     private double price;
     private double priceBeforeDiscount;
 
-    public Product(Product product) {
+    /*public Product(Product product) {
         this.name=product.getName();
         //image=product.getImage();
         this.price=product.getPrice();
         this.priceBeforeDiscount=product.getPriceBeforeDiscount();
-    }
+    }*/
 
-    public Product(String name, String image, double price, double priceBeforeDiscount) {
-        this.name=name;
+    public Product(String name, String path, double price, double priceBeforeDiscount) {
+        this.name = name;
         //image=image;
-        this.image=image;
-        this.price=price;
-        this.priceBeforeDiscount=priceBeforeDiscount;
+        this.price = price;
+        this.priceBeforeDiscount = priceBeforeDiscount;
+
+
+        File file = new File(path);
+        this.image = new byte[(int) file.length()];
+        try {
+            FileInputStream fileInputStream = new FileInputStream(file);
+            //convert file into array of bytes
+            fileInputStream.read(this.image);
+            fileInputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public Product() {
@@ -68,9 +78,9 @@ public class Product implements Serializable {
         this.priceBeforeDiscount = priceBeforeDiscount;
     }
 
-/*    public Image getImage() {
-        return image;
-    }*/
+    public Image getImage() {
+        return new Image(new ByteArrayInputStream(this.image));
+    }
 
     /*public void setImage(Image image) {
         this.image = image;

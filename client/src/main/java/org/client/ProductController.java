@@ -7,6 +7,7 @@ import org.entities.Product;
  */
 
 
+import java.io.ByteArrayInputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -59,7 +60,7 @@ public class ProductController extends ItemController{
 
     public void setProduct(Product product, CatalogController catalog) {
         this.product = product;
-        //image.setImage(/*product.getImage()*/new Image("C:\\Users\\itaiz\\Desktop\\Dropbox\\Homework\\SoftwareEngineering\\Lilach\\client\\src\\main\\resources\\Images\\tahelStupid2.jpg"));
+        image.setImage(product.getImage());
         price.setText(product.getPrice() + " ₪");
         name.setText(product.getName());
         currentCatalog = catalog;

@@ -43,8 +43,8 @@ public class App
         Random random = new Random();
         double price;
         for (int i = 0; i < 5; i++) {
-            String img1 = "\\src\\main\\resources\\Images" + i + ".jpg";
-            Product p1 = new Product("rakefet", img1, price = random.nextInt(1000), (price - random.nextInt(500)));
+            String img1 = "C:\\Users\\galh9\\IdeaProjects\\Lilach\\client\\src\\main\\resources\\Images\\tahelStupid" + i + ".jpg";
+            Product p1 = new Product("tahelStupid" + i, img1, price = random.nextInt(1000), (price - random.nextInt(500)));
 
             session.save(p1);
             session.flush();
@@ -67,17 +67,14 @@ public class App
     public static void main( String[] args ) throws IOException
     {
         try {
+
             SessionFactory sessionFactory = getSessionFactory();
             session = sessionFactory.openSession();
-/*            session.beginTransaction();
-
+            session.beginTransaction();
+            /*
             generateProducts();
-            session.getTransaction().commit(); // Save everything.*/
-
-
-
-
-
+            session.getTransaction().commit(); // Save everything.
+            */
 
             server = new Server(3000);
             server.listen();
