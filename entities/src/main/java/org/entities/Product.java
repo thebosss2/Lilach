@@ -15,7 +15,7 @@ public class Product implements Serializable {
     @Column(name = "product_name")
     private String name;
     //private Image image;
-    @Column(name = "image", length = 6555500)
+    @Column(name = "image", length = 65555)
     private byte[] image;
     private int price;
     private int priceBeforeDiscount;
