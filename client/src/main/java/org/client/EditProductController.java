@@ -57,6 +57,11 @@ public class EditProductController extends Controller{
         }
     }
 
+    @FXML
+    void changeImage(ActionEvent event) throws InterruptedException {
+        coolButtonClick((Button) event.getTarget());
+    }
+
     private void coolButtonClick(Button button) throws InterruptedException{
         Executor executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {

@@ -8,9 +8,9 @@
 
 <Pane fx:id="pane" onMouseClicked="#goToAddItemPage" onMouseEntered="#mouseOnProduct" onMouseExited="#mouseOffProduct" prefHeight="285.0" prefWidth="234.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.AddItemController">
    <children>
-      <ImageView fx:id="image" fitHeight="173.0" fitWidth="199.0" layoutX="20.0" layoutY="56.0" onMouseClicked="#goToAddItemPage" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="image" fitHeight="173.0" fitWidth="199.0" layoutX="30.0" layoutY="56.0" onMouseClicked="#goToAddItemPage" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../Images/green_plus3.jpg" />
+            <Image url="@../../Images/plusSign.png" />
          </image>
       </ImageView>
       <Text fx:id="name" boundsType="LOGICAL_VERTICAL_CENTER" layoutX="10.0" layoutY="28.0" onMouseClicked="#goToAddItemPage" strokeType="OUTSIDE" strokeWidth="0.0" text="add item" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="214.0">

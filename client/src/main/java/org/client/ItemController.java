@@ -48,7 +48,7 @@ public abstract class ItemController extends Controller {
 
     protected void clickOnProductEffect(MouseEvent event) throws InterruptedException {
 
-        pane.setStyle("-fx-background-color: #8fb66a");
+        pane.setStyle("-fx-background-color: #a8a1d5");
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
@@ -60,6 +60,7 @@ public abstract class ItemController extends Controller {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
     }
 
 }
