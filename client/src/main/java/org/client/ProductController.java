@@ -54,7 +54,6 @@ public class ProductController extends ItemController{
 
         coolButtonClick((Button)event.getTarget());
         //Check if you need to kill the thread.
-
     }
 
 
