@@ -37,7 +37,6 @@ public class Server extends AbstractServer {
                     case "#SAVE" -> {updateProduct((LinkedList<Object>)msg);}
             }
 
-           /*    pullProducts(((LinkedList<Object>) msg) ,client);*/
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -56,8 +55,6 @@ public class Server extends AbstractServer {
 
         App.session.evict(productBefore);
         changeParam(productBefore, productAfter);
-/*        List<Product> products = App.getAllProducts();
-        products.set(p.getId()-1,p);*/
         App.session.merge(productBefore);
         App.session.flush();
         App.session.getTransaction().commit(); // Save everything.
@@ -73,14 +70,6 @@ public class Server extends AbstractServer {
 
 
     private static void pullProducts(List<Object> msg, ConnectionToClient client) throws IOException{
-
-//        List<Product> products = null ;//= getAllProducts();
-//        msg.add(products);
-//        System.out.println(client.getId());
-//        System.out.println(client.getInetAddress());
-//        System.out.println(client.getName());
-//        client.sendToClient(msg);
-        
         List<Product> products = App.getAllProducts();
         String commandToClient = "#PULLCATALOG";
         List<Object> msgToClient = new LinkedList<Object>();
