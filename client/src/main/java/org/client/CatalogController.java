@@ -24,12 +24,6 @@ import java.util.LinkedList;
 
 
 public class CatalogController extends Controller {
-
-    //All products in the catalog.
-    //protected static ArrayList<Product> products = null; //Catalog.getProducts();
-
-
-
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
 
@@ -52,22 +46,11 @@ public class CatalogController extends Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        /*pullProductsToClient("#PULLCATALOG");*/
     }
 
     public void setCatalog(StoreSkeleton skeleton) {
 
         this.setSkeleton(skeleton);
-
-/*        try {
-           for (Product product : Client.products) {
-                displayProduct(product);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
     }
 
     /**
@@ -99,12 +82,6 @@ public class CatalogController extends Controller {
 
 
     public void pullProductsToClient() throws IOException {
-
-/*        products = new LinkedList<Product>();
-        for(Product product : data){
-            products.add(product);
-        }*/
-/*        products = data;*/
         CatalogController catalogController = this;
         Platform.runLater(new Runnable() {
             @Override
@@ -120,14 +97,6 @@ public class CatalogController extends Controller {
             }
         });
 
-
-        //this.displayProduct(new Product());
-
-
-/*        for(int i=0;i<((LinkedList<?>) msg).size();i++){
-            Product p=new Product((Product) ((LinkedList<Object>) msg).get(i));
-            products.add(p);
-        }*/
 
     }
 }
