@@ -10,9 +10,9 @@ public abstract class Controller{
 
     public void setSkeleton(StoreSkeleton skeleton){
         this.globalSkeleton = skeleton;
-    }
+    } //set skeleton
 
     public StoreSkeleton getSkeleton() {
         return this.globalSkeleton;
-    }
+    } //returns skeleton information
 }

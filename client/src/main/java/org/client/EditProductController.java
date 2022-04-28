@@ -79,16 +79,16 @@ public class EditProductController extends Controller{
         });
     }
 
-    void saveChanges(){
+    void saveChanges(){     //function creates new product and sends save command to server
         String save="#SAVE";
-        LinkedList<Object> msg = new LinkedList<Object>();
+        LinkedList<Object> msg = new LinkedList<Object>();  //msg has string message with all data in next nodes
 
         Product p = new Product(this.nameText.getText(), this.product.getByteImage(), Integer.parseInt(this.priceText.getText()), Integer.parseInt(this.priceBeforeDiscountText.getText()));
         //need to update image
 
-        msg.add(save);
-        msg.add(product);
-        msg.add(p);
+        msg.add(save);          // adds #SAVE command for server
+        msg.add(product);       //adds data to msg list
+        msg.add(p);             //
         App.client.setController(this);
         try {
             App.client.sendToServer(msg); //Sends a msg contains the command and the controller for the catalog.

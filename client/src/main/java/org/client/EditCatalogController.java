@@ -42,18 +42,18 @@ public class EditCatalogController extends CatalogController {
     }
 
     @Override
-    public void setCatalog(StoreSkeleton skeleton) {
+    public void setCatalog(StoreSkeleton skeleton) {    //set catalog edit view for worker
         mainPane.getChildren().clear();
         this.setSkeleton(skeleton);
         try {
-            displayAddItem();
+            displayAddItem();       //displays add item image and option
 
         }catch (IOException e){
             e.printStackTrace();
         }
     }
 
-    public void displayAddItem() throws IOException {
+    public void displayAddItem() throws IOException {   //displays add item option
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AddItem.fxml"));
         mainPane.getChildren().add(fxmlLoader.load());  //Adds new product pane to the screen.
         AddItemController controller = fxmlLoader.getController();

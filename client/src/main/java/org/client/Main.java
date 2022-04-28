@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args) {
         try {
 
-            App.main(args);
+            App.main(args);     //Main class for Jar calls cliant main
         } catch (IOException e) {
             e.printStackTrace();
         }

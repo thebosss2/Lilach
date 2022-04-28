@@ -40,7 +40,6 @@ public class CatalogController extends Controller {
         LinkedList<Object> msg = new LinkedList<Object>();
         msg.add("#PULLCATALOG");
         // msg.add(this);
-        System.out.println("send to server");
         App.client.setController(this);
         try {
             App.client.sendToServer(msg); //Sends a msg contains the command and the controller for the catalog.
@@ -49,7 +48,7 @@ public class CatalogController extends Controller {
         }
     }
 
-    public void setCatalog(StoreSkeleton skeleton) {
+    public void setCatalog(StoreSkeleton skeleton) {    //sets catalog skeleton
 
         this.setSkeleton(skeleton);
     }
@@ -59,10 +58,10 @@ public class CatalogController extends Controller {
      * @throws IOException Function adding instance of pre-made product to the screen.
      *                     Note to self: VERY IMPORTANT to load before using the "getController" method (else you'll get null).
      */
-    protected void displayProduct(Product product, CatalogController currentCatalog) throws IOException {
+    protected void displayProduct(Product product, CatalogController currentCatalog) throws IOException {       //func displays an item on pane
         FXMLLoader fxmlLoader;
 
-        if (currentCatalog instanceof EditCatalogController) {
+        if (currentCatalog instanceof EditCatalogController) {      //different display for editor (worker)
             fxmlLoader = new FXMLLoader(getClass().getResource("ProductToEdit.fxml"));
             mainPane.getChildren().add(fxmlLoader.load());  //Adds new product pane to the screen.
             ProductToEditController controller = fxmlLoader.getController();
@@ -70,7 +69,7 @@ public class CatalogController extends Controller {
             controller.setProduct(product);
         }
 
-        else {
+        else {      //display for customer or catalog view
             fxmlLoader = new FXMLLoader(getClass().getResource("Product.fxml"));
             mainPane.getChildren().add(fxmlLoader.load());  //Adds new product pane to the screen.
             ProductController controller = fxmlLoader.getController();
@@ -82,9 +81,9 @@ public class CatalogController extends Controller {
     }
 
 
-    public void pullProductsToClient() throws IOException {
+    public void pullProductsToClient() throws IOException {         //function is called to display all products when returning with data from server
         CatalogController catalogController = this;
-        Platform.runLater(new Runnable() {
+        Platform.runLater(new Runnable() {      //runlater used to wait for server and client threads to finish
             @Override
             public void run() {
                 for (Product product : Client.products) {

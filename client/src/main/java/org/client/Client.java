@@ -39,22 +39,22 @@ public class Client extends AbstractClient {
     }
 
     @Override
-    protected void handleMessageFromServer(Object msg){
+    protected void handleMessageFromServer(Object msg){     //function handles message from server
         try{
-            switch(((LinkedList<Object>) msg).get(0).toString()){
-                case "#PULLCATALOG"-> {pushToCatalog(msg);}
+            switch(((LinkedList<Object>) msg).get(0).toString()){       //switch with all command options sent between client and server
+                case "#PULLCATALOG"-> {pushToCatalog(msg);}         //function gets all data from server to display to client
             }
         }catch (Exception e){
-            System.out.println("Hello client error");
+            System.out.println("Client Error");
             e.getStackTrace();
         }
 
     }
 
-    private void pushToCatalog(Object msg) throws IOException {
+    private void pushToCatalog(Object msg) throws IOException { // takes data received and sends to display function
         products = (LinkedList<Product>)((LinkedList<Object>)msg).get(1);
         CatalogController catalogController = (CatalogController) controller;
-        catalogController.pullProductsToClient();
+        catalogController.pullProductsToClient();       //calls static function in client for display
     }
 
 

@@ -22,7 +22,7 @@ public class GuestMenuController extends Controller{
     }
 
     @FXML
-    void goToCatalog(ActionEvent event) throws InterruptedException {
+    void goToCatalog(ActionEvent event) throws InterruptedException {   //catalog button clears page and loads all products
         coolButtonClick((Button)event.getTarget());
         this.getSkeleton().changeCenter("Catalog");
 

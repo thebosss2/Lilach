@@ -31,32 +31,32 @@ public class App
 
    public static Session session;// encapsulation make public function so this can be private
 
-    private static SessionFactory getSessionFactory() throws HibernateException {
+    private static SessionFactory getSessionFactory() throws HibernateException {       //creates session factory for database use
         Configuration configuration = new Configuration();
         // Add ALL of your entities here. You can also try adding a whole package.
         configuration.addAnnotatedClass(Product.class);
-        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
+        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();        //pull session factory config from hibernate properties
         return configuration.buildSessionFactory(serviceRegistry);
     }
 
-    private static void generateProducts() throws Exception {
+    private static void generateProducts() throws Exception {       //generates new products
         Random random = new Random();
         int price;
         for (int i = 0; i < 5; i++) {
             String img1 = "src/main/resources/Images/Flower" + i + ".jpg";
             Product p1 = new Product("Flower" + i, img1, price = random.nextInt(1000), (price - random.nextInt(500)));
 
-            session.save(p1);
+            session.save(p1);   //saves and flushes to database
             session.flush();
         }
     }
-    static List<Product> getAllProducts() throws IOException {
+    static List<Product> getAllProducts() throws IOException {      //pulls all products from database
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Product> query = builder.createQuery(Product.class);
         query.from(Product.class);
         List<Product> data =  session.createQuery(query).getResultList();
         LinkedList<Product> list = new LinkedList<Product>();
-        for(Product product: data){
+        for(Product product: data){     //converts arraylist to linkedlist
             list.add(product);
         }
         return list;
@@ -68,14 +68,14 @@ public class App
     {
         try {
 
-            SessionFactory sessionFactory = getSessionFactory();
-            session = sessionFactory.openSession();
-/*            session.beginTransaction();
-            generateProducts();
+            SessionFactory sessionFactory = getSessionFactory();        //calls and creates session factory
+            session = sessionFactory.openSession(); //opens session
+/*            session.beginTransaction();       //transaction for generation
+            generateProducts();             //generate
             session.getTransaction().commit(); // Save everything.*/
 
-            server = new Server(3000);
-            server.listen();
+            server = new Server(3000);      //builds server
+            server.listen();                    //listens to client
         } catch (Exception e) {
             if (session != null) {
                 session.getTransaction().rollback();

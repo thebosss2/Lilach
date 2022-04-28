@@ -67,7 +67,7 @@ public class ProductController extends ItemController{
             priceBeforeDiscount.setText("");
     }
 
-    public void goToProductView (MouseEvent event) throws InterruptedException {
+    public void goToProductView (MouseEvent event) throws InterruptedException {        //clears page and displays solo product with info
         clickOnProductEffect(event);
         Controller controller  = this.getSkeleton().changeCenter("ProductView");
         ProductViewController productView = (ProductViewController) controller;

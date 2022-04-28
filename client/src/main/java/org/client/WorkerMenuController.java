@@ -9,7 +9,7 @@ public class WorkerMenuController extends GuestMenuController{
     private Button editCatalogBtn;
 
     @FXML
-    void goToEditCatalog(ActionEvent event) throws InterruptedException {
+    void goToEditCatalog(ActionEvent event) throws InterruptedException {       // loads edit catalog view for worker
         coolButtonClick((Button)event.getTarget());
         this.getSkeleton().changeCenter("EditCatalog");
     }
