@@ -41,7 +41,7 @@ public class App extends Application {
 
     public static void main(String[] args) throws IOException {
 
-        client = new Client(args[0], 3000);
+        client = new Client("192.168.1.151", 3000);
         client.openConnection();
 
         launch();
