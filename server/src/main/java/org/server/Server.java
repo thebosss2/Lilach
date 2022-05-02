@@ -34,17 +34,12 @@ public class Server extends AbstractServer {
                 switch(((LinkedList<Object>) msg).get(0).toString()){   //switch to see what client wants from server
                     case "#PULLCATALOG" -> {pullProducts(((LinkedList<Object>) msg) ,client);}  //display updated catalog version
                     case "#SAVE" -> {updateProduct((LinkedList<Object>)msg);}           //save change to product details
-            }
 
+            }
         }
         catch (IOException e) {
             e.printStackTrace();
         }
-
-
-
-
-
     }
 
     private static void updateProduct(Object msg)throws IOException{        //update product details func
@@ -58,7 +53,7 @@ public class Server extends AbstractServer {
         App.session.flush();
         App.session.getTransaction().commit(); // Save everything.
     }
-
+    //TODO check image update
     private static void changeParam(Product p, Product p2){     //changes details
         p.setName(p2.getName());
         p.setPrice(p2.getPrice());

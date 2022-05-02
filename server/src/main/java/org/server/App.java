@@ -43,13 +43,16 @@ public class App
         Random random = new Random();
         int price;
         for (int i = 0; i < 5; i++) {
-            String img1 = "src/main/resources/Images/Flower" + i + ".jpg";
+            String img1 = "C:\\Users\\Itai\\Desktop\\Dropbox\\Homework\\SoftwareEngineering\\Lilach\\client\\src\\main\\resources\\Images\\Flower" + i + ".jpg";
             Product p1 = new Product("Flower" + i, img1, price = random.nextInt(1000), (price - random.nextInt(500)));
 
             session.save(p1);   //saves and flushes to database
             session.flush();
         }
     }
+
+
+    ///TODO make generic func--------------------------------------------------------------------------------------------------------------
     static List<Product> getAllProducts() throws IOException {      //pulls all products from database
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Product> query = builder.createQuery(Product.class);

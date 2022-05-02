@@ -29,8 +29,8 @@ public class Client extends AbstractClient {
 
 
     }
+    // TODO Maybe delete
     private static Client client = null;
-
     public static Client getClient() {
         if (client == null) {
             client = new Client("localhost", 3000);

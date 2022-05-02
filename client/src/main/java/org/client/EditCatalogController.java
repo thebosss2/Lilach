@@ -47,7 +47,6 @@ public class EditCatalogController extends CatalogController {
         this.setSkeleton(skeleton);
         try {
             displayAddItem();       //displays add item image and option
-
         }catch (IOException e){
             e.printStackTrace();
         }

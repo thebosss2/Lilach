@@ -36,21 +36,6 @@ public class StoreSkeleton {
         changeCenter("Catalog");
     }
 
-    @FXML
-    void moveToImage(ActionEvent event) {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ImageOnly.fxml"));
-        FXMLLoader fxmlLoader2 = new FXMLLoader(getClass().getResource("WorkerMenu.fxml"));
-        mainScreen.getChildren().remove(mainScreen.getCenter()); //remove existing fxml from center.
-        mainScreen.getChildren().remove(mainScreen.getLeft()); //remove existing fxml from center.
-        try {
-            mainScreen.setCenter(fxmlLoader.load());
-            mainScreen.setLeft(fxmlLoader2.load());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
     /** Changed to public from private, returns Controller and set Skeleton to it.*/
     public Controller changeCenter(String name) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(name + ".fxml"));

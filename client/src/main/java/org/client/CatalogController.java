@@ -49,10 +49,8 @@ public class CatalogController extends Controller {
     }
 
     public void setCatalog(StoreSkeleton skeleton) {    //sets catalog skeleton
-
         this.setSkeleton(skeleton);
     }
-
     /**
      * @param product
      * @throws IOException Function adding instance of pre-made product to the screen.
@@ -60,7 +58,6 @@ public class CatalogController extends Controller {
      */
     protected void displayProduct(Product product, CatalogController currentCatalog) throws IOException {       //func displays an item on pane
         FXMLLoader fxmlLoader;
-
         if (currentCatalog instanceof EditCatalogController) {      //different display for editor (worker)
             fxmlLoader = new FXMLLoader(getClass().getResource("ProductToEdit.fxml"));
             mainPane.getChildren().add(fxmlLoader.load());  //Adds new product pane to the screen.
@@ -68,7 +65,6 @@ public class CatalogController extends Controller {
             controller.setSkeleton(this.getSkeleton());
             controller.setProduct(product);
         }
-
         else {      //display for customer or catalog view
             fxmlLoader = new FXMLLoader(getClass().getResource("Product.fxml"));
             mainPane.getChildren().add(fxmlLoader.load());  //Adds new product pane to the screen.
@@ -76,8 +72,6 @@ public class CatalogController extends Controller {
             controller.setSkeleton(this.getSkeleton());
             controller.setProduct(product);
         }
-
-
     }
 
 
@@ -92,7 +86,6 @@ public class CatalogController extends Controller {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
                 }
             }
         });
