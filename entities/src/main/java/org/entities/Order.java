@@ -4,11 +4,10 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
 
-enum PickupOrDelivery {PICKUP, DELIVERY}
 
 @Entity
 @Table(name = "orders")
-public class Order implements Serializable {     //Product class entity
+public abstract class Order implements Serializable {     //Product class entity
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;         // id generated for each product
@@ -21,18 +20,16 @@ public class Order implements Serializable {     //Product class entity
     private int price;
     private Date orderTime;
     private Date DeliveryTime;
-    private PickupOrDelivery pickupOrDelivery;
     private boolean isDelivered;
 
 
     public Order(Product[] products, /*RegisteredUser orderedBy,*/
-                 int price, Date orderTime, Date deliveryTime, PickupOrDelivery pickupOrDelivery) {
+                 int price, Date orderTime, Date deliveryTime) {
         this.products = products;
         //this.orderedBy = orderedBy;
         this.price = price;
         this.orderTime = orderTime;
         this.DeliveryTime = deliveryTime;
-        this.pickupOrDelivery = pickupOrDelivery;
         this.isDelivered = false;
     }
 

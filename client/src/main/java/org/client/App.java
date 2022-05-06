@@ -41,7 +41,7 @@ public class App extends Application {
 
     public static void main(String[] args) throws IOException {
 
-        client = new Client("localhost", 3000);
+        client = new Client("0.0.0.0", 3000);
         client.openConnection();
 
         launch();
