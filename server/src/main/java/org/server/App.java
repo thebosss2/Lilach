@@ -75,7 +75,7 @@ public class App
             session = sessionFactory.openSession(); //opens session
             /*session.beginTransaction();       //transaction for generation
             generateProducts();             //generate
-            session.getTransaction().commit(); // Save everything.*/
+            session.getTransaction().commit();*/ // Save everything.
 
             server = new Server(3000);      //builds server
             server.listen();                    //listens to client

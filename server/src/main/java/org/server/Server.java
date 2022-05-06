@@ -28,10 +28,10 @@ public class Server extends AbstractServer {
     protected void handleMessageFromClient(Object msg, ConnectionToClient client) {     //handles commands from client for info
 
         try {
-                switch(((LinkedList<Object>) msg).get(0).toString()){   //switch to see what client wants from server
-                    case "#PULLCATALOG" -> {pullProducts(((LinkedList<Object>) msg) ,client);}  //display updated catalog version
-                    case "#SAVE" -> {updateProduct((LinkedList<Object>)msg);}           //save change to product details
-
+            switch(((LinkedList<Object>) msg).get(0).toString()){   //switch to see what client wants from server
+                case "#PULLCATALOG" -> {pullProducts(((LinkedList<Object>) msg) ,client);}  //display updated catalog version
+                case "#SAVE" -> {updateProduct((LinkedList<Object>) msg);}           //save change to product details
+                case "#ADD" -> {addProduct((LinkedList<Object>) msg);}           // add product to the DB
             }
         }
         catch (IOException e) {
@@ -65,6 +65,15 @@ public class Server extends AbstractServer {
         msgToClient.add(commandToClient);
         msgToClient.add(products);
         client.sendToClient(msgToClient);
+    }
+
+
+    private void addProduct(LinkedList<Object> msg) {
+        App.session.beginTransaction();
+        Product product = (Product) ((LinkedList<Object>)msg).get(1);
+        App.session.save(product);   //saves and flushes to database
+        App.session.flush();
+        App.session.getTransaction().commit();
     }
 
     @Override

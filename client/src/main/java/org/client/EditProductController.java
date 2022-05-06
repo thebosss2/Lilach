@@ -72,9 +72,9 @@ public class EditProductController extends Controller{
     @FXML
     void changeImage(ActionEvent event) throws InterruptedException {
         coolButtonClick((Button) event.getTarget());
-        imageChanged++;
         File selectedFile = fileChooser.showOpenDialog(null);
         if(selectedFile != null) {
+            imageChanged++;
             newImagePath = selectedFile.getAbsolutePath();
             mainImage.setImage(new Image(newImagePath));
         }
@@ -99,18 +99,14 @@ public class EditProductController extends Controller{
         Product p;
 
 
-        if(imageChanged > 0) {
+        if(imageChanged > 0)
             p = new Product(this.nameText.getText(), newImagePath, Integer.parseInt(this.priceText.getText()),
                     Integer.parseInt(this.priceBeforeDiscountText.getText()));
-            System.out.println("new image inserted\n");
-        }
 
-        else {
+        else
             p = new Product(this.nameText.getText(), this.product.getByteImage(),
                     Integer.parseInt(this.priceText.getText()),
                     Integer.parseInt(this.priceBeforeDiscountText.getText()));
-            System.out.println("mafish new image\n");
-        }
 
         msg.add(save);          // adds #SAVE command for server
         msg.add(product);       //adds data to msg list

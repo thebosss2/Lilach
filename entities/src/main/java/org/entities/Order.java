@@ -8,7 +8,7 @@ enum PickupOrDelivery {PICKUP, DELIVERY}
 
 @Entity
 @Table(name = "orders")
-public class Order implements Serializable {      //Product class entity
+public class Order implements Serializable {     //Product class entity
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;         // id generated for each product
@@ -25,7 +25,7 @@ public class Order implements Serializable {      //Product class entity
     private boolean isDelivered;
 
 
-    public Order(Product[] products,/* RegisteredUser orderedBy,*/
+    public Order(Product[] products, /*RegisteredUser orderedBy,*/
                  int price, Date orderTime, Date deliveryTime, PickupOrDelivery pickupOrDelivery) {
         this.products = products;
         //this.orderedBy = orderedBy;
