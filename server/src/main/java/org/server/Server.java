@@ -21,14 +21,11 @@ public class Server extends AbstractServer {
         super(port);
     }
 
-
-
     @Override
     /**
      * Msg contains at least a command (string) for the switch to handle.
      */
     protected void handleMessageFromClient(Object msg, ConnectionToClient client) {     //handles commands from client for info
-
 
         try {
                 switch(((LinkedList<Object>) msg).get(0).toString()){   //switch to see what client wants from server
@@ -53,14 +50,13 @@ public class Server extends AbstractServer {
         App.session.flush();
         App.session.getTransaction().commit(); // Save everything.
     }
-    //TODO check image update
+
     private static void changeParam(Product p, Product p2){     //changes details
         p.setName(p2.getName());
         p.setPrice(p2.getPrice());
+        p.setImage(p2.getByteImage());
         p.setPriceBeforeDiscount(p2.getPriceBeforeDiscount());
     }
-
-
 
     private static void pullProducts(List<Object> msg, ConnectionToClient client) throws IOException{       //func pulls products from server
         List<Product> products = App.getAllProducts();
@@ -71,7 +67,6 @@ public class Server extends AbstractServer {
         client.sendToClient(msgToClient);
     }
 
-
     @Override
     protected synchronized void clientDisconnected(ConnectionToClient client) { //is client disconnected
         // TODO Auto-generated method stub
@@ -79,14 +74,12 @@ public class Server extends AbstractServer {
         System.out.println("Client Disconnected.");
         super.clientDisconnected(client);
     }
+
     @Override
     protected void clientConnected(ConnectionToClient client) {     //is client connected
         super.clientConnected(client);
         System.out.println("Client connected: " + client.getInetAddress());
     }
-
-
-
 
     public static void main(String[] args) throws IOException {
 

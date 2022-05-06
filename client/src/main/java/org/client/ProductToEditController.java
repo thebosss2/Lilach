@@ -1,11 +1,16 @@
 package org.client;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import org.entities.Product;
+
+import java.io.File;
 
 public class ProductToEditController extends ItemController{
 
@@ -17,6 +22,7 @@ public class ProductToEditController extends ItemController{
     @FXML
     private Text priceBeforeDiscount;
 
+
     @FXML
     void goToEditProduct(MouseEvent event) throws InterruptedException {
         clickOnProductEffect(event);
@@ -25,6 +31,7 @@ public class ProductToEditController extends ItemController{
         EditProductController editProduct = (EditProductController) controller;
         editProduct.setProductView(this.product);
     }
+
 
     public void setProduct(Product product) {
         this.product = product;

@@ -1,6 +1,8 @@
 package org.client;
 
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.stage.FileChooser;
 import org.client.*;
 import org.entities.Product;
 import javafx.fxml.FXML;
@@ -8,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.FlowPane;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
@@ -27,6 +30,7 @@ public class EditCatalogController extends CatalogController {
 
     @FXML // fx:id="mainPane"
     private FlowPane mainPane; // Value injected by FXMLLoader
+
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {

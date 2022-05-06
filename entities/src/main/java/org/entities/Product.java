@@ -7,7 +7,7 @@ import java.io.*;
 import java.util.*;
 
 @Entity
-@Table(name = "poducts")
+@Table(name = "products")
 public class Product implements Serializable {      //Product class entity
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,9 +49,6 @@ public class Product implements Serializable {      //Product class entity
 
     }
 
-
-
-
     public Product() {
 
     }
@@ -65,7 +62,6 @@ public class Product implements Serializable {      //Product class entity
     public int getPrice() {
         return price;
     }
-
 
     public int getPriceBeforeDiscount() {
         return priceBeforeDiscount;
@@ -81,9 +77,7 @@ public class Product implements Serializable {      //Product class entity
 
     public byte[] getByteImage(){ return image;}
 
-    /*public void setImage(Image image) {
-        this.image = image;
-    }*/
+    public void setImage(byte[] image){ this.image = image;}
 
     public String getName() {
         return name;

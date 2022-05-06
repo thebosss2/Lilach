@@ -43,7 +43,7 @@ public class App
         Random random = new Random();
         int price;
         for (int i = 0; i < 5; i++) {
-            String img1 = "C:\\Users\\Itai\\Desktop\\Dropbox\\Homework\\SoftwareEngineering\\Lilach\\client\\src\\main\\resources\\Images\\Flower" + i + ".jpg";
+            String img1 = "C:\\Users\\galh9\\IdeaProjects\\Lilach\\client\\src\\main\\resources\\Images\\Flower" + i + ".jpg";
             Product p1 = new Product("Flower" + i, img1, price = random.nextInt(1000), (price - random.nextInt(500)));
 
             session.save(p1);   //saves and flushes to database
@@ -73,7 +73,7 @@ public class App
 
             SessionFactory sessionFactory = getSessionFactory();        //calls and creates session factory
             session = sessionFactory.openSession(); //opens session
-/*            session.beginTransaction();       //transaction for generation
+            /*session.beginTransaction();       //transaction for generation
             generateProducts();             //generate
             session.getTransaction().commit(); // Save everything.*/
 

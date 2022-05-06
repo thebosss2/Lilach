@@ -1,5 +1,6 @@
 package org.client;
 import javafx.scene.image.Image;
+import javafx.stage.FileChooser;
 import org.entities.Product;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -7,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import org.server.App.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 
@@ -16,6 +18,12 @@ import java.util.concurrent.Executors;
 public class EditProductController extends Controller{
 
     private Product product;
+
+    FileChooser fileChooser = new FileChooser();
+
+    private String newImagePath = null;
+
+    private int imageChanged = 0;
 
     @FXML
     private Button changeImageBtn;
@@ -64,6 +72,12 @@ public class EditProductController extends Controller{
     @FXML
     void changeImage(ActionEvent event) throws InterruptedException {
         coolButtonClick((Button) event.getTarget());
+        imageChanged++;
+        File selectedFile = fileChooser.showOpenDialog(null);
+        if(selectedFile != null) {
+            newImagePath = selectedFile.getAbsolutePath();
+            mainImage.setImage(new Image(newImagePath));
+        }
     }
 
     private void coolButtonClick(Button button) throws InterruptedException{
@@ -82,9 +96,21 @@ public class EditProductController extends Controller{
     void saveChanges(){     //function creates new product and sends save command to server
         String save="#SAVE";
         LinkedList<Object> msg = new LinkedList<Object>();  //msg has string message with all data in next nodes
+        Product p;
 
-        Product p = new Product(this.nameText.getText(), this.product.getByteImage(), Integer.parseInt(this.priceText.getText()), Integer.parseInt(this.priceBeforeDiscountText.getText()));
-        //need to update image
+
+        if(imageChanged > 0) {
+            p = new Product(this.nameText.getText(), newImagePath, Integer.parseInt(this.priceText.getText()),
+                    Integer.parseInt(this.priceBeforeDiscountText.getText()));
+            System.out.println("new image inserted\n");
+        }
+
+        else {
+            p = new Product(this.nameText.getText(), this.product.getByteImage(),
+                    Integer.parseInt(this.priceText.getText()),
+                    Integer.parseInt(this.priceBeforeDiscountText.getText()));
+            System.out.println("mafish new image\n");
+        }
 
         msg.add(save);          // adds #SAVE command for server
         msg.add(product);       //adds data to msg list
