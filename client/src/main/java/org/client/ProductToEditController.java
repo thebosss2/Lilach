@@ -5,11 +5,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import org.entities.PreMadeProduct;
 import org.entities.Product;
 
 public class ProductToEditController extends ItemController{
 
-    private Product product;
+    private PreMadeProduct product;
 
     @FXML
     private Text price;
@@ -26,7 +27,7 @@ public class ProductToEditController extends ItemController{
         editProduct.setProductView(this.product);
     }
 
-    public void setProduct(Product product) {
+    public void setProduct(PreMadeProduct product) {
         this.product = product;
         image.setImage(product.getImage());
         price.setText(product.getPrice() + "₪");

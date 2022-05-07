@@ -1,4 +1,5 @@
 package org.client;
+import org.entities.PreMadeProduct;
 import org.entities.Product;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -66,7 +67,7 @@ public class ProductViewController extends Controller{
         mainImage.setImage(image_change);
     }
 
-    public void setProductView (Product product) {
+    public void setProductView (PreMadeProduct product) {
         this.product = product;
         this.productName.setText(product.getName());
         this.mainImage.setImage(product.getImage());

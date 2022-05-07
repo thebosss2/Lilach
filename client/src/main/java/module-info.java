@@ -5,6 +5,7 @@ module org.client {
     requires org.server;
     requires javafx.graphics;
     uses org.entities.Product;
+    uses org.entities.PreMadeProduct;
 
     opens org.client to javafx.fxml;
     exports org.client;

@@ -1,5 +1,6 @@
 package org.client;
 import javafx.scene.image.Image;
+import org.entities.PreMadeProduct;
 import org.entities.Product;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,7 +16,7 @@ import java.util.concurrent.Executors;
 
 public class EditProductController extends Controller{
 
-    private Product product;
+    private PreMadeProduct product;
 
     @FXML
     private Button changeImageBtn;
@@ -38,7 +39,7 @@ public class EditProductController extends Controller{
     @FXML
     private Button saveBtn;
 
-    void setProductView(Product product){
+    void setProductView(PreMadeProduct product){
         this.product = product;
         this.nameText.setText(product.getName());
         this.mainImage.setImage(product.getImage());
@@ -83,7 +84,7 @@ public class EditProductController extends Controller{
         String save="#SAVE";
         LinkedList<Object> msg = new LinkedList<Object>();  //msg has string message with all data in next nodes
 
-        Product p = new Product(this.nameText.getText(), this.product.getByteImage(), Integer.parseInt(this.priceText.getText()), Integer.parseInt(this.priceBeforeDiscountText.getText()));
+        PreMadeProduct p = new PreMadeProduct(this.nameText.getText(), this.product.getByteImage(), Integer.parseInt(this.priceText.getText()), Integer.parseInt(this.priceBeforeDiscountText.getText()));
         //need to update image
 
         msg.add(save);          // adds #SAVE command for server
