@@ -1,26 +1,15 @@
 package org.client;
 
 import javafx.application.Platform;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.FlowPane;
 import org.entities.Product;
-import org.entities.Catalog;
-import org.client.Client;
-import org.client.*;
 
-import java.io.Serializable;
+import java.io.IOException;
+import java.net.URL;
 import java.util.LinkedList;
-
-/**
- * Sample Skeleton for 'Catalog.fxml' Controller Class
- */
-
-    import java.io.IOException;
-    import java.net.URL;
-    import java.util.*;
-
-    import javafx.fxml.FXML;
-    import javafx.fxml.FXMLLoader;
-    import javafx.scene.image.Image;
-    import javafx.scene.layout.FlowPane;
+import java.util.ResourceBundle;
 
 
 public class CatalogController extends Controller {
@@ -51,6 +40,7 @@ public class CatalogController extends Controller {
     public void setCatalog(StoreSkeleton skeleton) {    //sets catalog skeleton
         this.setSkeleton(skeleton);
     }
+
     /**
      * @param product
      * @throws IOException Function adding instance of pre-made product to the screen.
@@ -64,8 +54,7 @@ public class CatalogController extends Controller {
             ProductToEditController controller = fxmlLoader.getController();
             controller.setSkeleton(this.getSkeleton());
             controller.setProduct(product);
-        }
-        else {      //display for customer or catalog view
+        } else {      //display for customer or catalog view
             fxmlLoader = new FXMLLoader(getClass().getResource("Product.fxml"));
             mainPane.getChildren().add(fxmlLoader.load());  //Adds new product pane to the screen.
             ProductController controller = fxmlLoader.getController();

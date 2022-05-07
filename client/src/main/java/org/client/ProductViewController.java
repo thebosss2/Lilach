@@ -1,5 +1,5 @@
 package org.client;
-import org.entities.Product;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -9,11 +9,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import org.entities.Product;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-public class ProductViewController extends Controller{
+public class ProductViewController extends Controller {
 
     private Product product;
 
@@ -66,26 +67,26 @@ public class ProductViewController extends Controller{
         mainImage.setImage(image_change);
     }
 
-    public void setProductView (Product product) {
+    public void setProductView(Product product) {
         this.product = product;
         this.productName.setText(product.getName());
         this.mainImage.setImage(product.getImage());
         this.image1.setImage(product.getImage());
         this.price.setText(Double.toString(product.getPrice()));
-        if(product.getPriceBeforeDiscount() != 0)
+        if (product.getPriceBeforeDiscount() != 0)
             this.priceBeforeDiscount.setText(Double.toString(product.getPriceBeforeDiscount()));
     }
 
     @FXML
     void plusAction(ActionEvent event) throws InterruptedException {
-        coolButtonClick((Button)event.getTarget());
+        coolButtonClick((Button) event.getTarget());
         count++;
         orderCount.setText(Integer.toString(count));
     }
 
     @FXML
     void minusAction(ActionEvent event) throws InterruptedException {
-        coolButtonClick((Button)event.getTarget());
+        coolButtonClick((Button) event.getTarget());
         if (count > 1) {
             count--;
             orderCount.setText(Integer.toString(count));
@@ -94,12 +95,12 @@ public class ProductViewController extends Controller{
 
     @FXML
     void addToCart(ActionEvent event) throws InterruptedException {
-        coolButtonClick((Button)event.getTarget());
+        coolButtonClick((Button) event.getTarget());
 
         // TODO
     }
 
-    private void coolButtonClick(Button button) throws InterruptedException{
+    private void coolButtonClick(Button button) throws InterruptedException {
         Executor executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
             button.setStyle("-fx-background-color: #8c73ea");

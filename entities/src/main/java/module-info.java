@@ -1,4 +1,4 @@
-module org.entities{
+module org.entities {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.graphics;

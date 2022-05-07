@@ -1,35 +1,27 @@
 package org.server;
-import org.entities.*;
-//import org.hibernate.SessionFactory;
 
-import javax.persistence.*;
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
-
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-
-import org.hibernate.FlushMode;
+import org.entities.Product;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
-import org.server.ocsf.ConnectionToClient;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Random;
 
 /**
  * Hello world!
- *
  */
-public class App
-{
+public class App {
 
-   public static Session session;// encapsulation make public function so this can be private
+    public static Session session;// encapsulation make public function so this can be private
 
     private static SessionFactory getSessionFactory() throws HibernateException {       //creates session factory for database use
         Configuration configuration = new Configuration();
@@ -43,7 +35,7 @@ public class App
         Random random = new Random();
         int price;
         for (int i = 0; i < 5; i++) {
-            String img1 = "C:\\Users\\Tahel\\Documents\\Lilach\\client\\src\\main\\resources\\Images\\Flower" + i + ".jpg";
+            var img1 = loadImageFromResources(String.format("Flower%s.jpg", i));
             Product p1 = new Product("Flower" + i, img1, price = random.nextInt(1000), (price - random.nextInt(500)));
 
             session.save(p1);   //saves and flushes to database
@@ -57,18 +49,23 @@ public class App
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Product> query = builder.createQuery(Product.class);
         query.from(Product.class);
-        List<Product> data =  session.createQuery(query).getResultList();
+        List<Product> data = session.createQuery(query).getResultList();
         LinkedList<Product> list = new LinkedList<Product>();
-        for(Product product: data){     //converts arraylist to linkedlist
+        for (Product product : data) {     //converts arraylist to linkedlist
             list.add(product);
         }
         return list;
     }
 
+    public static byte[] loadImageFromResources(String imageName) throws IOException {
+        var stream = App.class.getClassLoader().getResourceAsStream(String.format("Images/%s", imageName));
+
+        return Objects.requireNonNull(stream).readAllBytes();
+    }
 
     private static Server server;
-    public static void main( String[] args ) throws IOException
-    {
+
+    public static void main(String[] args) throws IOException {
         try {
 
             SessionFactory sessionFactory = getSessionFactory();        //calls and creates session factory
@@ -87,7 +84,7 @@ public class App
             e.printStackTrace();
         } finally {
             if (session != null) {
-                while(!server.isClosed());
+                while (!server.isClosed()) ;
                 session.close();
                 session.getSessionFactory().close();
             }

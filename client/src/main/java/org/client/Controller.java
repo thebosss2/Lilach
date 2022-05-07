@@ -1,14 +1,10 @@
 package org.client;
 
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.ArrayList;
-
-public abstract class Controller{
+public abstract class Controller {
 
     protected StoreSkeleton globalSkeleton;
 
-    public void setSkeleton(StoreSkeleton skeleton){
+    public void setSkeleton(StoreSkeleton skeleton) {
         this.globalSkeleton = skeleton;
     } //set skeleton
 

@@ -2,7 +2,7 @@ package org.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.*;
+import java.util.Date;
 
 
 @Entity

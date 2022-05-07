@@ -7,8 +7,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -23,7 +21,7 @@ public abstract class ItemController extends Controller {
     @FXML // fx:id="name"
     protected Text name; // Value injected by FXMLLoader
 
-    protected void coolButtonClick(Button button) throws InterruptedException{
+    protected void coolButtonClick(Button button) throws InterruptedException {
         Executor executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
             button.setStyle("-fx-background-color: #8c73ea");
@@ -37,12 +35,12 @@ public abstract class ItemController extends Controller {
     }
 
     @FXML
-    protected void mouseOnProduct(MouseEvent event)  {
+    protected void mouseOnProduct(MouseEvent event) {
         pane.setStyle("-fx-background-color: #e5dcff");
     }
 
     @FXML
-    protected void mouseOffProduct(MouseEvent event)  {
+    protected void mouseOffProduct(MouseEvent event) {
         pane.setStyle("-fx-background-color: #ffffff");
     }
 

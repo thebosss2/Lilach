@@ -1,6 +1,6 @@
 package org.entities;
 
-public class TakeAwayOrder extends Order{
+public class TakeAwayOrder extends Order {
     private Store store;
 
     public TakeAwayOrder(Store store) {

@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class Report {
     private Date date;
-    private Chart[] chart;
+    private Chart[] charts;
 
     public Date getDate() {
         return date;
@@ -17,10 +17,10 @@ public class Report {
     }
 
     public Chart[] getChart() {
-        return chart;
+        return charts;
     }
 
     public void setChart(Chart[] chart) {
-        this.chart = chart;
+        this.charts = chart;
     }
 }

@@ -2,23 +2,29 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
-<AnchorPane maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.StoreSkeleton">
-   <children>
-      <BorderPane fx:id="mainScreen" layoutY="-2.0" prefHeight="438.0" prefWidth="672.0" style="-fx-background-color: #DFDDE1;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <top>
-            <ToolBar prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #62a74d; -fx-background-radius: 0 0 20 0;" BorderPane.alignment="CENTER">
-               <items>
-                  <Button mnemonicParsing="false" prefHeight="47.0" prefWidth="178.0" style="-fx-background-color: #62a74d;" text="Lilach Store" textFill="WHITE">
-                     <font>
-                        <Font name="Script MT Bold" size="24.0" />
-                     </font></Button>
-               </items>
-            </ToolBar>
-         </top>
-      </BorderPane>
-   </children>
+<AnchorPane maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0"
+            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.client.StoreSkeleton">
+    <children>
+        <BorderPane fx:id="mainScreen" layoutY="-2.0" prefHeight="438.0" prefWidth="672.0"
+                    style="-fx-background-color: #DFDDE1;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <top>
+                <ToolBar prefHeight="40.0" prefWidth="200.0"
+                         style="-fx-background-color: #62a74d; -fx-background-radius: 0 0 20 0;"
+                         BorderPane.alignment="CENTER">
+                    <items>
+                        <Button mnemonicParsing="false" prefHeight="47.0" prefWidth="178.0"
+                                style="-fx-background-color: #62a74d;" text="Lilach Store" textFill="WHITE">
+                            <font>
+                                <Font name="Script MT Bold" size="24.0"/>
+                            </font>
+                        </Button>
+                    </items>
+                </ToolBar>
+            </top>
+        </BorderPane>
+    </children>
 </AnchorPane>

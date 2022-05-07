@@ -1,6 +1,6 @@
 package org.entities;
 
-public class ShippingOrder extends Order{
+public class ShippingOrder extends Order {
     //private Employee storeManager;
     private String phoneNumber;
     private String receiverName;
@@ -10,15 +10,16 @@ public class ShippingOrder extends Order{
 
     public ShippingOrder() {
     }
-/*
-    public Employee getStoreManager() {
-        return storeManager;
-    }
 
-    public void setStoreManager(Employee storeManager) {
-        this.storeManager = storeManager;
-    }
-*/
+    /*
+        public Employee getStoreManager() {
+            return storeManager;
+        }
+
+        public void setStoreManager(Employee storeManager) {
+            this.storeManager = storeManager;
+        }
+    */
     public String getPhoneNumber() {
         return phoneNumber;
     }

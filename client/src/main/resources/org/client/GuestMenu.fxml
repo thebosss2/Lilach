@@ -6,44 +6,50 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
-<VBox maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="220.0" style="-fx-background-color: #9bc98c; -fx-background-radius: 0 0 20 0;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.GuestMenuController">
-   <children>
-      <Button fx:id="cartBtn" alignment="BASELINE_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#goToCart" onMouseEntered="#mouseOnBtn" onMouseExited="#mouseOffBtn" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: #9bc98c;" text="Cart" textFill="WHITE">
-         <font>
-            <Font size="20.0" />
-         </font>
-         <graphic>
-            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../../../../../../../../Downloads/src/src/main/resources/Icons/cart_icon.png" />
-               </image>
-            </ImageView>
-         </graphic>
-         <VBox.margin>
-            <Insets top="10.0" />
-         </VBox.margin>
-      </Button>
-      <Button fx:id="catalogBtn" alignment="BASELINE_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#goToCatalog" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: #9bc98c;" text="Catalog" textFill="WHITE">
-         <font>
-            <Font size="20.0" />
-         </font>
-         <graphic>
-            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../../../../../../../../Downloads/src/src/main/resources/Icons/catalog_icon.png" />
-               </image>
-            </ImageView>
-         </graphic>
-         <VBox.margin>
-            <Insets top="5.0" />
-         </VBox.margin>
-      </Button>
-   </children>
-   <opaqueInsets>
-      <Insets />
-   </opaqueInsets>
-   <padding>
-      <Insets bottom="10.0" />
-   </padding>
+<VBox maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="400.0" prefWidth="220.0" style="-fx-background-color: #9bc98c; -fx-background-radius: 0 0 20 0;"
+      xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.client.GuestMenuController">
+    <children>
+        <Button fx:id="cartBtn" alignment="BASELINE_CENTER" contentDisplay="CENTER" mnemonicParsing="false"
+                onAction="#goToCart" onMouseEntered="#mouseOnBtn" onMouseExited="#mouseOffBtn" prefHeight="50.0"
+                prefWidth="220.0" style="-fx-background-color: #9bc98c;" text="Cart" textFill="WHITE">
+            <font>
+                <Font size="20.0"/>
+            </font>
+            <graphic>
+                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../../../../../../../../../../Downloads/src/src/main/resources/Icons/cart_icon.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+            <VBox.margin>
+                <Insets top="10.0"/>
+            </VBox.margin>
+        </Button>
+        <Button fx:id="catalogBtn" alignment="BASELINE_CENTER" contentDisplay="CENTER" mnemonicParsing="false"
+                onAction="#goToCatalog" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: #9bc98c;"
+                text="Catalog" textFill="WHITE">
+            <font>
+                <Font size="20.0"/>
+            </font>
+            <graphic>
+                <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../../../../../../../../../../Downloads/src/src/main/resources/Icons/catalog_icon.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+            <VBox.margin>
+                <Insets top="5.0"/>
+            </VBox.margin>
+        </Button>
+    </children>
+    <opaqueInsets>
+        <Insets/>
+    </opaqueInsets>
+    <padding>
+        <Insets bottom="10.0"/>
+    </padding>
 </VBox>

@@ -1,21 +1,20 @@
 package org.client;
-import javafx.scene.image.Image;
-import javafx.stage.FileChooser;
-import org.entities.Product;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import org.server.App.*;
+import javafx.stage.FileChooser;
+import org.entities.Product;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
-
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-public class EditProductController extends Controller{
+public class EditProductController extends Controller {
 
     private Product product;
 
@@ -46,12 +45,12 @@ public class EditProductController extends Controller{
     @FXML
     private Button saveBtn;
 
-    void setProductView(Product product){
+    void setProductView(Product product) {
         this.product = product;
         this.nameText.setText(product.getName());
         this.mainImage.setImage(product.getImage());
         this.priceText.setText(Integer.toString(product.getPrice()));
-        if(product.getPriceBeforeDiscount() != 0)
+        if (product.getPriceBeforeDiscount() != 0)
             this.priceBeforeDiscountText.setText(Integer.toString(product.getPriceBeforeDiscount()));
     }
 
@@ -63,7 +62,7 @@ public class EditProductController extends Controller{
         alert.setHeaderText("You're about to save changes!");
         alert.setContentText("Are you sure?");
 
-        if(alert.showAndWait().get() == ButtonType.OK){
+        if (alert.showAndWait().get() == ButtonType.OK) {
             saveChanges();
             this.globalSkeleton.changeCenter("EditCatalog");
         }
@@ -73,14 +72,14 @@ public class EditProductController extends Controller{
     void changeImage(ActionEvent event) throws InterruptedException {
         coolButtonClick((Button) event.getTarget());
         File selectedFile = fileChooser.showOpenDialog(null);
-        if(selectedFile != null) {
+        if (selectedFile != null) {
             imageChanged++;
             newImagePath = selectedFile.getAbsolutePath();
             mainImage.setImage(new Image(newImagePath));
         }
     }
 
-    private void coolButtonClick(Button button) throws InterruptedException{
+    private void coolButtonClick(Button button) throws InterruptedException {
         Executor executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
             button.setStyle("-fx-background-color: #8c73ea");
@@ -93,13 +92,13 @@ public class EditProductController extends Controller{
         });
     }
 
-    void saveChanges(){     //function creates new product and sends save command to server
-        String save="#SAVE";
+    void saveChanges() {     //function creates new product and sends save command to server
+        String save = "#SAVE";
         LinkedList<Object> msg = new LinkedList<Object>();  //msg has string message with all data in next nodes
         Product p;
 
 
-        if(imageChanged > 0)
+        if (imageChanged > 0)
             p = new Product(this.nameText.getText(), newImagePath, Integer.parseInt(this.priceText.getText()),
                     Integer.parseInt(this.priceBeforeDiscountText.getText()));
 

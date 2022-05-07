@@ -1,16 +1,10 @@
 package org.client;
 
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.stage.FileChooser;
-import org.client.*;
-import org.entities.Product;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.FlowPane;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
@@ -32,7 +26,8 @@ public class EditCatalogController extends CatalogController {
     private FlowPane mainPane; // Value injected by FXMLLoader
 
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert mainPane != null : "fx:id=\"mainPane\" was not injected: check your FXML file 'Catalog.fxml'.";
         try {
@@ -51,7 +46,7 @@ public class EditCatalogController extends CatalogController {
         this.setSkeleton(skeleton);
         try {
             displayAddItem();       //displays add item image and option
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

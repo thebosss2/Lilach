@@ -1,19 +1,12 @@
 package org.server;
 
-import java.util.Random;
-
 import org.entities.Product;
-import javax.persistence.*;
-import org.server.App;
-
 import org.server.ocsf.AbstractServer;
 import org.server.ocsf.ConnectionToClient;
-
 
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.LinkedList;
 
 public class Server extends AbstractServer {
 
@@ -28,21 +21,20 @@ public class Server extends AbstractServer {
     protected void handleMessageFromClient(Object msg, ConnectionToClient client) {     //handles commands from client for info
 
         try {
-            switch(((LinkedList<Object>) msg).get(0).toString()){   //switch to see what client wants from server
-                case "#PULLCATALOG" -> {pullProducts(((LinkedList<Object>) msg) ,client);}  //display updated catalog version
-                case "#SAVE" -> {updateProduct((LinkedList<Object>) msg);}           //save change to product details
-                case "#ADD" -> {addProduct((LinkedList<Object>) msg);}           // add product to the DB
+            switch (((LinkedList<Object>) msg).get(0).toString()) {   //switch to see what client wants from server
+                case "#PULLCATALOG" -> pullProducts(((LinkedList<Object>) msg), client);  //display updated catalog version
+                case "#SAVE" -> updateProduct((LinkedList<Object>) msg);           //save change to product details
+                case "#ADD" -> addProduct((LinkedList<Object>) msg);           // add product to the DB
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private static void updateProduct(Object msg)throws IOException{        //update product details func
+    private static void updateProduct(Object msg) throws IOException {        //update product details func
         App.session.beginTransaction();
-        Product productBefore = (Product) ((LinkedList<Object>)msg).get(1);
-        Product productAfter = (Product) ((LinkedList<Object>)msg).get(2);
+        Product productBefore = (Product) ((LinkedList<Object>) msg).get(1);
+        Product productAfter = (Product) ((LinkedList<Object>) msg).get(2);
 
         App.session.evict(productBefore);       //evict current product details from database
         changeParam(productBefore, productAfter);   //func changes product to updates details
@@ -51,14 +43,14 @@ public class Server extends AbstractServer {
         App.session.getTransaction().commit(); // Save everything.
     }
 
-    private static void changeParam(Product p, Product p2){     //changes details
+    private static void changeParam(Product p, Product p2) {     //changes details
         p.setName(p2.getName());
         p.setPrice(p2.getPrice());
         p.setImage(p2.getByteImage());
         p.setPriceBeforeDiscount(p2.getPriceBeforeDiscount());
     }
 
-    private static void pullProducts(List<Object> msg, ConnectionToClient client) throws IOException{       //func pulls products from server
+    private static void pullProducts(List<Object> msg, ConnectionToClient client) throws IOException {       //func pulls products from server
         List<Product> products = App.getAllProducts();
         String commandToClient = "#PULLCATALOG";
         List<Object> msgToClient = new LinkedList<Object>();
@@ -70,7 +62,7 @@ public class Server extends AbstractServer {
 
     private void addProduct(LinkedList<Object> msg) {
         App.session.beginTransaction();
-        Product product = (Product) ((LinkedList<Object>)msg).get(1);
+        Product product = (Product) ((LinkedList<Object>) msg).get(1);
         App.session.save(product);   //saves and flushes to database
         App.session.flush();
         App.session.getTransaction().commit();

@@ -1,23 +1,16 @@
 package org.client;
-import javafx.scene.image.Image;
-import org.entities.Product;
-
-/**
- * Sample Skeleton for 'Product.fxml' Controller Class
- */
-
-
-import java.io.ByteArrayInputStream;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import org.entities.Product;
 
-public class ProductController extends ItemController{
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class ProductController extends ItemController {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -30,14 +23,15 @@ public class ProductController extends ItemController{
 
     @FXML // fx:id="price"
     private Text price; // Value injected by FXMLLoader
-    
+
     private Product product;
 
     @FXML // fx:id="priceBeforeDiscount"
     private Text priceBeforeDiscount; // Value injected by FXMLLoader
 
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert button != null : "fx:id=\"button\" was not injected: check your FXML file 'Product.fxml'.";
         assert name != null : "fx:id=\"name\" was not injected: check your FXML file 'Product.fxml'.";
@@ -50,7 +44,7 @@ public class ProductController extends ItemController{
     @FXML
     void addToCart(ActionEvent event) throws InterruptedException {
 
-        coolButtonClick((Button)event.getTarget());
+        coolButtonClick((Button) event.getTarget());
         //Check if you need to kill the thread.
     }
 
@@ -61,15 +55,15 @@ public class ProductController extends ItemController{
         price.setText(product.getPrice() + "₪");
         name.setText(product.getName());
 
-        if(product.getPriceBeforeDiscount() != 0)
+        if (product.getPriceBeforeDiscount() != 0)
             priceBeforeDiscount.setText(product.getPriceBeforeDiscount() + " ₪");
         else
             priceBeforeDiscount.setText("");
     }
 
-    public void goToProductView (MouseEvent event) throws InterruptedException {        //clears page and displays solo product with info
+    public void goToProductView(MouseEvent event) throws InterruptedException {        //clears page and displays solo product with info
         clickOnProductEffect(event);
-        Controller controller  = this.getSkeleton().changeCenter("ProductView");
+        Controller controller = this.getSkeleton().changeCenter("ProductView");
         ProductViewController productView = (ProductViewController) controller;
         productView.setProductView(this.product);
     }

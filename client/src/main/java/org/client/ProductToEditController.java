@@ -1,18 +1,11 @@
 package org.client;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
 import org.entities.Product;
 
-import java.io.File;
-
-public class ProductToEditController extends ItemController{
+public class ProductToEditController extends ItemController {
 
     private Product product;
 
@@ -39,7 +32,7 @@ public class ProductToEditController extends ItemController{
         price.setText(product.getPrice() + "₪");
         name.setText(product.getName());
 
-        if(product.getPriceBeforeDiscount() != 0)
+        if (product.getPriceBeforeDiscount() != 0)
             priceBeforeDiscount.setText(product.getPriceBeforeDiscount() + " ₪");
         else
             priceBeforeDiscount.setText("");

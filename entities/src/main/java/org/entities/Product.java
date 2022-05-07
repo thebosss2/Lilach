@@ -1,10 +1,12 @@
 package org.entities;
 
 import javafx.scene.image.Image;
-import javafx.scene.text.Text;
+
 import javax.persistence.*;
-import java.io.*;
-import java.util.*;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "products")
@@ -44,7 +46,7 @@ public class Product implements Serializable {      //Product class entity
         //image=image;
         this.price = price;
         this.priceBeforeDiscount = priceBeforeDiscount;
-        this.image=image;
+        this.image = image;
 
 
     }
@@ -75,9 +77,13 @@ public class Product implements Serializable {      //Product class entity
         return new Image(new ByteArrayInputStream(this.image));
     }
 
-    public byte[] getByteImage(){ return image;}
+    public byte[] getByteImage() {
+        return image;
+    }
 
-    public void setImage(byte[] image){ this.image = image;}
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
 
     public String getName() {
         return name;
@@ -87,7 +93,7 @@ public class Product implements Serializable {      //Product class entity
         this.name = name;
     }
 
-    public int getId(){
+    public int getId() {
         return id;
     }
 }

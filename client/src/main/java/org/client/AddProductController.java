@@ -14,7 +14,7 @@ import java.util.LinkedList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-public class AddProductController extends Controller{
+public class AddProductController extends Controller {
 
     int imageAdded = 0;
 
@@ -47,7 +47,7 @@ public class AddProductController extends Controller{
     void addImage(ActionEvent event) throws InterruptedException {
         coolButtonClick((Button) event.getTarget());
         File selectedFile = fileChooser.showOpenDialog(null);
-        if(selectedFile != null) {
+        if (selectedFile != null) {
             imageAdded++;
             newImagePath = selectedFile.getAbsolutePath();
             mainImage.setImage(new Image(newImagePath));
@@ -59,16 +59,14 @@ public class AddProductController extends Controller{
         coolButtonClick((Button) event.getTarget());
         Alert alert;
 
-        if(nameText.getText().equals("") || priceText.getText().equals("")
-            || priceBeforeDiscountText.getText().equals("") || descriptionText.getText().equals("")
-            || imageAdded == 0){
+        if (nameText.getText().equals("") || priceText.getText().equals("")
+                || priceBeforeDiscountText.getText().equals("") || descriptionText.getText().equals("")
+                || imageAdded == 0) {
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Missing Values");
             alert.setHeaderText("One or more of the fields are missing");
             alert.showAndWait();
-        }
-
-        else{
+        } else {
             alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Add Product Confirmation");
             alert.setHeaderText("You're about to add a product!");
@@ -82,9 +80,9 @@ public class AddProductController extends Controller{
     }
 
     private void addProduct() { //create a new product with information from worker, then save on DB
-        String add="#ADD";
+        String add = "#ADD";
         LinkedList<Object> msg = new LinkedList<Object>();  //msg has string message with all data in next nodes
-        Product p= new Product(this.nameText.getText(), newImagePath, Integer.parseInt(this.priceText.getText()),
+        Product p = new Product(this.nameText.getText(), newImagePath, Integer.parseInt(this.priceText.getText()),
                 Integer.parseInt(this.priceBeforeDiscountText.getText()));
 
         msg.add(add);          // adds #ADD command for server
@@ -98,7 +96,7 @@ public class AddProductController extends Controller{
     }
 
 
-    private void coolButtonClick(Button button) throws InterruptedException{
+    private void coolButtonClick(Button button) throws InterruptedException {
         Executor executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
             button.setStyle("-fx-background-color: #8c73ea");

@@ -3,16 +3,16 @@
  */
 
 package org.client;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
 
 public class StoreSkeleton {
 
@@ -36,7 +36,9 @@ public class StoreSkeleton {
         changeCenter("Catalog");
     }
 
-    /** Changed to public from private, returns Controller and set Skeleton to it.*/
+    /**
+     * Changed to public from private, returns Controller and set Skeleton to it.
+     */
     public Controller changeCenter(String name) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(name + ".fxml"));
         mainScreen.getChildren().remove(mainScreen.getCenter()); //remove existing fxml from center.
@@ -55,7 +57,7 @@ public class StoreSkeleton {
         return controller;
     }
 
-    private void changeLeft(String name){
+    private void changeLeft(String name) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(name + ".fxml"));
         mainScreen.getChildren().remove(mainScreen.getLeft()); //remove existing fxml from left.
         Controller controller = null;
@@ -69,8 +71,8 @@ public class StoreSkeleton {
     }
 
 
-
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() throws IOException {
         assert catalogBtn != null : "fx:id=\"catalog\" was not injected: check your FXML file 'First catalog try.fxml'.";
         assert mainScreen != null : "fx:id=\"mainScreen\" was not injected: check your FXML file 'First catalog try.fxml'.";
