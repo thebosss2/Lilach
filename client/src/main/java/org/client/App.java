@@ -40,7 +40,7 @@ public class App extends Application {
         client.openConnection();
 
         launch();
-        //itai is king
+
 
     }
 }
