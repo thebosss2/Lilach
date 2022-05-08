@@ -1,5 +1,6 @@
 package org.server;
 
+import org.entities.PreMadeProduct;
 import org.entities.Product;
 import org.server.ocsf.AbstractServer;
 import org.server.ocsf.ConnectionToClient;
@@ -33,8 +34,8 @@ public class Server extends AbstractServer {
 
     private static void updateProduct(Object msg) throws IOException {        //update product details func
         App.session.beginTransaction();
-        Product productBefore = (Product) ((LinkedList<Object>) msg).get(1);
-        Product productAfter = (Product) ((LinkedList<Object>) msg).get(2);
+        PreMadeProduct productBefore = (PreMadeProduct) ((LinkedList<Object>) msg).get(1);
+        PreMadeProduct productAfter = (PreMadeProduct) ((LinkedList<Object>) msg).get(2);
 
         App.session.evict(productBefore);       //evict current product details from database
         changeParam(productBefore, productAfter);   //func changes product to updates details
@@ -43,7 +44,7 @@ public class Server extends AbstractServer {
         App.session.getTransaction().commit(); // Save everything.
     }
 
-    private static void changeParam(Product p, Product p2) {     //changes details
+    private static void changeParam(PreMadeProduct p, PreMadeProduct p2) {     //changes details
         p.setName(p2.getName());
         p.setPrice(p2.getPrice());
         p.setImage(p2.getByteImage());
@@ -51,7 +52,7 @@ public class Server extends AbstractServer {
     }
 
     private static void pullProducts(List<Object> msg, ConnectionToClient client) throws IOException {       //func pulls products from server
-        List<Product> products = App.getAllProducts();
+        List<PreMadeProduct> products = App.getAllProducts();
         String commandToClient = "#PULLCATALOG";
         List<Object> msgToClient = new LinkedList<Object>();
         msgToClient.add(commandToClient);
@@ -62,7 +63,7 @@ public class Server extends AbstractServer {
 
     private void addProduct(LinkedList<Object> msg) {
         App.session.beginTransaction();
-        Product product = (Product) ((LinkedList<Object>) msg).get(1);
+        PreMadeProduct product = (PreMadeProduct) ((LinkedList<Object>) msg).get(1);
         App.session.save(product);   //saves and flushes to database
         App.session.flush();
         App.session.getTransaction().commit();

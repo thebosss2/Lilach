@@ -6,6 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import org.entities.PreMadeProduct;
 import org.entities.Product;
 
 import java.io.File;
@@ -82,7 +83,7 @@ public class AddProductController extends Controller {
     private void addProduct() { //create a new product with information from worker, then save on DB
         String add = "#ADD";
         LinkedList<Object> msg = new LinkedList<Object>();  //msg has string message with all data in next nodes
-        Product p = new Product(this.nameText.getText(), newImagePath, Integer.parseInt(this.priceText.getText()),
+        PreMadeProduct p = new PreMadeProduct(this.nameText.getText(), newImagePath, Integer.parseInt(this.priceText.getText()),
                 Integer.parseInt(this.priceBeforeDiscountText.getText()));
 
         msg.add(add);          // adds #ADD command for server

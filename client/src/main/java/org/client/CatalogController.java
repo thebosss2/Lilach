@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.FlowPane;
+import org.entities.PreMadeProduct;
 import org.entities.Product;
 
 import java.io.IOException;
@@ -46,7 +47,7 @@ public class CatalogController extends Controller {
      * @throws IOException Function adding instance of pre-made product to the screen.
      *                     Note to self: VERY IMPORTANT to load before using the "getController" method (else you'll get null).
      */
-    protected void displayProduct(Product product, CatalogController currentCatalog) throws IOException {       //func displays an item on pane
+    protected void displayProduct(PreMadeProduct product, CatalogController currentCatalog) throws IOException {       //func displays an item on pane
         FXMLLoader fxmlLoader;
         if (currentCatalog instanceof EditCatalogController) {      //different display for editor (worker)
             fxmlLoader = new FXMLLoader(getClass().getResource("ProductToEdit.fxml"));
@@ -69,7 +70,7 @@ public class CatalogController extends Controller {
         Platform.runLater(new Runnable() {      //runlater used to wait for server and client threads to finish
             @Override
             public void run() {
-                for (Product product : Client.products) {
+                for (PreMadeProduct product : Client.products) {
                     try {
                         displayProduct(product, catalogController);
                     } catch (IOException e) {

@@ -1,6 +1,7 @@
 package org.client;
 
 import org.client.ocsf.AbstractClient;
+import org.entities.PreMadeProduct;
 import org.entities.Product;
 
 import java.io.IOException;
@@ -10,7 +11,7 @@ public class Client extends AbstractClient {
 
     private StoreSkeleton storeSkeleton;
 
-    protected static LinkedList<Product> products = new LinkedList<Product>();//(LinkedList<Product>) Catalog.getProducts();
+    protected static LinkedList<PreMadeProduct> products = new LinkedList<PreMadeProduct>();//(LinkedList<Product>) Catalog.getProducts();
 
     private Controller controller;
 
@@ -53,7 +54,7 @@ public class Client extends AbstractClient {
     }
 
     private void pushToCatalog(Object msg) throws IOException { // takes data received and sends to display function
-        products = (LinkedList<Product>) ((LinkedList<Object>) msg).get(1);
+        products = (LinkedList<PreMadeProduct>) ((LinkedList<Object>) msg).get(1);
         CatalogController catalogController = (CatalogController) controller;
         catalogController.pullProductsToClient();       //calls static function in client for display
     }

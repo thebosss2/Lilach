@@ -16,7 +16,7 @@ import java.util.concurrent.Executors;
 
 public class ProductViewController extends Controller{
 
-    private Product product;
+    private PreMadeProduct product;
 
     private int count = 1;
 

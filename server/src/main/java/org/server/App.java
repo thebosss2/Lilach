@@ -1,5 +1,7 @@
 package org.server;
 
+import org.entities.CustomMadeProduct;
+import org.entities.PreMadeProduct;
 import org.entities.Product;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -27,6 +29,8 @@ public class App {
         Configuration configuration = new Configuration();
         // Add ALL of your entities here. You can also try adding a whole package.
         configuration.addAnnotatedClass(Product.class);
+        configuration.addAnnotatedClass(PreMadeProduct.class);
+        configuration.addAnnotatedClass(CustomMadeProduct.class);
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();        //pull session factory config from hibernate properties
         return configuration.buildSessionFactory(serviceRegistry);
     }
@@ -36,7 +40,7 @@ public class App {
         int price;
         for (int i = 0; i < 5; i++) {
             var img1 = loadImageFromResources(String.format("Flower%s.jpg", i));
-            Product p1 = new Product("Flower" + i, img1, price = random.nextInt(1000), (price - random.nextInt(500)));
+            PreMadeProduct p1 = new PreMadeProduct("Flower" + i, img1, price = random.nextInt(1000), (price - random.nextInt(500)));
 
             session.save(p1);   //saves and flushes to database
             session.flush();
@@ -45,13 +49,13 @@ public class App {
 
 
     ///TODO make generic func--------------------------------------------------------------------------------------------------------------
-    static List<Product> getAllProducts() throws IOException {      //pulls all products from database
+    static List<PreMadeProduct> getAllProducts() throws IOException {      //pulls all products from database
         CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<Product> query = builder.createQuery(Product.class);
-        query.from(Product.class);
-        List<Product> data = session.createQuery(query).getResultList();
-        LinkedList<Product> list = new LinkedList<Product>();
-        for (Product product : data) {     //converts arraylist to linkedlist
+        CriteriaQuery<PreMadeProduct> query = builder.createQuery(PreMadeProduct.class);
+        query.from(PreMadeProduct.class);
+        List<PreMadeProduct> data = session.createQuery(query).getResultList();
+        LinkedList<PreMadeProduct> list = new LinkedList<PreMadeProduct>();
+        for (PreMadeProduct product : data) {     //converts arraylist to linkedlist
             list.add(product);
         }
         return list;
