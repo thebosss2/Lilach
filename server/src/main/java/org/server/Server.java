@@ -2,6 +2,7 @@ package org.server;
 
 import java.util.Random;
 
+import org.entities.PreMadeProduct;
 import org.entities.Product;
 import javax.persistence.*;
 import org.server.App;
@@ -44,8 +45,8 @@ public class Server extends AbstractServer {
 
     private static void updateProduct(Object msg)throws IOException{        //update product details func
         App.session.beginTransaction();
-        Product productBefore = (Product) ((LinkedList<Object>)msg).get(1);
-        Product productAfter = (Product) ((LinkedList<Object>)msg).get(2);
+        PreMadeProduct productBefore = (PreMadeProduct) ((LinkedList<Object>)msg).get(1);
+        PreMadeProduct productAfter = (PreMadeProduct) ((LinkedList<Object>)msg).get(2);
 
         App.session.evict(productBefore);       //evict current product details from database
         changeParam(productBefore, productAfter);   //func changes product to updates details
@@ -54,7 +55,7 @@ public class Server extends AbstractServer {
         App.session.getTransaction().commit(); // Save everything.
     }
     //TODO check image update
-    private static void changeParam(Product p, Product p2){     //changes details
+    private static void changeParam(PreMadeProduct p, PreMadeProduct p2){     //changes details
         p.setName(p2.getName());
         p.setPrice(p2.getPrice());
         p.setPriceBeforeDiscount(p2.getPriceBeforeDiscount());
@@ -63,7 +64,7 @@ public class Server extends AbstractServer {
 
 
     private static void pullProducts(List<Object> msg, ConnectionToClient client) throws IOException{       //func pulls products from server
-        List<Product> products = App.getAllProducts();
+        List<PreMadeProduct> products = App.getAllProducts();
         String commandToClient = "#PULLCATALOG";
         List<Object> msgToClient = new LinkedList<Object>();
         msgToClient.add(commandToClient);

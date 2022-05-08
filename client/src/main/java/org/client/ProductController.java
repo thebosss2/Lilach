@@ -1,5 +1,6 @@
 package org.client;
 import javafx.scene.image.Image;
+import org.entities.PreMadeProduct;
 import org.entities.Product;
 
 /**
@@ -31,7 +32,7 @@ public class ProductController extends ItemController{
     @FXML // fx:id="price"
     private Text price; // Value injected by FXMLLoader
     
-    private Product product;
+    private PreMadeProduct product;
 
     @FXML // fx:id="priceBeforeDiscount"
     private Text priceBeforeDiscount; // Value injected by FXMLLoader
@@ -55,7 +56,7 @@ public class ProductController extends ItemController{
     }
 
 
-    public void setProduct(Product product) {
+    public void setProduct(PreMadeProduct product) {
         this.product = product;
         image.setImage(product.getImage());
         price.setText(product.getPrice() + "₪");
