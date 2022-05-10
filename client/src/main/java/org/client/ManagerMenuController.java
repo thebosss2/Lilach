@@ -3,15 +3,21 @@ package org.client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import org.entities.Employee;
 
-public class WorkerMenuController extends GuestMenuController {
-    @FXML
-    protected Button editCatalogBtn;
+public class ManagerMenuController extends WorkerMenuController {
 
     @FXML
-    void goToEditCatalog(ActionEvent event) throws InterruptedException {       // loads edit catalog view for worker
+    private Button reportsBtn;
+
+    @FXML
+    void goToReports(ActionEvent event) throws InterruptedException {       // loads edit catalog view for worker
         coolMenuClick((Button) event.getTarget());
-        this.getSkeleton().changeCenter("EditCatalog");
+
+        //if(((Employee)App.client.user).role == CEO)
+        this.getSkeleton().changeCenter("CEOReport");
+        //else
+        //    this.getSkeleton().changeCenter("StoreReport");
     }
 
     @Override
@@ -19,6 +25,9 @@ public class WorkerMenuController extends GuestMenuController {
         cartBtn.setStyle("-fx-background-color: #9bc98c");
         catalogBtn.setStyle("-fx-background-color: #9bc98c");
         editCatalogBtn.setStyle("-fx-background-color: #9bc98c");
+        reportsBtn.setStyle("-fx-background-color: #9bc98c");
         button.setStyle("-fx-background-color: #62a74d");
     }
+
 }
+
