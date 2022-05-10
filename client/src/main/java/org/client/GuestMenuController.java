@@ -21,12 +21,12 @@ public class GuestMenuController extends Controller {
 
     @FXML
     void goToCart(ActionEvent event) throws InterruptedException {
-        coolButtonClick((Button) event.getTarget());
+        coolMenuClick((Button) event.getTarget());
     }
 
     @FXML
     void goToCatalog(ActionEvent event) throws InterruptedException {   //catalog button clears page and loads all products
-        coolButtonClick((Button) event.getTarget());
+        coolMenuClick((Button) event.getTarget());
         this.getSkeleton().changeCenter("Catalog");
 
     }
@@ -52,7 +52,7 @@ public class GuestMenuController extends Controller {
         //TODO
     }
 
-    protected void coolButtonClick(Button button) throws InterruptedException {
+    protected void coolMenuClick(Button button) throws InterruptedException {
         cartBtn.setStyle("-fx-background-color: #9bc98c");
         catalogBtn.setStyle("-fx-background-color: #9bc98c");
         button.setStyle("-fx-background-color: #62a74d");

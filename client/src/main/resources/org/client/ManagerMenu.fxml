@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="220.0" style="-fx-background-color: #9bc98c; -fx-background-radius: 0 0 20 0;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.ManagerMenuController">
+   <children>
+      <Button fx:id="cartBtn" alignment="BASELINE_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#goToCart" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: #9bc98c;" text="Cart" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+      </Button>
+      <Button fx:id="catalogBtn" alignment="BASELINE_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#goToCatalog" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: #62a74d;" text="Catalog" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </Button>
+      <Button fx:id="editCatalogBtn" alignment="BASELINE_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#goToEditCatalog" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: #9bc98c;" text="Edit Catalog" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Button fx:id="reportsBtn" alignment="BASELINE_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#goToReports" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: #9bc98c;" text="Reports" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+   </children>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+   <padding>
+      <Insets bottom="10.0" />
+   </padding>
+</VBox>
