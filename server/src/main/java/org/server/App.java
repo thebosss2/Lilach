@@ -1,8 +1,6 @@
 package org.server;
 
-import org.entities.CustomMadeProduct;
-import org.entities.PreMadeProduct;
-import org.entities.Product;
+import org.entities.*;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -13,10 +11,7 @@ import org.hibernate.service.ServiceRegistry;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Hello world!
@@ -31,6 +26,11 @@ public class App {
         configuration.addAnnotatedClass(Product.class);
         configuration.addAnnotatedClass(PreMadeProduct.class);
         configuration.addAnnotatedClass(CustomMadeProduct.class);
+        configuration.addAnnotatedClass(User.class);
+        configuration.addAnnotatedClass(Customer.class);
+        configuration.addAnnotatedClass(Complaint.class);
+
+
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();        //pull session factory config from hibernate properties
         return configuration.buildSessionFactory(serviceRegistry);
     }
@@ -41,9 +41,15 @@ public class App {
         for (int i = 0; i < 5; i++) {
             var img1 = loadImageFromResources(String.format("Flower%s.jpg", i));
             PreMadeProduct p1 = new PreMadeProduct("Flower" + i, img1, price = random.nextInt(1000), (price - random.nextInt(500)));
-
+            Customer cust = new Customer("name","user","pass","hash","mail",new Date(),"credit");
+            Complaint c = new Complaint(cust ,new Date(),"bad bad bad", Complaint.Topic.BAD_SERVICE);
+            session.save(cust);
+            session.flush();
+            session.save(c);
+            session.flush();
             session.save(p1);   //saves and flushes to database
             session.flush();
+
         }
     }
 
