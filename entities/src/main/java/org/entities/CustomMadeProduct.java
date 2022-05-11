@@ -9,7 +9,7 @@ import java.util.List;
 public class CustomMadeProduct extends Product {
 
     @ManyToMany
-    //@Column(name= "productList")
+    @JoinColumn(name= "productList")
     private List<PreMadeProduct> products = new LinkedList<PreMadeProduct>();
 
     // this is called when on custom made page

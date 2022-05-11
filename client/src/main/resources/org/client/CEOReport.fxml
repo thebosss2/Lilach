@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
@@ -17,34 +18,56 @@
 
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.CEOReportController">
    <children>
-      <ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0">
+      <ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1050.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <content>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <AnchorPane maxHeight="2000.0" maxWidth="1920.0">
                <children>
                   <VBox prefHeight="899.0" prefWidth="1084.0">
                      <children>
-                        <HBox prefHeight="45.0" prefWidth="1083.0">
+                        <HBox prefHeight="45.0" prefWidth="1083.0" spacing="10.0">
                            <children>
-                              <Label text="from " />
-                              <DatePicker fx:id="fromDate2" prefHeight="28.0" prefWidth="100.0" />
-                              <Label text="to " />
-                              <DatePicker fx:id="toDate2" prefHeight="28.0" prefWidth="100.0" />
-                              <Button fx:id="makeReportBtn2" mnemonicParsing="false" onAction="#makeReport2" prefHeight="28.0" prefWidth="101.0" style="-fx-background-color: #c6acef;" text="make report">
+                              <Label text="from" />
+                              <DatePicker fx:id="fromDate2" prefHeight="28.0" prefWidth="100.0">
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                              </DatePicker>
+                              <Label text="to" />
+                              <DatePicker fx:id="toDate2" prefHeight="28.0" prefWidth="100.0">
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                              </DatePicker>
+                              <Button fx:id="makeReportBtn2" mnemonicParsing="false" onAction="#makeReport2" prefHeight="30.0" prefWidth="110.0" style="-fx-background-color: #c6acef;" text="make report">
                                  <font>
                                     <Font name="Guttman Aharoni" size="15.0" />
                                  </font>
+                                 <HBox.margin>
+                                    <Insets right="50.0" />
+                                 </HBox.margin>
                               </Button>
-                              <ComboBox fx:id="storePicker" prefHeight="36.0" prefWidth="120.0" promptText="pick a store" style="-fx-background-color: #c6acef;" />
-                              <Label text="from " />
+                              <ComboBox fx:id="storePicker" prefHeight="36.0" prefWidth="120.0" promptText="pick a store" style="-fx-background-color: #c6acef;">
+                                 <HBox.margin>
+                                    <Insets right="50.0" />
+                                 </HBox.margin>
+                              </ComboBox>
+                              <Label text="from" />
                               <DatePicker fx:id="fromDate1" prefHeight="28.0" prefWidth="100.0" />
-                              <Label text="to " />
-                              <DatePicker fx:id="toDate1" prefHeight="28.0" prefWidth="100.0" />
-                              <Button fx:id="makeReportBtn1" mnemonicParsing="false" onAction="#makeReport1" prefHeight="31.0" prefWidth="102.0" style="-fx-background-color: #c6acef;" text="make report">
+                              <Label text="to" />
+                              <DatePicker fx:id="toDate1" prefHeight="28.0" prefWidth="100.0">
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                              </DatePicker>
+                              <Button fx:id="makeReportBtn1" mnemonicParsing="false" onAction="#makeReport1" prefHeight="31.0" prefWidth="113.0" style="-fx-background-color: #c6acef;" text="make report">
                                  <font>
                                     <Font name="Guttman Aharoni" size="15.0" />
                                  </font>
                               </Button>
                            </children>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
                         </HBox>
                         <HBox prefHeight="269.0" prefWidth="1084.0">
                            <children>

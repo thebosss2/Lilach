@@ -1,5 +1,11 @@
 package org.entities;
 
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table
 public class ShippingOrder extends Order {
     //private Employee storeManager;
     private String phoneNumber;
