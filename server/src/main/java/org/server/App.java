@@ -52,7 +52,17 @@ public class App {
 
         }
     }
+    private static void generateStores() throws Exception {       //generates new products
+        Random random = new Random();
+        int price;
+        for (int i = 0; i < 5; i++) {
+            var img1 = loadImageFromResources(String.format("Flower%s.jpg", i));
+            PreMadeProduct p1 = new PreMadeProduct("Flower" + i, img1, price = random.nextInt(1000), (price - random.nextInt(500)));
 
+            session.save(p1);   //saves and flushes to database
+            session.flush();
+        }
+    }
 
     ///TODO make generic func--------------------------------------------------------------------------------------------------------------
     static List<PreMadeProduct> getAllProducts() throws IOException {      //pulls all products from database
@@ -93,6 +103,7 @@ public class App {
             session = sessionFactory.openSession(); //opens session
             session.beginTransaction();       //transaction for generation
             generateProducts();             //generate
+            generateStores();
             session.getTransaction().commit(); // Save everything.
 
             server = new Server(3000);      //builds server

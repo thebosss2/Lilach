@@ -15,7 +15,7 @@
       <module name="client" target="15" />
       <module name="entities" target="15" />
       <module name="Lilach" target="15" />
-      <module name="server" target="16" />
+      <module name="server" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -1,6 +1,8 @@
 package org.client;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
@@ -10,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import org.entities.Store;
 
 public class CEOReportController extends Controller{
 
@@ -68,7 +71,7 @@ public class CEOReportController extends Controller{
     private PieChart ordersChart2;
 
     @FXML
-    private ComboBox<?> storePicker;
+    private ComboBox<Store> storePicker = new ComboBox<>();
 
     @FXML
     private DatePicker toDate1;
@@ -76,13 +79,35 @@ public class CEOReportController extends Controller{
     @FXML
     private DatePicker toDate2;
 
+
     @FXML
-    void makeReport1(ActionEvent event) {
+    void initialize() {
+        //storePicker.getItems().add(s1);
+        //.getItems().add(s2);
+
+    }
+    Label selectedStore = new Label("default item selected");
+
+    // Create action event
+    /*EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
+                public void handle(ActionEvent e)
+                {
+                    selectedStore.setText(storePicker.getValue() + " selected");
+                }
+            };*/
+
+    // Set on action
+    //storePicker.setOnAction(event);
+
+    @FXML
+    void makeReport1(ActionEvent event) throws InterruptedException {
+        coolButtonClick((Button)event.getTarget());
 
     }
 
     @FXML
-    void makeReport2(ActionEvent event) {
+    void makeReport2(ActionEvent event) throws InterruptedException {
+        coolButtonClick((Button)event.getTarget());
 
     }
 
