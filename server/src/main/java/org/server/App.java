@@ -66,6 +66,17 @@ public class App {
         }
         return list;
     }
+    static List<User> getAllUsers() throws IOException {      //pulls all products from database
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<User> query = builder.createQuery(User.class);
+        query.from(User.class);
+        List<User> data = session.createQuery(query).getResultList();
+        LinkedList<User> list = new LinkedList<User>();
+        for (User product : data) {     //converts arraylist to linkedlist
+            list.add(product);
+        }
+        return list;
+    }
 
     public static byte[] loadImageFromResources(String imageName) throws IOException {
         var stream = App.class.getClassLoader().getResourceAsStream(String.format("Images/%s", imageName));

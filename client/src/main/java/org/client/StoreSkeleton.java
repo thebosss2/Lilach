@@ -9,6 +9,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import org.entities.Guest;
+import org.entities.User;
 
 import java.io.IOException;
 import java.net.URL;
@@ -70,7 +72,6 @@ public class StoreSkeleton {
         }
     }
 
-
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() throws IOException {
@@ -79,7 +80,7 @@ public class StoreSkeleton {
         assert cartBtn != null : "fx:id=\"openImage\" was not injected: check your FXML file 'First catalog try.fxml'.";
 
         changeCenter("Catalog");
-        changeLeft("WorkerMenu");
+        changeLeft("GuestMenu");
     }
 
 }
