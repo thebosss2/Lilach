@@ -1,8 +1,7 @@
 package org.client;
 
 import org.client.ocsf.AbstractClient;
-import org.entities.PreMadeProduct;
-import org.entities.Product;
+import org.entities.*;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -14,6 +13,8 @@ public class Client extends AbstractClient {
     protected static LinkedList<PreMadeProduct> products = new LinkedList<PreMadeProduct>();//(LinkedList<Product>) Catalog.getProducts();
 
     private Controller controller;
+
+    private Guest user;
 
     public Client(String localhost, int i) {
         super(localhost, i);
@@ -42,21 +43,29 @@ public class Client extends AbstractClient {
     protected void handleMessageFromServer(Object msg) {     //function handles message from server
         try {
             switch (((LinkedList<Object>) msg).get(0).toString()) {       //switch with all command options sent between client and server
-                case "#PULLCATALOG" -> {
-                    pushToCatalog(msg);
-                }         //function gets all data from server to display to client
+                case "#PULLCATALOG" -> pushToCatalog(msg);//function gets all data from server to display to client
+                case "#LOGIN" -> loginClient((LinkedList<Object>)msg);
             }
         } catch (Exception e) {
             System.out.println("Client Error");
             e.getStackTrace();
         }
-
     }
 
     private void pushToCatalog(Object msg) throws IOException { // takes data received and sends to display function
         products = (LinkedList<PreMadeProduct>) ((LinkedList<Object>) msg).get(1);
         CatalogController catalogController = (CatalogController) controller;
         catalogController.pullProductsToClient();       //calls static function in client for display
+    }
+
+    private void loginClient(LinkedList<Object> msg){
+        if(msg.get(1).equals("#SUCCESS")){
+            switch(msg.get(3).toString()){
+                case "CUSTOMER" -> this.user=(Customer)msg.get(2);
+                case "EMPLOYEE" -> this.user=(Employee)msg.get(2);
+                case "GUEST" -> this.user=new Guest();
+            }
+        }
     }
 
 

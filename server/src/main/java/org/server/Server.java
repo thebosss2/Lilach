@@ -1,7 +1,6 @@
 package org.server;
 
-import org.entities.PreMadeProduct;
-import org.entities.Product;
+import org.entities.*;
 import org.server.ocsf.AbstractServer;
 import org.server.ocsf.ConnectionToClient;
 
@@ -26,6 +25,7 @@ public class Server extends AbstractServer {
                 case "#PULLCATALOG" -> pullProducts(((LinkedList<Object>) msg), client);  //display updated catalog version
                 case "#SAVE" -> updateProduct((LinkedList<Object>) msg);           //save change to product details
                 case "#ADD" -> addProduct((LinkedList<Object>) msg);           // add product to the DB
+                case "#LOGIN" -> loginServer((LinkedList<Object>)msg,client);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -67,6 +67,26 @@ public class Server extends AbstractServer {
         App.session.save(product);   //saves and flushes to database
         App.session.flush();
         App.session.getTransaction().commit();
+    }
+
+    private void loginServer(LinkedList<Object> msg,ConnectionToClient client) throws IOException {
+        List<User> users = App.getAllUsers();
+        for(User user : users){
+            if(user.getUserName().equals(msg.get(1))){
+                if(user.getPassword().equals(msg.get(2))){
+                    msg.remove(2);
+                    msg.remove(1);
+                    msg.add("#SUCCESS");
+                    msg.add(user);
+                    if(user instanceof Customer) {
+                        msg.add("CUSTOMER");
+                    }else if (user instanceof  Employee) {
+                        msg.add("EMPLOYEE");
+                    }
+                    client.sendToClient(msg);
+                }
+            }
+        }
     }
 
     @Override
