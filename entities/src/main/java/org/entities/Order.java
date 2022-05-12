@@ -5,7 +5,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 
-@Entity
+@MappedSuperclass
+// Table is needed in here??
 @Table(name = "orders")
 public abstract class Order implements Serializable {     //Product class entity
     @Id
