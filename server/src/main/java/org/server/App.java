@@ -29,6 +29,9 @@ public class App {
         configuration.addAnnotatedClass(User.class);
         configuration.addAnnotatedClass(Customer.class);
         configuration.addAnnotatedClass(Complaint.class);
+        configuration.addAnnotatedClass(Order.class);
+        configuration.addAnnotatedClass(Store.class);
+        configuration.addAnnotatedClass(Employee.class);
 
 
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();        //pull session factory config from hibernate properties
@@ -101,10 +104,10 @@ public class App {
 
             SessionFactory sessionFactory = getSessionFactory();        //calls and creates session factory
             session = sessionFactory.openSession(); //opens session
-            session.beginTransaction();       //transaction for generation
+            /*session.beginTransaction();       //transaction for generation
             generateProducts();             //generate
             generateStores();
-            session.getTransaction().commit(); // Save everything.
+            session.getTransaction().commit(); // Save everything.*/
 
             server = new Server(3000);      //builds server
             server.listen();                    //listens to client

@@ -1,7 +1,7 @@
 package org.entities;
 
-
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "stores")
@@ -13,14 +13,16 @@ public class Store {
     @OneToOne
     private Employee storeManager;
 
-    @ManyToOne
-    private Employee[] employees;
+    @OneToMany
+    private List<Employee> employees;
 
     private String address;
-    @ManyToOne
-    private Order[] orders;
 
-    public Store(Employee storeManager, Employee[] employees, String address) {
+    @OneToMany
+    @Column(name="stores_orders")
+    private List<Order> orders;
+
+    public Store(Employee storeManager, List<Employee> employees, String address) {
         this.storeManager = storeManager;
         employees = employees;
         this.address = address;
@@ -38,11 +40,11 @@ public class Store {
         this.storeManager = storeManager;
     }
 
-    public Employee[] getEmployees() {
+    public List<Employee> getEmployees() {
         return employees;
     }
 
-    public void setEmployees(Employee[] employees) {
+    public void setEmployees(List<Employee> employees) {
         employees = employees;
     }
 
@@ -54,11 +56,11 @@ public class Store {
         this.address = address;
     }
 
-    public Order[] getOrders() {
+    public List<Order> getOrders() {
         return orders;
     }
 
-    public void setOrders(Order[] orders) {
+    public void setOrders(List<Order> orders) {
         this.orders = orders;
     }
 

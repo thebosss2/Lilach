@@ -21,6 +21,7 @@ public class PreMadeProduct extends Product{
         this.name = name;
 
     }
+
     public PreMadeProduct(String name, byte[] image, int price, int priceBeforeDiscount) {
         super(image,price);
 
@@ -40,7 +41,6 @@ public class PreMadeProduct extends Product{
         this.priceBeforeDiscount = priceBeforeDiscount;
     }
 
-
     public String getName() {
         return name;
     }
@@ -48,6 +48,5 @@ public class PreMadeProduct extends Product{
     public void setName(String name) {
         this.name = name;
     }
-
 
 }
