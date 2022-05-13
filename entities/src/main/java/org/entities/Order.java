@@ -2,6 +2,8 @@ package org.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -27,48 +29,90 @@ public class Order implements Serializable {     //Product class entity
     private Store store;
 
     protected int price;
-    protected Date orderTime;
-    protected Date DeliveryTime;
+    protected String orderTime;
+    protected Date deliveryDate;
+    protected String deliveryHour;
     protected boolean isDelivered;
 
-    protected enum Delivery {SHIPPING, TAKEAWAY}
+    protected enum Delivery {SELF_SHIPPING, SHIPPING_GIFT, TAKEAWAY}
     protected Delivery delivery;
 
     // above - shipping order information
-    private String phoneNumber = null;
+    private String personalPhone = null;
+    private String receiverPhone = null;
     private String receiverName= null;
     private String address= null;
     private String email= null;
-    private Boolean shippingToSelf= null;
+    private String greetingCard = null;
 
+
+    //SHIPPING_GIFT constructor
     public Order(LinkedList<PreMadeProduct> preMadeProducts, LinkedList<CustomMadeProduct> customMadeProducts,
-                 Customer orderedBy, int price, Date orderTime, Date deliveryTime,
-                 Delivery delivery, String phoneNumber, String receiverName, String address,
-                 String email, Boolean shippingToSelf) {
+                 Customer orderedBy, int price, Date deliveryDate, String deliveryHour, String personalPhone,
+                 String receiverPhone, String receiverName, String address, String email, String greetingCard) {
+
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat simpleformat = new SimpleDateFormat("dd/MMMM/yyyy hh:mm:s");
+        this.orderTime = simpleformat.format(cal.getTime());
+        this.delivery = Delivery.SHIPPING_GIFT;
 
         this.preMadeProducts = preMadeProducts;
         this.customMadeProducts = customMadeProducts;
         this.orderedBy = orderedBy;
         this.price = price;
-        this.orderTime = orderTime;
-        this.DeliveryTime = deliveryTime;
+        this.deliveryDate = deliveryDate;
+        this.deliveryHour = deliveryHour;
         this.isDelivered = false;
-        this.delivery = delivery;
-
-        if(delivery == Delivery.SHIPPING)
-            setShippingInfo(phoneNumber, receiverName, address, email, shippingToSelf);
-    }
-
-    private void setShippingInfo(String phoneNumber, String receiverName,
-                                 String address, String email, Boolean shippingToSelf) {
-
-        this.phoneNumber = phoneNumber;
+        this.personalPhone = personalPhone;
+        this.receiverPhone = receiverPhone;
         this.receiverName = receiverName;
         this.address = address;
         this.email = email;
-        this.shippingToSelf = shippingToSelf;
+        this.greetingCard = greetingCard;
     }
 
+    //SELF_SHIPPING constructor
+    public Order(LinkedList<PreMadeProduct> preMadeProducts, LinkedList<CustomMadeProduct> customMadeProducts,
+                 Customer orderedBy, int price, Date deliveryDate, String deliveryHour,
+                 String personalPhone, String address, String email) {
+
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat simpleformat = new SimpleDateFormat("dd/MMMM/yyyy hh:mm:s");
+        this.orderTime = simpleformat.format(cal.getTime());
+        this.delivery = Delivery.SELF_SHIPPING;
+
+        this.preMadeProducts = preMadeProducts;
+        this.customMadeProducts = customMadeProducts;
+        this.orderedBy = orderedBy;
+        this.price = price;
+        this.deliveryDate = deliveryDate;
+        this.deliveryHour = deliveryHour;
+        this.isDelivered = false;
+        this.personalPhone = personalPhone;
+        this.address = address;
+        this.email = email;
+        this.greetingCard = greetingCard;
+    }
+
+    //TAKEAWAY constructor
+    public Order(LinkedList<PreMadeProduct> preMadeProducts, LinkedList<CustomMadeProduct> customMadeProducts,
+                 Customer orderedBy, int price, Date deliveryDate, String deliveryHour,
+                 String personalPhone, String address) {
+
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat simpleformat = new SimpleDateFormat("dd/MMMM/yyyy hh:mm:s");
+        this.orderTime = simpleformat.format(cal.getTime());
+        this.delivery = Delivery.TAKEAWAY;
+
+        this.preMadeProducts = preMadeProducts;
+        this.customMadeProducts = customMadeProducts;
+        this.orderedBy = orderedBy;
+        this.price = price;
+        this.deliveryDate = deliveryDate;
+        this.deliveryHour = deliveryHour;
+        this.isDelivered = false;
+
+    }
 
     public Order() {
 
@@ -98,20 +142,12 @@ public class Order implements Serializable {     //Product class entity
         this.price = price;
     }
 
-    public Date getOrderTime() {
+    public String getOrderTime() {
         return orderTime;
     }
 
-    public void setOrderTime(Date orderTime) {
+    public void setOrderTime(String orderTime) {
         this.orderTime = orderTime;
-    }
-
-    public Date getDeliveryTime() {
-        return DeliveryTime;
-    }
-
-    public void setDeliveryTime(Date deliveryTime) {
-        DeliveryTime = deliveryTime;
     }
 
     public boolean isDelivered() {
@@ -120,14 +156,6 @@ public class Order implements Serializable {     //Product class entity
 
     public void setDelivered(boolean delivered) {
         isDelivered = delivered;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 
     public String getReceiverName() {
@@ -152,14 +180,6 @@ public class Order implements Serializable {     //Product class entity
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Boolean getShippingToSelf() {
-        return shippingToSelf;
-    }
-
-    public void setShippingToSelf(Boolean shippingToSelf) {
-        this.shippingToSelf = shippingToSelf;
     }
 
 }
