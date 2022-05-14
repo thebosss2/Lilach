@@ -96,9 +96,7 @@ public class ProductViewController extends Controller{
     @FXML
     void addToCart(ActionEvent event) throws InterruptedException {
         coolButtonClick((Button)event.getTarget());
-
-        // TODO
+        for (int i=0;i<count;i++)
+            App.client.cart.insertProduct(this.product);
     }
-
-
 }
