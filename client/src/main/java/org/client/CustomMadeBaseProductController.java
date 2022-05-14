@@ -18,10 +18,13 @@ public class CustomMadeBaseProductController {
     private URL location;
 
     @FXML
-    private Button add_to_product;
+    private ImageView image;
 
     @FXML
-    private ImageView image;
+    private Button minus;
+
+    @FXML
+    private Button plus;
 
     @FXML
     private Text price;
@@ -33,8 +36,8 @@ public class CustomMadeBaseProductController {
     private Text product_name;
 
     @FXML
-    void addToCart(ActionEvent event) {
-
+    void addProduct(ActionEvent event) {
+        price.setText(Integer.toString(Integer.parseInt(price.getText())+1));
     }
 
     @FXML
@@ -42,11 +45,16 @@ public class CustomMadeBaseProductController {
 
     }
 
+    @FXML
+    void minusProduct(ActionEvent event) {
+        price.setText(Integer.toString(Integer.parseInt(price.getText())-1));
+    }
 
     @FXML
     void initialize() {
-        assert add_to_product != null : "fx:id=\"add_to_product\" was not injected: check your FXML file 'CustomMadeBaseProduct.fxml'.";
         assert image != null : "fx:id=\"image\" was not injected: check your FXML file 'CustomMadeBaseProduct.fxml'.";
+        assert minus != null : "fx:id=\"minus\" was not injected: check your FXML file 'CustomMadeBaseProduct.fxml'.";
+        assert plus != null : "fx:id=\"plus\" was not injected: check your FXML file 'CustomMadeBaseProduct.fxml'.";
         assert price != null : "fx:id=\"price\" was not injected: check your FXML file 'CustomMadeBaseProduct.fxml'.";
         assert priceBeforeDiscount != null : "fx:id=\"priceBeforeDiscount\" was not injected: check your FXML file 'CustomMadeBaseProduct.fxml'.";
         assert product_name != null : "fx:id=\"product_name\" was not injected: check your FXML file 'CustomMadeBaseProduct.fxml'.";

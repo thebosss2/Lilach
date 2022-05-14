@@ -24,6 +24,7 @@ public class CartProductController extends Controller{
     @FXML
     private Text description;
 
+
     @FXML
     private Button Duplicate;
 

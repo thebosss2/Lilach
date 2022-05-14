@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 public class CartController extends Controller {
 
@@ -30,6 +31,10 @@ public class CartController extends Controller {
     @FXML
     private VBox vbox;
 
+
+    @FXML
+    private Text total_price;
+
     @FXML
     void cleanCart(ActionEvent event) {
 
@@ -45,6 +50,7 @@ public class CartController extends Controller {
         assert clean_cart != null : "fx:id=\"clean_cart\" was not injected: check your FXML file 'Cart.fxml'.";
         assert create_order != null : "fx:id=\"create_order\" was not injected: check your FXML file 'Cart.fxml'.";
         assert scroll_pane != null : "fx:id=\"scroll_pane\" was not injected: check your FXML file 'Cart.fxml'.";
+        assert total_price != null : "fx:id=\"total_price\" was not injected: check your FXML file 'Cart.fxml'.";
         assert vbox != null : "fx:id=\"vbox\" was not injected: check your FXML file 'Cart.fxml'.";
 
         App.client.setController(this);

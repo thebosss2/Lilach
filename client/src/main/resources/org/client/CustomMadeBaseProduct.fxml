@@ -6,16 +6,15 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane prefHeight="313.0" prefWidth="270.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.CustomMadeBaseProduct">
    <children>
       <ImageView fx:id="image" fitHeight="199.0" fitWidth="199.0" layoutX="49.0" layoutY="49.0" onMouseClicked="#goToProductView" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="add_to_product" layoutX="118.0" layoutY="258.0" mnemonicParsing="false" onAction="#addToCart" prefHeight="34.0" prefWidth="144.0" style="-fx-background-color: #c6acef;" text="Add To Product">
+      <Button fx:id="plus" layoutX="236.0" layoutY="262.0" mnemonicParsing="false" onAction="#addProduct" prefHeight="16.0" prefWidth="18.0" text="+">
          <font>
-            <Font name="Guttman Aharoni" size="15.0" />
+            <Font name="Guttman Aharoni" size="12.0" />
          </font>
       </Button>
-      <Text fx:id="product_name" boundsType="LOGICAL_VERTICAL_CENTER" layoutX="41.0" layoutY="31.0" onMouseClicked="#goToProductView" strokeType="OUTSIDE" strokeWidth="0.0" text="Rakefet" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="214.0">
+      <Text fx:id="product_name" boundsType="LOGICAL_VERTICAL_CENTER" layoutX="28.0" layoutY="31.0" onMouseClicked="#goToProductView" strokeType="OUTSIDE" strokeWidth="0.0" text="Rakefet" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="214.0">
          <font>
             <Font name="Guttman-Aharoni Bold" size="21.0" />
          </font>
@@ -26,5 +25,11 @@
          </font>
       </Text>
       <Text fx:id="priceBeforeDiscount" layoutX="20.0" layoutY="278.0" onMouseClicked="#goToProductView" strikethrough="true" strokeType="OUTSIDE" strokeWidth="0.0" text="50₪" textAlignment="CENTER" wrappingWidth="42.519471168518066" />
+      <Button fx:id="minus" layoutX="191.0" layoutY="261.0" mnemonicParsing="false" onAction="#minusProduct" prefHeight="16.0" prefWidth="18.0" text="-">
+         <font>
+            <Font name="Guttman Aharoni" size="12.0" />
+         </font>
+      </Button>
+      <Text layoutX="222.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
    </children>
 </AnchorPane>
