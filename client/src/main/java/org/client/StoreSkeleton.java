@@ -49,9 +49,6 @@ public class StoreSkeleton {
             mainScreen.setCenter(fxmlLoader.load());
             controller = fxmlLoader.getController();
 
-            if (controller instanceof CatalogController)
-                ((CatalogController) controller).setCatalog(this);
-
             controller.setSkeleton(this);
         } catch (IOException e) {
             e.printStackTrace();
@@ -80,7 +77,7 @@ public class StoreSkeleton {
         assert cartBtn != null : "fx:id=\"openImage\" was not injected: check your FXML file 'First catalog try.fxml'.";
 
         changeCenter("Catalog");
-        changeLeft("GuestMenu");
+        changeLeft("WorkerMenu");
     }
 
 }

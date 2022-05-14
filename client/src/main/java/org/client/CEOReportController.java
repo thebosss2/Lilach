@@ -71,7 +71,7 @@ public class CEOReportController extends Controller{
     private PieChart ordersChart2;
 
     @FXML
-    private ComboBox<Store> storePicker = new ComboBox<>();
+    private ComboBox<Store> storePicker;
 
     @FXML
     private DatePicker toDate1;
@@ -84,20 +84,8 @@ public class CEOReportController extends Controller{
     void initialize() {
         //storePicker.getItems().add(s1);
         //.getItems().add(s2);
-
     }
-    Label selectedStore = new Label("default item selected");
 
-    // Create action event
-    /*EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
-                public void handle(ActionEvent e)
-                {
-                    selectedStore.setText(storePicker.getValue() + " selected");
-                }
-            };*/
-
-    // Set on action
-    //storePicker.setOnAction(event);
 
     @FXML
     void makeReport1(ActionEvent event) throws InterruptedException {

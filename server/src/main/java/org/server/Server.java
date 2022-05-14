@@ -26,6 +26,7 @@ public class Server extends AbstractServer {
                 case "#SAVE" -> updateProduct((LinkedList<Object>) msg);           //save change to product details
                 case "#ADD" -> addProduct((LinkedList<Object>) msg);           // add product to the DB
                 case "#LOGIN" -> loginServer((LinkedList<Object>)msg,client);
+                case "#PULLSTORES" -> pullStores(((LinkedList<Object>) msg), client);  //display updated catalog version
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -60,6 +61,14 @@ public class Server extends AbstractServer {
         client.sendToClient(msgToClient);
     }
 
+    private static void pullStores(List<Object> msg, ConnectionToClient client) throws IOException {       //func pulls products from server
+        List<Store> stores = App.getAllStores();
+        String commandToClient = "#PULLSTORES";
+        List<Object> msgToClient = new LinkedList<Object>();
+        msgToClient.add(commandToClient);
+        msgToClient.add(stores);
+        client.sendToClient(msgToClient);
+    }
 
     private void addProduct(LinkedList<Object> msg) {
         App.session.beginTransaction();

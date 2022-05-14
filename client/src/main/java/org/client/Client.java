@@ -44,7 +44,8 @@ public class Client extends AbstractClient {
         try {
             switch (((LinkedList<Object>) msg).get(0).toString()) {       //switch with all command options sent between client and server
                 case "#PULLCATALOG" -> pushToCatalog(msg);//function gets all data from server to display to client
-                case "#LOGIN" -> loginClient((LinkedList<Object>)msg);
+                case "#LOGIN" -> loginClient((LinkedList<Object>) msg);
+                case "#PULLSTORES" -> pushStores(msg);//function gets all data from server to display to client
             }
         } catch (Exception e) {
             System.out.println("Client Error");
@@ -58,15 +59,30 @@ public class Client extends AbstractClient {
         catalogController.pullProductsToClient();       //calls static function in client for display
     }
 
-    private void loginClient(LinkedList<Object> msg){
-        if(msg.get(1).equals("#SUCCESS")){
-            switch(msg.get(3).toString()){
-                case "CUSTOMER" -> this.user=(Customer)msg.get(2);
-                case "EMPLOYEE" -> this.user=(Employee)msg.get(2);
-                case "GUEST" -> this.user=new Guest();
+    private void loginClient(LinkedList<Object> msg) {
+        if (msg.get(1).equals("#SUCCESS")) {
+            switch (msg.get(3).toString()) {
+                case "CUSTOMER" -> this.user = (Customer) msg.get(2);
+                case "EMPLOYEE" -> this.user = (Employee) msg.get(2);
+                case "GUEST" -> this.user = new Guest();
             }
         }
     }
+
+    private void pushStores(Object msg) throws IOException { // takes data received and sends to display function
+        CreateOrderController createOrderController;
+        CEOReportController CEOReportController;
+        if (controller instanceof CreateOrderController)
+        {
+
+    createOrderController =(CreateOrderController)controller;
+        }
+        else if(controller instanceof CEOReportController) {
+            CEOReportController = (CEOReportController) controller;
+            catalogController.pullStoresToClient((LinkedList<PreMadeProduct>) ((LinkedList<Object>) msg).get(1));       //calls static function in client for display
+        }
+    }
+
 
 
 }

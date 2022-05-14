@@ -38,10 +38,6 @@ public class CatalogController extends Controller {
         }
     }
 
-    public void setCatalog(StoreSkeleton skeleton) {    //sets catalog skeleton
-        this.setSkeleton(skeleton);
-    }
-
     /**
      * @param product
      * @throws IOException Function adding instance of pre-made product to the screen.

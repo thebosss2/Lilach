@@ -10,6 +10,8 @@ public class Store {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;         // id generated for each store
 
+    private String name;
+
     @OneToOne
     private Employee storeManager;
 
@@ -22,9 +24,8 @@ public class Store {
     @Column(name="stores_orders")
     private List<Order> orders;
 
-    public Store(Employee storeManager, List<Employee> employees, String address) {
-        this.storeManager = storeManager;
-        employees = employees;
+    public Store(String name, String address) {
+        this.name=name;
         this.address = address;
     }
 
