@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
@@ -22,6 +23,9 @@ public class CartProductController extends Controller{
 
     @FXML
     private Text description;
+
+    @FXML
+    private Button Duplicate;
 
     @FXML
     private ImageView image;
@@ -43,6 +47,11 @@ public class CartProductController extends Controller{
     }
 
     @FXML
+    void duplicate(ActionEvent event) {
+
+    }
+
+    @FXML
     void remove(ActionEvent event) {
 
     }
@@ -50,7 +59,7 @@ public class CartProductController extends Controller{
     public void setCartProduct(Product product) {
         this.product = product;
         image.setImage(product.getImage());
-        price.setText(product.getPrice() + "₪");
+        price.setText("Price: " + product.getPrice() + "₪");
 
 
         if(product instanceof PreMadeProduct){

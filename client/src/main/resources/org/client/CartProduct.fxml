@@ -6,9 +6,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="200.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.CartProductController">
+<AnchorPane prefHeight="200.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.CartProductController">
    <children>
-      <ImageView fx:id="image" fitHeight="200.0" fitWidth="208.0" layoutX="452.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <ImageView fx:id="image" fitHeight="176.0" fitWidth="300.0" layoutX="452.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="11.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="13.0" />
       <AnchorPane layoutX="55.0" prefHeight="200.0" prefWidth="454.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Text fx:id="product_name" layoutX="148.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ProductName">
@@ -16,22 +16,25 @@
                   <Font name="System Bold" size="24.0" />
                </font>
             </Text>
-            <Text layoutX="25.0" layoutY="108.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price">
+            <Text fx:id="price" layoutX="40.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price: 0₪">
                <font>
-                  <Font size="14.0" />
+                  <Font size="18.0" />
                </font>
             </Text>
-            <Text fx:id="price" layoutX="32.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0₪">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Text>
-            <Text fx:id="description" layoutX="126.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description">
+            <Text fx:id="description" layoutX="198.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description">
                <font>
                   <Font name="Yu Gothic Light" size="12.0" />
                </font>
             </Text>
-            <Button fx:id="remove" layoutX="196.0" layoutY="160.0" mnemonicParsing="false" onAction="#remove" style="-fx-background-color: #c6acef;" text="Remove" />
+            <Button fx:id="remove" layoutX="34.0" layoutY="149.0" mnemonicParsing="false" onAction="#remove" style="-fx-background-color: #c6acef;" text="Remove">
+               <font>
+                  <Font size="16.0" />
+               </font></Button>
+            <Button fx:id="Duplicate" layoutX="130.0" layoutY="149.0" mnemonicParsing="false" onAction="#duplicate" style="-fx-background-color: #c6acef;" text="Duplicate">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
    </children>
