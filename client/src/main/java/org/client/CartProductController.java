@@ -13,7 +13,7 @@ import org.entities.CustomMadeProduct;
 import org.entities.PreMadeProduct;
 import org.entities.Product;
 
-public class CartProductController extends Controller{
+public class CartProductController extends Controller {
 
     @FXML
     private ResourceBundle resources;
@@ -48,7 +48,12 @@ public class CartProductController extends Controller{
 
     @FXML
     void duplicate(ActionEvent event) {
+        if (product instanceof PreMadeProduct)
+            App.client.cart.insertProduct(new PreMadeProduct(((PreMadeProduct) product).getName(), product.getByteImage(), product.getPrice(), ((PreMadeProduct) product).getPriceBeforeDiscount()));
+        else{
 
+        }
+        App.
     }
 
     @FXML
@@ -62,12 +67,11 @@ public class CartProductController extends Controller{
         price.setText("Price: " + product.getPrice() + "₪");
 
 
-        if(product instanceof PreMadeProduct){
-            product_name.setText(((PreMadeProduct)product).getName());
+        if (product instanceof PreMadeProduct) {
+            product_name.setText(((PreMadeProduct) product).getName());
             description.setText("");
 
-        }
-        else //CustomMadeProduct
+        } else //CustomMadeProduct
         {
             product_name.setText("Custom made product " + Integer.toString(product.getId()));
 
