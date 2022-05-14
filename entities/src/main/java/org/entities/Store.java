@@ -1,11 +1,12 @@
 package org.entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "stores")
-public class Store {
+public class Store implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;         // id generated for each store
@@ -25,7 +26,7 @@ public class Store {
     private List<Order> orders;
 
     public Store(String name, String address) {
-        this.name=name;
+        this.name = name;
         this.address = address;
     }
 
@@ -65,4 +66,11 @@ public class Store {
         this.orders = orders;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

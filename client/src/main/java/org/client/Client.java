@@ -71,15 +71,14 @@ public class Client extends AbstractClient {
 
     private void pushStores(Object msg) throws IOException { // takes data received and sends to display function
         CreateOrderController createOrderController;
-        CEOReportController CEOReportController;
-        if (controller instanceof CreateOrderController)
-        {
+        CEOReportController ceoReportController;
+        if (controller instanceof CreateOrderController) {
+            createOrderController = (CreateOrderController)controller;
 
-    createOrderController =(CreateOrderController)controller;
         }
         else if(controller instanceof CEOReportController) {
-            CEOReportController = (CEOReportController) controller;
-            catalogController.pullStoresToClient((LinkedList<PreMadeProduct>) ((LinkedList<Object>) msg).get(1));       //calls static function in client for display
+            ceoReportController = (CEOReportController) controller;
+            ceoReportController.pullStoresToClient((LinkedList<Store>) ((LinkedList<Object>) msg).get(1));       //calls static function in client for display
         }
     }
 

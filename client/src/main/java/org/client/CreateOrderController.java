@@ -25,7 +25,7 @@ public class CreateOrderController extends Controller{
     private ComboBox<String> TAHourPicker;
 
     @FXML
-    private ComboBox<Store> TAStorePicker;
+    private ComboBox<String> TAStorePicker;
 
     @FXML
     private Button TASubmitBtn;
@@ -87,6 +87,8 @@ public class CreateOrderController extends Controller{
     @FXML
     private Tab selfTab;
 
+    private LinkedList<Store> stores = new LinkedList<Store>();
+
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -119,6 +121,12 @@ public class CreateOrderController extends Controller{
     @FXML
     void tabClicked(ActionEvent event) {
 
+    }
+
+    public void pullStoresToClient(LinkedList<Store> stores){
+        this.stores = stores;
+        for(Store s : stores)
+            TAStorePicker.getItems().add(s.getName());
     }
 
 }

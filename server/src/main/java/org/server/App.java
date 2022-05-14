@@ -116,10 +116,10 @@ public class App {
 
             SessionFactory sessionFactory = getSessionFactory();        //calls and creates session factory
             session = sessionFactory.openSession(); //opens session
-            /*session.beginTransaction();       //transaction for generation
+            session.beginTransaction();       //transaction for generation
             generateProducts();             //generate
             generateStores();
-            session.getTransaction().commit(); // Save everything.*/
+            session.getTransaction().commit(); // Save everything.
 
             server = new Server(3000);      //builds server
             server.listen();                    //listens to client

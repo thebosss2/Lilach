@@ -77,7 +77,7 @@ public class StoreSkeleton {
         assert cartBtn != null : "fx:id=\"openImage\" was not injected: check your FXML file 'First catalog try.fxml'.";
 
         changeCenter("Catalog");
-        changeLeft("WorkerMenu");
+        changeLeft("ManagerMenu");
     }
 
 }

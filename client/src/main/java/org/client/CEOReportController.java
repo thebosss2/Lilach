@@ -14,6 +14,9 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import org.entities.Store;
 
+import java.io.IOException;
+import java.util.LinkedList;
+
 public class CEOReportController extends Controller{
 
     @FXML
@@ -71,7 +74,7 @@ public class CEOReportController extends Controller{
     private PieChart ordersChart2;
 
     @FXML
-    private ComboBox<Store> storePicker;
+    private ComboBox<String> storePicker;
 
     @FXML
     private DatePicker toDate1;
@@ -79,11 +82,19 @@ public class CEOReportController extends Controller{
     @FXML
     private DatePicker toDate2;
 
+    private LinkedList<Store> stores = new LinkedList<Store>();
+
 
     @FXML
     void initialize() {
-        //storePicker.getItems().add(s1);
-        //.getItems().add(s2);
+        LinkedList<Object> msg = new LinkedList<Object>();
+        msg.add("#PULLSTORES");
+        App.client.setController(this);
+        try {
+            App.client.sendToServer(msg); //Sends a msg contains the command and the controller for the catalog.
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -99,4 +110,9 @@ public class CEOReportController extends Controller{
 
     }
 
+    public void pullStoresToClient(LinkedList<Store> stores){
+        this.stores = stores;
+        for(Store s : stores)
+            storePicker.getItems().add(s.getName());
+    }
 }
