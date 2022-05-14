@@ -13,18 +13,35 @@ public class GuestMenuController extends Controller {
     @FXML
     protected Button catalogBtn;
 
+    @FXML // fx:id="loginBtn"
+    private Button loginBtn; // Value injected by FXMLLoader
+
+    @FXML // fx:id="signUpBtn"
+    private Button signUpBtn; // Value injected by FXMLLoader
+
     @FXML
     void goToCart(ActionEvent event) throws InterruptedException {
-        coolButtonClick((Button) event.getTarget());
+        coolMenuClick((Button) event.getTarget());
     }
 
     @FXML
     void goToCatalog(ActionEvent event) throws InterruptedException {   //catalog button clears page and loads all products
-        coolButtonClick((Button) event.getTarget());
+        coolMenuClick((Button) event.getTarget());
         this.getSkeleton().changeCenter("Catalog");
 
     }
 
+    @FXML
+    void goToLogin(ActionEvent event) throws InterruptedException {
+        coolButtonClick((Button) event.getTarget());
+        this.getSkeleton().changeCenter("Login");
+    }
+
+    @FXML
+    void goToSignUp(ActionEvent event) throws InterruptedException {
+        coolButtonClick((Button) event.getTarget());
+        this.getSkeleton().changeCenter("SignUp");
+    }
     @FXML
     void mouseOffBtn(MouseEvent event) {
         //TODO
@@ -35,7 +52,7 @@ public class GuestMenuController extends Controller {
         //TODO
     }
 
-    protected void coolButtonClick(Button button) throws InterruptedException {
+    protected void coolMenuClick(Button button) throws InterruptedException {
         cartBtn.setStyle("-fx-background-color: #9bc98c");
         catalogBtn.setStyle("-fx-background-color: #9bc98c");
         button.setStyle("-fx-background-color: #62a74d");

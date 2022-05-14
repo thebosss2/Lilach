@@ -1,16 +1,33 @@
 package org.entities;
 
-public class Store {
-    //private Employee storeManager;
-    //private Employee[] Employees;
-    private String address;
-    private Order orders;
-    private Report[] reports;
 
-    /*public Store(Employee storeManager, Employee[] employees, String address) {
+import javax.persistence.*;
+
+@Entity
+@Table(name = "stores")
+public class Store {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;         // id generated for each store
+
+    @OneToOne
+    private Employee storeManager;
+
+    @ManyToOne
+    private Employee[] employees;
+
+    private String address;
+    @ManyToOne
+    private Order[] orders;
+
+    public Store(Employee storeManager, Employee[] employees, String address) {
         this.storeManager = storeManager;
-        Employees = employees;
+        employees = employees;
         this.address = address;
+    }
+
+    public Store() {
+
     }
 
     public Employee getStoreManager() {
@@ -22,12 +39,12 @@ public class Store {
     }
 
     public Employee[] getEmployees() {
-        return Employees;
+        return employees;
     }
 
     public void setEmployees(Employee[] employees) {
-        Employees = employees;
-    }*/
+        employees = employees;
+    }
 
     public String getAddress() {
         return address;
@@ -37,19 +54,12 @@ public class Store {
         this.address = address;
     }
 
-    public Order getOrders() {
+    public Order[] getOrders() {
         return orders;
     }
 
-    public void setOrders(Order orders) {
+    public void setOrders(Order[] orders) {
         this.orders = orders;
     }
 
-    public Report[] getReports() {
-        return reports;
-    }
-
-    public void setReports(Report[] reports) {
-        this.reports = reports;
-    }
 }

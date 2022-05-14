@@ -80,19 +80,6 @@ public class EditProductController extends Controller {
         }
     }
 
-    private void coolButtonClick(Button button) throws InterruptedException {
-        Executor executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
-            button.setStyle("-fx-background-color: #8c73ea");
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            button.setStyle("-fx-background-color: #c6acef");
-        });
-    }
-
     void saveChanges() {     //function creates new product and sends save command to server
         String save = "#SAVE";
         LinkedList<Object> msg = new LinkedList<Object>();  //msg has string message with all data in next nodes
