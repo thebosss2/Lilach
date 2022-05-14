@@ -14,7 +14,11 @@ public class Customer extends User {
     private int id;
     private enum AccountType{}
     private String creditCard;
-    ///////////////////////////////////////////////Past Orders
+
+    @OneToMany(targetEntity = Complaint.class, mappedBy = "customer")
+    @Column(name = "order")
+    protected List<Order> orders = new LinkedList<Order>();
+
     @OneToMany(targetEntity = Complaint.class, mappedBy = "customer")
     @Column(name = "complaint")
     private List<Complaint> complaints = new LinkedList<Complaint>();

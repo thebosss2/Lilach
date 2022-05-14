@@ -49,9 +49,6 @@ public class StoreSkeleton {
             mainScreen.setCenter(fxmlLoader.load());
             controller = fxmlLoader.getController();
 
-            if (controller instanceof CatalogController)
-                ((CatalogController) controller).setCatalog(this);
-
             controller.setSkeleton(this);
         } catch (IOException e) {
             e.printStackTrace();

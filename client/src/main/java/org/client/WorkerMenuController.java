@@ -4,7 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
-public class WorkerMenuController extends GuestMenuController {
+public class WorkerMenuController extends Controller {
     @FXML
     protected Button editCatalogBtn;
 
@@ -14,10 +14,7 @@ public class WorkerMenuController extends GuestMenuController {
         this.getSkeleton().changeCenter("EditCatalog");
     }
 
-    @Override
     protected void coolMenuClick(Button button) throws InterruptedException {
-        cartBtn.setStyle("-fx-background-color: #9bc98c");
-        catalogBtn.setStyle("-fx-background-color: #9bc98c");
         editCatalogBtn.setStyle("-fx-background-color: #9bc98c");
         button.setStyle("-fx-background-color: #62a74d");
     }

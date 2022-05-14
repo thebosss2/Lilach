@@ -31,6 +31,7 @@ public class EditCatalogController extends CatalogController {
     void initialize() {
         assert mainPane != null : "fx:id=\"mainPane\" was not injected: check your FXML file 'Catalog.fxml'.";
         try {
+            displayAddItem();
             LinkedList<Object> msg = new LinkedList<Object>();
             msg.add("#PULLCATALOG");
             App.client.setController(this);
@@ -40,16 +41,6 @@ public class EditCatalogController extends CatalogController {
         }
     }
 
-    @Override
-    public void setCatalog(StoreSkeleton skeleton) {    //set catalog edit view for worker
-        mainPane.getChildren().clear();
-        this.setSkeleton(skeleton);
-        try {
-            displayAddItem();       //displays add item image and option
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public void displayAddItem() throws IOException {   //displays add item option
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AddItem.fxml"));

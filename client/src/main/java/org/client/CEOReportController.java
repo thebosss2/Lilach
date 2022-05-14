@@ -1,20 +1,19 @@
 package org.client;
 
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.StackedBarChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import org.entities.Store;
 
-public class CEOReportController extends Controller{
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.LinkedList;
+
+public class CEOReportController extends Controller {
 
     @FXML
     private Label companyIncome1;
@@ -71,7 +70,7 @@ public class CEOReportController extends Controller{
     private PieChart ordersChart2;
 
     @FXML
-    private ComboBox<Store> storePicker = new ComboBox<>();
+    private ComboBox<String> storePicker;
 
     @FXML
     private DatePicker toDate1;
@@ -79,36 +78,62 @@ public class CEOReportController extends Controller{
     @FXML
     private DatePicker toDate2;
 
+    private LinkedList<Store> stores = new LinkedList<Store>();
+
 
     @FXML
     void initialize() {
-        //storePicker.getItems().add(s1);
-        //.getItems().add(s2);
-
+        displayDates(fromDate1, LocalDate.now(), true);
+        displayDates(fromDate2, LocalDate.now(),true);
+        LinkedList<Object> msg = new LinkedList<Object>();
+        msg.add("#PULLSTORES");
+        App.client.setController(this);
+        try {
+            App.client.sendToServer(msg); //Sends a msg contains the command and the controller for the catalog.
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-    Label selectedStore = new Label("default item selected");
 
-    // Create action event
-    /*EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
-                public void handle(ActionEvent e)
-                {
-                    selectedStore.setText(storePicker.getValue() + " selected");
-                }
-            };*/
-
-    // Set on action
-    //storePicker.setOnAction(event);
 
     @FXML
     void makeReport1(ActionEvent event) throws InterruptedException {
-        coolButtonClick((Button)event.getTarget());
+        coolButtonClick((Button) event.getTarget());
 
     }
 
     @FXML
     void makeReport2(ActionEvent event) throws InterruptedException {
-        coolButtonClick((Button)event.getTarget());
+        coolButtonClick((Button) event.getTarget());
 
+    }
+
+    public void pullStoresToClient(LinkedList<Store> stores) {
+        this.stores = stores;
+        for (Store s : stores)
+            storePicker.getItems().add(s.getName());
+    }
+
+
+    public void changedFromDate1 (ActionEvent event) throws InterruptedException {
+        toDate1.setDisable(false);
+        displayDates(toDate1, fromDate1.getValue(), LocalDate.now());
+    }
+
+    public void changedFromDate2 (ActionEvent event) throws InterruptedException {
+        toDate2.setDisable(false);
+        displayDates(toDate2, fromDate2.getValue(), LocalDate.now());
+    }
+
+
+    public void changedToDate1 (ActionEvent event) throws InterruptedException {
+        toDate1.setDisable(false);
+        displayDates(fromDate1, toDate1.getValue(), true);
+    }
+
+    public void changedToDate2 (ActionEvent event) throws InterruptedException {
+        toDate2.setDisable(false);
+        displayDates(fromDate2, toDate2.getValue(), true);
     }
 
 }
