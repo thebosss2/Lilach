@@ -1,23 +1,19 @@
 package org.client;
 
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.StackedBarChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import org.entities.Store;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.LinkedList;
 
-public class CEOReportController extends Controller{
+public class CEOReportController extends Controller {
 
     @FXML
     private Label companyIncome1;
@@ -87,6 +83,8 @@ public class CEOReportController extends Controller{
 
     @FXML
     void initialize() {
+        displayDates(fromDate1, LocalDate.now(), true);
+        displayDates(fromDate2, LocalDate.now(),true);
         LinkedList<Object> msg = new LinkedList<Object>();
         msg.add("#PULLSTORES");
         App.client.setController(this);
@@ -100,19 +98,42 @@ public class CEOReportController extends Controller{
 
     @FXML
     void makeReport1(ActionEvent event) throws InterruptedException {
-        coolButtonClick((Button)event.getTarget());
+        coolButtonClick((Button) event.getTarget());
 
     }
 
     @FXML
     void makeReport2(ActionEvent event) throws InterruptedException {
-        coolButtonClick((Button)event.getTarget());
+        coolButtonClick((Button) event.getTarget());
 
     }
 
-    public void pullStoresToClient(LinkedList<Store> stores){
+    public void pullStoresToClient(LinkedList<Store> stores) {
         this.stores = stores;
-        for(Store s : stores)
+        for (Store s : stores)
             storePicker.getItems().add(s.getName());
     }
+
+
+    public void changedFromDate1 (ActionEvent event) throws InterruptedException {
+        toDate1.setDisable(false);
+        displayDates(toDate1, fromDate1.getValue(), LocalDate.now());
+    }
+
+    public void changedFromDate2 (ActionEvent event) throws InterruptedException {
+        toDate2.setDisable(false);
+        displayDates(toDate2, fromDate2.getValue(), LocalDate.now());
+    }
+
+
+    public void changedToDate1 (ActionEvent event) throws InterruptedException {
+        toDate1.setDisable(false);
+        displayDates(fromDate1, toDate1.getValue(), true);
+    }
+
+    public void changedToDate2 (ActionEvent event) throws InterruptedException {
+        toDate2.setDisable(false);
+        displayDates(fromDate2, toDate2.getValue(), true);
+    }
+
 }

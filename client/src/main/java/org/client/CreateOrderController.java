@@ -2,21 +2,17 @@ package org.client;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import org.entities.Store;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.LinkedList;
 
 public class CreateOrderController extends Controller{
 
     @FXML
-    private DatePicker TADateText;
+    private DatePicker TADate;
 
     @FXML
     private TextArea TAGreetingText;
@@ -55,7 +51,7 @@ public class CreateOrderController extends Controller{
     private TextField giftReceiverPhoneText;
 
     @FXML
-    private DatePicker giftShippingDateText;
+    private DatePicker giftShippingDate;
 
     @FXML
     private Button giftSubmitBtn;
@@ -79,7 +75,7 @@ public class CreateOrderController extends Controller{
     private TextField selfPhoneText;
 
     @FXML
-    private DatePicker selfShippingDateText;
+    private DatePicker selfShippingDate;
 
     @FXML
     private Button selfSubmitBtn;
@@ -92,6 +88,7 @@ public class CreateOrderController extends Controller{
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
+
         LinkedList<Object> msg = new LinkedList<Object>();
         msg.add("#PULLSTORES");
         App.client.setController(this);

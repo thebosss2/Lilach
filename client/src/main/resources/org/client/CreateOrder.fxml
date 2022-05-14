@@ -89,7 +89,7 @@
                                           <TextField fx:id="selfAddressText" prefWidth="237.0" />
                                           <TextField fx:id="selfEmailText" prefWidth="237.0" />
                                           <TextField fx:id="selfPhoneText" prefWidth="237.0" />
-                                          <DatePicker fx:id="selfShippingDateText" prefHeight="25.0" prefWidth="315.0" />
+                                          <DatePicker fx:id="selfShippingDate" prefHeight="25.0" prefWidth="315.0" />
                                           <ComboBox fx:id="selfHourPicker" prefHeight="22.0" prefWidth="288.0" />
                                        </children>
                                        <HBox.margin>
@@ -193,7 +193,7 @@
                                           <TextField fx:id="giftReceiverPhoneText" prefWidth="237.0" />
                                           <TextField fx:id="giftEmailText" prefWidth="237.0" />
                                           <TextField fx:id="giftPhoneText" prefWidth="237.0" />
-                                          <DatePicker fx:id="giftShippingDateText" prefHeight="25.0" prefWidth="315.0" />
+                                          <DatePicker fx:id="giftShippingDate" prefHeight="25.0" prefWidth="315.0" />
                                           <ComboBox fx:id="giftHourPicker" prefHeight="22.0" prefWidth="288.0" />
                                        </children>
                                        <HBox.margin>
@@ -273,7 +273,7 @@
                                     <VBox prefHeight="265.0" prefWidth="533.0" spacing="20.0">
                                        <children>
                                           <ComboBox fx:id="TAStorePicker" prefHeight="22.0" prefWidth="288.0" />
-                                          <DatePicker fx:id="TADateText" prefHeight="25.0" prefWidth="315.0" />
+                                          <DatePicker fx:id="TADate" prefHeight="25.0" prefWidth="315.0" />
                                           <ComboBox fx:id="TAHourPicker" prefHeight="22.0" prefWidth="288.0" />
                                        </children>
                                        <HBox.margin>
