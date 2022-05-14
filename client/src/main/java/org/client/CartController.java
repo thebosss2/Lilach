@@ -1,5 +1,6 @@
 package org.client;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -40,7 +41,7 @@ public class CartController extends Controller {
     }
 
     @FXML
-    void initialize() {
+    void initialize() throws IOException {
         assert clean_cart != null : "fx:id=\"clean_cart\" was not injected: check your FXML file 'Cart.fxml'.";
         assert create_order != null : "fx:id=\"create_order\" was not injected: check your FXML file 'Cart.fxml'.";
         assert scroll_pane != null : "fx:id=\"scroll_pane\" was not injected: check your FXML file 'Cart.fxml'.";
@@ -51,11 +52,11 @@ public class CartController extends Controller {
         FXMLLoader fxmlLoader;
         for(int i=0; i<App.client.cart.getProducts().size(); i++)
         {
-            fxmlLoader = new FXMLLoader(getClass().getResource("Product.fxml"));
+            fxmlLoader = new FXMLLoader(getClass().getResource("CartProduct.fxml"));
             vbox.getChildren().add(fxmlLoader.load());  //Adds new product pane to the screen.
-            ProductController controller = fxmlLoader.getController();
+            CartProductController controller = fxmlLoader.getController();
             controller.setSkeleton(this.getSkeleton());
-            controller.setProduct(App.client.cart.getProducts().get(i));
+            controller.setCartProduct(App.client.cart.getProducts().get(i));
         }
     }
 

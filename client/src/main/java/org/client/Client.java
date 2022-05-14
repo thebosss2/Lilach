@@ -14,7 +14,7 @@ public class Client extends AbstractClient {
 
     private Controller controller;
 
-    public Cart cart;
+    public Cart cart= new Cart();
     private Guest user;
 
     public Client(String localhost, int i) {

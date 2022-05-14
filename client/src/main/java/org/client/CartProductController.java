@@ -2,6 +2,8 @@ package org.client;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -10,7 +12,7 @@ import org.entities.CustomMadeProduct;
 import org.entities.PreMadeProduct;
 import org.entities.Product;
 
-public class CartProductController{
+public class CartProductController extends Controller{
 
     @FXML
     private ResourceBundle resources;
@@ -40,6 +42,10 @@ public class CartProductController{
         assert product_name != null : "fx:id=\"product_name\" was not injected: check your FXML file 'cartProduct.fxml'.";
     }
 
+    @FXML
+    void remove(ActionEvent event) {
+
+    }
 
     public void setCartProduct(Product product) {
         this.product = product;
