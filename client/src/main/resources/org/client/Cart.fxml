@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.CartController">
+   <children>
+      <AnchorPane layoutX="200.0" layoutY="309.0" prefHeight="91.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Button fx:id="create_order" layoutX="166.0" layoutY="31.0" mnemonicParsing="false" onAction="#createOrder" style="-fx-background-color: #c6acef;" text="Create Order">
+               <font>
+                  <Font name="Cambria" size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="clean_cart" layoutX="339.0" layoutY="31.0" mnemonicParsing="false" onAction="#cleanCart" style="-fx-background-color: #c6acef;" text="Clean Cart">
+               <font>
+                  <Font name="Cambria" size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+      <ScrollPane fx:id="scroll_pane" layoutX="160.0" layoutY="14.0" prefHeight="310.0" prefWidth="600.0" AnchorPane.bottomAnchor="89.60000000000002" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <content>
+            <AnchorPane prefHeight="310.0" prefWidth="598.0">
+               <children>
+                  <VBox fx:id="vbox" layoutX="38.0" layoutY="14.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

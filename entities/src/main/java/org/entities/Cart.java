@@ -19,6 +19,10 @@ public class Cart {
         return this.totalCost;
     }
 
+    public List<Product> getProducts() {
+        return this.products;
+    }
+
     public void setTotalCost(double newCost) {
         this.totalCost = newCost;
     }

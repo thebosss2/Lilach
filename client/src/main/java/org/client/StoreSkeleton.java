@@ -52,6 +52,9 @@ public class StoreSkeleton {
             if (controller instanceof CatalogController)
                 ((CatalogController) controller).setCatalog(this);
 
+            if (controller instanceof CartController)
+                ((CartController) controller).setCart(this);
+
             controller.setSkeleton(this);
         } catch (IOException e) {
             e.printStackTrace();
