@@ -7,8 +7,8 @@ import java.util.List;
 
 public class Cart {
 
-    private List<Product> products;
-    private int totalCost;
+    private List<Product> products = new LinkedList<>();
+    private double totalCost;
 
     public Cart() {
         this.products = new LinkedList<Product>();
@@ -19,7 +19,7 @@ public class Cart {
         return this.totalCost;
     }
 
-    public void setTotalCost(int newCost) {
+    public void setTotalCost(double newCost) {
         this.totalCost = newCost;
     }
 
@@ -38,4 +38,3 @@ public class Cart {
         this.totalCost += product.getPrice();
     }
 }
-
