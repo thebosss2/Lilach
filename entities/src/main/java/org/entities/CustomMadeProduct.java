@@ -11,7 +11,7 @@ public class CustomMadeProduct extends Product {
     @ManyToMany
     @Column(name= "products")
     private List<PreMadeProduct> products = new LinkedList<PreMadeProduct>();
-
+    //
     // this is called when on custom made page
     //user selects multiple premadeProducts into list that is saved on controller(customMadeCatalog controller)
     // when they are done they select create customProduct (when added to cart)
