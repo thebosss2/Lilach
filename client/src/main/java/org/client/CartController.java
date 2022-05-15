@@ -10,6 +10,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import org.entities.Customer;
+import org.entities.User;
 
 public class CartController extends Controller {
 
@@ -44,7 +46,10 @@ public class CartController extends Controller {
 
     @FXML
     void createOrder(ActionEvent event) {
-        this.globalSkeleton.changeCenter("CreateOrder");
+        if(App.client.user instanceof Customer)
+            App.client.storeSkeleton.changeCenter("CreateOrder");
+        else
+            App.client.storeSkeleton.changeCenter("Login");
     }
 
     @FXML
