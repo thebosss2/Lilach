@@ -14,7 +14,7 @@
             <Font name="Guttman Aharoni" size="12.0" />
          </font>
       </Button>
-      <Text fx:id="product_name" boundsType="LOGICAL_VERTICAL_CENTER" layoutX="28.0" layoutY="31.0" onMouseClicked="#goToProductView" strokeType="OUTSIDE" strokeWidth="0.0" text="Rakefet" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="214.0">
+      <Text fx:id="product_name" boundsType="LOGICAL_VERTICAL_CENTER" layoutX="28.0" layoutY="31.0" onMouseClicked="#goToProductView" strokeType="OUTSIDE" strokeWidth="0.0" text="Basic_Product" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="214.0">
          <font>
             <Font name="Guttman-Aharoni Bold" size="21.0" />
          </font>
