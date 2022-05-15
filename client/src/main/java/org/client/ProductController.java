@@ -50,7 +50,6 @@ public class ProductController extends ItemController{
 
     @FXML
     void addToCart(ActionEvent event) throws InterruptedException {
-
         coolButtonClick((Button)event.getTarget());
         //Check if you need to kill the thread.
         App.client.cart.insertProduct(this.product);

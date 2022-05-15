@@ -26,8 +26,10 @@ public class App {
         configuration.addAnnotatedClass(Product.class);
         configuration.addAnnotatedClass(PreMadeProduct.class);
         configuration.addAnnotatedClass(CustomMadeProduct.class);
+        configuration.addAnnotatedClass(Guest.class);
         configuration.addAnnotatedClass(User.class);
         configuration.addAnnotatedClass(Customer.class);
+        configuration.addAnnotatedClass(Employee.class);
         configuration.addAnnotatedClass(Complaint.class);
         configuration.addAnnotatedClass(Order.class);
         configuration.addAnnotatedClass(Store.class);
@@ -44,16 +46,18 @@ public class App {
         for (int i = 0; i < 5; i++) {
             var img1 = loadImageFromResources(String.format("Flower%s.jpg", i));
             PreMadeProduct p1 = new PreMadeProduct("Flower" + i, img1, price = random.nextInt(1000), (price - random.nextInt(500)));
-            Customer cust = new Customer("name", "user", "pass", "hash", "mail", new Date(), "credit");
-            Complaint c = new Complaint(cust, new Date(), "bad bad bad", Complaint.Topic.BAD_SERVICE);
+            Customer cust = new Customer("name","user","pass","mail",new Date(),"credit", Customer.AccountType.MEMBERSHIP);
+            Complaint c = new Complaint(cust ,new Date(),"bad bad bad", Complaint.Topic.BAD_SERVICE);
             session.save(cust);
             session.flush();
             session.save(c);
             session.flush();
             session.save(p1);   //saves and flushes to database
             session.flush();
-
         }
+        Customer cust = new Customer("Sagi","Sagi","Sagi","Sagi",new Date(),"Sagi", Customer.AccountType.MEMBERSHIP);
+        session.save(cust);
+        session.flush();
     }
 
     private static void generateStores() throws Exception {       //generates new products
@@ -93,13 +97,14 @@ public class App {
     }
     static List<User> getAllUsers() throws IOException {      //pulls all products from database
         CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<User> query = builder.createQuery(User.class);
-        query.from(User.class);
-        List<User> data = session.createQuery(query).getResultList();
-        LinkedList<User> list = new LinkedList<User>();
-        for (User product : data) {     //converts arraylist to linkedlist
-            list.add(product);
-        }
+        CriteriaQuery<Customer> customerQuery = builder.createQuery(Customer.class);
+        customerQuery.from(Customer.class);
+        List<Customer> customers = session.createQuery(customerQuery).getResultList();
+        LinkedList<User> list = new LinkedList<>(customers);
+        CriteriaQuery<Employee> employeeQuery = builder.createQuery(Employee.class);
+        employeeQuery.from(Employee.class);
+        List<Employee> employees = session.createQuery(employeeQuery).getResultList();
+        list.addAll(employees);
         return list;
     }
 

@@ -78,6 +78,7 @@ public class StoreSkeleton {
 
         changeCenter("Catalog");
         changeLeft("GuestMenu");
+
     }
 
 }
