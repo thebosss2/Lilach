@@ -4,6 +4,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -38,11 +40,12 @@ public class App extends Application {
 
     public static void main(String[] args) throws IOException {
 
-        client = new Client("0.0.0.0", 3000);
+        client = new Client("127.0.0.1", 3000);
         client.openConnection();
 
         launch();
 
 
     }
+
 }
