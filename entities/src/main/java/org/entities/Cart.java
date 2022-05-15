@@ -19,6 +19,10 @@ public class Cart {
         return this.totalCost;
     }
 
+    public List<Product> getProducts() {
+        return this.products;
+    }
+
     public void setTotalCost(double newCost) {
         this.totalCost = newCost;
     }
@@ -36,5 +40,10 @@ public class Cart {
     public void insertProduct(Product product) {
         this.products.add(product);
         this.totalCost += product.getPrice();
+    }
+
+    public void emptyProducts() {
+        this.products = new LinkedList<Product>();
+        this.totalCost = 0;
     }
 }
