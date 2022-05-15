@@ -1,9 +1,10 @@
 package org.client;
 
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import org.entities.Store;
+import org.entities.*;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -88,7 +89,9 @@ public class CreateOrderController extends Controller{
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-
+        displayDates(selfShippingDate, LocalDate.now(), false);
+        displayDates(giftShippingDate, LocalDate.now(), false);
+        displayDates(TADate, LocalDate.now(), false);
         LinkedList<Object> msg = new LinkedList<Object>();
         msg.add("#PULLSTORES");
         App.client.setController(this);
@@ -102,7 +105,7 @@ public class CreateOrderController extends Controller{
 
     @FXML
     void TASubmitOrder(ActionEvent event) {
-
+        //Order order = new Order(App.client.cart)
     }
 
     @FXML
@@ -116,7 +119,7 @@ public class CreateOrderController extends Controller{
     }
 
     @FXML
-    void tabClicked(ActionEvent event) {
+    void tabClicked(Event event) {
 
     }
 

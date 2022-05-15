@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.ReportReportController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.ReportController">
    <children>
       <ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1050.0" style="-fx-background-color: ffffff;">
          <content>
@@ -30,7 +30,7 @@
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <DatePicker fx:id="fromDate" prefHeight="28.0" prefWidth="108.0">
+                              <DatePicker fx:id="fromDate" onAction="#changedFromDate" prefHeight="28.0" prefWidth="108.0">
                                  <HBox.margin>
                                     <Insets right="40.0" top="5.0" />
                                  </HBox.margin>
@@ -40,7 +40,7 @@
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <DatePicker fx:id="toDate" prefHeight="28.0" prefWidth="111.0">
+                              <DatePicker fx:id="toDate" disable="true" onAction="#changedToDate" prefHeight="28.0" prefWidth="111.0">
                                  <HBox.margin>
                                     <Insets right="70.0" top="5.0" />
                                  </HBox.margin>
