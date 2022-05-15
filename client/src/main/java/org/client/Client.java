@@ -70,6 +70,12 @@ public class Client extends AbstractClient {
         }
     }
 
+    private void pushToCatalog(Object msg) throws IOException { // takes data received and sends to display function
+        products = (LinkedList<PreMadeProduct>) ((LinkedList<Object>) msg).get(1);
+        CatalogController catalogController = (CatalogController) controller;
+        catalogController.pullProductsToClient();       //calls static function in client for display
+    }
+
     private void authenticationReply(LinkedList<Object> msg) {
         SignUpController signUpController = (SignUpController) controller;
         if (msg.get(1).toString().equals("#USER_NOT_EXISTS")) {
@@ -135,13 +141,6 @@ public class Client extends AbstractClient {
         CEOReportController ceoReportController;
         if (controller instanceof CreateOrderController) {
             createOrderController = (CreateOrderController)controller;
-        private void pushToCatalog (Object msg) throws IOException
-        { // takes data received and sends to display function
-            products = (LinkedList<PreMadeProduct>) ((LinkedList<Object>) msg).get(1);
-            CatalogController catalogController = (CatalogController) controller;
-            catalogController.pullProductsToClient();       //calls static function in client for display
-        }
-
         }
         else if(controller instanceof CEOReportController) {
             ceoReportController = (CEOReportController) controller;
@@ -151,7 +150,7 @@ public class Client extends AbstractClient {
 
 
 
-}
+
         private void loginClient (LinkedList < Object > msg) {
             if (msg.get(1).equals("#SUCCESS")) {
                 switch (msg.get(3).toString()) {
