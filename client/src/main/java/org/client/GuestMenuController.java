@@ -34,13 +34,13 @@ public class GuestMenuController extends Controller {
 
     @FXML
     void goToLogin(ActionEvent event) throws InterruptedException {
-        coolButtonClick((Button) event.getTarget());
+        coolMenuClick((Button) event.getTarget());
         this.getSkeleton().changeCenter("Login");
     }
 
     @FXML
     void goToSignUp(ActionEvent event) throws InterruptedException {
-        coolButtonClick((Button) event.getTarget());
+        coolMenuClick((Button) event.getTarget());
         this.getSkeleton().changeCenter("SignUp");
     }
     @FXML
@@ -56,6 +56,8 @@ public class GuestMenuController extends Controller {
     protected void coolMenuClick(Button button) throws InterruptedException {
         cartBtn.setStyle("-fx-background-color: #9bc98c");
         catalogBtn.setStyle("-fx-background-color: #9bc98c");
+        signUpBtn.setStyle("-fx-background-color: #9bc98c");
+        loginBtn.setStyle("-fx-background-color: #9bc98c");
         button.setStyle("-fx-background-color: #62a74d");
     }
 

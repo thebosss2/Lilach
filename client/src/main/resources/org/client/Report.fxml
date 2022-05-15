@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.chart.StackedBarChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.ReportReportController">
+   <children>
+      <ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1050.0" style="-fx-background-color: ffffff;">
+         <content>
+            <AnchorPane maxHeight="600.0" maxWidth="1000.0" style="-fx-background-color: ffffff;">
+               <children>
+                  <VBox prefHeight="600.0" prefWidth="1043.0" spacing="20.0">
+                     <children>
+                        <HBox prefHeight="60.0" prefWidth="1043.0" spacing="10.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="39.0" prefWidth="41.0" text="from:">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <DatePicker fx:id="fromDate" prefHeight="28.0" prefWidth="108.0">
+                                 <HBox.margin>
+                                    <Insets right="40.0" top="5.0" />
+                                 </HBox.margin>
+                              </DatePicker>
+                              <Label prefHeight="37.0" prefWidth="21.0" text="to:">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <DatePicker fx:id="toDate" prefHeight="28.0" prefWidth="111.0">
+                                 <HBox.margin>
+                                    <Insets right="70.0" top="5.0" />
+                                 </HBox.margin>
+                              </DatePicker>
+                              <Button fx:id="makeReportBtn" mnemonicParsing="false" onAction="#makeReport" prefHeight="36.0" prefWidth="125.0" style="-fx-background-color: #c6acef;" text="make report">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets right="50.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                           <VBox.margin>
+                              <Insets left="20.0" top="30.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox prefHeight="539.0" prefWidth="1043.0">
+                           <children>
+                              <VBox prefHeight="539.0" prefWidth="469.0">
+                                 <children>
+                                    <Label fx:id="incomeReport" alignment="TOP_LEFT" prefHeight="216.0" prefWidth="468.0" text="     Income report:">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <PieChart fx:id="ordersChart" prefHeight="257.0" prefWidth="293.0" title="Orders Report" />
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="539.0" prefWidth="564.0">
+                                 <children>
+                                    <StackedBarChart fx:id="complaintChart" prefHeight="423.0" prefWidth="555.0" title="Complaint Chart">
+                                       <xAxis>
+                                          <CategoryAxis fx:id="daysAxis1" label="Days" side="BOTTOM" />
+                                       </xAxis>
+                                       <yAxis>
+                                          <NumberAxis fx:id="complaintsAxis1" label="Number Of Complaints" side="LEFT" />
+                                       </yAxis>
+                                    </StackedBarChart>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

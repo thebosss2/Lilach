@@ -9,24 +9,19 @@ import java.io.FileInputStream;
 import java.io.Serializable;
 
 @MappedSuperclass
-public class Product implements Serializable {      //Product class entity
+public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;         // id generated for each product
-    //@Column(name = "product_name")
-    //private String name;
-    //private Image image;
+
     @Column(name = "image", length = 65555)
     private byte[] image;
+
     private int price;
-    //private int priceBeforeDiscount;
 
     public Product(String path, int price) {      //constructor
-        //this.name = name;
-        //image=image;
-        this.price = price;
-        //this.priceBeforeDiscount = priceBeforeDiscount;
 
+        this.price = price;
 
         File file = new File(path);         //converts string pth into bytecode image
         this.image = new byte[(int) file.length()];
@@ -54,8 +49,6 @@ public class Product implements Serializable {      //Product class entity
 
     }
 
-    //getters and setters
-
     public void setPrice(int price) {
         this.price = price;
     }
@@ -63,8 +56,6 @@ public class Product implements Serializable {      //Product class entity
     public int getPrice() {
         return price;
     }
-
-
 
     public Image getImage() {
         return new Image(new ByteArrayInputStream(this.image));
@@ -78,9 +69,9 @@ public class Product implements Serializable {      //Product class entity
         this.image = image;
     }
 
-
     public int getId() {
         return id;
     }
+
 }
 
