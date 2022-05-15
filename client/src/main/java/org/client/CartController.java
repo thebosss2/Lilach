@@ -37,7 +37,8 @@ public class CartController extends Controller {
 
     @FXML
     void cleanCart(ActionEvent event) {
-
+        App.client.cart.emptyProducts();
+        //TODO refresh
     }
 
     @FXML
@@ -54,7 +55,7 @@ public class CartController extends Controller {
         assert vbox != null : "fx:id=\"vbox\" was not injected: check your FXML file 'Cart.fxml'.";
 
         App.client.setController(this);
-
+        total_price.setText("Total Price: " + App.client.cart.getTotalCost());
         FXMLLoader fxmlLoader;
         for(int i=0; i<App.client.cart.getProducts().size(); i++)
         {

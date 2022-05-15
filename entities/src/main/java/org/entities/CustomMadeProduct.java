@@ -21,6 +21,11 @@ public class CustomMadeProduct extends Product {
         products=p;
     }
 
+    public CustomMadeProduct(List<PreMadeProduct> p, int price, byte[] image){
+        super(image,price);
+        products=p;
+    }
+
     public CustomMadeProduct() {
 
     }

@@ -41,4 +41,9 @@ public class Cart {
         this.products.add(product);
         this.totalCost += product.getPrice();
     }
+
+    public void emptyProducts() {
+        this.products = new LinkedList<Product>();
+        this.totalCost = 0;
+    }
 }
