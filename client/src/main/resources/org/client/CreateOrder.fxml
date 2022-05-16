@@ -11,43 +11,23 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.CreateOrder">
+<AnchorPane prefHeight="600.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.CreateOrderController">
    <children>
       <TabPane prefHeight="600.0" prefWidth="1050.0" style="-fx-background-color: ffffff;" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="40.0" tabMaxWidth="120.0" tabMinHeight="40.0" tabMinWidth="120.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
           <Tab fx:id="selfTab" onSelectionChanged="#tabClicked" style="-fx-background-color: e6b3ff; -fx-font-size: 16px;" text="self shipping">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="312.0" prefWidth="1050.0">
+              <AnchorPane focusTraversable="true" minHeight="0.0" minWidth="0.0" prefHeight="312.0" prefWidth="1050.0">
                      <children>
-                        <VBox layoutX="660.0" prefHeight="553.0" prefWidth="390.0" style="-fx-background-color: e6b3ff;">
+                        <HBox prefHeight="552.0" prefWidth="1050.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <HBox prefHeight="50.0" prefWidth="786.0" spacing="30.0">
+                              <HBox prefHeight="553.0" prefWidth="676.0">
                                  <children>
-                                    <Label alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="170.0" text="Order summery:">
-                                       <font>
-                                          <Font name="Calibri" size="18.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                                 <padding>
-                                    <Insets left="30.0" />
-                                 </padding>
-                              </HBox>
-                              <Button fx:id="selfSubmitBtn" mnemonicParsing="false" onAction="#selfSubmitOrder" prefHeight="30.0" prefWidth="110.0" style="-fx-background-color: c44dff;" text="Submit Order" textFill="WHITE">
-                                 <font>
-                                    <Font name="Guttman Aharoni" size="15.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                        </VBox>
-                        <HBox prefHeight="330.0" prefWidth="1050.0">
-                           <children>
-                              <HBox prefHeight="378.0" prefWidth="710.0">
-                                 <children>
-                                    <VBox prefHeight="386.0" prefWidth="433.0" spacing="19.0">
+                                    <VBox prefHeight="552.0" prefWidth="700.0" spacing="19.0">
                                        <children>
                                           <Label alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="170.0" text="Fill the following fields:">
                                              <font>
@@ -74,7 +54,7 @@
                                                 <Font size="18.0" />
                                              </font>
                                           </Label>
-                                          <Label prefHeight="22.0" prefWidth="120.0" style="-fx-border-style: 22222;" text="Shipping hour:">
+                                          <Label prefHeight="22.0" prefWidth="120.0" text="Shipping hour:">
                                              <font>
                                                 <Font size="18.0" />
                                              </font>
@@ -84,24 +64,42 @@
                                           <Insets left="20.0" />
                                        </HBox.margin>
                                     </VBox>
-                                    <VBox prefHeight="265.0" prefWidth="533.0" spacing="20.0">
+                                    <VBox prefHeight="484.0" prefWidth="750.0" spacing="20.0">
                                        <children>
                                           <TextField fx:id="selfAddressText" prefWidth="237.0" />
                                           <TextField fx:id="selfEmailText" prefWidth="237.0" />
                                           <TextField fx:id="selfPhoneText" prefWidth="237.0" />
                                           <DatePicker fx:id="selfShippingDate" prefHeight="25.0" prefWidth="315.0" />
-                                          <ComboBox fx:id="selfHourPicker" prefHeight="22.0" prefWidth="288.0" />
+                                          <ComboBox fx:id="selfHourPicker" prefHeight="25.0" prefWidth="304.0" />
                                        </children>
                                        <HBox.margin>
-                                          <Insets right="220.0" top="68.0" />
+                                          <Insets right="150.0" top="68.0" />
                                        </HBox.margin>
                                     </VBox>
                                  </children>
                               </HBox>
+                              <VBox prefHeight="553.0" prefWidth="381.0" style="-fx-background-color: e6b3ff;">
+                                 <children>
+                                    <Label alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="170.0" text="Order summery:">
+                                       <font>
+                                          <Font name="Calibri" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Pane fx:id="selfCartPane" prefHeight="459.0" prefWidth="504.0" />
+                                    <Button fx:id="selfSubmitBtn" mnemonicParsing="false" onAction="#selfSubmitOrder" prefHeight="31.0" prefWidth="120.0" style="-fx-background-color: c44dff;" text="Submit Order" textFill="WHITE">
+                                       <font>
+                                          <Font name="Guttman Aharoni" size="15.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="200.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                 </children>
+                              </VBox>
                            </children>
                         </HBox>
-                        <TextArea fx:id="selfGreetingText" layoutX="14.0" layoutY="397.0" prefHeight="108.0" prefWidth="472.0" />
-                        <Label layoutX="14.0" layoutY="359.0" prefHeight="22.0" prefWidth="318.0" text="Add greeting card to the order: (optional)">
+                        <TextArea fx:id="selfGreetingText" layoutX="14.0" layoutY="397.0" prefHeight="108.0" prefWidth="514.0" />
+                        <Label layoutX="14.0" layoutY="370.0" prefHeight="22.0" prefWidth="318.0" text="Add greeting card to the order: (optional)">
                            <font>
                               <Font name="Calibri" size="18.0" />
                            </font>
@@ -114,32 +112,11 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="312.0" prefWidth="1050.0">
                      <children>
-                        <VBox layoutX="660.0" prefHeight="553.0" prefWidth="390.0" style="-fx-background-color: e6b3ff;">
+                        <HBox prefHeight="552.0" prefWidth="1050.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <HBox prefHeight="50.0" prefWidth="786.0" spacing="30.0">
+                              <HBox prefHeight="553.0" prefWidth="765.0">
                                  <children>
-                                    <Label alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="170.0" text="Order summery:">
-                                       <font>
-                                          <Font name="Calibri" size="18.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                                 <padding>
-                                    <Insets left="30.0" />
-                                 </padding>
-                              </HBox>
-                              <Button fx:id="giftSubmitBtn" mnemonicParsing="false" onAction="#giftSubmitOrder" prefHeight="30.0" prefWidth="110.0" style="-fx-background-color: c44dff;" text="Submit Order" textFill="WHITE">
-                                 <font>
-                                    <Font name="Guttman Aharoni" size="15.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                        </VBox>
-                        <HBox prefHeight="330.0" prefWidth="1050.0">
-                           <children>
-                              <HBox prefHeight="360.0" prefWidth="710.0">
-                                 <children>
-                                    <VBox prefHeight="386.0" prefWidth="433.0" spacing="20.0">
+                                    <VBox prefHeight="386.0" prefWidth="700.0" spacing="20.0">
                                        <children>
                                           <Label alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="170.0" text="Fill the following fields:">
                                              <font>
@@ -186,7 +163,7 @@
                                           <Insets left="20.0" />
                                        </HBox.margin>
                                     </VBox>
-                                    <VBox prefHeight="265.0" prefWidth="533.0" spacing="20.0">
+                                    <VBox prefHeight="265.0" prefWidth="750.0" spacing="20.0">
                                        <children>
                                           <TextField fx:id="giftReceiverNameText" prefHeight="25.0" prefWidth="237.0" />
                                           <TextField fx:id="giftReceiverAddressText" prefWidth="237.0" />
@@ -197,15 +174,36 @@
                                           <ComboBox fx:id="giftHourPicker" prefHeight="22.0" prefWidth="288.0" />
                                        </children>
                                        <HBox.margin>
-                                          <Insets right="220.0" top="65.0" />
+                                          <Insets right="150.0" top="65.0" />
                                        </HBox.margin>
                                     </VBox>
                                  </children>
                               </HBox>
+                              <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="553.0" prefWidth="470.0" style="-fx-background-color: e6b3ff;">
+                                 <children>
+                                    <Label alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="170.0" text="Order summery:">
+                                       <font>
+                                          <Font name="Calibri" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Pane fx:id="giftCartPane" prefHeight="459.0" prefWidth="390.0" />
+                                    <Button fx:id="selfSubmitBtn1" mnemonicParsing="false" onAction="#selfSubmitOrder" prefHeight="31.0" prefWidth="120.0" style="-fx-background-color: c44dff;" text="Submit Order" textFill="WHITE">
+                                       <font>
+                                          <Font name="Guttman Aharoni" size="15.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="200.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </VBox>
                            </children>
                         </HBox>
-                        <TextArea fx:id="giftGreetingText" layoutX="14.0" layoutY="410.0" prefHeight="108.0" prefWidth="472.0" />
-                        <Label layoutX="14.0" layoutY="375.0" prefHeight="22.0" prefWidth="318.0" text="Add greeting card to the order: (optional)">
+                        <TextArea fx:id="giftGreetingText" layoutX="18.0" layoutY="420.0" prefHeight="108.0" prefWidth="507.0" />
+                        <Label layoutX="19.0" layoutY="394.0" prefHeight="22.0" prefWidth="318.0" text="Add greeting card to the order: (optional)">
                            <font>
                               <Font name="Calibri" size="18.0" />
                            </font>
@@ -218,30 +216,9 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <VBox layoutX="660.0" prefHeight="553.0" prefWidth="390.0" style="-fx-background-color: e6b3ff;">
+                        <HBox prefHeight="552.0" prefWidth="1050.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <HBox prefHeight="50.0" prefWidth="786.0" spacing="30.0">
-                                 <children>
-                                    <Label alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="170.0" text="Order summery:">
-                                       <font>
-                                          <Font name="Calibri" size="18.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                                 <padding>
-                                    <Insets left="30.0" />
-                                 </padding>
-                              </HBox>
-                              <Button fx:id="TASubmitBtn" mnemonicParsing="false" onAction="#TASubmitOrder" prefHeight="30.0" prefWidth="110.0" style="-fx-background-color: c44dff;" text="Submit Order" textFill="WHITE">
-                                 <font>
-                                    <Font name="Guttman Aharoni" size="15.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                        </VBox>
-                        <HBox prefHeight="301.0" prefWidth="1050.0">
-                           <children>
-                              <HBox prefHeight="334.0" prefWidth="710.0">
+                              <HBox prefHeight="555.0" prefWidth="710.0">
                                  <children>
                                     <VBox prefHeight="386.0" prefWidth="433.0" spacing="20.0">
                                        <children>
@@ -282,10 +259,28 @@
                                     </VBox>
                                  </children>
                               </HBox>
+                              <VBox prefHeight="555.0" prefWidth="415.0" style="-fx-background-color: e6b3ff;">
+                                 <children>
+                                    <Label alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="170.0" text="Order summery:">
+                                       <font>
+                                          <Font name="Calibri" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Pane fx:id="TACartPane" prefHeight="459.0" prefWidth="390.0" />
+                                    <Button fx:id="selfSubmitBtn2" mnemonicParsing="false" onAction="#selfSubmitOrder" prefHeight="31.0" prefWidth="120.0" style="-fx-background-color: c44dff;" text="Submit Order" textFill="WHITE">
+                                       <font>
+                                          <Font name="Guttman Aharoni" size="15.0" />
+                                       </font>
+                                       <VBox.margin>
+                                          <Insets left="200.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                 </children>
+                              </VBox>
                            </children>
                         </HBox>
                         <TextArea fx:id="TAGreetingText" layoutX="14.0" layoutY="397.0" prefHeight="108.0" prefWidth="472.0" />
-                        <Label layoutX="14.0" layoutY="359.0" prefHeight="22.0" prefWidth="318.0" text="Add greeting card to the order: (optional)">
+                        <Label layoutX="14.0" layoutY="369.0" prefHeight="22.0" prefWidth="318.0" text="Add greeting card to the order: (optional)">
                            <font>
                               <Font name="Calibri" size="18.0" />
                            </font>

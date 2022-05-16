@@ -37,7 +37,7 @@ public class Order implements Serializable {     //Product class entity
     protected enum Delivery {SELF_SHIPPING, SHIPPING_GIFT, TAKEAWAY}
     protected Delivery delivery;
 
-    // above - shipping order information
+    //shipping order information:
     private String personalPhone = null;
     private String receiverPhone = null;
     private String receiverName= null;
@@ -96,8 +96,7 @@ public class Order implements Serializable {     //Product class entity
 
     //TAKEAWAY constructor
     public Order(LinkedList<PreMadeProduct> preMadeProducts, LinkedList<CustomMadeProduct> customMadeProducts,
-                 Customer orderedBy, int price, Date deliveryDate, String deliveryHour,
-                 String personalPhone, String address) {
+                 Customer orderedBy, int price, Store store, Date deliveryDate, String deliveryHour) {
 
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat simpleformat = new SimpleDateFormat("dd/MMMM/yyyy hh:mm:s");
@@ -111,6 +110,7 @@ public class Order implements Serializable {     //Product class entity
         this.deliveryDate = deliveryDate;
         this.deliveryHour = deliveryHour;
         this.isDelivered = false;
+        this.store = store;
 
     }
 

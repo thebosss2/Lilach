@@ -10,10 +10,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import org.entities.Store;
 
+import java.io.IOException;
 import java.time.LocalDate;
+import java.util.LinkedList;
 
-public class ReportController {
+public class ReportController extends Controller{
 
     @FXML
     private StackedBarChart<?, ?> complaintChart;
@@ -40,13 +43,23 @@ public class ReportController {
     private DatePicker toDate;
 
     @FXML
-    void initialize(){
-
+    void initialize() {
+        displayDates(fromDate, LocalDate.now(), true);
     }
 
     @FXML
-    void makeReport(ActionEvent event) {
+    void makeReport(ActionEvent event) throws InterruptedException {
+        coolButtonClick((Button) event.getTarget());
+    }
 
+    public void changedFromDate (ActionEvent event) throws InterruptedException {
+        toDate.setDisable(false);
+        displayDates(toDate, fromDate.getValue(), LocalDate.now());
+    }
+
+    public void changedToDate (ActionEvent event) throws InterruptedException {
+        toDate.setDisable(false);
+        displayDates(fromDate, toDate.getValue(), true);
     }
 
 }
