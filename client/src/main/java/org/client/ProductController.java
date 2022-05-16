@@ -58,7 +58,7 @@ public class ProductController extends ItemController{
     }
 
 
-    public void setProduct(PreMadeProduct product) {
+    public void  setProduct(PreMadeProduct product) {
         this.product = product;
         image.setImage(product.getImage());
         price.setText(product.getPrice() + "₪");

@@ -15,7 +15,7 @@ public class ManagerMenuController extends WorkerMenuController {
         coolMenuClick((Button) event.getTarget());
 
         //if(((Employee)App.client.user).role == CEO)
-        this.getSkeleton().changeCenter("Report");
+        this.getSkeleton().changeCenter("CEOReport");
         //else
         //    this.getSkeleton().changeCenter("StoreReport");
     }

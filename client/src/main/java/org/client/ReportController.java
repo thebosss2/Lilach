@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import org.entities.Store;
 
 import java.io.IOException;
 import java.time.LocalDate;

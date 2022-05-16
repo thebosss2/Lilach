@@ -15,7 +15,7 @@ public class Client extends AbstractClient {
     private Controller controller;
 
     public Cart cart= new Cart();
-    private Guest user;
+    protected Guest user;
 
     public Client(String localhost, int i) {
         super(localhost, i);
@@ -73,14 +73,17 @@ public class Client extends AbstractClient {
     private void pushStores(Object msg) throws IOException { // takes data received and sends to display function
         CreateOrderController createOrderController;
         CEOReportController ceoReportController;
+
         if (controller instanceof CreateOrderController) {
             createOrderController = (CreateOrderController)controller;
-
+            createOrderController.pullStoresToClient((LinkedList<Store>) ((LinkedList<Object>) msg).get(1));       //calls static function in client for display
         }
         else if(controller instanceof CEOReportController) {
             ceoReportController = (CEOReportController) controller;
             ceoReportController.pullStoresToClient((LinkedList<Store>) ((LinkedList<Object>) msg).get(1));       //calls static function in client for display
         }
+
+
     }
 
 
