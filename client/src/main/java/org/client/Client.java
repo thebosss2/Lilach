@@ -23,14 +23,14 @@ import java.util.concurrent.Executors;
 
 public class Client extends AbstractClient {
 
-    private StoreSkeleton storeSkeleton;
+    protected StoreSkeleton storeSkeleton;
 
     protected static LinkedList<PreMadeProduct> products = new LinkedList<PreMadeProduct>();//(LinkedList<Product>) Catalog.getProducts();
 
     private Controller controller;
 
     public Cart cart= new Cart();
-    private Guest user;
+    protected Guest user;
 
     public Client(String localhost, int i) {
         super(localhost, i);
@@ -141,6 +141,7 @@ public class Client extends AbstractClient {
         CEOReportController ceoReportController;
         if (controller instanceof CreateOrderController) {
             createOrderController = (CreateOrderController)controller;
+            createOrderController.pullStoresToClient((LinkedList<Store>) ((LinkedList<Object>) msg).get(1));       //calls static function in client for display
         }
         else if(controller instanceof CEOReportController) {
             ceoReportController = (CEOReportController) controller;
@@ -149,19 +150,54 @@ public class Client extends AbstractClient {
     }
 
 
+    private void changeMenu(){
 
-
-        private void loginClient (LinkedList < Object > msg) {
-            if (msg.get(1).equals("#SUCCESS")) {
-                switch (msg.get(3).toString()) {
-                    case "CUSTOMER" -> this.user = (Customer) msg.get(2);
-                    case "EMPLOYEE" -> this.user = (Employee) msg.get(2);
-                    case "GUEST" -> this.user = new Guest();
-                }
-                //TODO add menu switch and "hello {name}".
+        if(this.user instanceof Customer){
+            //storeSkeleton.changeLeft("CustomerMenu");
+        }else if(this.user instanceof Employee){
+            switch(((Employee) this.user).getRole()){
+                case STORE_EMPLOYEE -> storeSkeleton.changeLeft("WorkerMenu");
+                //case CUSTOMER_SERVICE -> storeSkeleton.changeLeft("CustomerServiceMenu");
+                case STORE_MANAGER -> storeSkeleton.changeLeft("ManagerMenu");
+                case CEO -> storeSkeleton.changeLeft("ManagerMenu");
+                //case ADMIN -> storeSkeleton.changeLeft("AdminMenu");
             }
-            //TODO add response to failure.
+        }else{
+            storeSkeleton.changeLeft("GuestMenu");
         }
+        storeSkeleton.changeCenter("Catalog");
+
+    }
+
+    public void logOut(){   //TODO clean cart
+        List<Object> msg = new LinkedList<Object>();
+        msg.add("#LOGOUT");
+        msg.add(user);
+        try {
+            sendToServer(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loginClient (LinkedList < Object > msg) {
+        if (msg.get(1).equals("#SUCCESS")) {
+            switch (msg.get(2).toString()) {
+                case "CUSTOMER" -> this.user = (Customer) msg.get(3);
+                case "EMPLOYEE" -> this.user = (Employee) msg.get(3);
+                case "GUEST" -> this.user = new Guest();
+            }
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    changeMenu();
+                }
+            });
+
+            //TODO add menu switch and "hello {name}".
+        }
+        //TODO add response to failure.
+    }
 
 
     }

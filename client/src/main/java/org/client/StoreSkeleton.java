@@ -56,7 +56,7 @@ public class StoreSkeleton {
         return controller;
     }
 
-    private void changeLeft(String name) {
+    public void changeLeft(String name) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(name + ".fxml"));
         mainScreen.getChildren().remove(mainScreen.getLeft()); //remove existing fxml from left.
         Controller controller = null;
@@ -75,6 +75,8 @@ public class StoreSkeleton {
         assert catalogBtn != null : "fx:id=\"catalog\" was not injected: check your FXML file 'First catalog try.fxml'.";
         assert mainScreen != null : "fx:id=\"mainScreen\" was not injected: check your FXML file 'First catalog try.fxml'.";
         assert cartBtn != null : "fx:id=\"openImage\" was not injected: check your FXML file 'First catalog try.fxml'.";
+
+        App.client.storeSkeleton=this;
 
         changeCenter("Catalog");
         changeLeft("GuestMenu");

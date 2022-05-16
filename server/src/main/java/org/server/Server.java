@@ -31,6 +31,7 @@ public class Server extends AbstractServer {
                 case "#SIGNUP_AUTHENTICATION" -> authinticateUser((LinkedList<Object>) msg, client);
                 case "#SIGNUP" -> signUpServer(((LinkedList<Object>)msg),client);
                 case "#PULLSTORES" -> pullStores(((LinkedList<Object>) msg), client);  //display updated catalog version
+                case "#LOGOUT" -> logoutServer((LinkedList<Object>) msg, client);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -106,26 +107,54 @@ public class Server extends AbstractServer {
         App.session.flush();
         App.session.getTransaction().commit();
     }
+    private void updateConnected(User user,Boolean connected){
+        App.session.beginTransaction();
+        App.session.evict(user);       //evict current product details from database
+        user.setConnected(connected);
+        App.session.merge(user);           //merge into database with updated info
+        App.session.flush();
+        App.session.getTransaction().commit(); // Save everything.
+    }
 
     private void loginServer(LinkedList<Object> msg,ConnectionToClient client) throws IOException {
         List<User> users = App.getAllUsers();
         for(User user : users){
-            if(user.getUserName().equals(msg.get(1))){
-                if(user.getPassword().equals(msg.get(2))){
-                    msg.remove(2);
-                    msg.remove(1);
-                    msg.add("#SUCCESS");
-                    msg.add(user);
-                    if(user instanceof Customer) {
-                        msg.add("CUSTOMER");
-                    }else if (user instanceof Employee) {
-                        msg.add("EMPLOYEE");
+            if(user.getUserName().equals(msg.get(1)) && user.getPassword().equals(msg.get(2))){
+                synchronized (this){
+                    if(!user.getConnected()){
+                        updateConnected(user,true);
+                        msg.remove(2);
+                        msg.remove(1);
+                        msg.add("#SUCCESS");
+                        if(user instanceof Customer) {
+                            msg.add("CUSTOMER");
+                        }else if (user instanceof Employee) {
+                            msg.add("EMPLOYEE");
+                        }
+                        msg.add(user);
+                        client.sendToClient(msg);
                     }
-                    client.sendToClient(msg);
                 }
             }
         }
     }
+
+    private void logoutServer(LinkedList<Object> msg, ConnectionToClient client){
+
+        updateConnected((User) msg.get(1),false);
+        msg.remove(1);
+        msg.remove(0);
+        msg.add("#LOGIN");
+        msg.add("#SUCCESS");
+        msg.add("GUEST");
+        try {
+            client.sendToClient(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     @Override
     protected synchronized void clientDisconnected(ConnectionToClient client) { //is client disconnected

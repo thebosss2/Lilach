@@ -33,7 +33,6 @@ public class App {
         configuration.addAnnotatedClass(Complaint.class);
         configuration.addAnnotatedClass(Order.class);
         configuration.addAnnotatedClass(Store.class);
-        configuration.addAnnotatedClass(Employee.class);
 
 
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();        //pull session factory config from hibernate properties
@@ -55,8 +54,8 @@ public class App {
             session.save(p1);   //saves and flushes to database
             session.flush();
         }
-        Customer cust = new Customer("Sagi","Sagi","Sagi","Sagi",new Date(),"Sagi", Customer.AccountType.MEMBERSHIP);
-        session.save(cust);
+        Employee emp = new Employee("Sagi","Sagi","Sagi","Sagi",new Date(),Employee.Role.STORE_EMPLOYEE);
+        session.save(emp);
         session.flush();
     }
 
