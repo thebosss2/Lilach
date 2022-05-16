@@ -10,24 +10,25 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.CreateOrderController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.CreateOrderController">
    <children>
-      <TabPane prefHeight="600.0" prefWidth="1050.0" style="-fx-background-color: ffffff;" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="40.0" tabMaxWidth="120.0" tabMinHeight="40.0" tabMinWidth="120.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="1050.0" style="-fx-background-color: ffffff;" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="40.0" tabMaxWidth="120.0" tabMinHeight="40.0" tabMinWidth="120.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
           <Tab fx:id="selfTab" onSelectionChanged="#tabClicked" style="-fx-background-color: e6b3ff; -fx-font-size: 16px;" text="self shipping">
             <content>
-              <AnchorPane focusTraversable="true" minHeight="0.0" minWidth="0.0" prefHeight="312.0" prefWidth="1050.0">
+              <AnchorPane focusTraversable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0">
                      <children>
-                        <HBox prefHeight="552.0" prefWidth="1050.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <HBox prefHeight="553.0" prefWidth="676.0">
+                              <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
                                  <children>
-                                    <VBox prefHeight="552.0" prefWidth="700.0" spacing="19.0">
+                                    <VBox maxWidth="700.0" prefHeight="552.0" prefWidth="250.0" spacing="19.0">
                                        <children>
                                           <Label alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="170.0" text="Fill the following fields:">
                                              <font>
@@ -64,13 +65,13 @@
                                           <Insets left="20.0" />
                                        </HBox.margin>
                                     </VBox>
-                                    <VBox prefHeight="484.0" prefWidth="750.0" spacing="20.0">
+                                    <VBox maxWidth="400.0" prefHeight="484.0" prefWidth="750.0" spacing="20.0">
                                        <children>
-                                          <TextField fx:id="selfAddressText" prefWidth="237.0" />
-                                          <TextField fx:id="selfEmailText" prefWidth="237.0" />
-                                          <TextField fx:id="selfPhoneText" prefWidth="237.0" />
-                                          <DatePicker fx:id="selfShippingDate" prefHeight="25.0" prefWidth="315.0" />
-                                          <ComboBox fx:id="selfHourPicker" prefHeight="25.0" prefWidth="304.0" />
+                                          <TextField fx:id="selfAddressText" maxWidth="300.0" prefWidth="300.0" />
+                                          <TextField fx:id="selfEmailText" maxWidth="300.0" prefWidth="300.0" />
+                                          <TextField fx:id="selfPhoneText" maxWidth="300.0" prefWidth="300.0" />
+                                          <DatePicker fx:id="selfShippingDate" maxWidth="300.0" onAction="#selfEnableHours" prefHeight="25.0" prefWidth="300.0" />
+                                          <ComboBox fx:id="selfHourPicker" maxWidth="300.0" prefHeight="25.0" prefWidth="300.0" />
                                        </children>
                                        <HBox.margin>
                                           <Insets right="150.0" top="68.0" />
@@ -78,14 +79,90 @@
                                     </VBox>
                                  </children>
                               </HBox>
-                              <VBox prefHeight="553.0" prefWidth="381.0" style="-fx-background-color: e6b3ff;">
+                              <VBox minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: e6b3ff;">
                                  <children>
                                     <Label alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="170.0" text="Order summery:">
                                        <font>
                                           <Font name="Calibri" size="18.0" />
                                        </font>
                                     </Label>
-                                    <Pane fx:id="selfCartPane" prefHeight="459.0" prefWidth="504.0" />
+                                    <FlowPane fx:id="selfCartPane" />
+                                    <TextFlow prefHeight="60.0" prefWidth="378.0">
+                                       <children>
+                                          <TextFlow prefHeight="96.0" prefWidth="263.0">
+                                             <children>
+                                                <Label prefHeight="32.0" prefWidth="214.0" text="shipping fee:">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="10.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label prefHeight="32.0" prefWidth="202.0" text="price before discount: ">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="10.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label prefHeight="32.0" prefWidth="202.0" text="discount: ">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="10.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label prefHeight="32.0" prefWidth="213.0" text="final price:">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="10.0" />
+                                                   </padding>
+                                                </Label>
+                                             </children>
+                                          </TextFlow>
+                                          <TextFlow prefHeight="100.0" prefWidth="90.0">
+                                             <children>
+                                                <Label prefHeight="32.0" prefWidth="130.0" text="20">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="10.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label fx:id="selfPriceBeforeLabel" prefHeight="32.0" prefWidth="130.0" text="price before">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="10.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label fx:id="selfDiscountLabel" prefHeight="32.0" prefWidth="110.0" text="0%">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="10.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label fx:id="selfFinalPriceLabel" prefHeight="32.0" prefWidth="110.0" text="final price">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="10.0" />
+                                                   </padding>
+                                                </Label>
+                                             </children>
+                                          </TextFlow>
+                                       </children>
+                                    </TextFlow>
                                     <Button fx:id="selfSubmitBtn" mnemonicParsing="false" onAction="#selfSubmitOrder" prefHeight="31.0" prefWidth="120.0" style="-fx-background-color: c44dff;" text="Submit Order" textFill="WHITE">
                                        <font>
                                           <Font name="Guttman Aharoni" size="15.0" />
@@ -170,7 +247,7 @@
                                           <TextField fx:id="giftReceiverPhoneText" prefWidth="237.0" />
                                           <TextField fx:id="giftEmailText" prefWidth="237.0" />
                                           <TextField fx:id="giftPhoneText" prefWidth="237.0" />
-                                          <DatePicker fx:id="giftShippingDate" prefHeight="25.0" prefWidth="315.0" />
+                                          <DatePicker fx:id="giftShippingDate" onAction="#giftEnableHours" prefHeight="25.0" prefWidth="315.0" />
                                           <ComboBox fx:id="giftHourPicker" prefHeight="22.0" prefWidth="288.0" />
                                        </children>
                                        <HBox.margin>
@@ -186,8 +263,84 @@
                                           <Font name="Calibri" size="18.0" />
                                        </font>
                                     </Label>
-                                    <Pane fx:id="giftCartPane" prefHeight="459.0" prefWidth="390.0" />
-                                    <Button fx:id="selfSubmitBtn1" mnemonicParsing="false" onAction="#selfSubmitOrder" prefHeight="31.0" prefWidth="120.0" style="-fx-background-color: c44dff;" text="Submit Order" textFill="WHITE">
+                                    <FlowPane fx:id="giftCartPane" />
+                                    <TextFlow prefHeight="60.0" prefWidth="378.0">
+                                       <children>
+                                          <TextFlow prefHeight="77.0" prefWidth="218.0">
+                                             <children>
+                                                <Label prefHeight="32.0" prefWidth="214.0" text="shipping fee:">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="10.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label prefHeight="32.0" prefWidth="202.0" text="price before discount: ">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="10.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label prefHeight="32.0" prefWidth="202.0" text="discount: ">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="10.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label prefHeight="32.0" prefWidth="213.0" text="final price:">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="10.0" />
+                                                   </padding>
+                                                </Label>
+                                             </children>
+                                          </TextFlow>
+                                          <TextFlow prefHeight="100.0" prefWidth="130.0">
+                                             <children>
+                                                <Label prefHeight="32.0" prefWidth="130.0" text="20">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="10.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label fx:id="giftPriceBeforeLabel" prefHeight="32.0" prefWidth="130.0" text="price before">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="10.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label fx:id="giftDiscountLabel" prefHeight="32.0" prefWidth="110.0" text="0%">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="10.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label fx:id="giftFinalPriceLabel" prefHeight="32.0" prefWidth="110.0" text="final price">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="10.0" />
+                                                   </padding>
+                                                </Label>
+                                             </children>
+                                          </TextFlow>
+                                       </children>
+                                    </TextFlow>
+                                    <Button fx:id="giftSubmitBtn" mnemonicParsing="false" onAction="#giftSubmitOrder" prefHeight="31.0" prefWidth="120.0" style="-fx-background-color: c44dff;" text="Submit Order" textFill="WHITE">
                                        <font>
                                           <Font name="Guttman Aharoni" size="15.0" />
                                        </font>
@@ -220,7 +373,7 @@
                            <children>
                               <HBox prefHeight="555.0" prefWidth="710.0">
                                  <children>
-                                    <VBox prefHeight="386.0" prefWidth="433.0" spacing="20.0">
+                                    <VBox prefHeight="553.0" prefWidth="466.0" spacing="20.0">
                                        <children>
                                           <Label alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="170.0" text="Fill the following fields:">
                                              <font>
@@ -250,7 +403,7 @@
                                     <VBox prefHeight="265.0" prefWidth="533.0" spacing="20.0">
                                        <children>
                                           <ComboBox fx:id="TAStorePicker" prefHeight="22.0" prefWidth="288.0" />
-                                          <DatePicker fx:id="TADate" prefHeight="25.0" prefWidth="315.0" />
+                                          <DatePicker fx:id="TADate" onAction="#TAEnableHours" prefHeight="25.0" prefWidth="315.0" />
                                           <ComboBox fx:id="TAHourPicker" prefHeight="22.0" prefWidth="288.0" />
                                        </children>
                                        <HBox.margin>
@@ -266,8 +419,68 @@
                                           <Font name="Calibri" size="18.0" />
                                        </font>
                                     </Label>
-                                    <Pane fx:id="TACartPane" prefHeight="459.0" prefWidth="390.0" />
-                                    <Button fx:id="selfSubmitBtn2" mnemonicParsing="false" onAction="#selfSubmitOrder" prefHeight="31.0" prefWidth="120.0" style="-fx-background-color: c44dff;" text="Submit Order" textFill="WHITE">
+                                    <FlowPane fx:id="TACartPane" />
+                                    <TextFlow prefHeight="60.0" prefWidth="378.0">
+                                       <children>
+                                          <TextFlow prefHeight="77.0" prefWidth="218.0">
+                                             <children>
+                                                <Label prefHeight="32.0" prefWidth="202.0" text="price before discount: ">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="10.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label prefHeight="32.0" prefWidth="202.0" text="discount: ">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="10.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label prefHeight="32.0" prefWidth="214.0" text="final price:">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="10.0" />
+                                                   </padding>
+                                                </Label>
+                                             </children>
+                                          </TextFlow>
+                                          <TextFlow prefHeight="75.0" prefWidth="130.0">
+                                             <children>
+                                                <Label fx:id="TAPriceBeforeLabel" prefHeight="32.0" prefWidth="130.0" text="price before">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="10.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label fx:id="TADiscountLabel" prefHeight="32.0" prefWidth="110.0" text="0%">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="10.0" />
+                                                   </padding>
+                                                </Label>
+                                                <Label fx:id="TAFinalPriceLabel" prefHeight="32.0" prefWidth="110.0" text="final price">
+                                                   <font>
+                                                      <Font size="14.0" />
+                                                   </font>
+                                                   <padding>
+                                                      <Insets left="10.0" />
+                                                   </padding>
+                                                </Label>
+                                             </children>
+                                          </TextFlow>
+                                       </children>
+                                    </TextFlow>
+                                    <Button fx:id="TASubmitBtn" mnemonicParsing="false" onAction="#TASubmitOrder" prefHeight="31.0" prefWidth="120.0" style="-fx-background-color: c44dff;" text="Submit Order" textFill="WHITE">
                                        <font>
                                           <Font name="Guttman Aharoni" size="15.0" />
                                        </font>

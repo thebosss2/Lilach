@@ -30,7 +30,7 @@ public class Client extends AbstractClient {
     private Controller controller;
 
     public Cart cart= new Cart();
-    protected Guest user;
+    protected Guest user = new Customer();
 
     public Client(String localhost, int i) {
         super(localhost, i);
@@ -41,9 +41,9 @@ public class Client extends AbstractClient {
     }
 
     public static void main(String[] args) {
-
-
     }
+
+    public static int[] hourList = {8,9,10,11,12,13,14,15,16,17,18};
 
     // TODO Maybe delete
     private static Client client = null;
