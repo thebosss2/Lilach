@@ -43,6 +43,7 @@ public class GuestMenuController extends Controller {
         coolMenuClick((Button) event.getTarget());
         this.getSkeleton().changeCenter("SignUp");
     }
+
     @FXML
     void mouseOffBtn(MouseEvent event) {
         //TODO

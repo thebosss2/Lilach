@@ -36,8 +36,8 @@ public class LoginController extends Controller{
     void login(ActionEvent event) {
         List<Object> msg = new LinkedList<Object>();
         msg.add("#LOGIN");
-        msg.add(username.getText().toString());
-        msg.add(password.getText().toString());
+        msg.add(username.getText());
+        msg.add(password.getText());
         try {
             App.client.sendToServer(msg);
         } catch (IOException e) {

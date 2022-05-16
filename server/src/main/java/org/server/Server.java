@@ -5,8 +5,10 @@ import org.server.ocsf.AbstractServer;
 import org.server.ocsf.ConnectionToClient;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.zip.CheckedOutputStream;
 
 public class Server extends AbstractServer {
 
@@ -26,11 +28,38 @@ public class Server extends AbstractServer {
                 case "#SAVE" -> updateProduct((LinkedList<Object>) msg);           //save change to product details
                 case "#ADD" -> addProduct((LinkedList<Object>) msg);           // add product to the DB
                 case "#LOGIN" -> loginServer((LinkedList<Object>)msg,client);
+                case "#SIGNUP_AUTHENTICATION" -> authinticateUser((LinkedList<Object>) msg, client);
+                case "#SIGNUP" -> signUpServer(((LinkedList<Object>)msg),client);
                 case "#PULLSTORES" -> pullStores(((LinkedList<Object>) msg), client);  //display updated catalog version
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+
+    private void signUpServer(LinkedList<Object> msg, ConnectionToClient client) {
+        Customer customer = (Customer) msg.get(1);
+        App.session.beginTransaction();
+        App.session.save(customer);
+        App.session.flush();
+        App.session.getTransaction().commit();
+    }
+
+    //Checks if the username asked by new signup exists.
+    private void authinticateUser(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
+        List<User> users = App.getAllUsers();
+        List<Object> newMsg = new LinkedList<Object>();
+        newMsg.add(msg.get(0));
+        for(User user : users){
+            if(user.getUserName().equals(msg.get(1).toString())){
+                newMsg.add("#USER_EXISTS");
+                client.sendToClient(newMsg);
+                return;
+            }
+        }
+        newMsg.add("#USER_NOT_EXISTS");
+        client.sendToClient(newMsg);
     }
 
     private static void updateProduct(Object msg) throws IOException {        //update product details func
@@ -89,7 +118,7 @@ public class Server extends AbstractServer {
                     msg.add(user);
                     if(user instanceof Customer) {
                         msg.add("CUSTOMER");
-                    }else if (user instanceof  Employee) {
+                    }else if (user instanceof Employee) {
                         msg.add("EMPLOYEE");
                     }
                     client.sendToClient(msg);

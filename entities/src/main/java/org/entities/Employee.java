@@ -10,8 +10,8 @@ public class Employee extends User {
     private enum Role { STORE_EMPLOYEE, CUSTOMER_SERVICE, STORE_MANAGER, CEO, ADMIN}
     @Column(name = "employee_role")
     private Role role;
-    public Employee(String name, String userName, String password, String hashPassword, String email, Date birth, Role role) {
-        super(name, userName, password, hashPassword, email, birth);
+    public Employee(String name, String userName, String password, String email, Date birth, Role role) {
+        super(name, userName, password,  email, birth);
         this.role = role;
     }
 

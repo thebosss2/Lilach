@@ -2,31 +2,32 @@ package org.entities;
 
 import javax.persistence.*;
 import javax.persistence.MappedSuperclass;
+import java.io.Serializable;
 import java.util.Date;
 
 @MappedSuperclass
-public class User extends Guest{
+public class User extends Guest implements Serializable {
 
     @Column(name = "user_name")
     private String userName;
     @Column(name = "pass_word")
     private String password;
-    private String hashPassword;
     private String email;
     private Date birth;
     private int balance=0;
 
-    public User(String name, String userName, String password, String hashPassword, String email, Date birth/*,Cart cart*/) {
+    public User(String name, String userName, String password, String email, Date birth/*,Cart cart*/) {
         super(name/*,cart*/);
         this.userName = userName;
         this.password = password;
-        this.hashPassword = hashPassword;
         this.email = email;
         this.birth = birth;
+        System.out.println("Hello there User!");
     }
 
     public User() {
         super();
+        System.out.println("Hello there default User!");
     }
 
     public String getUserName() {
@@ -43,14 +44,6 @@ public class User extends Guest{
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getHashPassword() {
-        return hashPassword;
-    }
-
-    public void setHashPassword(String hashPassword) {
-        this.hashPassword = hashPassword;
     }
 
     public String getEmail() {
