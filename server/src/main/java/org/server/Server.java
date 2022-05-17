@@ -58,7 +58,7 @@ public class Server extends AbstractServer {
                 client.sendToClient(newMsg);
                 return;
             }
-        }
+        }//TODO check if ID already exists and email
         newMsg.add("#USER_NOT_EXISTS");
         client.sendToClient(newMsg);
     }
