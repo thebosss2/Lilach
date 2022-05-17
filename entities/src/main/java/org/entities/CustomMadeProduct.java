@@ -11,9 +11,14 @@ public class CustomMadeProduct extends Product {
     @ManyToMany
     @Column(name= "products")
     private List<PreMadeProduct> products = new LinkedList<PreMadeProduct>();
+
+
     public enum ItemType {FLOWER_ARRANGEMENT, BLOOMING_POT, BRIDES_BOUQUET, BOUQUET}
     private ItemType itemType;
 
+    public ItemType getItemType() {
+        return itemType;
+    }
 
     // this is called when on custom made page
     //user selects multiple premadeProducts into list that is saved on controller(customMadeCatalog controller)

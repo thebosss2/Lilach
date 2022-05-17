@@ -209,7 +209,6 @@ public class CreateOrderController extends Controller{
         pane.getChildren().add(fxmlLoader.load());  //Adds new product pane to the screen.
         SummeryPreProductController controller = fxmlLoader.getController();
         controller.setSummeryPreProduct(product.getName(),product.getPrice());
-
     }
 
     private void setPrices() {
@@ -226,7 +225,7 @@ public class CreateOrderController extends Controller{
             giftFinalPriceLabel.setText(String.valueOf((int)(0.9 * App.client.cart.getTotalCost())+20)); //also added shipping fee
             selfFinalPriceLabel.setText(String.valueOf((int)(0.9 * App.client.cart.getTotalCost())+20));
         }
-        else { //no discount for no members
+        else { //no discount for not members
             TAFinalPriceLabel.setText(String.valueOf(App.client.cart.getTotalCost()));
             giftFinalPriceLabel.setText(String.valueOf(App.client.cart.getTotalCost()+20)); // added shipping fee
             selfFinalPriceLabel.setText(String.valueOf(App.client.cart.getTotalCost()+20));
@@ -247,9 +246,9 @@ public class CreateOrderController extends Controller{
 
     private void enableHours(ComboBox<String> HourPicker, DatePicker datePicker) {
         HourPicker.setDisable(false); //enable the combobox
+        HourPicker.getItems().clear();
         if (datePicker.getValue().atStartOfDay().isEqual(LocalDate.now().atStartOfDay())){ //if the required date is today
             LocalTime now = LocalTime.now();
-            HourPicker.getItems().clear();
             for(int i = 0; i< Client.hourList.length; i++)  //the combobox will contain all hours after current hour
                 if(now.getHour() < Client.hourList[i])
                     HourPicker.getItems().add(String.valueOf(Client.hourList[i]) +":00");
