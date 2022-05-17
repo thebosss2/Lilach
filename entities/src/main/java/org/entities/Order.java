@@ -26,7 +26,7 @@ public class Order implements Serializable {     //Product class entity
     protected Customer orderedBy;
 
     @ManyToOne
-    private Store store;
+    protected Store store;
 
     protected int price;
     protected String orderTime;
@@ -38,12 +38,12 @@ public class Order implements Serializable {     //Product class entity
     protected Delivery delivery;
 
     //shipping order information:
-    private String personalPhone = null;
-    private String receiverPhone = null;
-    private String receiverName= null;
-    private String address= null;
-    private String email= null;
-    private String greetingCard = null;
+    protected String personalPhone = null;
+    protected String receiverPhone = null;
+    protected String receiverName= null;
+    protected String address= null;
+    protected String email= null;
+    protected String greetingCard = null;
 
 
     //SHIPPING_GIFT constructor
@@ -74,7 +74,7 @@ public class Order implements Serializable {     //Product class entity
     //SELF_SHIPPING constructor
     public Order(LinkedList<PreMadeProduct> preMadeProducts, LinkedList<CustomMadeProduct> customMadeProducts,
                  Customer orderedBy, int price, Date deliveryDate, String deliveryHour,
-                 String personalPhone, String address, String email) {
+                 String personalPhone, String address, String email, String greetingCard) {
 
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat simpleformat = new SimpleDateFormat("dd/MMMM/yyyy hh:mm:s");
@@ -96,7 +96,7 @@ public class Order implements Serializable {     //Product class entity
 
     //TAKEAWAY constructor
     public Order(LinkedList<PreMadeProduct> preMadeProducts, LinkedList<CustomMadeProduct> customMadeProducts,
-                 Customer orderedBy, int price, Store store, Date deliveryDate, String deliveryHour) {
+                 Customer orderedBy, int price, Store store, Date deliveryDate, String deliveryHour, String greetingCard) {
 
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat simpleformat = new SimpleDateFormat("dd/MMMM/yyyy hh:mm:s");
@@ -111,13 +111,14 @@ public class Order implements Serializable {     //Product class entity
         this.deliveryHour = deliveryHour;
         this.isDelivered = false;
         this.store = store;
-
+        this.greetingCard = greetingCard;
     }
 
     public Order() {
 
     }
 
+    //getters and setters:
     public List<CustomMadeProduct> getCustomMadeProducts(){
         return this.customMadeProducts;
     }

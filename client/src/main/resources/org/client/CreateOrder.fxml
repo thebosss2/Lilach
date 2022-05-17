@@ -163,7 +163,7 @@
                                           </TextFlow>
                                        </children>
                                     </TextFlow>
-                                    <Button fx:id="selfSubmitBtn" mnemonicParsing="false" onAction="#selfSubmitOrder" prefHeight="31.0" prefWidth="120.0" style="-fx-background-color: c44dff;" text="Submit Order" textFill="WHITE">
+                                    <Button fx:id="selfSubmitBtn" mnemonicParsing="false" onAction="#SubmitOrder" prefHeight="31.0" prefWidth="120.0" style="-fx-background-color: c44dff;" text="Submit Order" textFill="WHITE">
                                        <font>
                                           <Font name="Guttman Aharoni" size="15.0" />
                                        </font>
@@ -340,7 +340,7 @@
                                           </TextFlow>
                                        </children>
                                     </TextFlow>
-                                    <Button fx:id="giftSubmitBtn" mnemonicParsing="false" onAction="#giftSubmitOrder" prefHeight="31.0" prefWidth="120.0" style="-fx-background-color: c44dff;" text="Submit Order" textFill="WHITE">
+                                    <Button fx:id="giftSubmitBtn" mnemonicParsing="false" onAction="#SubmitOrder" prefHeight="31.0" prefWidth="120.0" style="-fx-background-color: c44dff;" text="Submit Order" textFill="WHITE">
                                        <font>
                                           <Font name="Guttman Aharoni" size="15.0" />
                                        </font>
@@ -480,7 +480,7 @@
                                           </TextFlow>
                                        </children>
                                     </TextFlow>
-                                    <Button fx:id="TASubmitBtn" mnemonicParsing="false" onAction="#TASubmitOrder" prefHeight="31.0" prefWidth="120.0" style="-fx-background-color: c44dff;" text="Submit Order" textFill="WHITE">
+                                    <Button fx:id="TASubmitBtn" mnemonicParsing="false" onAction="#SubmitOrder" prefHeight="31.0" prefWidth="120.0" style="-fx-background-color: c44dff;" text="Submit Order" textFill="WHITE">
                                        <font>
                                           <Font name="Guttman Aharoni" size="15.0" />
                                        </font>
