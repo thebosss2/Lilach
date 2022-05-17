@@ -8,6 +8,8 @@ import java.util.Date;
 @MappedSuperclass
 public class User extends Guest implements Serializable {
 
+    @Column(name = " Identification")
+    private int ID;
     @Column(name = "user_name")
     private String userName;
     @Column(name = "pass_word")
@@ -17,19 +19,18 @@ public class User extends Guest implements Serializable {
     private int balance=0;
     private Boolean connected;
 
-    public User(String name, String userName, String password, String email, Date birth/*,Cart cart*/) {
+    public User(int ID, String name, String userName, String password, String email, Date birth/*,Cart cart*/) {
         super(name/*,cart*/);
+        this.ID=ID;
         this.userName = userName;
         this.password = password;
         this.email = email;
         this.birth = birth;
         this.connected=false;
-        System.out.println("Hello there User!");
     }
 
     public User() {
         super();
-        System.out.println("Hello there default User!");
     }
 
     public String getUserName() {
@@ -74,5 +75,13 @@ public class User extends Guest implements Serializable {
 
     public void setConnected(Boolean connected) {
         this.connected = connected;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
     }
 }

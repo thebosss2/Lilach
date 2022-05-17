@@ -41,7 +41,7 @@ public class App {
         for (int i = 0; i < 5; i++) {
             var img1 = loadImageFromResources(String.format("Flower%s.jpg", i));
             PreMadeProduct p1 = new PreMadeProduct("Flower" + i, img1, price = random.nextInt(1000), (price - random.nextInt(500)));
-            Customer cust = new Customer("name","user","pass","mail",new Date(),"credit", Customer.AccountType.MEMBERSHIP);
+            Customer cust = new Customer(23234+i, "name","user","pass","mail",new Date(),"credit", Customer.AccountType.MEMBERSHIP);
             Complaint c = new Complaint(cust ,new Date(),"bad bad bad", Complaint.Topic.BAD_SERVICE);
             session.save(cust);
             session.flush();
@@ -50,8 +50,11 @@ public class App {
             session.save(p1);   //saves and flushes to database
             session.flush();
         }
-        Employee emp = new Employee("Sagi","Sagi","Sagi","Sagi",new Date(),Employee.Role.STORE_EMPLOYEE);
+        Employee emp = new Employee(34023040,"Sagi","Sagi","Sagi","Sagi",new Date(),Employee.Role.STORE_EMPLOYEE);
         session.save(emp);
+        session.flush();
+        Employee man = new Employee(347823040,"Itai","Itai","Itai","Itai",new Date(),Employee.Role.STORE_MANAGER);
+        session.save(man);
         session.flush();
     }
 

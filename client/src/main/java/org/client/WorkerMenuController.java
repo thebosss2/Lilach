@@ -13,7 +13,7 @@ public class WorkerMenuController extends Controller {
     protected Button editCatalogBtn;
 
     @FXML // fx:id="logoutBtn"
-    private Button logoutBtn; // Value injected by FXMLLoader
+    protected Button logoutBtn; // Value injected by FXMLLoader
 
     @FXML
     void goToEditCatalog(ActionEvent event) throws InterruptedException {       // loads edit catalog view for worker

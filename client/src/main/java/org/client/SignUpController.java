@@ -64,7 +64,7 @@ public class SignUpController extends Controller{
 
     @FXML
     void signUpClicked(ActionEvent event) {
-        if(checkFieldsNotEmpty()){
+        if(checkFieldsNotEmpty() /*&& idAndEmailCheck()*/){
             sendAlert("One or more fields are empty!");
             return;
         }
@@ -72,6 +72,7 @@ public class SignUpController extends Controller{
         List<Object> msg = new LinkedList<Object>();
         msg.add("#SIGNUP_AUTHENTICATION");
         msg.add(usernameText.getText().toString());
+        msg.add(324234);        //TODO add id here for validation check
         try {
             coolButtonClick(signUpBtn);
             App.client.sendToServer(msg);
@@ -99,13 +100,25 @@ public class SignUpController extends Controller{
 
     }
 
+    /*private boolean idAndEmailCheck() {
+
+        String email = emailText.getText().toString();
+        String compMail=email;
+        int countAt = compMail.length() - compMail.replace("@", "").length();
+        if(countAt!=1 || email.indexOf("@")==0)
+            return false;
+        if(Id.length()!=9)
+            return false;
+        return true;
+    }*/
+
     private boolean checkFieldsNotEmpty() {
         return fullNameText.getText().isEmpty() || usernameText.getText().isEmpty() || passwordText.getText().isEmpty() ||
                 emailText.getText().isEmpty() || creditCardText.getText().isEmpty() || accountType.getSelectionModel().isEmpty() || birthdatePicker.getValue() == null;
     }
 
-    public Customer createNewUser(){
-        return new Customer(fullNameText.getText(),
+    public Customer createNewUser(){    //TODO add id
+        return new Customer(234,fullNameText.getText(),
                 usernameText.getText(),
                 passwordText.getText(),
                 emailText.getText(),

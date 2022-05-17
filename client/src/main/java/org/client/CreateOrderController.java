@@ -163,6 +163,7 @@ public class CreateOrderController extends Controller{
     }
 
     private void getStores() {
+        //added check if user is guest or customer
         if(App.client.user instanceof Customer) {
             if (((Customer) (App.client.user)).getAccountType() == Customer.AccountType.STORE)  //if there is certain store for this costumer
                 TAStorePicker.setDisable(true); //disable the combobox
@@ -217,6 +218,7 @@ public class CreateOrderController extends Controller{
         TAPriceBeforeLabel.setText(String.valueOf(App.client.cart.getTotalCost()));
         giftPriceBeforeLabel.setText(String.valueOf(App.client.cart.getTotalCost()));
         selfPriceBeforeLabel.setText(String.valueOf(App.client.cart.getTotalCost()));
+        //added check if user is guest or customer
         if(App.client.user instanceof Customer) {
             if(((Customer)(App.client.user)).getAccountType() == Customer.AccountType.MEMBERSHIP && App.client.cart.getTotalCost()>=50){
                 //if the user is member and have order larger than 50 nis- we give 10% discount
