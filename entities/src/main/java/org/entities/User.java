@@ -15,6 +15,7 @@ public class User extends Guest implements Serializable {
     private String email;
     private Date birth;
     private int balance=0;
+    private Boolean connected;
 
     public User(String name, String userName, String password, String email, Date birth/*,Cart cart*/) {
         super(name/*,cart*/);
@@ -22,6 +23,7 @@ public class User extends Guest implements Serializable {
         this.password = password;
         this.email = email;
         this.birth = birth;
+        this.connected=false;
         System.out.println("Hello there User!");
     }
 
@@ -64,5 +66,13 @@ public class User extends Guest implements Serializable {
 
     public void setBalance(int balance) {
         this.balance = balance;
+    }
+
+    public Boolean getConnected() {
+        return connected;
+    }
+
+    public void setConnected(Boolean connected) {
+        this.connected = connected;
     }
 }
