@@ -16,16 +16,29 @@ public class ManagerMenuController extends WorkerMenuController {
 
         //if(((Employee)App.client.user).role == CEO)
         this.getSkeleton().changeCenter("CEOReport");
+        //this.getSkeleton().changeCenter("EditCatalog");
         //else
         //    this.getSkeleton().changeCenter("StoreReport");
     }
 
+
+    @FXML
+    void logOut(ActionEvent event) throws InterruptedException {
+        coolMenuClick((Button) event.getTarget());
+        App.client.logOut();
+    }
+
     @Override
     protected void coolMenuClick(Button button) throws InterruptedException {
-
         editCatalogBtn.setStyle("-fx-background-color: #9bc98c");
         reportsBtn.setStyle("-fx-background-color: #9bc98c");
         button.setStyle("-fx-background-color: #62a74d");
+
+    }
+
+    @FXML // This method is called by the FXMLLoader when initialization is complete
+    void initialize() {
+        assert reportsBtn != null : "fx:id=\"reportsBtn\" was not injected: check your FXML file 'ManagerMenu.fxml'.";
     }
 
 }
