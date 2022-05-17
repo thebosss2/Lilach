@@ -30,7 +30,7 @@ public class Client extends AbstractClient {
     private Controller controller;
 
     public Cart cart= new Cart();
-    protected Guest user = new Customer();
+    protected Guest user;
 
     public Client(String localhost, int i) {
         super(localhost, i);
