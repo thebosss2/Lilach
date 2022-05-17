@@ -7,9 +7,9 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane prefHeight="60.0" prefWidth="500.0" style="-fx-background-color: e6b3ff; -fx-border-color: ffffff; -fx-border-radius: 20; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.SummeryCustomProductController">
+<AnchorPane prefWidth="500.0" style="-fx-background-color: e6b3ff; -fx-border-color: ffffff; -fx-border-radius: 20; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.SummeryCustomProductController">
    <children>
-      <Label layoutX="4.0" prefHeight="22.0" prefWidth="118.0" text="custom made:">
+      <Label fx:id="type" layoutX="9.0" layoutY="1.0" prefHeight="22.0" prefWidth="242.0" text="custom  ">
          <font>
             <Font name="Calibri Light" size="18.0" />
          </font>
@@ -17,7 +17,7 @@
             <Insets left="7.0" />
          </padding>
       </Label>
-      <Label layoutX="406.0" layoutY="3.0" prefHeight="20.0" prefWidth="54.0" text="price:">
+      <Label layoutX="419.0" layoutY="31.0" prefHeight="20.0" prefWidth="54.0" text="price:">
          <font>
             <Font name="Calibri Light" size="17.0" />
          </font>
@@ -25,12 +25,12 @@
             <Insets left="7.0" />
          </padding>
       </Label>
-      <Text fx:id="price" layoutX="460.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="10" wrappingWidth="26.13671875">
+      <Text fx:id="price" layoutX="470.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="10" wrappingWidth="26.13671875">
          <font>
             <Font name="Calibri Light" size="15.0" />
          </font>
       </Text>
-      <TextFlow layoutX="127.0" prefHeight="69.0" prefWidth="250.0">
+      <TextFlow layoutX="6.0" layoutY="26.0" prefHeight="48.0" prefWidth="402.0">
          <children>
             <Text fx:id="description" strokeType="OUTSIDE" strokeWidth="0.0" text="desciprtion: " wrappingWidth="52.13671875">
                <font>

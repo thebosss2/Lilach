@@ -43,7 +43,7 @@ public class CartController extends Controller {
 
     @FXML
     void createOrder(ActionEvent event) {
-
+        this.globalSkeleton.changeCenter("CreateOrder");
     }
 
     @FXML

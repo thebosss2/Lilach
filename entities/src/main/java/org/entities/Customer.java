@@ -13,6 +13,9 @@ public class Customer extends User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+
+
     public enum AccountType{STORE, CHAIN, MEMBERSHIP}
     private AccountType accountType;
     private String creditCard;
@@ -39,6 +42,14 @@ public class Customer extends User implements Serializable {
 
     public void setCreditCard(String creditCard) {
         this.creditCard = creditCard;
+    }
+
+    public AccountType getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(AccountType accountType) {
+        this.accountType = accountType;
     }
 
 }

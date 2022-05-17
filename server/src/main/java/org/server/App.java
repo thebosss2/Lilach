@@ -13,11 +13,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import java.io.IOException;
 import java.util.*;
 
-/**
- * Hello world!
- */
 public class App {
-
     public static Session session;// encapsulation make public function so this can be private
 
     private static SessionFactory getSessionFactory() throws HibernateException {       //creates session factory for database use
