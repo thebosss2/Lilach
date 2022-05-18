@@ -13,6 +13,8 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.UnaryOperator;
+import java.util.regex.Pattern;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -66,18 +68,23 @@ public class SignUpController extends Controller{
 
     @FXML // fx:id="PhoneNumberText"
     private TextField phoneNumberText; // Value injected by FXMLLoader
-
+    Pattern pattern1 = Pattern.compile(".{0,10}");
     TextFormatter<String> formatter1 = new TextFormatter<String>( change -> {
         change.setText(change.getText().replaceAll("[^0-9.,]", ""));
-        return change;
-
+        return pattern1.matcher(change.getControlNewText()).matches() ? change : null;
     });
-    TextFormatter<String> formatter2 = new TextFormatter<String>( change -> {
+
+    Pattern pattern2 = Pattern.compile(".{0,9}");
+    TextFormatter<String> formatter2 = new TextFormatter<String>(change-> {
         change.setText(change.getText().replaceAll("[^0-9.,]", ""));
-        return change;
-
+        return pattern2.matcher(change.getControlNewText()).matches() ? change : null;
     });
 
+    Pattern pattern3 = Pattern.compile(".{0,16}");
+    TextFormatter<String> formatter3 = new TextFormatter<String>(change-> {
+        change.setText(change.getText().replaceAll("[^0-9.,]", ""));
+        return pattern3.matcher(change.getControlNewText()).matches() ? change : null;
+    });
 
     @FXML
     void signUpClicked(ActionEvent event) {
@@ -181,6 +188,7 @@ public class SignUpController extends Controller{
 
         phoneNumberText.setTextFormatter(formatter1);
         idText.setTextFormatter(formatter2);
+        creditCardText.setTextFormatter(formatter3);
 
     }
 
