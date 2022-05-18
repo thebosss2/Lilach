@@ -29,8 +29,8 @@ public class Customer extends User implements Serializable {
     @Column(name = "complaint")
     private List<Complaint> complaints = new LinkedList<Complaint>();
 
-    public Customer(int ID, String name, String userName, String password, String email, Date birth, String creditCard, AccountType accountType) {
-        super(ID, name, userName, password, email, birth);
+    public Customer(String userID, String name, String userName, String password, String email, String phone, String creditCard, AccountType accountType) {
+        super(userID, name, userName, password, email, phone);
         this.creditCard = creditCard;
         this.accountType = accountType;
         //TODO add hashing to password if have time.

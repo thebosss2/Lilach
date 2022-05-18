@@ -6,6 +6,8 @@ package org.client;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.ParsePosition;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.LinkedList;
@@ -31,9 +33,6 @@ public class SignUpController extends Controller{
 
     @FXML // fx:id="accountType"
     private ChoiceBox<String> accountType = new ChoiceBox<>(); // Value injected by FXMLLoader
-
-    @FXML // fx:id="birthdatePicker"
-    private DatePicker birthdatePicker; // Value injected by FXMLLoader
 
     @FXML // fx:id="creditCardText"
     private TextField creditCardText; // Value injected by FXMLLoader
@@ -62,6 +61,24 @@ public class SignUpController extends Controller{
     @FXML // fx:id="usernameText"
     private TextField usernameText; // Value injected by FXMLLoader
 
+    @FXML // fx:id="IdText"
+    private TextField idText; // Value injected by FXMLLoader
+
+    @FXML // fx:id="PhoneNumberText"
+    private TextField phoneNumberText; // Value injected by FXMLLoader
+
+    TextFormatter<String> formatter1 = new TextFormatter<String>( change -> {
+        change.setText(change.getText().replaceAll("[^0-9.,]", ""));
+        return change;
+
+    });
+    TextFormatter<String> formatter2 = new TextFormatter<String>( change -> {
+        change.setText(change.getText().replaceAll("[^0-9.,]", ""));
+        return change;
+
+    });
+
+
     @FXML
     void signUpClicked(ActionEvent event) {
         if(checkFieldsNotEmpty() /*&& idAndEmailCheck()*/){
@@ -72,7 +89,7 @@ public class SignUpController extends Controller{
         List<Object> msg = new LinkedList<Object>();
         msg.add("#SIGNUP_AUTHENTICATION");
         msg.add(usernameText.getText().toString());
-        msg.add(324234);        //TODO add id here for validation check
+        msg.add(idText.getText().toString());        //TODO add id here for validation check
         try {
             coolButtonClick(signUpBtn);
             App.client.sendToServer(msg);
@@ -113,16 +130,16 @@ public class SignUpController extends Controller{
     }*/
 
     private boolean checkFieldsNotEmpty() {
-        return fullNameText.getText().isEmpty() || usernameText.getText().isEmpty() || passwordText.getText().isEmpty() ||
-                emailText.getText().isEmpty() || creditCardText.getText().isEmpty() || accountType.getSelectionModel().isEmpty() || birthdatePicker.getValue() == null;
+        return fullNameText.getText().isEmpty() || usernameText.getText().isEmpty() || passwordText.getText().isEmpty() ||idText.getText().isEmpty()||
+                emailText.getText().isEmpty() || creditCardText.getText().isEmpty() || accountType.getSelectionModel().isEmpty() || phoneNumberText.getText().isEmpty();
     }
 
     public Customer createNewUser(){    //TODO add id
-        return new Customer(234,fullNameText.getText(),
+        return new Customer(idText.getText(),fullNameText.getText(),
                 usernameText.getText(),
                 passwordText.getText(),
                 emailText.getText(),
-                Date.from(birthdatePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                phoneNumberText.getText(),
                 creditCardText.getText(),
                 coonvertToAccountType(accountType.getValue()));
     }
@@ -141,8 +158,9 @@ public class SignUpController extends Controller{
     }
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
+        assert idText != null : "fx:id=\"idText\" was not injected: check your FXML file 'SignUp.fxml'.";
+        assert phoneNumberText != null : "fx:id=\"phoneNumberText\" was not injected: check your FXML file 'SignUp.fxml'.";
         assert accountType != null : "fx:id=\"accountType\" was not injected: check your FXML file 'SignUp.fxml'.";
-        assert birthdatePicker != null : "fx:id=\"birthdatePicker\" was not injected: check your FXML file 'SignUp.fxml'.";
         assert creditCardText != null : "fx:id=\"creditCardText\" was not injected: check your FXML file 'SignUp.fxml'.";
         assert defaultStore != null : "fx:id=\"defaultStore\" was not injected: check your FXML file 'SignUp.fxml'.";
         assert emailText != null : "fx:id=\"emailText\" was not injected: check your FXML file 'SignUp.fxml'.";
@@ -152,10 +170,11 @@ public class SignUpController extends Controller{
         assert popup != null : "fx:id=\"popup\" was not injected: check your FXML file 'SignUp.fxml'.";
         assert signUpBtn != null : "fx:id=\"signUpBtn\" was not injected: check your FXML file 'SignUp.fxml'.";
         assert usernameText != null : "fx:id=\"usernameText\" was not injected: check your FXML file 'SignUp.fxml'.";
-
-        birthdatePicker.setPromptText("dd-MM-yyyy");
-
         accountType.getItems().addAll("Store", "Chain", "Membership");
+
+        phoneNumberText.setTextFormatter(formatter1);
+        idText.setTextFormatter(formatter2);
+
     }
 
 }
