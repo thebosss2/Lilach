@@ -156,7 +156,7 @@ public class Client extends AbstractClient {
     private void changeMenu(){
 
         if(this.user instanceof Customer){
-            //storeSkeleton.changeLeft("CustomerMenu");
+            storeSkeleton.changeLeft("CustomerMenu");
         }else if(this.user instanceof Employee){
             switch(((Employee) this.user).getRole()){
                 case STORE_EMPLOYEE -> storeSkeleton.changeLeft("WorkerMenu");

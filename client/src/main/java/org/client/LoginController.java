@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 public class LoginController extends Controller{
@@ -27,7 +28,7 @@ public class LoginController extends Controller{
     private Button loginBtn; // Value injected by FXMLLoader
 
     @FXML // fx:id="password"
-    private TextField password; // Value injected by FXMLLoader
+    private PasswordField password; // Value injected by FXMLLoader
 
     @FXML // fx:id="username"
     private TextField username; // Value injected by FXMLLoader

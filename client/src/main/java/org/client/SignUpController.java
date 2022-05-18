@@ -50,7 +50,7 @@ public class SignUpController extends Controller{
     private AnchorPane mainPane; // Value injected by FXMLLoader
 
     @FXML // fx:id="passwordText"
-    private TextField passwordText; // Value injected by FXMLLoader
+    private PasswordField passwordText; // Value injected by FXMLLoader
 
     @FXML // fx:id="popup"
     public Text popup; // Value injected by FXMLLoader
@@ -81,8 +81,11 @@ public class SignUpController extends Controller{
 
     @FXML
     void signUpClicked(ActionEvent event) {
-        if(checkFieldsNotEmpty() /*&& idAndEmailCheck()*/){
+        if(checkFieldsNotEmpty()){
             sendAlert("One or more fields are empty!");
+            return;
+        }
+        if(!idAndEmailCheck()){
             return;
         }
         App.client.setController(this);
@@ -117,17 +120,21 @@ public class SignUpController extends Controller{
 
     }
 
-    /*private boolean idAndEmailCheck() {
-
+    private boolean idAndEmailCheck() {
         String email = emailText.getText().toString();
         String compMail=email;
         int countAt = compMail.length() - compMail.replace("@", "").length();
         if(countAt!=1 || email.indexOf("@")==0)
             return false;
-        if(Id.length()!=9)
+        if(idText.getText().length()!=9)
             return false;
+        if(usernameText.getText().contains(" "))
+        {
+            sendAlert("username cannot have spaces");
+            return false;
+        }
         return true;
-    }*/
+    }
 
     private boolean checkFieldsNotEmpty() {
         return fullNameText.getText().isEmpty() || usernameText.getText().isEmpty() || passwordText.getText().isEmpty() ||idText.getText().isEmpty()||
