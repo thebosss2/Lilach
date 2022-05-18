@@ -23,7 +23,7 @@ import java.util.concurrent.Executors;
 
 public class Client extends AbstractClient {
 
-    protected StoreSkeleton storeSkeleton;
+    public StoreSkeleton storeSkeleton;
 
     protected static LinkedList<PreMadeProduct> products = new LinkedList<PreMadeProduct>();//(LinkedList<Product>) Catalog.getProducts();
 
@@ -54,6 +54,11 @@ public class Client extends AbstractClient {
         }
         return client;
     }
+
+    public StoreSkeleton getSkeleton() {
+        return storeSkeleton;
+    }
+
 
     @Override
     protected void handleMessageFromServer(Object msg) {     //function handles message from server

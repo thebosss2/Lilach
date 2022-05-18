@@ -57,14 +57,15 @@ public class CartProductController extends Controller {
             App.client.cart.insertProduct(p);
         }
 
-        //TODO refresh
+        App.client.storeSkeleton.changeCenter("Cart");
     }
 
     @FXML
     void remove(ActionEvent event) {
         App.client.cart.removeProduct(product.getId());
 
-        //TODO refresh
+        App.client.storeSkeleton.changeCenter("Cart");
+
     }
 
     public void setCartProduct(Product product) {

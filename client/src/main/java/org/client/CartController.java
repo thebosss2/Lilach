@@ -10,6 +10,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import org.entities.Customer;
+import org.entities.User;
 
 public class CartController extends Controller {
 
@@ -38,12 +40,16 @@ public class CartController extends Controller {
     @FXML
     void cleanCart(ActionEvent event) {
         App.client.cart.emptyProducts();
-        //TODO refresh
+
+        App.client.storeSkeleton.changeCenter("Cart");
     }
 
     @FXML
     void createOrder(ActionEvent event) {
-        this.globalSkeleton.changeCenter("CreateOrder");
+        if(App.client.user instanceof Customer)
+            App.client.storeSkeleton.changeCenter("CreateOrder");
+        else
+            App.client.storeSkeleton.changeCenter("Login");
     }
 
     @FXML
@@ -56,6 +62,7 @@ public class CartController extends Controller {
 
         App.client.setController(this);
         total_price.setText("Total Price: " + App.client.cart.getTotalCost());
+
         FXMLLoader fxmlLoader;
         for(int i=0; i<App.client.cart.getProducts().size(); i++)
         {
