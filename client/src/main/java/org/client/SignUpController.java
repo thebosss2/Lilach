@@ -111,10 +111,10 @@ public class SignUpController extends Controller{
                 emailText.getText(),
                 Date.from(birthdatePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()),
                 creditCardText.getText(),
-                coonvertToAccountType(accountType.getValue()));
+                convertToAccountType(accountType.getValue()));
     }
 
-    private Customer.AccountType coonvertToAccountType(String accountType) {
+    private Customer.AccountType convertToAccountType(String accountType) {
         return switch (accountType){
             case "Store" -> Customer.AccountType.STORE;
             case "Chain" -> Customer.AccountType.CHAIN;
