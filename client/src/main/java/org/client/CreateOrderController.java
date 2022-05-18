@@ -15,6 +15,7 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -132,8 +133,6 @@ public class CreateOrderController extends Controller {
 
     @FXML
     void initialize() throws IOException {
-        //initialize tab color
-        //TATab.setStyle("-tab-text-color: green;");
 
         //initialize all datePickers:
         displayDates(selfShippingDate, LocalDate.now(), false);
@@ -241,9 +240,13 @@ public class CreateOrderController extends Controller {
     @FXML
     Store getSelectedStore() {
         Store pickedStore = new Store();
-        for (Store s : stores) {
-            if (s.getName().equals(TAStorePicker.getValue()))
-                pickedStore = s;
+        if(TAStorePicker.isDisabled())
+            ;//pickedStore = App.client.user.store;
+        else{
+            for (Store s : stores) {
+                if (s.getName().equals(TAStorePicker.getValue()))
+                    pickedStore = s;
+            }
         }
         return pickedStore;
     }
@@ -277,7 +280,7 @@ public class CreateOrderController extends Controller {
         enableHours(giftHourPicker, giftShippingDate);
     }
     @FXML
-    private Order SubmitOrder(ActionEvent event) {
+    private void SubmitOrder(ActionEvent event) {
         Button b = (Button)event.getTarget();
         Order order;
 
@@ -301,21 +304,24 @@ public class CreateOrderController extends Controller {
         else //this is gift order
             order = new Order(preList, customList, (Customer) App.client.user, Integer.parseInt(giftFinalPriceLabel.getText()), pickedDate, giftHourPicker.getValue(), giftPhoneText.getText(), giftReceiverPhoneText.getText(),giftReceiverNameText.getText(), giftReceiverAddressText.getText(),giftEmailText.getText(), giftGreetingText.getText());
 
-        return order;
+        List<Object> newMsg = new LinkedList<Object>();
+        newMsg.add("#SAVEORDER");
+        newMsg.add(order);
+        try {
+            App.client.sendToServer(newMsg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //TODO alert- order submission succeeded
     }
 
     @FXML
-    void tabClicked(Event event) {/*
-        Executor executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
+    private boolean checkValidityTA() {
+        return true;//if(TAStorePicker.)
+    }
+    @FXML
+    void tabClicked(Event event) {
 
-
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }); */
     }
 
 

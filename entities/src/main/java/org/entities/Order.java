@@ -32,7 +32,8 @@ public class Order implements Serializable {     //Product class entity
     protected String orderTime;
     protected Date deliveryDate;
     protected String deliveryHour;
-    protected boolean isDelivered;
+    protected enum Status {PENDING, ARRIVED, CANCELED}
+    protected Status isDelivered;
 
     protected enum Delivery {SELF_SHIPPING, SHIPPING_GIFT, TAKEAWAY}
     protected Delivery delivery;
@@ -62,7 +63,7 @@ public class Order implements Serializable {     //Product class entity
         this.price = price;
         this.deliveryDate = deliveryDate;
         this.deliveryHour = deliveryHour;
-        this.isDelivered = false;
+        this.isDelivered = Status.PENDING;
         this.personalPhone = personalPhone;
         this.receiverPhone = receiverPhone;
         this.receiverName = receiverName;
@@ -87,7 +88,7 @@ public class Order implements Serializable {     //Product class entity
         this.price = price;
         this.deliveryDate = deliveryDate;
         this.deliveryHour = deliveryHour;
-        this.isDelivered = false;
+        this.isDelivered = Status.PENDING;
         this.personalPhone = personalPhone;
         this.address = address;
         this.email = email;
@@ -109,7 +110,7 @@ public class Order implements Serializable {     //Product class entity
         this.price = price;
         this.deliveryDate = deliveryDate;
         this.deliveryHour = deliveryHour;
-        this.isDelivered = false;
+        this.isDelivered = Status.PENDING;
         this.store = store;
         this.greetingCard = greetingCard;
     }
@@ -151,11 +152,11 @@ public class Order implements Serializable {     //Product class entity
         this.orderTime = orderTime;
     }
 
-    public boolean isDelivered() {
+    public Status isDelivered() {
         return isDelivered;
     }
 
-    public void setDelivered(boolean delivered) {
+    public void setDelivered(Status delivered) {
         isDelivered = delivered;
     }
 
