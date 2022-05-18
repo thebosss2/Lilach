@@ -31,6 +31,7 @@ public class Server extends AbstractServer {
                 case "#SIGNUP_AUTHENTICATION" -> authinticateUser((LinkedList<Object>) msg, client);
                 case "#SIGNUP" -> signUpServer(((LinkedList<Object>)msg),client);
                 case "#PULLSTORES" -> pullStores(((LinkedList<Object>) msg), client);  //display updated catalog version
+                case "#SAVEORDER" -> saveOrderServer(((LinkedList<Object>)msg),client);
                 case "#LOGOUT" -> logoutServer((LinkedList<Object>) msg, client);
             }
         } catch (IOException e) {
@@ -43,6 +44,14 @@ public class Server extends AbstractServer {
         Customer customer = (Customer) msg.get(1);
         App.session.beginTransaction();
         App.session.save(customer);
+        App.session.flush();
+        App.session.getTransaction().commit();
+    }
+
+    private void saveOrderServer(LinkedList<Object> msg, ConnectionToClient client) {
+        Order order = (Order) msg.get(1);
+        App.session.beginTransaction();
+        App.session.save(order);
         App.session.flush();
         App.session.getTransaction().commit();
     }

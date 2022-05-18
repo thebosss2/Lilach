@@ -26,24 +26,25 @@ public class Order implements Serializable {     //Product class entity
     protected Customer orderedBy;
 
     @ManyToOne
-    private Store store;
+    protected Store store;
 
     protected int price;
     protected String orderTime;
     protected Date deliveryDate;
     protected String deliveryHour;
-    protected boolean isDelivered;
+    protected enum Status {PENDING, ARRIVED, CANCELED}
+    protected Status isDelivered;
 
     protected enum Delivery {SELF_SHIPPING, SHIPPING_GIFT, TAKEAWAY}
     protected Delivery delivery;
 
     //shipping order information:
-    private String personalPhone = null;
-    private String receiverPhone = null;
-    private String receiverName= null;
-    private String address= null;
-    private String email= null;
-    private String greetingCard = null;
+    protected String personalPhone = null;
+    protected String receiverPhone = null;
+    protected String receiverName= null;
+    protected String address= null;
+    protected String email= null;
+    protected String greetingCard = null;
 
 
     //SHIPPING_GIFT constructor
@@ -62,7 +63,7 @@ public class Order implements Serializable {     //Product class entity
         this.price = price;
         this.deliveryDate = deliveryDate;
         this.deliveryHour = deliveryHour;
-        this.isDelivered = false;
+        this.isDelivered = Status.PENDING;
         this.personalPhone = personalPhone;
         this.receiverPhone = receiverPhone;
         this.receiverName = receiverName;
@@ -74,7 +75,7 @@ public class Order implements Serializable {     //Product class entity
     //SELF_SHIPPING constructor
     public Order(LinkedList<PreMadeProduct> preMadeProducts, LinkedList<CustomMadeProduct> customMadeProducts,
                  Customer orderedBy, int price, Date deliveryDate, String deliveryHour,
-                 String personalPhone, String address, String email) {
+                 String personalPhone, String address, String email, String greetingCard) {
 
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat simpleformat = new SimpleDateFormat("dd/MMMM/yyyy hh:mm:s");
@@ -87,7 +88,7 @@ public class Order implements Serializable {     //Product class entity
         this.price = price;
         this.deliveryDate = deliveryDate;
         this.deliveryHour = deliveryHour;
-        this.isDelivered = false;
+        this.isDelivered = Status.PENDING;
         this.personalPhone = personalPhone;
         this.address = address;
         this.email = email;
@@ -96,7 +97,7 @@ public class Order implements Serializable {     //Product class entity
 
     //TAKEAWAY constructor
     public Order(LinkedList<PreMadeProduct> preMadeProducts, LinkedList<CustomMadeProduct> customMadeProducts,
-                 Customer orderedBy, int price, Store store, Date deliveryDate, String deliveryHour) {
+                 Customer orderedBy, int price, Store store, Date deliveryDate, String deliveryHour, String greetingCard) {
 
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat simpleformat = new SimpleDateFormat("dd/MMMM/yyyy hh:mm:s");
@@ -109,15 +110,16 @@ public class Order implements Serializable {     //Product class entity
         this.price = price;
         this.deliveryDate = deliveryDate;
         this.deliveryHour = deliveryHour;
-        this.isDelivered = false;
+        this.isDelivered = Status.PENDING;
         this.store = store;
-
+        this.greetingCard = greetingCard;
     }
 
     public Order() {
 
     }
 
+    //getters and setters:
     public List<CustomMadeProduct> getCustomMadeProducts(){
         return this.customMadeProducts;
     }
@@ -150,11 +152,11 @@ public class Order implements Serializable {     //Product class entity
         this.orderTime = orderTime;
     }
 
-    public boolean isDelivered() {
+    public Status isDelivered() {
         return isDelivered;
     }
 
-    public void setDelivered(boolean delivered) {
+    public void setDelivered(Status delivered) {
         isDelivered = delivered;
     }
 
