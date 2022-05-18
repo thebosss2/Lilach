@@ -65,6 +65,7 @@ public class Client extends AbstractClient {
         try {
             switch (((LinkedList<Object>) msg).get(0).toString()) {       //switch with all command options sent between client and server
                 case "#PULLCATALOG" -> pushToCatalog(msg);//function gets all data from server to display to client
+                case "#PULLBASES" -> pushToBases(msg);//function gets all data from server to display to client
                 case "#LOGIN" -> loginClient((LinkedList<Object>) msg);
                 case "#SIGNUP_AUTHENTICATION" -> authenticationReply((LinkedList<Object>) msg);
                 case "#PULLSTORES" -> pushStores(msg);//function gets all data from server to display to client
@@ -79,6 +80,12 @@ public class Client extends AbstractClient {
         products = (LinkedList<PreMadeProduct>) ((LinkedList<Object>) msg).get(1);
         CatalogController catalogController = (CatalogController) controller;
         catalogController.pullProductsToClient();       //calls static function in client for display
+    }
+
+    private void pushToBases(Object msg) throws IOException { // takes data received and sends to display function
+        products = (LinkedList<PreMadeProduct>) ((LinkedList<Object>) msg).get(1);
+        CreateCustomMadeController createCustomMadeController = (CreateCustomMadeController) controller;
+        createCustomMadeController.pullProductsToClient();       //calls static function in client for display
     }
 
     private void authenticationReply(LinkedList<Object> msg) {

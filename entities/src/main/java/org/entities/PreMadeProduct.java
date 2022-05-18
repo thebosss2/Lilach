@@ -73,4 +73,9 @@ public class PreMadeProduct extends Product{
         this.name = name;
     }
 
+    public ProductType getType()
+    {
+        return this.productType;
+    }
+
 }
