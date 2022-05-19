@@ -21,6 +21,7 @@ public class Client extends AbstractClient {
 
     protected static LinkedList<PreMadeProduct> products = new LinkedList<PreMadeProduct>();//(LinkedList<Product>) Catalog.getProducts();
 
+    protected static LinkedList<Order> orders = new LinkedList<Order>();
     private Controller controller;
 
     public Cart cart = new Cart();
@@ -60,6 +61,7 @@ public class Client extends AbstractClient {
             switch (((LinkedList<Object>) msg).get(0).toString()) {       //switch with all command options sent between client and server
                 case "#PULLCATALOG" -> pushToCatalog(msg);//function gets all data from server to display to client
                 case "#PULLBASES" -> pushToBases(msg);//function gets all data from server to display to client
+                case "#PULLORDERS" -> pushToOrders(msg);//function gets all data from server to display to client
                 case "#LOGIN" -> loginClient((LinkedList<Object>) msg);
                 case "#SIGNUP_AUTHENTICATION" -> authenticationReply((LinkedList<Object>) msg);
                 case "#PULLSTORES" -> pushStores(msg);//function gets all data from server to display to client
@@ -69,6 +71,12 @@ public class Client extends AbstractClient {
             System.out.println("Client Error");
             e.getStackTrace();
         }
+    }
+
+    private void pushToOrders(Object msg) {
+        orders = (LinkedList<Order>) ((LinkedList<Object>) msg).get(1);
+        SummaryOrdersController summaryOrdersController = (SummaryOrdersController) controller;
+        summaryOrdersController.pullOrdersToClient();       //calls static function in client for display
     }
 
     private void changeBalance(Object msg) {

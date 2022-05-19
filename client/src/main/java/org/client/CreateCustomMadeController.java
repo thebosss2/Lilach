@@ -54,7 +54,10 @@ public class CreateCustomMadeController extends Controller{
     void addToCart(ActionEvent event) throws InterruptedException
     {
         coolButtonClick((Button)event.getTarget());
-        //TODO
+
+//        this.product.setAmount(this.product.getAmount()+1);
+
+//        App.client.cart.insertProduct(this.product);
     }
 
     @FXML

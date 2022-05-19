@@ -44,4 +44,11 @@ public class SummeryCustomProductController extends Controller{
     public Text getPrice() {
         return price;
     }
+
+    public void setProduct(CustomMadeProduct product) {
+        price.setText(Integer.toString(product.getPrice()));
+
+//        if(product.getItemType()== CustomMadeProduct.ItemType.FLOWER_ARRANGEMENT)
+        type.setText(product.getItemType().toString());
+    }
 }

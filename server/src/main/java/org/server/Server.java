@@ -35,10 +35,19 @@ public class Server extends AbstractServer {
                 case "#SAVEORDER" -> saveOrderServer(((LinkedList<Object>)msg),client);
                 case "#LOGOUT" -> logoutServer((LinkedList<Object>) msg, client);
                 case "#DELETEORDER" -> deleteOrder((LinkedList<Object>) msg, client);
+                case "#PULLORDERS" -> pullOrders((LinkedList<Object>) msg, client);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void pullOrders(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
+        List<Order> orders = App.getAllOrders();
+        List<Object> msgToClient = new LinkedList<Object>();
+        msgToClient.add(msg.get(0).toString());
+        msgToClient.add(orders);
+        client.sendToClient(msgToClient);
     }
 
     private void deleteOrder(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
