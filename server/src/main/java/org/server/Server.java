@@ -34,10 +34,19 @@ public class Server extends AbstractServer {
                 case "#PULLSTORES" -> pullStores(((LinkedList<Object>) msg), client);  //display updated catalog version
                 case "#SAVEORDER" -> saveOrderServer(((LinkedList<Object>)msg),client);
                 case "#LOGOUT" -> logoutServer((LinkedList<Object>) msg, client);
+                case "#DELETEORDER" -> deleteOrder((LinkedList<Object>) msg, client);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void deleteOrder(LinkedList<Object> msg, ConnectionToClient client) {
+        int id = (int) msg.get(1);
+        Order order = App.session.find(Order.class, id);
+        App.session.remove(order);
+        App.session.flush();
+        App.session.clear();
     }
 
 
