@@ -78,4 +78,9 @@ public class PreMadeProduct extends Product{
         return this.productType;
     }
 
+    public String getMainColor()
+    {
+        return this.mainColor;
+    }
+
 }

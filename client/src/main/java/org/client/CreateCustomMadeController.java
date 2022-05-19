@@ -11,6 +11,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import org.entities.PreMadeProduct;
 
@@ -26,7 +28,16 @@ public class CreateCustomMadeController extends Controller{
     private Button AddToCart;
 
     @FXML
+    private AnchorPane anchor_pane;
+
+    @FXML
     private FlowPane mainPane;
+
+    @FXML
+    private TextField max_price;
+
+    @FXML
+    private TextField min_price;
 
     @FXML
     private Button sort;
@@ -44,6 +55,44 @@ public class CreateCustomMadeController extends Controller{
 
     @FXML
     void sort(ActionEvent event) {
+        int low_price =Integer.parseInt(min_price.getText());
+        int high_price =Integer.parseInt(max_price.getText());
+
+        if(sortColor.getSelectionModel().isSelected(0)) //All colors - sort only by price
+        {
+            CreateCustomMadeController createCustomMadeController = this;
+            Platform.runLater(new Runnable() {      //runlater used to wait for server and client threads to finish
+                @Override
+                public void run() {
+                    for (PreMadeProduct product : Client.products) {
+                        try {
+                            if(product.getType()== PreMadeProduct.ProductType.CUSTOM_CATALOG && product.getPrice()>=low_price && product.getPrice()<=high_price)
+                                displayProduct(product, createCustomMadeController);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
+        }
+        else
+        {
+            CreateCustomMadeController createCustomMadeController = this;
+            Platform.runLater(new Runnable() {      //runlater used to wait for server and client threads to finish
+                @Override
+                public void run() {
+                    for (PreMadeProduct product : Client.products) {
+                        try {
+                            if(product.getType()== PreMadeProduct.ProductType.CUSTOM_CATALOG && product.getPrice()>=low_price && product.getPrice()<=high_price && product.getMainColor().equals(sortColor.getValue()))
+                                displayProduct(product, createCustomMadeController);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
+        }
+
 
     }
 
@@ -54,6 +103,9 @@ public class CreateCustomMadeController extends Controller{
         assert sort != null : "fx:id=\"sort\" was not injected: check your FXML file 'CreateCustomMade.fxml'.";
         assert sortColor != null : "fx:id=\"sortColor\" was not injected: check your FXML file 'CreateCustomMade.fxml'.";
         assert sortType != null : "fx:id=\"sortType\" was not injected: check your FXML file 'CreateCustomMade.fxml'.";
+
+        min_price.setText("0");
+        max_price.setText("1000");
 
         sortType.getItems().add("Collection Of Flowers");
         sortType.getItems().add("Flowerpot");

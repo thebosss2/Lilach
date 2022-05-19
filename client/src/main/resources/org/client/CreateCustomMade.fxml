@@ -29,15 +29,15 @@
                         <Insets left="8.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField prefHeight="22.0" prefWidth="60.0" />
+                  <TextField fx:id="min_price" prefHeight="22.0" prefWidth="60.0" promptText="0"/>
                   <Label text="Maximum Price:" />
-                  <TextField prefHeight="22.0" prefWidth="60.0" />
-                  <ComboBox fx:id="sortType" prefHeight="13.0" prefWidth="160.0" promptText="Main Color" style="-fx-background-color: #c6acef;">
+                  <TextField fx:id="max_price" prefHeight="22.0" prefWidth="60.0" promptText="1000"/>
+                  <ComboBox fx:id="sortColor" prefHeight="13.0" prefWidth="160.0" promptText="Main Color" style="-fx-background-color: #c6acef;">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
                   </ComboBox>
-                  <ComboBox fx:id="sortColor" prefHeight="20.0" prefWidth="153.0" promptText="Type" style="-fx-background-color: #c6acef;" />
+                  <ComboBox fx:id="sortType" prefHeight="20.0" prefWidth="153.0" promptText="Type" style="-fx-background-color: #c6acef;" />
                   <Button fx:id="sort" mnemonicParsing="false" onAction="#sort" prefHeight="18.0" prefWidth="88.0" style="-fx-background-color: #c6acef;" text="Sort">
                      <HBox.margin>
                         <Insets />
