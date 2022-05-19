@@ -14,9 +14,11 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import org.entities.CustomMadeProduct;
 import org.entities.PreMadeProduct;
 
 public class CreateCustomMadeController extends Controller{
+
 
     @FXML
     private ResourceBundle resources;
@@ -49,8 +51,10 @@ public class CreateCustomMadeController extends Controller{
     private ComboBox<String> sortType;
 
     @FXML
-    void addToCart(ActionEvent event) {
-
+    void addToCart(ActionEvent event) throws InterruptedException
+    {
+        coolButtonClick((Button)event.getTarget());
+        //TODO
     }
 
     @FXML
@@ -64,6 +68,7 @@ public class CreateCustomMadeController extends Controller{
             Platform.runLater(new Runnable() {      //runlater used to wait for server and client threads to finish
                 @Override
                 public void run() {
+                    mainPane.getChildren().clear();
                     for (PreMadeProduct product : Client.products) {
                         try {
                             if(product.getType()== PreMadeProduct.ProductType.CUSTOM_CATALOG && product.getPrice()>=low_price && product.getPrice()<=high_price)
@@ -81,6 +86,7 @@ public class CreateCustomMadeController extends Controller{
             Platform.runLater(new Runnable() {      //runlater used to wait for server and client threads to finish
                 @Override
                 public void run() {
+                    mainPane.getChildren().clear();
                     for (PreMadeProduct product : Client.products) {
                         try {
                             if(product.getType()== PreMadeProduct.ProductType.CUSTOM_CATALOG && product.getPrice()>=low_price && product.getPrice()<=high_price && product.getMainColor().equals(sortColor.getValue()))
@@ -105,11 +111,12 @@ public class CreateCustomMadeController extends Controller{
         assert sortType != null : "fx:id=\"sortType\" was not injected: check your FXML file 'CreateCustomMade.fxml'.";
 
         min_price.setText("0");
-        max_price.setText("1000");
+        max_price.setText("100");
 
-        sortType.getItems().add("Collection Of Flowers");
-        sortType.getItems().add("Flowerpot");
+        sortType.getItems().add("Flower Arrangement");
+        sortType.getItems().add("Blooming Pot");
         sortType.getItems().add("Bridal Bouquet");
+        sortType.getItems().add("Bouquet");
         sortType.getSelectionModel().select(0);
 
         sortColor.getItems().add("All Colors");

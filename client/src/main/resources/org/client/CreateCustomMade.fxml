@@ -7,57 +7,86 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anchor_pane" prefHeight="642.0" prefWidth="879.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.CreateCustomMadeController">
+<AnchorPane fx:id="anchor_pane" prefHeight="642.0" prefWidth="879.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.CreateCustomMadeController">
    <children>
-      <Text layoutX="211.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Let's Create You'r Own Product...">
-         <font>
-            <Font name="Script MT Bold" size="36.0" />
-         </font>
-      </Text>
-      <VBox layoutY="72.0" prefHeight="526.0" prefWidth="879.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <children>
-            <HBox prefHeight="41.0" prefWidth="1058.0" spacing="10.0">
+      <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <AnchorPane prefHeight="78.0" prefWidth="879.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label text="Minimum Price:">
-                     <HBox.margin>
-                        <Insets left="8.0" />
-                     </HBox.margin>
-                  </Label>
-                  <TextField fx:id="min_price" prefHeight="22.0" prefWidth="60.0" promptText="0"/>
-                  <Label text="Maximum Price:" />
-                  <TextField fx:id="max_price" prefHeight="22.0" prefWidth="60.0" promptText="1000"/>
-                  <ComboBox fx:id="sortColor" prefHeight="13.0" prefWidth="160.0" promptText="Main Color" style="-fx-background-color: #c6acef;">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </ComboBox>
-                  <ComboBox fx:id="sortType" prefHeight="20.0" prefWidth="153.0" promptText="Type" style="-fx-background-color: #c6acef;" />
-                  <Button fx:id="sort" mnemonicParsing="false" onAction="#sort" prefHeight="18.0" prefWidth="88.0" style="-fx-background-color: #c6acef;" text="Sort">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </Button>
+                  <VBox alignment="TOP_CENTER" prefHeight="96.0" prefWidth="879.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Let's Create You'r Own Product...">
+                           <font>
+                              <Font name="Script MT Bold" size="36.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Text>
+                        <HBox alignment="TOP_CENTER" prefHeight="59.0" prefWidth="879.0" spacing="10.0">
+                           <children>
+                              <Label text="Minimum Price:">
+                                 <HBox.margin>
+                                    <Insets left="8.0" />
+                                 </HBox.margin>
+                              </Label>
+                              <TextField fx:id="min_price" prefHeight="22.0" prefWidth="60.0" promptText="0" />
+                              <Label text="Maximum Price:" />
+                              <TextField fx:id="max_price" prefHeight="22.0" prefWidth="60.0" promptText="1000" />
+                              <ComboBox fx:id="sortColor" prefHeight="13.0" prefWidth="160.0" promptText="Main Color" style="-fx-background-color: #c6acef;">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </ComboBox>
+                              <ComboBox fx:id="sortType" prefHeight="20.0" prefWidth="153.0" promptText="Type" style="-fx-background-color: #c6acef;" />
+                              <Button fx:id="sort" mnemonicParsing="false" onAction="#sort" prefHeight="18.0" prefWidth="88.0" style="-fx-background-color: #c6acef;" text="Filter">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" />
+                     </padding>
+                  </VBox>
                </children>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </HBox>
-            <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="484.0" prefWidth="879.0">
-               <content>
-                  <FlowPane fx:id="mainPane" prefHeight="485.0" prefWidth="880.0" style="-fx-background-color: #FFFFFF;" />
-               </content></ScrollPane>
-         </children>
-      </VBox>
-      <Button fx:id="AddToCart" layoutX="391.0" layoutY="599.0" mnemonicParsing="false" onAction="#addToCart" style="-fx-background-color: #c6acef;" text="Add To Cart" AnchorPane.bottomAnchor="15.0">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Button>
+            </AnchorPane>
+         </top>
+         <center>
+            <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="462.0" prefWidth="879.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <content>
+                        <FlowPane fx:id="mainPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="482.0" prefWidth="878.0" style="-fx-background-color: #FFFFFF;" />
+                     </content>
+                  </ScrollPane>
+               </children>
+            </AnchorPane>
+         </center>
+         <bottom>
+            <AnchorPane maxHeight="-Infinity" prefHeight="60.0" prefWidth="879.0" style="-fx-background-color: #ffffff;" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Button fx:id="AddToCart" mnemonicParsing="false" onAction="#addToCart" style="-fx-background-color: #c6acef;" text="Add To Cart">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+         </bottom>
+      </BorderPane>
    </children>
 </AnchorPane>

@@ -52,8 +52,8 @@ public class ProductController extends ItemController{
     void addToCart(ActionEvent event) throws InterruptedException {
         coolButtonClick((Button)event.getTarget());
         //Check if you need to kill the thread.
+        this.product.setAmount(this.product.getAmount()+1);
         App.client.cart.insertProduct(this.product);
-
     }
 
 

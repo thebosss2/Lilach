@@ -40,7 +40,7 @@ public class App {
         int price;
         for (int i = 0; i < 5; i++) {
             var img1 = loadImageFromResources(String.format("Flower%s.jpg", i));
-            PreMadeProduct p1 = new PreMadeProduct("Flower" + i, img1, price = random.nextInt(1000), (price - random.nextInt(500)));
+            PreMadeProduct p1 = new PreMadeProduct("Flower" + i, img1, price = random.nextInt(100), random.nextInt(50));
             Customer cust = new Customer("name","user","pass","mail",new Date(),"credit", Customer.AccountType.MEMBERSHIP);
             Complaint c = new Complaint(cust ,new Date(),"bad bad bad", Complaint.Topic.BAD_SERVICE);
             session.save(cust);
@@ -70,7 +70,7 @@ public class App {
         String[] colors = {"Red","Pink","Yellow","White","Pink","White","White","Green","Blue","Green","Green"};
         for (int i = 0; i <= num_products; i++) {
             var img = loadImageFromResources(String.format("base%s.jpg", i));
-            PreMadeProduct p = new PreMadeProduct("Base Product " + i, img, price = random.nextInt(1000), (price - random.nextInt(500)),colors[i]);
+            PreMadeProduct p = new PreMadeProduct("Base Product " + i, img, price = random.nextInt(100),random.nextInt(50),colors[i]);
             session.save(p);   //saves and flushes to database
             session.flush();
         }
