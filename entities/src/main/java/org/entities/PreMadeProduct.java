@@ -83,7 +83,7 @@ public class PreMadeProduct extends Product {
 
     public void setDescription(String description) {
         this.description = description;
-
+    }
     public ProductType getType()
     {
         return this.productType;

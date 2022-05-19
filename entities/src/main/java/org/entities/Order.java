@@ -173,13 +173,13 @@ public class Order implements Serializable {     //Product class entity
         this.address = address;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
+//    public String getEmail() {
+//        return email;
+//    }
+//
+//    public void setEmail(String email) {
+//        this.email = email;
+//    }
 
     public String getDeliveryHour() {
         return deliveryHour;
