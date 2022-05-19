@@ -4,34 +4,34 @@ package org.entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.io.File;
-import java.io.FileInputStream;
 
 @Entity
 @Table(name = "premadeProducts")
-public class PreMadeProduct extends Product{
+public class PreMadeProduct extends Product {
 
     @Column(name = "product_name")
     private String name;
     private int priceBeforeDiscount;
     private String mainColor;
+
     public enum ProductType {CATALOG, CUSTOM_CATALOG}
+
     private ProductType productType;
     private String description;
 
     //Ctor for catalog product
-    public PreMadeProduct(String name, String path, int price, String description,int priceBeforeDiscount) { //constructor
-        super(path,price);
-        this.priceBeforeDiscount=priceBeforeDiscount;
+    public PreMadeProduct(String name, String path, int price, String description, int priceBeforeDiscount) { //constructor
+        super(path, price);
+        this.priceBeforeDiscount = priceBeforeDiscount;
         this.name = name;
         this.productType = ProductType.CATALOG;
         this.description = description;
     }
 
     //Ctor for catalog product
-    public PreMadeProduct(String name, byte[] image, int price, String description,int priceBeforeDiscount) {
-        super(image,price);
-        this.priceBeforeDiscount=priceBeforeDiscount;
+    public PreMadeProduct(String name, byte[] image, int price, String description, int priceBeforeDiscount) {
+        super(image, price);
+        this.priceBeforeDiscount = priceBeforeDiscount;
         this.name = name;
         this.productType = ProductType.CATALOG;
         this.description = description;
@@ -39,8 +39,8 @@ public class PreMadeProduct extends Product{
 
     //Ctor for custom-made catalog product
     public PreMadeProduct(String name, String path, int price, int priceBeforeDiscount, String mainColor) { //constructor
-        super(path,price);
-        this.priceBeforeDiscount=priceBeforeDiscount;
+        super(path, price);
+        this.priceBeforeDiscount = priceBeforeDiscount;
         this.name = name;
         this.mainColor = mainColor;
         this.productType = ProductType.CUSTOM_CATALOG;
@@ -49,8 +49,8 @@ public class PreMadeProduct extends Product{
 
     //Ctor for custom-made catalog product
     public PreMadeProduct(String name, byte[] image, int price, int priceBeforeDiscount, String mainColor) {
-        super(image,price);
-        this.priceBeforeDiscount=priceBeforeDiscount;
+        super(image, price);
+        this.priceBeforeDiscount = priceBeforeDiscount;
         this.name = name;
         this.mainColor = mainColor;
         this.productType = ProductType.CUSTOM_CATALOG;

@@ -34,6 +34,7 @@ public class SummeryCustomProductController extends Controller{
         for(int i=0; i < (product.getProducts()).size(); i++){
             this.description.setText(this.description.getText() + product.getProducts().get(i).getName() + ", ");
         }
+        this.description.setText(this.description.getText().substring(0,this.description.getText().length()-2));
     }
 
     public Text getDescription() {

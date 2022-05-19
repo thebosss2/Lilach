@@ -71,7 +71,7 @@
                                  <children>
                                     <Label alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="170.0" text="Order summery:">
                                        <font>
-                                          <Font name="Calibri" size="18.0" />
+                                          <Font name="Calibri" size="25.0" />
                                        </font>
                                     </Label>
                                     <FlowPane fx:id="selfCartPane" />
@@ -79,33 +79,33 @@
                                        <children>
                                           <TextFlow prefHeight="96.0" prefWidth="263.0">
                                              <children>
-                                                <Label prefHeight="32.0" prefWidth="214.0" text="shipping fee:">
+                                                <Label prefHeight="35.0" prefWidth="214.0" text="shipping fee:">
                                                    <font>
-                                                      <Font size="14.0" />
+                                                      <Font size="18.0" />
                                                    </font>
                                                    <padding>
                                                       <Insets left="10.0" />
                                                    </padding>
                                                 </Label>
-                                                <Label prefHeight="32.0" prefWidth="202.0" text="price before discount: ">
+                                                <Label prefHeight="35.0" prefWidth="202.0" text="price before discount: ">
                                                    <font>
-                                                      <Font size="14.0" />
+                                                      <Font size="18.0" />
                                                    </font>
                                                    <padding>
                                                       <Insets left="10.0" />
                                                    </padding>
                                                 </Label>
-                                                <Label prefHeight="32.0" prefWidth="202.0" text="members discount: ">
+                                                <Label prefHeight="35.0" prefWidth="202.0" text="members discount: ">
                                                    <font>
-                                                      <Font size="14.0" />
+                                                      <Font size="18.0" />
                                                    </font>
                                                    <padding>
                                                       <Insets left="10.0" />
                                                    </padding>
                                                 </Label>
-                                                <Label prefHeight="32.0" prefWidth="213.0" text="final price:">
+                                                <Label prefHeight="35.0" prefWidth="213.0" text="final price:">
                                                    <font>
-                                                      <Font size="14.0" />
+                                                      <Font size="18.0" />
                                                    </font>
                                                    <padding>
                                                       <Insets left="10.0" />
@@ -115,33 +115,33 @@
                                           </TextFlow>
                                           <TextFlow prefHeight="100.0" prefWidth="90.0">
                                              <children>
-                                                <Label prefHeight="32.0" prefWidth="130.0" text="20">
+                                                <Label prefHeight="35.0" prefWidth="130.0" text="20">
                                                    <font>
-                                                      <Font size="14.0" />
+                                                      <Font size="18.0" />
                                                    </font>
                                                    <padding>
                                                       <Insets left="10.0" />
                                                    </padding>
                                                 </Label>
-                                                <Label fx:id="selfPriceBeforeLabel" prefHeight="32.0" prefWidth="130.0" text="price before">
+                                                <Label fx:id="selfPriceBeforeLabel" prefHeight="35.0" prefWidth="130.0" text="price before">
                                                    <font>
-                                                      <Font size="14.0" />
+                                                      <Font size="18.0" />
                                                    </font>
                                                    <padding>
                                                       <Insets left="10.0" />
                                                    </padding>
                                                 </Label>
-                                                <Label fx:id="selfDiscountLabel" prefHeight="32.0" prefWidth="110.0" text="0%">
+                                                <Label fx:id="selfDiscountLabel" prefHeight="35.0" prefWidth="110.0" text="0%">
                                                    <font>
-                                                      <Font size="14.0" />
+                                                      <Font size="18.0" />
                                                    </font>
                                                    <padding>
                                                       <Insets left="10.0" />
                                                    </padding>
                                                 </Label>
-                                                <Label fx:id="selfFinalPriceLabel" prefHeight="32.0" prefWidth="110.0" text="final price">
+                                                <Label fx:id="selfFinalPriceLabel" prefHeight="35.0" prefWidth="110.0" text="final price">
                                                    <font>
-                                                      <Font size="14.0" />
+                                                      <Font size="18.0" />
                                                    </font>
                                                    <padding>
                                                       <Insets left="10.0" />
@@ -156,7 +156,7 @@
                                           <Font name="Guttman Aharoni" size="15.0" />
                                        </font>
                                        <VBox.margin>
-                                          <Insets left="200.0" />
+                                          <Insets left="200.0" top="10.0" />
                                        </VBox.margin>
                                     </Button>
                                  </children>
@@ -236,41 +236,44 @@
                                  <children>
                                     <Label alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="170.0" text="Order summery:">
                                        <font>
-                                          <Font name="Calibri" size="18.0" />
+                                          <Font name="Calibri" size="25.0" />
                                        </font>
                                     </Label>
-                                    <FlowPane fx:id="giftCartPane" />
+                                    <FlowPane fx:id="giftCartPane">
+                                       <padding>
+                                          <Insets bottom="5.0" />
+                                       </padding></FlowPane>
                                     <TextFlow prefHeight="60.0" prefWidth="378.0">
                                        <children>
                                           <TextFlow prefHeight="77.0" prefWidth="218.0">
                                              <children>
-                                                <Label prefHeight="32.0" prefWidth="214.0" text="shipping fee:">
+                                                <Label prefHeight="35.0" prefWidth="214.0" text="shipping fee:">
                                                    <font>
-                                                      <Font size="14.0" />
+                                                      <Font size="18.0" />
                                                    </font>
                                                    <padding>
                                                       <Insets left="10.0" />
                                                    </padding>
                                                 </Label>
-                                                <Label prefHeight="32.0" prefWidth="202.0" text="price before discount: ">
+                                                <Label prefHeight="35.0" prefWidth="202.0" text="price before discount: ">
                                                    <font>
-                                                      <Font size="14.0" />
+                                                      <Font size="18.0" />
                                                    </font>
                                                    <padding>
                                                       <Insets left="10.0" />
                                                    </padding>
                                                 </Label>
-                                                <Label prefHeight="32.0" prefWidth="202.0" text="members discount: ">
+                                                <Label prefHeight="35.0" prefWidth="202.0" text="members discount: ">
                                                    <font>
-                                                      <Font size="14.0" />
+                                                      <Font size="18.0" />
                                                    </font>
                                                    <padding>
                                                       <Insets left="10.0" />
                                                    </padding>
                                                 </Label>
-                                                <Label prefHeight="32.0" prefWidth="213.0" text="final price:">
+                                                <Label prefHeight="35.0" prefWidth="213.0" text="final price:">
                                                    <font>
-                                                      <Font size="14.0" />
+                                                      <Font size="18.0" />
                                                    </font>
                                                    <padding>
                                                       <Insets left="10.0" />
@@ -280,33 +283,33 @@
                                           </TextFlow>
                                           <TextFlow prefHeight="100.0" prefWidth="130.0">
                                              <children>
-                                                <Label prefHeight="32.0" prefWidth="130.0" text="20">
+                                                <Label prefHeight="35.0" prefWidth="130.0" text="20">
                                                    <font>
-                                                      <Font size="14.0" />
+                                                      <Font size="18.0" />
                                                    </font>
                                                    <padding>
                                                       <Insets left="10.0" />
                                                    </padding>
                                                 </Label>
-                                                <Label fx:id="giftPriceBeforeLabel" prefHeight="32.0" prefWidth="130.0" text="price before">
+                                                <Label fx:id="giftPriceBeforeLabel" prefHeight="35.0" prefWidth="130.0" text="price before">
                                                    <font>
-                                                      <Font size="14.0" />
+                                                      <Font size="18.0" />
                                                    </font>
                                                    <padding>
                                                       <Insets left="10.0" />
                                                    </padding>
                                                 </Label>
-                                                <Label fx:id="giftDiscountLabel" prefHeight="32.0" prefWidth="110.0" text="0%">
+                                                <Label fx:id="giftDiscountLabel" prefHeight="35.0" prefWidth="110.0" text="0%">
                                                    <font>
-                                                      <Font size="14.0" />
+                                                      <Font size="18.0" />
                                                    </font>
                                                    <padding>
                                                       <Insets left="10.0" />
                                                    </padding>
                                                 </Label>
-                                                <Label fx:id="giftFinalPriceLabel" prefHeight="32.0" prefWidth="110.0" text="final price">
+                                                <Label fx:id="giftFinalPriceLabel" prefHeight="35.0" prefWidth="110.0" text="final price">
                                                    <font>
-                                                      <Font size="14.0" />
+                                                      <Font size="18.0" />
                                                    </font>
                                                    <padding>
                                                       <Insets left="10.0" />
@@ -321,7 +324,7 @@
                                           <Font name="Guttman Aharoni" size="15.0" />
                                        </font>
                                        <VBox.margin>
-                                          <Insets left="200.0" />
+                                          <Insets left="200.0" top="10.0" />
                                        </VBox.margin>
                                     </Button>
                                  </children>
@@ -392,7 +395,7 @@
                                  <children>
                                     <Label alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="170.0" text="Order summery:">
                                        <font>
-                                          <Font name="Calibri" size="18.0" />
+                                          <Font name="Calibri" size="25.0" />
                                        </font>
                                     </Label>
                                     <FlowPane fx:id="TACartPane" />
@@ -402,7 +405,7 @@
                                              <children>
                                                 <Label prefHeight="32.0" prefWidth="202.0" text="price before discount: ">
                                                    <font>
-                                                      <Font size="14.0" />
+                                                      <Font size="18.0" />
                                                    </font>
                                                    <padding>
                                                       <Insets left="10.0" />
@@ -410,7 +413,7 @@
                                                 </Label>
                                                 <Label prefHeight="32.0" prefWidth="202.0" text="members discount: ">
                                                    <font>
-                                                      <Font size="14.0" />
+                                                      <Font size="18.0" />
                                                    </font>
                                                    <padding>
                                                       <Insets left="10.0" />
@@ -418,7 +421,7 @@
                                                 </Label>
                                                 <Label prefHeight="32.0" prefWidth="214.0" text="final price:">
                                                    <font>
-                                                      <Font size="14.0" />
+                                                      <Font size="18.0" />
                                                    </font>
                                                    <padding>
                                                       <Insets left="10.0" />
@@ -430,7 +433,7 @@
                                              <children>
                                                 <Label fx:id="TAPriceBeforeLabel" prefHeight="32.0" prefWidth="130.0" text="price before">
                                                    <font>
-                                                      <Font size="14.0" />
+                                                      <Font size="18.0" />
                                                    </font>
                                                    <padding>
                                                       <Insets left="10.0" />
@@ -438,7 +441,7 @@
                                                 </Label>
                                                 <Label fx:id="TADiscountLabel" prefHeight="32.0" prefWidth="110.0" text="0%">
                                                    <font>
-                                                      <Font size="14.0" />
+                                                      <Font size="18.0" />
                                                    </font>
                                                    <padding>
                                                       <Insets left="10.0" />
@@ -446,7 +449,7 @@
                                                 </Label>
                                                 <Label fx:id="TAFinalPriceLabel" prefHeight="32.0" prefWidth="110.0" text="final price">
                                                    <font>
-                                                      <Font size="14.0" />
+                                                      <Font size="18.0" />
                                                    </font>
                                                    <padding>
                                                       <Insets left="10.0" />
@@ -461,7 +464,7 @@
                                           <Font name="Guttman Aharoni" size="15.0" />
                                        </font>
                                        <VBox.margin>
-                                          <Insets left="200.0" />
+                                          <Insets left="200.0" top="10.0" />
                                        </VBox.margin>
                                     </Button>
                                  </children>

@@ -314,7 +314,11 @@ public class CreateOrderController extends Controller {
                     getPickedDate(giftShippingDate), giftHourPicker.getValue(), giftReceiverPhoneText.getText(), giftReceiverNameText.getText(),
                     giftReceiverAddressText.getText(), giftGreetingText.getText());
 
-        List<Object> newMsg = new LinkedList<Object>(); //ask server to save to db
+        //set balance for buyer
+        ((Customer) App.client.user).setBalance(((Customer) App.client.user).getBalance() - Integer.parseInt(TAFinalPriceLabel.getText()));
+
+        //ask server to save to db
+        List<Object> newMsg = new LinkedList<Object>();
         newMsg.add("#SAVEORDER");
         newMsg.add(order);
         try {
