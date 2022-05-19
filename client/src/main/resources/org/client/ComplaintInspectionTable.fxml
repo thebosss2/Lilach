@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="700.0" prefWidth="855.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.ComplaintInspectionTableController">
+   <children>
+      <TableView fx:id="tableView" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="100.0">
+        <columns>
+          <TableColumn fx:id="statusCol" prefWidth="94.0" text="Status" />
+          <TableColumn fx:id="nameCol" prefWidth="113.0" text="Name" />
+            <TableColumn fx:id="dateCol" prefWidth="124.0" text="Date opened" />
+            <TableColumn fx:id="topicCol" prefWidth="105.0" text="Topic" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
