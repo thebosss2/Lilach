@@ -41,12 +41,31 @@ public class Server extends AbstractServer {
         }
     }
 
-    private void deleteOrder(LinkedList<Object> msg, ConnectionToClient client) {
+    private void deleteOrder(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
         int id = (int) msg.get(1);
         Order order = App.session.find(Order.class, id);
-        App.session.remove(order);
+
+        App.session.beginTransaction();
+
+        App.session.evict(order);       //evict current product details from database
+
+        order.setDelivered(Order.Status.CANCELED);  //func changes product to updates details
         App.session.flush();
-        App.session.clear();
+        App.session.getTransaction().commit();
+
+
+        List<Object> newMsg = new LinkedList<Object>();
+        newMsg.add(msg.get(0));
+        newMsg.add(order.getPrice());
+        newMsg.add(order.getDeliveryDate());
+        newMsg.add(order.getDeliveryHour());
+        client.sendToClient(newMsg);
+        return;
+
+
+//        App.session.remove(order);
+//        App.session.flush();
+//        App.session.clear();
     }
 
 

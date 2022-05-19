@@ -1,25 +1,19 @@
 package org.client;
 
-import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
-import javafx.application.Preloader;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Popup;
-import javafx.stage.PopupWindow;
 import javafx.util.Duration;
 import org.client.ocsf.AbstractClient;
 import org.entities.*;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class Client extends AbstractClient {
 
@@ -29,7 +23,7 @@ public class Client extends AbstractClient {
 
     private Controller controller;
 
-    public Cart cart= new Cart();
+    public Cart cart = new Cart();
     protected Guest user;
 
     public Client(String localhost, int i) {
@@ -43,7 +37,7 @@ public class Client extends AbstractClient {
     public static void main(String[] args) {
     }
 
-    public static int[] hourList = {8,9,10,11,12,13,14,15,16,17,18};
+    public static int[] hourList = {8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18};
 
     // TODO Maybe delete
     private static Client client = null;
@@ -69,11 +63,34 @@ public class Client extends AbstractClient {
                 case "#LOGIN" -> loginClient((LinkedList<Object>) msg);
                 case "#SIGNUP_AUTHENTICATION" -> authenticationReply((LinkedList<Object>) msg);
                 case "#PULLSTORES" -> pushStores(msg);//function gets all data from server to display to client
+                case "#DELETEORDER" -> changeBalance(msg);//function gets all data from server to display to client
             }
         } catch (Exception e) {
             System.out.println("Client Error");
             e.getStackTrace();
         }
+    }
+
+    private void changeBalance(Object msg) {
+        int refund = 0;
+        int price = (int) ((LinkedList<Object>) msg).get(1);
+        Date date = (Date) ((LinkedList<Object>) msg).get(2);
+        String hour = (String) ((LinkedList<Object>) msg).get(3);
+
+        Date new_date = new Date();
+        long diffInMillies = Math.abs(date.getTime() - new_date.getTime());
+        long diff = TimeUnit.HOURS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+
+        diff += Integer.parseInt(hour.substring(0, 2));
+
+        if (diff > 3)
+            refund = price;
+        else if (diff>1)
+            refund = price/2;
+
+        //TODO add alert
+
+        ((User) App.client.user).setBalance(((User) App.client.user).getBalance() + refund);
     }
 
     private void pushToCatalog(Object msg) throws IOException { // takes data received and sends to display function
@@ -103,24 +120,24 @@ public class Client extends AbstractClient {
             Executor executor = Executors.newSingleThreadExecutor();
             executor.execute(() -> {
                 Platform.runLater(new Runnable() {
-                                      @Override
-                                      public void run() {
-                                          Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                                          alert.setHeaderText("Sign-up succeeded.");
-                                          //alert.getButtonTypes().clear();
-                                          alert.show();
+                    @Override
+                    public void run() {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setHeaderText("Sign-up succeeded.");
+                        //alert.getButtonTypes().clear();
+                        alert.show();
                                           /*signUpController.popup.setText("Sign-up succeeded");
                                           signUpController.setPopupInMiddle();*/
-                                          PauseTransition pause = new PauseTransition(Duration.seconds(1));
-                                          //pause.setOnFinished(e -> signUpController.popup.setText(""));
-                                          pause.setOnFinished((e -> alert.close()));
-                                          pause.play();
+                        PauseTransition pause = new PauseTransition(Duration.seconds(1));
+                        //pause.setOnFinished(e -> signUpController.popup.setText(""));
+                        pause.setOnFinished((e -> alert.close()));
+                        pause.play();
 
-                                          //TODO now isntead of text, I can create a mini pane with opacity 0.
-                                      }
-                                  });
+                        //TODO now isntead of text, I can create a mini pane with opacity 0.
+                    }
+                });
 
-                    });
+            });
             /*try {
                 XMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fadingPopupMessage.fxml"));
                 Scene scene = new Scene(fxmlLoader.load());
@@ -141,22 +158,20 @@ public class Client extends AbstractClient {
             }*/
 
 
-            }
-        else{
+        } else {
 
-                signUpController.sendAlert("Username already taken. Please try a new one.");
-            }
+            signUpController.sendAlert("Username already taken. Please try a new one.");
         }
+    }
 
     private void pushStores(Object msg) throws IOException { // takes data received and sends to display function
         CreateOrderController createOrderController;
         CEOReportController ceoReportController;
 
         if (controller instanceof CreateOrderController) {
-            createOrderController = (CreateOrderController)controller;
+            createOrderController = (CreateOrderController) controller;
             createOrderController.pullStoresToClient((LinkedList<Store>) ((LinkedList<Object>) msg).get(1));       //calls static function in client for display
-        }
-        else if(controller instanceof CEOReportController) {
+        } else if (controller instanceof CEOReportController) {
             ceoReportController = (CEOReportController) controller;
             ceoReportController.pullStoresToClient((LinkedList<Store>) ((LinkedList<Object>) msg).get(1));       //calls static function in client for display
         }
@@ -165,26 +180,26 @@ public class Client extends AbstractClient {
     }
 
 
-    private void changeMenu(){
+    private void changeMenu() {
 
-        if(this.user instanceof Customer){
+        if (this.user instanceof Customer) {
             //storeSkeleton.changeLeft("CustomerMenu");
-        }else if(this.user instanceof Employee){
-            switch(((Employee) this.user).getRole()){
+        } else if (this.user instanceof Employee) {
+            switch (((Employee) this.user).getRole()) {
                 case STORE_EMPLOYEE -> storeSkeleton.changeLeft("WorkerMenu");
                 //case CUSTOMER_SERVICE -> storeSkeleton.changeLeft("CustomerServiceMenu");
                 case STORE_MANAGER -> storeSkeleton.changeLeft("ManagerMenu");
                 case CEO -> storeSkeleton.changeLeft("ManagerMenu");
                 //case ADMIN -> storeSkeleton.changeLeft("AdminMenu");
             }
-        }else{
+        } else {
             storeSkeleton.changeLeft("GuestMenu");
         }
         storeSkeleton.changeCenter("Catalog");
 
     }
 
-    public void logOut(){   //TODO clean cart
+    public void logOut() {   //TODO clean cart
         List<Object> msg = new LinkedList<Object>();
         msg.add("#LOGOUT");
         msg.add(user);
@@ -195,7 +210,7 @@ public class Client extends AbstractClient {
         }
     }
 
-    private void loginClient (LinkedList < Object > msg) {
+    private void loginClient(LinkedList<Object> msg) {
         if (msg.get(1).equals("#SUCCESS")) {
             switch (msg.get(2).toString()) {
                 case "CUSTOMER" -> this.user = (Customer) msg.get(3);
@@ -215,4 +230,4 @@ public class Client extends AbstractClient {
     }
 
 
-    }
+}
