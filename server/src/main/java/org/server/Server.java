@@ -25,6 +25,7 @@ public class Server extends AbstractServer {
         try {
             switch (((LinkedList<Object>) msg).get(0).toString()) {   //switch to see what client wants from server
                 case "#PULLCATALOG" -> pullProducts(((LinkedList<Object>) msg), client);  //display updated catalog version
+                case "#PULLBASES" -> pullProducts(((LinkedList<Object>) msg), client);  //display updated catalog version
                 case "#SAVE" -> updateProduct((LinkedList<Object>) msg);           //save change to product details
                 case "#ADD" -> addProduct((LinkedList<Object>) msg);           // add product to the DB
                 case "#LOGIN" -> loginServer((LinkedList<Object>)msg,client);
@@ -33,10 +34,19 @@ public class Server extends AbstractServer {
                 case "#PULLSTORES" -> pullStores(((LinkedList<Object>) msg), client);  //display updated catalog version
                 case "#SAVEORDER" -> saveOrderServer(((LinkedList<Object>)msg),client);
                 case "#LOGOUT" -> logoutServer((LinkedList<Object>) msg, client);
+                case "#DELETEORDER" -> deleteOrder((LinkedList<Object>) msg, client);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void deleteOrder(LinkedList<Object> msg, ConnectionToClient client) {
+        int id = (int) msg.get(1);
+        Order order = App.session.find(Order.class, id);
+        App.session.remove(order);
+        App.session.flush();
+        App.session.clear();
     }
 
 
@@ -93,7 +103,7 @@ public class Server extends AbstractServer {
 
     private static void pullProducts(List<Object> msg, ConnectionToClient client) throws IOException {       //func pulls products from server
         List<PreMadeProduct> products = App.getAllProducts();
-        String commandToClient = "#PULLCATALOG";
+        String commandToClient = msg.get(0).toString();
         List<Object> msgToClient = new LinkedList<Object>();
         msgToClient.add(commandToClient);
         msgToClient.add(products);

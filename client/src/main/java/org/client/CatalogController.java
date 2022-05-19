@@ -68,7 +68,8 @@ public class CatalogController extends Controller {
             public void run() {
                 for (PreMadeProduct product : Client.products) {
                     try {
-                        displayProduct(product, catalogController);
+                        if(product.getType()== PreMadeProduct.ProductType.CATALOG)
+                            displayProduct(product, catalogController);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

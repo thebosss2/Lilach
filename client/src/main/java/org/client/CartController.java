@@ -3,6 +3,7 @@ package org.client;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -46,10 +47,12 @@ public class CartController extends Controller {
 
     @FXML
     void createOrder(ActionEvent event) {
-        if(App.client.user instanceof Customer)
-            App.client.storeSkeleton.changeCenter("CreateOrder");
-        else
-            App.client.storeSkeleton.changeCenter("Login");
+        if (App.client.cart.getTotalCost() > 0) {
+            if (App.client.user instanceof Customer)
+                App.client.storeSkeleton.changeCenter("CreateOrder");
+            else
+                App.client.storeSkeleton.changeCenter("Login");
+        }
     }
 
     @FXML
@@ -64,8 +67,7 @@ public class CartController extends Controller {
         total_price.setText("Total Price: " + App.client.cart.getTotalCost());
 
         FXMLLoader fxmlLoader;
-        for(int i=0; i<App.client.cart.getProducts().size(); i++)
-        {
+        for (int i = 0; i < App.client.cart.getProducts().size(); i++) {
             fxmlLoader = new FXMLLoader(getClass().getResource("CartProduct.fxml"));
             vbox.getChildren().add(fxmlLoader.load());  //Adds new product pane to the screen.
             CartProductController controller = fxmlLoader.getController();
