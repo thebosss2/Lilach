@@ -132,6 +132,9 @@ public class Order implements Serializable {     //Product class entity
         return this.preMadeProducts;
     }
 
+    public int getId() {
+        return id;
+    }
     public int getPrice() {
         return price;
     }

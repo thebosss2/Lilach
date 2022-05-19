@@ -23,22 +23,35 @@ public class CartProductController extends Controller {
     private URL location;
 
     @FXML
-    private Text description;
-
+    private Text amount;
 
     @FXML
-    private Button Duplicate;
+    private Text description;
 
     @FXML
     private ImageView image;
 
     @FXML
+    private Button minus;
+
+    @FXML
+    private Button plus;
+
+    @FXML
     private Text price;
+
+    @FXML
+    private Text total;
 
     @FXML
     private Text product_name;
 
+    @FXML
+    private Button remove;
+
     private Product product;
+
+
 
     @FXML
     void initialize() {
@@ -46,6 +59,7 @@ public class CartProductController extends Controller {
         assert image != null : "fx:id=\"image\" was not injected: check your FXML file 'cartProduct.fxml'.";
         assert price != null : "fx:id=\"price\" was not injected: check your FXML file 'cartProduct.fxml'.";
         assert product_name != null : "fx:id=\"product_name\" was not injected: check your FXML file 'cartProduct.fxml'.";
+        assert total != null : "fx:id=\"total\" was not injected: check your FXML file 'CartProduct.fxml'.";
     }
 
     @FXML
@@ -68,10 +82,38 @@ public class CartProductController extends Controller {
 
     }
 
+    @FXML
+    void addProduct(ActionEvent event)
+    {
+        amount.setText(Integer.toString(Integer.parseInt(amount.getText())+1));
+        product.setAmount(product.getAmount()+1);
+        total.setText("Total Price: " + product.getPrice() * product.getAmount() + "₪");
+        App.client.cart.refreshTotalCost();
+        App.client.storeSkeleton.changeCenter("Cart");
+    }
+
+    @FXML
+    void minusProduct(ActionEvent event)
+    {
+        if(Integer.parseInt(amount.getText()) > 1)
+        {
+            amount.setText(Integer.toString(Integer.parseInt(amount.getText())-1));
+            product.setAmount(product.getAmount()-1);
+            total.setText("Total Price: " + product.getPrice() * product.getAmount() + "₪");
+            App.client.cart.refreshTotalCost();
+            App.client.storeSkeleton.changeCenter("Cart");
+
+        }
+
+    }
+
     public void setCartProduct(Product product) {
         this.product = product;
         image.setImage(product.getImage());
         price.setText("Price: " + product.getPrice() + "₪");
+        total.setText("Total Price: " + product.getPrice() * product.getAmount() + "₪");
+        //price.setText("Price: " + product.getPrice() + "₪");
+        amount.setText(Integer.toString(product.getAmount()));
 
 
         if (product instanceof PreMadeProduct) {

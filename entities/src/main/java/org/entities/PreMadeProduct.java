@@ -76,12 +76,22 @@ public class PreMadeProduct extends Product {
         this.name = name;
     }
 
+
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+
+    public ProductType getType()
+    {
+        return this.productType;
+    }
+
+    public String getMainColor()
+    {
+        return this.mainColor;
     }
 
 }
