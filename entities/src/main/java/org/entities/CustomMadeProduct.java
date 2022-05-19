@@ -24,6 +24,7 @@ public class CustomMadeProduct extends Product {
     //user selects multiple premadeProducts into list that is saved on controller(customMadeCatalog controller)
     // when they are done they select create customProduct (when added to cart)
     //then and only then is the constructor called
+
     public CustomMadeProduct(List<PreMadeProduct> products, int price, String path, ItemType itemType){
         super(path,price);
         this.products=products;
