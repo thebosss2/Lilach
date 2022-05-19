@@ -48,6 +48,7 @@ public class CustomMadeBaseProductController extends ItemController{
 
     @FXML
     void addProduct(ActionEvent event) {
+        product.setAmount(Integer.parseInt(amount.getText())+1);
         amount.setText(Integer.toString(Integer.parseInt(amount.getText())+1));
     }
 
@@ -58,8 +59,10 @@ public class CustomMadeBaseProductController extends ItemController{
 
     @FXML
     void minusProduct(ActionEvent event) {
-        if(Integer.parseInt(amount.getText()) > 0)
-            amount.setText(Integer.toString(Integer.parseInt(amount.getText())-1));
+        if(Integer.parseInt(amount.getText()) > 0) {
+            product.setAmount(Integer.parseInt(amount.getText())-1);
+            amount.setText(Integer.toString(Integer.parseInt(amount.getText()) - 1));
+        }
     }
 
     @FXML
@@ -83,6 +86,8 @@ public class CustomMadeBaseProductController extends ItemController{
         assert priceBeforeDiscount != null : "fx:id=\"priceBeforeDiscount\" was not injected: check your FXML file 'CustomMadeBaseProduct.fxml'.";
         assert product_name != null : "fx:id=\"product_name\" was not injected: check your FXML file 'CustomMadeBaseProduct.fxml'.";
 
+
+
     }
 
     public void setProduct(PreMadeProduct product) {
@@ -90,6 +95,7 @@ public class CustomMadeBaseProductController extends ItemController{
         image.setImage(product.getImage());
         price.setText(product.getPrice() + "₪");
         product_name.setText(product.getName());
+        amount.setText(Integer.toString(product.getAmount()));
 
         if(product.getPriceBeforeDiscount() != 0)
             priceBeforeDiscount.setText(product.getPriceBeforeDiscount() + " ₪");

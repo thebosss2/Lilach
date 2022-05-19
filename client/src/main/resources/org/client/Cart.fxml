@@ -11,14 +11,14 @@
    <children>
       <AnchorPane layoutX="200.0" layoutY="309.0" prefHeight="91.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Button fx:id="create_order" layoutX="363.0" layoutY="29.0" mnemonicParsing="false" onAction="#createOrder" style="-fx-background-color: #c6acef;" text="Create Order">
+            <Button fx:id="create_order" layoutX="363.0" layoutY="29.0" mnemonicParsing="false" onAction="#createOrder" style="-fx-background-color: #c6acef;" text="Create Order" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="110.0">
                <font>
-                  <Font name="Cambria" size="15.0" />
+                  <Font size="15.0" />
                </font>
             </Button>
-            <Button fx:id="clean_cart" layoutX="492.0" layoutY="29.0" mnemonicParsing="false" onAction="#cleanCart" style="-fx-background-color: #c6acef;" text="Clean Cart">
+            <Button fx:id="clean_cart" layoutX="492.0" layoutY="29.0" mnemonicParsing="false" onAction="#cleanCart" style="-fx-background-color: #c6acef;" text="Clean Cart" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
                <font>
-                  <Font name="Cambria" size="15.0" />
+                  <Font size="15.0" />
                </font>
             </Button>
             <Text fx:id="total_price" layoutX="14.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Price: ">

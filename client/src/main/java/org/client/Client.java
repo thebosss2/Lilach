@@ -83,12 +83,24 @@ public class Client extends AbstractClient {
 
         diff += Integer.parseInt(hour.substring(0, 2));
 
-        if (diff > 3)
-            refund = price;
-        else if (diff>1)
-            refund = price/2;
 
-        //TODO add alert
+        //alert+ change refund
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("Order Cancellation succeeded");
+        alert.setTitle("The Order Has Been Canceled");
+
+        if (diff > 3)
+        {
+            refund = price;
+            alert.setContentText("You have received a full refund");
+        }
+        else if (diff>1)
+        {
+            refund = price/2;
+            alert.setContentText("The refund is half the order price");
+        }
+        else
+            alert.setContentText("I'm sorry, but according to the policy you do not deserve a refund");
 
         ((User) App.client.user).setBalance(((User) App.client.user).getBalance() + refund);
     }
