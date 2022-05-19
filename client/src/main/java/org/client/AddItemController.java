@@ -7,6 +7,6 @@ public class AddItemController extends ItemController {
     public void goToAddItemPage(MouseEvent event) throws InterruptedException {
         clickOnProductEffect(event);
         Controller controller = null;
-        controller = this.getSkeleton().changeCenter("AddProduct");
+        controller = App.client.storeSkeleton.changeCenter("AddProduct");
     }
 }

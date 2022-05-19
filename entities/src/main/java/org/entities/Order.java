@@ -32,50 +32,25 @@ public class Order implements Serializable {     //Product class entity
     protected String orderTime;
     protected Date deliveryDate;
     protected String deliveryHour;
+
     protected enum Status {PENDING, ARRIVED, CANCELED}
+
     protected Status isDelivered;
 
     protected enum Delivery {SELF_SHIPPING, SHIPPING_GIFT, TAKEAWAY}
+
     protected Delivery delivery;
 
     //shipping order information:
-    protected String personalPhone = null;
     protected String receiverPhone = null;
-    protected String receiverName= null;
-    protected String address= null;
-    protected String email= null;
+    protected String receiverName = null;
+    protected String address = null;
     protected String greetingCard = null;
 
 
-    //SHIPPING_GIFT constructor
-    public Order(LinkedList<PreMadeProduct> preMadeProducts, LinkedList<CustomMadeProduct> customMadeProducts,
-                 Customer orderedBy, int price, Date deliveryDate, String deliveryHour, String personalPhone,
-                 String receiverPhone, String receiverName, String address, String email, String greetingCard) {
-
-        Calendar cal = Calendar.getInstance();
-        SimpleDateFormat simpleformat = new SimpleDateFormat("dd/MMMM/yyyy hh:mm:s");
-        this.orderTime = simpleformat.format(cal.getTime());
-        this.delivery = Delivery.SHIPPING_GIFT;
-
-        this.preMadeProducts = preMadeProducts;
-        this.customMadeProducts = customMadeProducts;
-        this.orderedBy = orderedBy;
-        this.price = price;
-        this.deliveryDate = deliveryDate;
-        this.deliveryHour = deliveryHour;
-        this.isDelivered = Status.PENDING;
-        this.personalPhone = personalPhone;
-        this.receiverPhone = receiverPhone;
-        this.receiverName = receiverName;
-        this.address = address;
-        this.email = email;
-        this.greetingCard = greetingCard;
-    }
-
     //SELF_SHIPPING constructor
     public Order(LinkedList<PreMadeProduct> preMadeProducts, LinkedList<CustomMadeProduct> customMadeProducts,
-                 Customer orderedBy, int price, Date deliveryDate, String deliveryHour,
-                 String personalPhone, String address, String email, String greetingCard) {
+                 Customer orderedBy, int price, Date deliveryDate, String deliveryHour, String address, String greetingCard) {
 
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat simpleformat = new SimpleDateFormat("dd/MMMM/yyyy hh:mm:s");
@@ -89,11 +64,33 @@ public class Order implements Serializable {     //Product class entity
         this.deliveryDate = deliveryDate;
         this.deliveryHour = deliveryHour;
         this.isDelivered = Status.PENDING;
-        this.personalPhone = personalPhone;
         this.address = address;
-        this.email = email;
         this.greetingCard = greetingCard;
     }
+
+    //SHIPPING_GIFT constructor
+    public Order(LinkedList<PreMadeProduct> preMadeProducts, LinkedList<CustomMadeProduct> customMadeProducts,
+                 Customer orderedBy, int price, Date deliveryDate, String deliveryHour, String receiverPhone,
+                 String receiverName, String address, String greetingCard) {
+
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat simpleformat = new SimpleDateFormat("dd/MMMM/yyyy hh:mm:s");
+        this.orderTime = simpleformat.format(cal.getTime());
+        this.delivery = Delivery.SHIPPING_GIFT;
+
+        this.preMadeProducts = preMadeProducts;
+        this.customMadeProducts = customMadeProducts;
+        this.orderedBy = orderedBy;
+        this.price = price;
+        this.deliveryDate = deliveryDate;
+        this.deliveryHour = deliveryHour;
+        this.isDelivered = Status.PENDING;
+        this.receiverPhone = receiverPhone;
+        this.receiverName = receiverName;
+        this.address = address;
+        this.greetingCard = greetingCard;
+    }
+
 
     //TAKEAWAY constructor
     public Order(LinkedList<PreMadeProduct> preMadeProducts, LinkedList<CustomMadeProduct> customMadeProducts,
@@ -103,7 +100,6 @@ public class Order implements Serializable {     //Product class entity
         SimpleDateFormat simpleformat = new SimpleDateFormat("dd/MMMM/yyyy hh:mm:s");
         this.orderTime = simpleformat.format(cal.getTime());
         this.delivery = Delivery.TAKEAWAY;
-
         this.preMadeProducts = preMadeProducts;
         this.customMadeProducts = customMadeProducts;
         this.orderedBy = orderedBy;
@@ -120,19 +116,19 @@ public class Order implements Serializable {     //Product class entity
     }
 
     //getters and setters:
-    public List<CustomMadeProduct> getCustomMadeProducts(){
+    public List<CustomMadeProduct> getCustomMadeProducts() {
         return this.customMadeProducts;
     }
 
-    public void setCustomMadeProducts(LinkedList<CustomMadeProduct> customMadeProducts){
+    public void setCustomMadeProducts(LinkedList<CustomMadeProduct> customMadeProducts) {
         this.customMadeProducts = customMadeProducts;
     }
 
-    public void setPreMadeProducts(LinkedList<PreMadeProduct> preMadeProducts){
+    public void setPreMadeProducts(LinkedList<PreMadeProduct> preMadeProducts) {
         this.preMadeProducts = preMadeProducts;
     }
 
-    public List<PreMadeProduct> getPreMadeProducts(){
+    public List<PreMadeProduct> getPreMadeProducts() {
         return this.preMadeProducts;
     }
 
@@ -175,13 +171,4 @@ public class Order implements Serializable {     //Product class entity
     public void setAddress(String address) {
         this.address = address;
     }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
 }

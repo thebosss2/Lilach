@@ -1,8 +1,6 @@
 package org.client;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.DateCell;
-import javafx.scene.control.DatePicker;
+import javafx.scene.control.*;
 
 import java.time.LocalDate;
 import java.util.concurrent.Executor;
@@ -54,5 +52,28 @@ public abstract class Controller {
                 setDisable(empty || date.compareTo(toDay) > 0 || date.compareTo(fromDay) < 0);
             }
         });
+    }
+
+
+    //this function checks that all fields were filled and valid.if not- it lets the user know and fix it and return false
+    // if all fields are valid, it shows alert and return true
+    public boolean alertMsg(String actionHeader, String actionDescription, boolean invalid) {
+        Alert alert;
+        if (invalid) {
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Missing Values");
+            alert.setHeaderText("One or more fields are missing or invalid");
+            alert.showAndWait();
+            return false;
+        } else {
+            alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle(actionHeader + " Confirmation");
+            alert.setHeaderText("You're about to " + actionDescription);
+            alert.setContentText("Are you sure?");
+
+            if (alert.showAndWait().get() == ButtonType.OK) {
+                return true;
+            }
+        } return false;
     }
 }

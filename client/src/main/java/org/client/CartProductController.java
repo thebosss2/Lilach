@@ -51,7 +51,7 @@ public class CartProductController extends Controller {
     @FXML
     void duplicate(ActionEvent event) {
         if (product instanceof PreMadeProduct)
-            App.client.cart.insertProduct(new PreMadeProduct(((PreMadeProduct) product).getName(), product.getByteImage(), product.getPrice(), ((PreMadeProduct) product).getPriceBeforeDiscount()));
+            App.client.cart.insertProduct(new PreMadeProduct(((PreMadeProduct) product).getName(), product.getByteImage(), product.getPrice(), ((PreMadeProduct) product).getDescription(), ((PreMadeProduct) product).getPriceBeforeDiscount()));
         else{
             CustomMadeProduct p= new CustomMadeProduct(new LinkedList<PreMadeProduct>(((CustomMadeProduct)product).getProducts()),product.getPrice(), product.getByteImage());
             App.client.cart.insertProduct(p);

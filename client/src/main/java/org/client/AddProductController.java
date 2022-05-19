@@ -58,33 +58,29 @@ public class AddProductController extends Controller {
     @FXML
     void clickedAdd(ActionEvent event) throws InterruptedException {
         coolButtonClick((Button) event.getTarget());
-        Alert alert;
 
-        if (nameText.getText().equals("") || priceText.getText().equals("")
-                || priceBeforeDiscountText.getText().equals("") || descriptionText.getText().equals("")
-                || imageAdded == 0) {
-            alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Missing Values");
-            alert.setHeaderText("One or more of the fields are missing");
-            alert.showAndWait();
-        } else {
-            alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Add Product Confirmation");
-            alert.setHeaderText("You're about to add a product!");
-            alert.setContentText("Are you sure?");
-
-            if (alert.showAndWait().get() == ButtonType.OK) {
-                addProduct();
-                this.globalSkeleton.changeCenter("EditCatalog");
-            }
+        if(alertMsg("Add Product","add a product!" , isProductInvalid())) {
+            addProduct();
+            globalSkeleton.changeCenter("EditCatalog");
         }
+
+    }
+
+    private boolean isProductInvalid() {
+        if(nameText.getText().isEmpty() || priceText.getText().isEmpty() ||
+                priceBeforeDiscountText.getText().isEmpty() || descriptionText.getText().isEmpty() || imageAdded == 0)
+            return true;
+        if(nameText.getText().matches ("^[a-zA-Z0-9_ ]*$")  && priceText.getText().matches("^[0-9]*$") &&
+                priceBeforeDiscountText.getText().matches("^[0-9]*$"))
+            return false;
+        return true;
     }
 
     private void addProduct() { //create a new product with information from worker, then save on DB
         String add = "#ADD";
         LinkedList<Object> msg = new LinkedList<Object>();  //msg has string message with all data in next nodes
         PreMadeProduct p = new PreMadeProduct(this.nameText.getText(), newImagePath, Integer.parseInt(this.priceText.getText()),
-                Integer.parseInt(this.priceBeforeDiscountText.getText()));
+                descriptionText.getText(),Integer.parseInt(this.priceBeforeDiscountText.getText()));
 
         msg.add(add);          // adds #ADD command for server
         msg.add(p);             //adds data to msg list

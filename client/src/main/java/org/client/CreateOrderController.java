@@ -16,8 +16,6 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 public class CreateOrderController extends Controller {
 
@@ -43,16 +41,10 @@ public class CreateOrderController extends Controller {
     private Tab TATab;
 
     @FXML
-    private TextField giftEmailText;
-
-    @FXML
     private TextArea giftGreetingText;
 
     @FXML
     private ComboBox<String> giftHourPicker;
-
-    @FXML
-    private TextField giftPhoneText;
 
     @FXML
     private TextField giftReceiverAddressText;
@@ -79,16 +71,10 @@ public class CreateOrderController extends Controller {
     private TextField selfAddressText;
 
     @FXML
-    private TextField selfEmailText;
-
-    @FXML
     private TextArea selfGreetingText;
 
     @FXML
     private ComboBox<String> selfHourPicker;
-
-    @FXML
-    private TextField selfPhoneText;
 
     @FXML
     private DatePicker selfShippingDate;
@@ -240,9 +226,9 @@ public class CreateOrderController extends Controller {
     @FXML
     Store getSelectedStore() {
         Store pickedStore = new Store();
-        if(TAStorePicker.isDisabled())
+        if (TAStorePicker.isDisabled())
             ;//pickedStore = App.client.user.store;
-        else{
+        else {
             for (Store s : stores) {
                 if (s.getName().equals(TAStorePicker.getValue()))
                     pickedStore = s;
@@ -279,9 +265,31 @@ public class CreateOrderController extends Controller {
     void giftEnableHours(ActionEvent event) {
         enableHours(giftHourPicker, giftShippingDate);
     }
+
     @FXML
-    private void SubmitOrder(ActionEvent event) {
-        Button b = (Button)event.getTarget();
+    private void SubmitOrder(ActionEvent event) throws InterruptedException {
+        Button b = (Button) event.getTarget();
+        coolButtonClick(b);
+
+        //checks all that all fields were filled and valid.if not- it lets the user know and fix it.
+        if(alertMsg("Submit Order","submit your order!" , checkSaveOrder(b))) {
+            saveOrder(b); //if the fields are all valid- save the order
+            globalSkeleton.changeCenter("Catalog"); //and head back to catalog //todo change maybe to orders
+        }
+    }
+
+    private boolean checkSaveOrder(Button b) {
+        boolean valid;
+        if (b.getId().equals(TASubmitBtn.getId()))
+            valid = isInvalidTA();
+        else if (b.getId().equals(selfSubmitBtn.getId()))
+            valid = isInvalidSelf();
+        else //this is gift order
+            valid =isInvalidGift();
+        return valid;
+    }
+
+    private void saveOrder(Button b) {
         Order order;
 
         //prepare separate lists for custom and pre made products
@@ -293,18 +301,20 @@ public class CreateOrderController extends Controller {
             else customList.add((CustomMadeProduct) product);
         }
 
-        //prepare deliveryDate
-        Instant instant = Instant.from(TADate.getValue().atStartOfDay(ZoneId.systemDefault())); //convert LocalDate to Date
-        Date pickedDate = Date.from(instant);
+        if (b.getId().equals(TASubmitBtn.getId()))
+            order = new Order(preList, customList, (Customer) App.client.user, Integer.parseInt(TAFinalPriceLabel.getText()),
+                    getSelectedStore(), getPickedDate(TADate), TAHourPicker.getValue(), TAGreetingText.getText());
 
-        if(b.getId().equals(TASubmitBtn.getId()))
-            order = new Order(preList, customList, (Customer) App.client.user, Integer.parseInt(TAFinalPriceLabel.getText()), getSelectedStore(), pickedDate, TAHourPicker.getValue(),TAGreetingText.getText());
-        else if(b.getId().equals(selfSubmitBtn.getId()))
-            order = new Order(preList, customList, (Customer) App.client.user, Integer.parseInt(selfFinalPriceLabel.getText()), pickedDate, selfHourPicker.getValue(), selfPhoneText.getText(), selfAddressText.getText(),selfEmailText.getText(),selfGreetingText.getText());
+        else if (b.getId().equals(selfSubmitBtn.getId()))
+            order = new Order(preList, customList, (Customer) App.client.user, Integer.parseInt(selfFinalPriceLabel.getText()),
+                    getPickedDate(selfShippingDate), selfHourPicker.getValue(), selfAddressText.getText(), selfGreetingText.getText());
+
         else //this is gift order
-            order = new Order(preList, customList, (Customer) App.client.user, Integer.parseInt(giftFinalPriceLabel.getText()), pickedDate, giftHourPicker.getValue(), giftPhoneText.getText(), giftReceiverPhoneText.getText(),giftReceiverNameText.getText(), giftReceiverAddressText.getText(),giftEmailText.getText(), giftGreetingText.getText());
+            order = new Order(preList, customList, (Customer) App.client.user, Integer.parseInt(giftFinalPriceLabel.getText()),
+                    getPickedDate(giftShippingDate), giftHourPicker.getValue(), giftReceiverPhoneText.getText(), giftReceiverNameText.getText(),
+                    giftReceiverAddressText.getText(), giftGreetingText.getText());
 
-        List<Object> newMsg = new LinkedList<Object>();
+        List<Object> newMsg = new LinkedList<Object>(); //ask server to save to db
         newMsg.add("#SAVEORDER");
         newMsg.add(order);
         try {
@@ -312,13 +322,43 @@ public class CreateOrderController extends Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //TODO alert- order submission succeeded
+    }
+
+    private Date getPickedDate(DatePicker dp) { //get the picked localDate and convert it to Date
+        Instant instant = Instant.from(dp.getValue().atStartOfDay(ZoneId.systemDefault())); //convert LocalDate to Date
+        Date pickedDate = Date.from(instant);
+        return pickedDate;
+    }
+    
+    @FXML
+    private boolean isInvalidTA() {
+        //TODO STORE CHECK
+
+        return TAHourPicker.isDisabled() ||//if hours are disabled than costumer didnt pick a date
+                !(TAHourPicker.getItems().size() > 0);// if didnt pick hour
     }
 
     @FXML
-    private boolean checkValidityTA() {
-        return true;//if(TAStorePicker.)
+    private boolean isInvalidSelf() {
+        return selfHourPicker.isDisabled() ||//if hours are disabled than costumer didnt pick a date
+                !(selfHourPicker.getItems().size() > 0) || // if didnt pick hour
+                 selfAddressText.getText().isEmpty(); // if didnt write any address
     }
+
+    @FXML
+    private boolean isInvalidGift() {
+        if(giftHourPicker.isDisabled() ||//if hours are disabled than costumer didnt pick a date
+                !(giftHourPicker.getItems().size() > 0) ||// if didnt pick hour
+                giftReceiverPhoneText.getText().isEmpty() || // if didnt write phone for receiver
+                giftReceiverNameText.getText().isEmpty() || // if didnt write the name of receiver
+                giftReceiverAddressText.getText().isEmpty() ||
+                !giftReceiverPhoneText.getText().matches ("^[0-9]*$") ||
+                giftReceiverPhoneText.getText().length() != 10 ||
+                !giftReceiverNameText.getText().matches ("^[a-zA-Z_ ]*$")) // if didnt write any address for receiver
+                    return true;
+        return false;
+    }
+
     @FXML
     void tabClicked(Event event) {
 
@@ -326,3 +366,4 @@ public class CreateOrderController extends Controller {
 
 
 }
+
