@@ -11,6 +11,9 @@ public class ManagerMenuController extends WorkerMenuController {
     private Button reportsBtn;
 
     @FXML
+    private Button catalogBtn;
+
+    @FXML
     void goToReports(ActionEvent event) throws InterruptedException {       // loads edit catalog view for worker
         coolMenuClick((Button) event.getTarget());
 
@@ -28,6 +31,15 @@ public class ManagerMenuController extends WorkerMenuController {
         App.client.logOut();
     }
 
+    @FXML
+    void goToCatalog(ActionEvent event) throws InterruptedException {       // loads edit catalog view for worker
+        coolMenuClick((Button) event.getTarget());
+
+        //if(((Employee)App.client.user).role == CEO)
+        this.getSkeleton().changeCenter("Catalog");
+        //else
+        //    this.getSkeleton().changeCenter("StoreReport");
+    }
     @Override
     protected void coolMenuClick(Button button) throws InterruptedException {
         editCatalogBtn.setStyle("-fx-background-color: #9bc98c");

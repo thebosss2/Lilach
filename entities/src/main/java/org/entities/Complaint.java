@@ -14,7 +14,7 @@ public class Complaint {    //only for customers
     private Customer customer;
     @Column(name="dateOfSubmit")
     private Date date;
-    private String CompText;
+    private String compText;
     private Boolean appStatus=true;        // true= complaint filed successfully- yet to be inspected, false = complaint fulfilled
     private Boolean completedOnTime=false;
     public enum Topic{BAD_SERVICE, LATE_ARRIVAL, BAD_PRODUCT, PAYMENT_PROBLEMS, OTHER}
@@ -23,7 +23,7 @@ public class Complaint {    //only for customers
     public Complaint(Customer customer, Date date, String compText, Topic topic) {
         this.customer = customer;
         this.date = date;
-        this.CompText = compText;
+        this.compText = compText;
         this.topic = topic;
     }
 
@@ -40,11 +40,11 @@ public class Complaint {    //only for customers
     }
 
     public String getCompText() {
-        return CompText;
+        return compText;
     }
 
     public void setCompText(String compText) {
-        CompText = compText;
+        compText = compText;
     }
 
     public int getId() {

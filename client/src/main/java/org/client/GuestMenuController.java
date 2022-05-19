@@ -29,7 +29,12 @@ public class GuestMenuController extends Controller {
     void goToCatalog(ActionEvent event) throws InterruptedException {   //catalog button clears page and loads all products
         coolMenuClick((Button) event.getTarget());
         this.getSkeleton().changeCenter("Catalog");
+    }
 
+    @FXML
+    void goToComplaints(ActionEvent event) throws InterruptedException {   //catalog button clears page and loads all products
+        coolMenuClick((Button) event.getTarget());
+        this.getSkeleton().changeCenter("ComplaintInspectionTable");
     }
 
     @FXML

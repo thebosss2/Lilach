@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="400.0" prefWidth="220.0" style="-fx-background-color: #9bc98c; -fx-background-radius: 0 0 20 0;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.GuestMenuController">
+<VBox maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="400.0" prefWidth="220.0" style="-fx-background-color: #9bc98c; -fx-background-radius: 0 0 20 0;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.GuestMenuController">
     <children>
       <Button fx:id="loginBtn" alignment="BASELINE_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#goToLogin" onMouseEntered="#mouseOnBtn" onMouseExited="#mouseOffBtn" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: #9bc98c;" text="Login" textFill="WHITE">
          <font>
@@ -49,6 +49,11 @@
                 <Insets top="5.0" />
             </VBox.margin>
         </Button>
+      <Button fx:id="complaintsBtn" alignment="BASELINE_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#goToComplaints" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: #9bc98c;" text="Complaints" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
     </children>
     <opaqueInsets>
         <Insets />
