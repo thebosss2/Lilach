@@ -51,22 +51,9 @@ public class EditProductController extends Controller {
         this.nameText.setText(product.getName());
         this.mainImage.setImage(product.getImage());
         this.priceText.setText(Integer.toString(product.getPrice()));
+        this.descriptionText.setText(product.getDescription());
         if (product.getPriceBeforeDiscount() != 0)
             this.priceBeforeDiscountText.setText(Integer.toString(product.getPriceBeforeDiscount()));
-    }
-
-    @FXML
-    void clickedSave(ActionEvent event) throws InterruptedException {
-        coolButtonClick((Button) event.getTarget());
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Save Product Confirmation");
-        alert.setHeaderText("You're about to save changes!");
-        alert.setContentText("Are you sure?");
-
-        if (alert.showAndWait().get() == ButtonType.OK) {
-            saveChanges();
-            this.globalSkeleton.changeCenter("EditCatalog");
-        }
     }
 
     @FXML
@@ -80,6 +67,25 @@ public class EditProductController extends Controller {
         }
     }
 
+    @FXML
+    void clickedSave(ActionEvent event) throws InterruptedException {
+        coolButtonClick((Button) event.getTarget());
+        if(alertMsg("Edit Product","change this product!" , checkProduct())) {
+            saveChanges();
+            this.globalSkeleton.changeCenter("EditCatalog");
+        }
+    }
+
+    private boolean checkProduct() {
+        if(nameText.getText().isEmpty() || priceText.getText().isEmpty() ||
+                priceBeforeDiscountText.getText().isEmpty() || descriptionText.getText().isEmpty())
+            return true;
+        if(nameText.getText().matches ("^[a-zA-Z0-9_ ]*$")  && priceText.getText().matches("^[0-9]*$") &&
+                priceBeforeDiscountText.getText().matches("^[0-9]*$"))
+            return false;
+        return true;
+    }
+
     void saveChanges() {     //function creates new product and sends save command to server
         String save = "#SAVE";
         LinkedList<Object> msg = new LinkedList<Object>();  //msg has string message with all data in next nodes
@@ -87,13 +93,12 @@ public class EditProductController extends Controller {
 
 
         if (imageChanged > 0)
-            p = new PreMadeProduct(this.nameText.getText(), newImagePath, Integer.parseInt(this.priceText.getText()),
-                    Integer.parseInt(this.priceBeforeDiscountText.getText()));
+            p = new PreMadeProduct(nameText.getText(), newImagePath, Integer.parseInt(priceText.getText()),
+                    descriptionText.getText(),Integer.parseInt(priceBeforeDiscountText.getText()));
 
         else
-            p = new PreMadeProduct(this.nameText.getText(), this.product.getByteImage(),
-                    Integer.parseInt(this.priceText.getText()),
-                    Integer.parseInt(this.priceBeforeDiscountText.getText()));
+            p = new PreMadeProduct(nameText.getText(), product.getByteImage(), Integer.parseInt(priceText.getText()),
+                    descriptionText.getText(),Integer.parseInt(priceBeforeDiscountText.getText()));
 
         msg.add(save);          // adds #SAVE command for server
         msg.add(product);       //adds data to msg list
@@ -107,4 +112,3 @@ public class EditProductController extends Controller {
     }
 
 }
-

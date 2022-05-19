@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#goToCustomerView" onMouseEntered="#mouseOnProduct" onMouseExited="#mouseOffProduct" prefHeight="285.0" prefWidth="234.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.CustomerPreviewController">
+   <children>
+      <Button fx:id="freezeBtn" layoutX="97.0" layoutY="245.0" mnemonicParsing="false" onMouseClicked="#freezeAccounts" prefHeight="32.0" prefWidth="130.0" style="-fx-background-color: #c6acef;" text="Freeze Account">
+         <font>
+            <Font name="Guttman Aharoni" size="15.0" />
+         </font>
+      </Button>
+      <Text fx:id="name" boundsType="LOGICAL_VERTICAL_CENTER" fill="#9b5cff" layoutX="2.0" layoutY="22.0" onMouseClicked="#goToCustomerView" strokeType="OUTSIDE" strokeWidth="0.0" text="full name" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="138.66668701171875">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Text>
+      <Text fx:id="debt" layoutX="97.0" layoutY="169.0" onMouseClicked="#goToCustomerView" strokeType="OUTSIDE" strokeWidth="0.0" text="3022₪" textAlignment="RIGHT" wrappingWidth="130.0000000000001">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Text>
+      <Text boundsType="LOGICAL_VERTICAL_CENTER" layoutX="1.0" layoutY="70.0" onMouseClicked="#goToCustomerView" strokeType="OUTSIDE" strokeWidth="0.0" text="Username:" textOrigin="CENTER" wrappingWidth="110.66667938232422">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Text>
+      <Text fx:id="type" boundsType="LOGICAL_VERTICAL_CENTER" layoutX="136.0" layoutY="22.0" onMouseClicked="#goToCustomerView" strokeType="OUTSIDE" strokeWidth="0.0" text="type" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="97.33338928222668">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Text>
+      <Text boundsType="LOGICAL_VERTICAL_CENTER" layoutX="2.0" layoutY="131.0" onMouseClicked="#goToCustomerView" strokeType="OUTSIDE" strokeWidth="0.0" text="ID:" textOrigin="CENTER" wrappingWidth="37.99999618530262">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Text>
+      <Text boundsType="LOGICAL_VERTICAL_CENTER" layoutX="1.0" layoutY="100.0" onMouseClicked="#goToCustomerView" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" textOrigin="CENTER" wrappingWidth="97.33338928222679">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Text>
+      <Text boundsType="LOGICAL_VERTICAL_CENTER" layoutX="6.0" layoutY="162.0" onMouseClicked="#goToCustomerView" strokeType="OUTSIDE" strokeWidth="0.0" text="balance:" textOrigin="CENTER" wrappingWidth="87.719482421875">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Text>
+      <Text fx:id="id" layoutX="97.0" layoutY="138.0" onMouseClicked="#goToCustomerView" strokeType="OUTSIDE" strokeWidth="0.0" text="203010011" textAlignment="RIGHT" wrappingWidth="130.0000000000001">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Text>
+      <Text fx:id="password" layoutX="97.0" layoutY="107.0" onMouseClicked="#goToCustomerView" strokeType="OUTSIDE" strokeWidth="0.0" text="pass" textAlignment="RIGHT" wrappingWidth="130.0000000000001">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Text>
+      <Text fx:id="username" layoutX="97.0" layoutY="77.0" onMouseClicked="#goToCustomerView" strokeType="OUTSIDE" strokeWidth="0.0" text="user" textAlignment="RIGHT" wrappingWidth="130.0000000000001">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Text>
+   </children>
+</Pane>

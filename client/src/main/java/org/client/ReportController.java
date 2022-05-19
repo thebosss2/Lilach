@@ -50,6 +50,7 @@ public class ReportController extends Controller{
     @FXML
     void makeReport(ActionEvent event) throws InterruptedException {
         coolButtonClick((Button) event.getTarget());
+
     }
 
     public void changedFromDate (ActionEvent event) throws InterruptedException {
