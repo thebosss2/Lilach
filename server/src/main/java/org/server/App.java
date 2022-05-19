@@ -40,7 +40,8 @@ public class App {
         int price;
         for (int i = 0; i < 5; i++) {
             var img1 = loadImageFromResources(String.format("Flower%s.jpg", i));
-            PreMadeProduct p1 = new PreMadeProduct("Flower" + i, img1, price = random.nextInt(100), random.nextInt(50));
+
+            PreMadeProduct p1 = new PreMadeProduct("Flower" + i, img1, price = random.nextInt(1000),"descriptionnn", (price - random.nextInt(500)));
             Customer cust = new Customer("name","user","pass","mail",new Date(),"credit", Customer.AccountType.MEMBERSHIP);
             Complaint c = new Complaint(cust ,new Date(),"bad bad bad", Complaint.Topic.BAD_SERVICE);
             session.save(cust);
