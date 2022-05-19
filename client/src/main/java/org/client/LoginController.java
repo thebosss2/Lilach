@@ -28,7 +28,7 @@ public class LoginController extends Controller{
     private Button loginBtn; // Value injected by FXMLLoader
 
     @FXML // fx:id="password"
-    private PasswordField password; // Value injected by FXMLLoader
+    private PasswordField passwordText; // Value injected by FXMLLoader
 
     @FXML // fx:id="username"
     private TextField username; // Value injected by FXMLLoader
@@ -38,7 +38,7 @@ public class LoginController extends Controller{
         List<Object> msg = new LinkedList<Object>();
         msg.add("#LOGIN");
         msg.add(username.getText());
-        msg.add(password.getText());
+        msg.add(passwordText.getText());
         try {
             App.client.sendToServer(msg);
         } catch (IOException e) {
@@ -50,7 +50,7 @@ public class LoginController extends Controller{
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert loginBtn != null : "fx:id=\"lognBtn\" was not injected: check your FXML file 'Login.fxml'.";
-        assert password != null : "fx:id=\"password\" was not injected: check your FXML file 'Login.fxml'.";
+        assert passwordText != null : "fx:id=\"passwordText\" was not injected: check your FXML file 'Login.fxml'.";
         assert username != null : "fx:id=\"username\" was not injected: check your FXML file 'Login.fxml'.";
 
     }
