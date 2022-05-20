@@ -21,8 +21,8 @@ public class App extends Application {
         //Add here title set (Lilach Store).
         scene = new Scene(loadFXML("StoreSkeleton"), 1000, 600);
         stage.setScene(scene);
-        //stage.setMinWidth(800);
-        //stage.setMinHeight(600);
+        stage.setMinWidth(800);
+        stage.setMinHeight(600);
         stage.show();
 
     }

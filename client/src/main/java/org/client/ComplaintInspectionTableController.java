@@ -46,6 +46,9 @@ public class ComplaintInspectionTableController extends Controller{
     @FXML // fx:id="topicCol"
     private TableColumn<Complaint, Complaint.Topic> topicCol; // Value injected by FXMLLoader
 
+    @FXML
+    private TableColumn<Complaint, Void> btnCol;
+
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert dateCol != null : "fx:id=\"dateCol\" was not injected: check your FXML file 'ComplaintInspectionTable.fxml'.";
@@ -59,14 +62,19 @@ public class ComplaintInspectionTableController extends Controller{
         Customer cust = new Customer("23465", "Sagi","user","pass","mail","56346","credit", Customer.AccountType.MEMBERSHIP);
 
         dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
+        dateCol.setStyle("-fx-alignment: CENTER");
         topicCol.setCellValueFactory(new PropertyValueFactory<>("topic"));
+        topicCol.setStyle("-fx-alignment: CENTER");
 
         statusCol.setCellValueFactory(cellData -> {
             boolean status = cellData.getValue().getStatus();
             return new ReadOnlyStringWrapper(status ? "Open" : "Closed");
         });
+        statusCol.setStyle("-fx-alignment: CENTER");
+
 
         nameCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getCustomer().getName()));
+        nameCol.setStyle("-fx-alignment: CENTER");
 
         ObservableList<Complaint> complaints = FXCollections.observableArrayList();
 
@@ -75,15 +83,17 @@ public class ComplaintInspectionTableController extends Controller{
             Complaint complaint = new Complaint(cust, new Date(), "This is a complaint "+i, Complaint.Topic.OTHER);
             complaints.add(complaint);
         }
+        Complaint complaint = new Complaint(cust, new Date(1948, 2, 15), "This is a complaint 5", Complaint.Topic.OTHER);
+        complaints.add(complaint);
+
         addButtonToTable();
 
         tableView.setItems(complaints);
-        //tableView.setRoot(root);
 
-    }
+   }
 
     private void addButtonToTable() {
-        TableColumn<Complaint, Void> colBtn = new TableColumn("Inspect complaint");
+        btnCol = new TableColumn("Inspect complaint");
 
         Callback<TableColumn<Complaint, Void>, TableCell<Complaint, Void>> cellFactory = new Callback<>() {
             @Override
@@ -102,8 +112,6 @@ public class ComplaintInspectionTableController extends Controller{
                         btn.setText("Inspect");
                     }
 
-
-
                     @Override
                     public void updateItem(Void item, boolean empty) {
                         super.updateItem(item, empty);
@@ -118,13 +126,13 @@ public class ComplaintInspectionTableController extends Controller{
             }
         };
 
-        colBtn.setCellFactory(cellFactory);
-
-        tableView.getColumns().add(colBtn);
-
+        btnCol.setCellFactory(cellFactory);
+        btnCol.setStyle("-fx-alignment: CENTER");
+        tableView.getColumns().add(btnCol);
     }
 
     private void goToComplaintInspection(Complaint complaint) {
+        System.out.println(btnCol.getWidth());
         ComplaintInspectionController controller = (ComplaintInspectionController)
                 this.getSkeleton().changeCenter("ComplaintInspection");
         controller.setComplaint(complaint);

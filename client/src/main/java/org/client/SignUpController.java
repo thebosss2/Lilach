@@ -68,6 +68,7 @@ public class SignUpController extends Controller{
 
     @FXML // fx:id="PhoneNumberText"
     private TextField phoneNumberText; // Value injected by FXMLLoader
+
     Pattern pattern1 = Pattern.compile(".{0,10}");
     TextFormatter<String> formatter1 = new TextFormatter<String>( change -> {
         change.setText(change.getText().replaceAll("[^0-9.,]", ""));

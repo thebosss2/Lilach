@@ -54,6 +54,11 @@
             <Font size="20.0" />
          </font>
       </Button>
+      <Button fx:id="complaintBtn" alignment="BASELINE_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#goToComplaint" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: #9bc98c;" text="Complaint" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
     </children>
     <opaqueInsets>
         <Insets />

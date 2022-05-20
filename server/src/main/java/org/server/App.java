@@ -94,17 +94,28 @@ public class App {
         return list;
     }
     static List<User> getAllUsers() throws IOException {      //pulls all products from database
+        LinkedList<User> list = new LinkedList<>();
+        list.addAll(getAllCustomers());
+        list.addAll(getAllEmployees());
+        return list;
+    }
+
+    static List<Customer> getAllCustomers() throws IOException{
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Customer> customerQuery = builder.createQuery(Customer.class);
         customerQuery.from(Customer.class);
         List<Customer> customers = session.createQuery(customerQuery).getResultList();
-        LinkedList<User> list = new LinkedList<>(customers);
-        CriteriaQuery<Employee> employeeQuery = builder.createQuery(Employee.class);
-        employeeQuery.from(Employee.class);
-        List<Employee> employees = session.createQuery(employeeQuery).getResultList();
-        list.addAll(employees);
-        return list;
+        return new LinkedList<>(customers);
     }
+
+    static List<Employee> getAllEmployees() throws IOException{
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Employee> customerQuery = builder.createQuery(Employee.class);
+        customerQuery.from(Employee.class);
+        List<Employee> employees = session.createQuery(customerQuery).getResultList();
+        return new LinkedList<>(employees);
+    }
+
 
     public static byte[] loadImageFromResources(String imageName) throws IOException {
         var stream = App.class.getClassLoader().getResourceAsStream(String.format("Images/%s", imageName));

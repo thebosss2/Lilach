@@ -19,8 +19,10 @@ public class Customer extends User implements Serializable {
     public enum AccountType{STORE, CHAIN, MEMBERSHIP}
     private AccountType accountType;
     private String creditCard;
+
     ///////////////////////////////////////////////Past Orders
-    ///////////////////////////////////////////////private Store store;
+    ///////////////////////////////////////////////private Store store; //TODO move to user
+
     @OneToMany(targetEntity = Complaint.class, mappedBy = "customer")
     @Column(name = "order")
     protected List<Order> orders = new LinkedList<Order>();
