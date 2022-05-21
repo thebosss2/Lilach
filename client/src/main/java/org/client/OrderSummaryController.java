@@ -60,10 +60,10 @@ public class OrderSummaryController extends Controller{
 
 
     public void setOrder(Order order) {
-
+        this.order=order;
         if(order.isDelivered()== Order.Status.CANCELED){
             cancelOrder.setDisable(true);
-            //TODO maybe add text that says cancels
+            //T ODO maybe add text that says cancels
 
         }
 

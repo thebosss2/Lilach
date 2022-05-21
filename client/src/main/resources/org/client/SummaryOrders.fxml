@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
@@ -12,7 +13,10 @@
          <content>
             <AnchorPane prefHeight="316.0" prefWidth="601.0">
                <children>
-                  <VBox fx:id="vbox" prefHeight="303.0" prefWidth="601.0" />
+                  <VBox fx:id="vbox" prefHeight="303.0" prefWidth="601.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="13.0">
+                     <padding>
+                        <Insets bottom="200.0" />
+                     </padding></VBox>
                </children>
             </AnchorPane>
          </content>
