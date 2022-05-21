@@ -24,6 +24,7 @@ public class WorkerMenuController extends Controller {
     @FXML
     void logOut(ActionEvent event) throws InterruptedException {
         coolMenuClick((Button) event.getTarget());
+        App.client.cart.emptyProducts();
         App.client.logOut();
     }
 

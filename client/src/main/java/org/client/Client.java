@@ -160,6 +160,11 @@ public class Client extends AbstractClient {
             ceoReportController = (CEOReportController) controller;
             ceoReportController.pullStoresToClient((LinkedList<Store>) ((LinkedList<Object>) msg).get(1));       //calls static function in client for display
         }
+        else if(controller instanceof SignUpController){
+            SignUpController signUpController = (SignUpController) controller;
+            signUpController.pullStoresToClient((LinkedList<Store>) ((LinkedList<Object>) msg).get(1));
+        }
+
 
 
     }

@@ -135,7 +135,7 @@
                                        </bumpInput>
                                     </Lighting>
                                  </effect></ChoiceBox>
-                              <ComboBox fx:id="defaultStore" disable="true" layoutX="154.0" layoutY="11.0" prefWidth="150.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0" />
+                              <ComboBox fx:id="storePicker" disable="true" layoutX="154.0" layoutY="11.0" prefWidth="150.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0" />
                            </children>
                         </AnchorPane>
                         <Button fx:id="signUpBtn" mnemonicParsing="false" onAction="#signUpClicked" prefHeight="32.0" prefWidth="107.0" style="-fx-background-color: #c6acef;" text="Sign-Up">

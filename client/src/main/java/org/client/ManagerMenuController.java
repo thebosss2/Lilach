@@ -24,13 +24,6 @@ public class ManagerMenuController extends WorkerMenuController {
         //    this.getSkeleton().changeCenter("StoreReport");
     }
 
-
-    @FXML
-    void logOut(ActionEvent event) throws InterruptedException {
-        coolMenuClick((Button) event.getTarget());
-        App.client.logOut();
-    }
-
     @FXML
     void goToCatalog(ActionEvent event) throws InterruptedException {       // loads edit catalog view for worker
         coolMenuClick((Button) event.getTarget());
