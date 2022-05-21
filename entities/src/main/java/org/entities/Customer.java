@@ -2,6 +2,7 @@ package org.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
@@ -14,14 +15,14 @@ public class Customer extends User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-
-
     public enum AccountType{STORE, CHAIN, MEMBERSHIP}
     private AccountType accountType;
+    private Date memberShipExpire;
+
     private String creditCard;
 
-    ///////////////////////////////////////////////Past Orders
-    ///////////////////////////////////////////////private Store store; //TODO move to user
+    @ManyToOne
+    private Store store = null; //TODO move to user
 
     @OneToMany(targetEntity = Complaint.class, mappedBy = "customer")
     @Column(name = "order")
@@ -35,6 +36,18 @@ public class Customer extends User implements Serializable {
         super(userID, name, userName, password, email, phone);
         this.creditCard = creditCard;
         this.accountType = accountType;
+        if(accountType == AccountType.MEMBERSHIP){
+            memberShipExpire = new Date();
+            memberShipExpire.setYear(memberShipExpire.getYear()+1);
+        }
+        //TODO add hashing to password if have time.
+    }
+
+    public Customer(String userID, String name, String userName, String password, String email, String phone, String creditCard, AccountType accountType, Store store) {
+        super(userID, name, userName, password, email, phone);
+        this.creditCard = creditCard;
+        this.accountType = accountType;
+        this.store = store;
         //TODO add hashing to password if have time.
     }
 
@@ -54,4 +67,26 @@ public class Customer extends User implements Serializable {
         this.accountType = accountType;
     }
 
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
+    }
+
+    public Date getMemberShipExpire() {
+        return memberShipExpire;
+    }
+
+    //TODO delete this method!!
+    public void setMemberShipExpireTODELETE(Date date){
+        this.memberShipExpire = date;
+    }
+
+    public void setMemberShipExpire() {
+        Date memberShipExpire = new Date();
+        memberShipExpire.setYear(memberShipExpire.getYear() + 1);
+        this.memberShipExpire = memberShipExpire;
+    }
 }

@@ -58,6 +58,10 @@ public class App {
         session.flush();
 
         Customer cust = new Customer("23465", "Sagii","Sagii","Sagii","mail","56346","credit", Customer.AccountType.MEMBERSHIP);
+        Date date = new Date();
+        date.setYear(date.getYear() - 2);
+        cust.setMemberShipExpireTODELETE(date);
+        cust.setBalance(150);
         session.save(cust);
         session.flush();
 

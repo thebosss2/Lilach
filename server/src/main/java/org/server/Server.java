@@ -35,23 +35,55 @@ public class Server extends AbstractServer {
                 case "#COMPLAINT" -> addComplaint((LinkedList<Object>) msg);
                 case "#PULL_COMPLAINTS" -> pullOpenComplaints(client);
                 case "#CLOSE_COMPLAINT" -> closeComplaintAndCompensate((LinkedList<Object>) msg);
+                case "#UPDATE_CUSTOMER_ACCOUNT" -> updateCustomerAccount((LinkedList<Object>) msg, client);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    private void updateCustomerAccount(LinkedList<Object> msg, ConnectionToClient client) {
+        Customer customer = (Customer) msg.get(1);
+        if(msg.get(2).toString().equals("CONFIRMED")){
+            updateAccount(customer, Customer.AccountType.MEMBERSHIP);
+            updateBalance(customer, (int) msg.get(3));
+        } else{
+            updateAccount(customer, Customer.AccountType.CHAIN);
+        }
+
+        List<Object> newMsg = new LinkedList<>();
+        newMsg.add("#UPDATE_CUSTOMER");
+        newMsg.add(customer);
+        try {
+            client.sendToClient(newMsg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateAccount(Customer customer, Customer.AccountType type) {
+        App.session.beginTransaction();
+        App.session.evict(customer);       //evict current product details from database
+        if(type == Customer.AccountType.MEMBERSHIP)
+            customer.setMemberShipExpire();
+        else
+            customer.setAccountType(type);
+        App.session.merge(customer);           //merge into database with updated info
+        App.session.flush();
+        App.session.getTransaction().commit(); // Save everything.
+    }
+
     private void closeComplaintAndCompensate(LinkedList<Object> msg) {
         Complaint complaint = (Complaint) msg.get(1);
         closeComplaint(complaint);
         if(msg.get(2).equals("COMPENSATED"))
-            compensateCustomer(complaint.getCustomer(), (int) msg.get(3));
+            updateBalance(complaint.getCustomer(),complaint.getCustomer().getBalance () + (int) msg.get(3));
     }
 
-    private void compensateCustomer(Customer customer, int compensation){
+    private void updateBalance(Customer customer, int balance){
         App.session.beginTransaction();
         App.session.evict(customer);       //evict current product details from database
-        customer.setBalance(customer.getBalance() + compensation);
+        customer.setBalance(balance);
         App.session.merge(customer);           //merge into database with updated info
         App.session.flush();
         App.session.getTransaction().commit(); // Save everything.
