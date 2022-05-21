@@ -26,7 +26,7 @@ public class EmployeeViewController {
     private TextField password;
 
     @FXML
-    private ComboBox<?> role;
+    private ComboBox<String> role;
 
     @FXML
     private Button saveBtn;
@@ -38,19 +38,24 @@ public class EmployeeViewController {
     private Button statusBtn;
 
     @FXML
-    private ComboBox<?> store;
+    private ComboBox<String> store;
 
     @FXML
     private TextField username;
 
     @FXML
     void changeStatus(ActionEvent event) {
-
+        if(this.status.getText().equals("Active")) {
+            this.status.setText("Inactive");
+            this.status.setStyle("-fx-text-inner-color: red;");
+        }
+        else
+            this.status.setText("Active");
+            this.status.setStyle("-fx-text-inner-color: green;");
     }
 
     @FXML
     void saveChanges(ActionEvent event) {
-
     }
 
 }
