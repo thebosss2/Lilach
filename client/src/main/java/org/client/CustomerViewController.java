@@ -12,7 +12,7 @@ import javafx.scene.text.Text;
 public class CustomerViewController {
 
     @FXML
-    private Label balance;
+    private TextField balance;
 
     @FXML
     private DatePicker birth;
@@ -21,7 +21,7 @@ public class CustomerViewController {
     private TextField email;
 
     @FXML
-    private Label id;
+    private TextField id;
 
     @FXML
     private TextField name;
