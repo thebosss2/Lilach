@@ -4,7 +4,10 @@
 
 package org.client;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
@@ -57,6 +60,30 @@ public class ComplaintInspectionController extends Controller{
         }
     }
 
+    @FXML
+    void submitInspection(ActionEvent event) {
+        List<Object> msg = new LinkedList<>();
+        msg.add("#CLOSE_COMPLAINT");
+        msg.add(complaint);
+        if(compensationCheckbox.isSelected()){
+            if(compensationField.getText().isEmpty()){
+                //sendAlert
+                return;
+            }
+            msg.add("COMPENSATED");
+            msg.add(Integer.parseInt(compensationField.getText()));
+        } else {
+            msg.add("NO_COMPENSATION");
+        }
+        try {
+            App.client.sendToServer(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //TODO alert says complaint fulfilled and send back to table.
+
+    }
 
     Pattern pattern1 = Pattern.compile(".{0,5}");
     TextFormatter<String> formatter1 = new TextFormatter<String>(change -> {

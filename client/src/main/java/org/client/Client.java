@@ -4,6 +4,8 @@ import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.application.Preloader;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -16,6 +18,8 @@ import org.client.ocsf.AbstractClient;
 import org.entities.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -63,11 +67,19 @@ public class Client extends AbstractClient {
                 case "#LOGIN" -> loginClient((LinkedList<Object>) msg);
                 case "#SIGNUP_AUTHENTICATION" -> authenticationReply((LinkedList<Object>) msg);
                 case "#PULLSTORES" -> pushStores(msg);//function gets all data from server to display to client
+                case "#PULL_COMPLAINTS" -> pushComplaints((LinkedList<Object>) msg);
             }
         } catch (Exception e) {
+            System.out.println(Arrays.toString(e.getStackTrace()));
+            System.out.println(e.getMessage());
             System.out.println("Client Error");
             e.getStackTrace();
         }
+    }
+
+    private void pushComplaints(LinkedList<Object> msg) {
+        ComplaintInspectionTableController tableController = (ComplaintInspectionTableController) controller;
+        tableController.pullComplaints(FXCollections.observableArrayList( ((ArrayList<Complaint>) msg.get(1))));
     }
 
     private void pushToCatalog(Object msg) throws IOException { // takes data received and sends to display function

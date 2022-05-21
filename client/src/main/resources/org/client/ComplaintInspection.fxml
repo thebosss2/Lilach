@@ -42,7 +42,7 @@
                         <Insets left="20.0" right="20.0" />
                      </HBox.margin>
                   </TextField>
-                  <Button fx:id="submitBtn" mnemonicParsing="false" style="-fx-background-color: #c6acef;" text="Submit inspection" />
+                  <Button fx:id="submitBtn" mnemonicParsing="false" onAction="#submitInspection" style="-fx-background-color: #c6acef;" text="Submit inspection" />
                </children>
             </HBox>
          </children>

@@ -73,19 +73,19 @@ public class SignUpController extends Controller{
 
     Pattern pattern1 = Pattern.compile(".{0,10}");
     TextFormatter<String> formatter1 = new TextFormatter<String>( change -> {
-        change.setText(change.getText().replaceAll("[^0-9.,]", ""));
+        change.setText(change.getText().replaceAll("[^0-9]", ""));
         return pattern1.matcher(change.getControlNewText()).matches() ? change : null;
     });
 
     Pattern pattern2 = Pattern.compile(".{0,9}");
     TextFormatter<String> formatter2 = new TextFormatter<String>(change-> {
-        change.setText(change.getText().replaceAll("[^0-9.,]", ""));
+        change.setText(change.getText().replaceAll("[^0-9]", ""));
         return pattern2.matcher(change.getControlNewText()).matches() ? change : null;
     });
 
     Pattern pattern3 = Pattern.compile(".{0,16}");
     TextFormatter<String> formatter3 = new TextFormatter<String>(change-> {
-        change.setText(change.getText().replaceAll("[^0-9.,]", ""));
+        change.setText(change.getText().replaceAll("[^0-9]", ""));
         return pattern3.matcher(change.getControlNewText()).matches() ? change : null;
     });
 

@@ -2,11 +2,12 @@ package org.entities;
 
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name = "complaints")
-public class Complaint {    //only for customers
+public class Complaint implements Serializable {    //only for customers
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -17,8 +18,19 @@ public class Complaint {    //only for customers
     private String compText;
     private Boolean appStatus=true;        // true= complaint filed successfully- yet to be inspected, false = complaint fulfilled
     private Boolean completedOnTime=false;
-    public enum Topic{BAD_SERVICE, LATE_ARRIVAL, BAD_PRODUCT, PAYMENT_PROBLEMS, OTHER}
+    public enum Topic{BAD_SERVICE, LATE_ARRIVAL, BAD_PRODUCT, PAYMENT, OTHER}
     private Topic topic;
+
+
+    public static Complaint.Topic convertToTopic(String topic) {
+        return switch (topic){
+            case "Bad service" -> Complaint.Topic.BAD_SERVICE;
+            case "Order didn't arrive in time" -> Complaint.Topic.LATE_ARRIVAL;
+            case "Defective product/ not what you ordered" -> Complaint.Topic.BAD_PRODUCT;
+            case "Payment issue" -> Complaint.Topic.PAYMENT;
+            default -> Complaint.Topic.OTHER;
+        };
+    }
 
     public Complaint(Customer customer, Date date, String compText, Topic topic) {
         this.customer = customer;

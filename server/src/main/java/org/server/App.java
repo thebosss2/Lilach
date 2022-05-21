@@ -56,6 +56,14 @@ public class App {
         Employee man = new Employee("34563456","Itai","Itai","Itai","Itai","12341234",Employee.Role.STORE_MANAGER);
         session.save(man);
         session.flush();
+
+        Customer cust = new Customer("23465", "Sagii","Sagii","Sagii","mail","56346","credit", Customer.AccountType.MEMBERSHIP);
+        session.save(cust);
+        session.flush();
+
+        Complaint c = new Complaint(cust ,new Date(),"I WANT MONEY", Complaint.Topic.PAYMENT);
+        session.save(c);
+        session.flush();
     }
 
     private static void generateStores() throws Exception {       //generates new products
@@ -114,6 +122,15 @@ public class App {
         customerQuery.from(Employee.class);
         List<Employee> employees = session.createQuery(customerQuery).getResultList();
         return new LinkedList<>(employees);
+    }
+
+    static List<Complaint> getAllOpenComplaints() throws IOException{
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Complaint> customerQuery = builder.createQuery(Complaint.class);
+        customerQuery.from(Complaint.class);
+        List<Complaint> complaints = session.createQuery(customerQuery).getResultList();
+        complaints.removeIf(complaint -> !complaint.getStatus());
+        return complaints;
     }
 
 

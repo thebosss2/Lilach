@@ -4,8 +4,11 @@
 
 package org.client;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -58,11 +61,9 @@ public class ComplaintInspectionTableController extends Controller{
         assert tableView != null : "fx:id=\"tableView\" was not injected: check your FXML file 'ComplaintInspectionTable.fxml'.";
         assert topicCol != null : "fx:id=\"topicCol\" was not injected: check your FXML file 'ComplaintInspectionTable.fxml'.";
 
-        //redundant
-        Customer cust = new Customer("23465", "Sagi","user","pass","mail","56346","credit", Customer.AccountType.MEMBERSHIP);
-
         dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
         dateCol.setStyle("-fx-alignment: CENTER");
+
         topicCol.setCellValueFactory(new PropertyValueFactory<>("topic"));
         topicCol.setStyle("-fx-alignment: CENTER");
 
@@ -72,23 +73,20 @@ public class ComplaintInspectionTableController extends Controller{
         });
         statusCol.setStyle("-fx-alignment: CENTER");
 
-
         nameCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getCustomer().getName()));
         nameCol.setStyle("-fx-alignment: CENTER");
 
-        ObservableList<Complaint> complaints = FXCollections.observableArrayList();
-
-        //TODO add function to get all complaints from the database and use here.
-        for(int i = 0; i < 5; i++){
-            Complaint complaint = new Complaint(cust, new Date(), "This is a complaint "+i, Complaint.Topic.OTHER);
-            complaints.add(complaint);
-        }
-        Complaint complaint = new Complaint(cust, new Date(1948, 2, 15), "This is a complaint 5", Complaint.Topic.OTHER);
-        complaints.add(complaint);
-
         addButtonToTable();
 
-        tableView.setItems(complaints);
+        App.client.setController(this);
+        List<Object> msg = new LinkedList<>();
+        msg.add("#PULL_COMPLAINTS");
+
+        try {
+            App.client.sendToServer(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
    }
 
@@ -138,4 +136,7 @@ public class ComplaintInspectionTableController extends Controller{
         controller.setComplaint(complaint);
     }
 
+    public void pullComplaints(ObservableList<Complaint> complaints) {
+        tableView.setItems(complaints);
+    }
 }
