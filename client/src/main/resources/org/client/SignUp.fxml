@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0" prefWidth="700.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.SignUpController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyPressed="#enterSignup" prefHeight="700.0" prefWidth="700.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.SignUpController">
    <children>
       <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <content>
@@ -28,7 +28,7 @@
                               <Font name="Script MT Bold" size="72.0" />
                            </font>
                            <VBox.margin>
-                              <Insets bottom="30.0" />
+                              <Insets bottom="30.0" top="20.0" />
                            </VBox.margin>
                         </Text>
                         <AnchorPane maxHeight="-Infinity" maxWidth="600.0" prefHeight="50.0" prefWidth="600.0">
@@ -143,7 +143,7 @@
                               <Font name="Guttman Aharoni" size="15.0" />
                            </font>
                            <VBox.margin>
-                              <Insets top="10.0" />
+                              <Insets bottom="30.0" top="10.0" />
                            </VBox.margin>
                         </Button>
                      </children>
@@ -152,10 +152,5 @@
             </AnchorPane>
          </content>
       </ScrollPane>
-      <Text fx:id="popup" boundsType="LOGICAL_VERTICAL_CENTER" strokeType="OUTSIDE" strokeWidth="0.0" text="TEXT">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Text>
    </children>
 </AnchorPane>

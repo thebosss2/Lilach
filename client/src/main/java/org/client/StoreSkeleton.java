@@ -28,7 +28,7 @@ public class StoreSkeleton {
     private Button catalogBtn; // Value injected by FXMLLoader
 
     @FXML // fx:id="mainScreen"
-    private BorderPane mainScreen; // Value injected by FXMLLoader
+    protected BorderPane mainScreen; // Value injected by FXMLLoader
 
     @FXML // fx:id="cartBtn"
     private Button cartBtn; // Value injected by FXMLLoader
@@ -69,6 +69,7 @@ public class StoreSkeleton {
             e.printStackTrace();
         }
     }
+
 
     @FXML
         // This method is called by the FXMLLoader when initialization is complete

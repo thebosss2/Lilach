@@ -20,6 +20,8 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import org.entities.Customer;
@@ -88,6 +90,12 @@ public class SignUpController extends Controller{
     });
 
     @FXML
+    void enterSignup(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER)
+            signUpClicked(new ActionEvent());
+    }
+
+    @FXML
     void signUpClicked(ActionEvent event) {
         if(checkFieldsNotEmpty()){
             sendAlert("One or more fields are empty!");
@@ -109,7 +117,7 @@ public class SignUpController extends Controller{
         }
     }
 
-    public void sendAlert(String error) {
+    public static void sendAlert(String error) {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
