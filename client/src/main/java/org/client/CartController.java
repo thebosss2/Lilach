@@ -3,6 +3,7 @@ package org.client;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import org.entities.Customer;
+import org.entities.User;
 
 public class CartController extends Controller {
 
@@ -38,12 +41,18 @@ public class CartController extends Controller {
     @FXML
     void cleanCart(ActionEvent event) {
         App.client.cart.emptyProducts();
-        //TODO refresh
+
+        App.client.storeSkeleton.changeCenter("Cart");
     }
 
     @FXML
     void createOrder(ActionEvent event) {
-        this.globalSkeleton.changeCenter("CreateOrder");
+        if (App.client.cart.getTotalCost() > 0) {
+            if (App.client.user instanceof Customer)
+                App.client.storeSkeleton.changeCenter("CreateOrder");
+            else
+                App.client.storeSkeleton.changeCenter("Login");
+        }
     }
 
     @FXML
@@ -56,9 +65,9 @@ public class CartController extends Controller {
 
         App.client.setController(this);
         total_price.setText("Total Price: " + App.client.cart.getTotalCost());
+
         FXMLLoader fxmlLoader;
-        for(int i=0; i<App.client.cart.getProducts().size(); i++)
-        {
+        for (int i = 0; i < App.client.cart.getProducts().size(); i++) {
             fxmlLoader = new FXMLLoader(getClass().getResource("CartProduct.fxml"));
             vbox.getChildren().add(fxmlLoader.load());  //Adds new product pane to the screen.
             CartProductController controller = fxmlLoader.getController();

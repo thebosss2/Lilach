@@ -15,27 +15,28 @@ public class SummeryCustomProductController extends Controller{
 
     @FXML
     private Label type;
-/*
+
     public void setSummeryCustomProduct(CustomMadeProduct product) {
+        this.price.setText(String.valueOf(product.getPrice()));
         switch(product.getItemType()) {
             case FLOWER_ARRANGEMENT:
-                this.type.setText();
+                this.type.setText("Custom flower arrangement:");
                 break;
             case BLOOMING_POT:
-                // code block
+                this.type.setText("Custom blooming pot:");
                 break;
             case BRIDES_BOUQUET:
-                // code block
+                this.type.setText("Custom bride bouquet:");
                 break;
-            default: //BOUQUET
-                // code block
+            case BOUQUET:
+                this.type.setText("Custom bouquet:");
         }
         for(int i=0; i < (product.getProducts()).size(); i++){
             this.description.setText(this.description.getText() + product.getProducts().get(i).getName() + ", ");
-            this.price.setText(String.valueOf(product.getPrice()));
         }
+        this.description.setText(this.description.getText().substring(0,this.description.getText().length()-2));
     }
-*/
+
     public Text getDescription() {
         return description;
     }

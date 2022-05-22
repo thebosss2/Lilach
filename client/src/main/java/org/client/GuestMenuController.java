@@ -13,6 +13,14 @@ public class GuestMenuController extends Controller {
     @FXML
     protected Button catalogBtn;
 
+    @FXML
+    private Button customMade;
+
+    @FXML
+    private Button order;
+
+
+
     @FXML // fx:id="loginBtn"
     private Button loginBtn; // Value injected by FXMLLoader
 
@@ -57,6 +65,18 @@ public class GuestMenuController extends Controller {
     void goToSignUp(ActionEvent event) throws InterruptedException {
         coolMenuClick((Button) event.getTarget());
         this.getSkeleton().changeCenter("SignUp");
+    }
+
+    @FXML
+    void goToCustomMade(ActionEvent event) throws InterruptedException {
+        coolMenuClick((Button) event.getTarget());
+        this.getSkeleton().changeCenter("CreateCustomMade");
+    }
+
+    @FXML
+    void goToOrder(ActionEvent event) throws InterruptedException {
+        coolMenuClick((Button) event.getTarget());
+        this.getSkeleton().changeCenter("SummaryOrders");
     }
 
     @FXML

@@ -25,24 +25,35 @@ public class Server extends AbstractServer {
         try {
             switch (((LinkedList<Object>) msg).get(0).toString()) {   //switch to see what client wants from server
                 case "#PULLCATALOG" -> pullProducts(((LinkedList<Object>) msg), client);  //display updated catalog version
+                case "#PULLBASES" -> pullProducts(((LinkedList<Object>) msg), client);  //display updated catalog version
                 case "#SAVE" -> updateProduct((LinkedList<Object>) msg);           //save change to product details
                 case "#ADD" -> addProduct((LinkedList<Object>) msg);           // add product to the DB
                 case "#LOGIN" -> loginServer((LinkedList<Object>)msg,client);
                 case "#SIGNUP_AUTHENTICATION" -> authinticateUser((LinkedList<Object>) msg, client);
                 case "#SIGNUP" -> signUpServer(((LinkedList<Object>)msg),client);
                 case "#PULLSTORES" -> pullStores(((LinkedList<Object>) msg), client);  //display updated catalog version
+                case "#SAVEORDER" -> saveOrderServer(((LinkedList<Object>)msg),client);
                 case "#LOGOUT" -> logoutServer((LinkedList<Object>) msg, client);
                 case "#COMPLAINT" -> addComplaint((LinkedList<Object>) msg);
                 case "#PULL_COMPLAINTS" -> pullOpenComplaints(client);
                 case "#CLOSE_COMPLAINT" -> closeComplaintAndCompensate((LinkedList<Object>) msg);
                 case "#UPDATE_CUSTOMER_ACCOUNT" -> updateCustomerAccount((LinkedList<Object>) msg, client);
+                case "#DELETEORDER" -> deleteOrder((LinkedList<Object>) msg, client);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void updateCustomerAccount(LinkedList<Object> msg, ConnectionToClient client) {
+
+    private void deleteOrder(LinkedList<Object> msg, ConnectionToClient client) {
+        int id = (int) msg.get(1);
+        Order order = App.session.find(Order.class, id);
+        App.session.remove(order);
+        App.session.flush();
+        App.session.clear();
+    }
+ private void updateCustomerAccount(LinkedList<Object> msg, ConnectionToClient client) {
         Customer customer = (Customer) msg.get(1);
         if(msg.get(2).toString().equals("CONFIRMED")){
             updateAccount(customer, Customer.AccountType.MEMBERSHIP);
@@ -114,6 +125,7 @@ public class Server extends AbstractServer {
         App.session.getTransaction().commit();
     }
 
+
     private void addComplaint(LinkedList<Object> msg) {
         addNewInstance((Complaint) msg.get(1));
     }
@@ -121,6 +133,15 @@ public class Server extends AbstractServer {
 
     private void signUpServer(LinkedList<Object> msg, ConnectionToClient client) {
         addNewInstance((Customer) msg.get(1));
+    }
+
+    private void saveOrderServer(LinkedList<Object> msg, ConnectionToClient client) {
+        Order order = (Order) msg.get(1);
+        App.session.beginTransaction();
+        App.session.save(order);
+        App.session.flush();
+        App.session.getTransaction().commit();
+
     }
 
     //Checks if the username asked by new signup exists.
@@ -160,7 +181,7 @@ public class Server extends AbstractServer {
 
     private static void pullProducts(List<Object> msg, ConnectionToClient client) throws IOException {       //func pulls products from server
         List<PreMadeProduct> products = App.getAllProducts();
-        String commandToClient = "#PULLCATALOG";
+        String commandToClient = msg.get(0).toString();
         List<Object> msgToClient = new LinkedList<Object>();
         msgToClient.add(commandToClient);
         msgToClient.add(products);

@@ -74,8 +74,6 @@ public class App {
     }
 
     private static void generateStores() throws Exception {       //generates new products
-        Random random = new Random();
-        int price;
         for (int i = 0; i < 5; i++) {
             Store store = new Store("store" + i, "address" + i);
             session.save(store);   //saves and flushes to database
@@ -83,6 +81,20 @@ public class App {
         }
 
     }
+
+    private static void generateBaseCustomMadeProduct() throws Exception {       //generates new base products
+        Random random = new Random();
+        int price;
+        int num_products = 10; //change according to the real
+        String[] colors = {"Red","Pink","Yellow","White","Pink","White","White","Green","Blue","Green","Green"};
+        for (int i = 0; i <= num_products; i++) {
+            var img = loadImageFromResources(String.format("base%s.jpg", i));
+            PreMadeProduct p = new PreMadeProduct("Base Product " + i, img, price = random.nextInt(100),random.nextInt(50),colors[i]);
+            session.save(p);   //saves and flushes to database
+            session.flush();
+        }
+    }
+
 
     ///TODO make generic func--------------------------------------------------------------------------------------------------------------
     static List<PreMadeProduct> getAllProducts() throws IOException {      //pulls all products from database
@@ -158,6 +170,7 @@ public class App {
             session.beginTransaction();       //transaction for generation
             generateProducts();             //generate
             generateStores();
+            generateBaseCustomMadeProduct();
             session.getTransaction().commit(); // Save everything.
 
             server = new Server(3000);      //builds server

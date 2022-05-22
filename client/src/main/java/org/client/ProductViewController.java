@@ -72,6 +72,7 @@ public class ProductViewController extends Controller{
         this.productName.setText(product.getName());
         this.mainImage.setImage(product.getImage());
         this.image1.setImage(product.getImage());
+        this.description.setText(product.getDescription());
         this.price.setText(Double.toString(product.getPrice()));
         if(product.getPriceBeforeDiscount() != 0)
             this.priceBeforeDiscount.setText(Double.toString(product.getPriceBeforeDiscount()));
@@ -82,6 +83,7 @@ public class ProductViewController extends Controller{
         coolButtonClick((Button)event.getTarget());
         count++;
         orderCount.setText(Integer.toString(count));
+        this.product.setAmount(count);
     }
 
     @FXML
@@ -90,13 +92,16 @@ public class ProductViewController extends Controller{
         if (count > 1) {
             count--;
             orderCount.setText(Integer.toString(count));
+            this.product.setAmount(count);
         }
     }
 
     @FXML
     void addToCart(ActionEvent event) throws InterruptedException {
         coolButtonClick((Button)event.getTarget());
-        for (int i=0;i<count;i++)
-            App.client.cart.insertProduct(this.product);
+        this.product.setAmount(Integer.parseInt(orderCount.getText()));
+//        for (int i=0;i<count;i++)
+//            App.client.cart.insertProduct(this.product);
+        App.client.cart.insertProduct(this.product);
     }
 }

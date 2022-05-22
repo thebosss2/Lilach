@@ -19,9 +19,12 @@ public class Product implements Serializable {
 
     private int price;
 
+    private int amount;
+
     public Product(String path, int price) {      //constructor
 
         this.price = price;
+        this.amount = 0;
 
         File file = new File(path);         //converts string pth into bytecode image
         this.image = new byte[(int) file.length()];
@@ -73,5 +76,13 @@ public class Product implements Serializable {
         return id;
     }
 
+    public int getAmount()
+    {
+        return this.amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
 }
 

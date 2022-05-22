@@ -7,9 +7,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import org.entities.PreMadeProduct;
 
-public class CustomMadeBaseProductController {
+public class CustomMadeBaseProductController extends ItemController{
 
     @FXML
     private ResourceBundle resources;
@@ -19,6 +21,13 @@ public class CustomMadeBaseProductController {
 
     @FXML
     private ImageView image;
+
+    @FXML
+    private AnchorPane anchor_pane;
+
+
+    @FXML
+    private Text amount;
 
     @FXML
     private Button minus;
@@ -35,9 +44,11 @@ public class CustomMadeBaseProductController {
     @FXML
     private Text product_name;
 
+    private PreMadeProduct product;
+
     @FXML
     void addProduct(ActionEvent event) {
-        price.setText(Integer.toString(Integer.parseInt(price.getText())+1));
+        amount.setText(Integer.toString(Integer.parseInt(amount.getText())+1));
     }
 
     @FXML
@@ -47,11 +58,24 @@ public class CustomMadeBaseProductController {
 
     @FXML
     void minusProduct(ActionEvent event) {
-        price.setText(Integer.toString(Integer.parseInt(price.getText())-1));
+        if(Integer.parseInt(amount.getText()) > 0)
+            amount.setText(Integer.toString(Integer.parseInt(amount.getText())-1));
+    }
+
+    @FXML
+    protected void mouseOnProduct(MouseEvent event) {
+        anchor_pane.setStyle("-fx-background-color: #e5dcff");
+    }
+
+    @FXML
+    protected void mouseOffProduct(MouseEvent event) {
+        anchor_pane.setStyle("-fx-background-color: #ffffff");
     }
 
     @FXML
     void initialize() {
+        assert amount != null : "fx:id=\"amount\" was not injected: check your FXML file 'CustomMadeBaseProduct.fxml'.";
+        assert anchor_pane != null : "fx:id=\"anchor_pane\" was not injected: check your FXML file 'CreateCustomMade.fxml'.";
         assert image != null : "fx:id=\"image\" was not injected: check your FXML file 'CustomMadeBaseProduct.fxml'.";
         assert minus != null : "fx:id=\"minus\" was not injected: check your FXML file 'CustomMadeBaseProduct.fxml'.";
         assert plus != null : "fx:id=\"plus\" was not injected: check your FXML file 'CustomMadeBaseProduct.fxml'.";
@@ -61,4 +85,15 @@ public class CustomMadeBaseProductController {
 
     }
 
+    public void setProduct(PreMadeProduct product) {
+        this.product = product;
+        image.setImage(product.getImage());
+        price.setText(product.getPrice() + "₪");
+        product_name.setText(product.getName());
+
+        if(product.getPriceBeforeDiscount() != 0)
+            priceBeforeDiscount.setText(product.getPriceBeforeDiscount() + " ₪");
+        else
+            priceBeforeDiscount.setText("");
+    }
 }

@@ -49,12 +49,13 @@
                 <Insets top="5.0" />
             </VBox.margin>
         </Button>
-      <Button fx:id="complaintsBtn" alignment="BASELINE_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#goToComplaints" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: #9bc98c;" text="Complaints" textFill="WHITE">
+      <Button fx:id="customMade" alignment="BASELINE_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#goToCustomMade" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: #9bc98c;" text="Custom-Made" textFill="WHITE">
+
          <font>
             <Font size="20.0" />
          </font>
       </Button>
-      <Button fx:id="complaintBtn" alignment="BASELINE_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#goToComplaint" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: #9bc98c;" text="Complaint" textFill="WHITE">
+      <Button fx:id="order" alignment="BASELINE_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#goToOrder" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: #9bc98c;" text="Orders" textFill="WHITE">
          <font>
             <Font size="20.0" />
          </font>

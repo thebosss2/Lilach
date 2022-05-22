@@ -5,27 +5,51 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="24.0" prefWidth="500.0" style="-fx-background-color: e6b3ff; -fx-border-color: ffffff; -fx-border-radius: 20; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.SummeryPreProductController">
+<AnchorPane prefHeight="54.0" prefWidth="444.0" style="-fx-background-color: e6b3ff; -fx-border-color: ffffff; -fx-border-radius: 23; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.SummeryPreProductController">
    <children>
-      <Label fx:id="name" layoutX="14.0" layoutY="3.0" prefHeight="21.0" prefWidth="129.0" text="Product name">
+      <Label fx:id="name" layoutX="56.0" layoutY="14.0" prefHeight="21.0" prefWidth="129.0" text="Product name" textFill="#9a03a4">
          <font>
-            <Font name="Calibri Light" size="18.0" />
+            <Font name="Calibri Bold" size="20.0" />
          </font>
          <padding>
             <Insets left="7.0" />
          </padding>
       </Label>
-      <Label layoutX="355.0" layoutY="3.0" prefHeight="20.0" prefWidth="54.0" text="price:">
+      <Label layoutX="212.0" layoutY="4.0" prefHeight="20.0" prefWidth="54.0" text="Price:" textFill="#750280">
          <font>
-            <Font name="Calibri Light" size="17.0" />
+            <Font name="Calibri" size="17.0" />
          </font>
          <padding>
             <Insets left="7.0" />
          </padding>
       </Label>
-      <Label fx:id="price" layoutX="409.0" layoutY="4.0" prefHeight="21.0" prefWidth="54.0" text="10">
+      <Label fx:id="totalPrice" layoutX="341.0" layoutY="26.0" prefHeight="21.0" prefWidth="54.0" text="10">
          <font>
             <Font size="15.0" />
+         </font>
+         <padding>
+            <Insets left="7.0" />
+         </padding>
+      </Label>
+      <Label layoutX="212.0" layoutY="26.0" prefHeight="21.0" prefWidth="87.0" text="Total Price:" textFill="#750280">
+         <font>
+            <Font name="Calibri" size="17.0" />
+         </font>
+         <padding>
+            <Insets left="7.0" />
+         </padding>
+      </Label>
+      <Label fx:id="price" layoutX="341.0" layoutY="4.0" prefHeight="21.0" prefWidth="54.0" text="10">
+         <font>
+            <Font size="15.0" />
+         </font>
+         <padding>
+            <Insets left="7.0" />
+         </padding>
+      </Label>
+      <Label fx:id="count" layoutX="14.0" layoutY="15.0" prefHeight="7.0" prefWidth="54.0" text="x10">
+         <font>
+            <Font name="System Bold" size="15.0" />
          </font>
          <padding>
             <Insets left="7.0" />

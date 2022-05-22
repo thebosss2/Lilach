@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
-public class SummaryProductController{
+public class SummaryProductController extends Controller{
 
     @FXML
     private ResourceBundle resources;
