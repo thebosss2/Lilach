@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane minHeight="264.0" minWidth="733.0" prefHeight="264.0" prefWidth="733.0" style="-fx-background-radius: 23; -fx-border-color: ffffff; -fx-background-color: f2d8ff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.OrderSummaryController">
+<AnchorPane minHeight="255.0" minWidth="1000.0" prefHeight="255.0" prefWidth="1000.0" style="-fx-background-radius: 24; -fx-border-color: ffffff; -fx-background-color: f2d8ff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.OrderSummaryController">
    <children>
       <ScrollPane layoutX="274.0" minWidth="460.0" prefHeight="290.0" prefWidth="460.0" style="-fx-background-color: #c6acef;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
         <content>

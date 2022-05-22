@@ -23,6 +23,15 @@ public class OrderSummaryController extends Controller{
     private ResourceBundle resources;
 
     @FXML
+    private Text delivery_date;
+
+    @FXML
+    private Text order_time;
+
+    @FXML
+    private Text store;
+
+    @FXML
     private URL location;
 
     @FXML
@@ -61,10 +70,17 @@ public class OrderSummaryController extends Controller{
 
     public void setOrder(Order order) {
         this.order=order;
+        price.setText("Price: " + Integer.toString(order.getPrice()));
+        order_time.setText("Order Time: " + order.getOrderTime());
+        delivery_date.setText("Delivery Time: " + order.getDeliveryDate().toString());
+
+        if(order.getDelivery() == Order.Delivery.SELF_SHIPPING && order.getStore()!= null)
+            store.setText("Store:" + order.getStore().getName());
+        else
+            store.setText("");
         if(order.isDelivered()== Order.Status.CANCELED){
             cancelOrder.setDisable(true);
-            //T ODO maybe add text that says cancels
-
+            cancelOrder.setText("Canceled");
         }
 
         OrderSummaryController orderSummaryController= this;
