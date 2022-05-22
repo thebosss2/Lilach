@@ -49,11 +49,6 @@ public class GuestMenuController extends Controller {
         this.getSkeleton().changeCenter("ComplaintSubmission");
     }
 
-    @FXML
-    void goToComplaints(ActionEvent event) throws InterruptedException {   //catalog button clears page and loads all products
-        coolMenuClick((Button) event.getTarget());
-        this.getSkeleton().changeCenter("ComplaintInspectionTable");
-    }
 
     @FXML
     void goToLogin(ActionEvent event) throws InterruptedException {
