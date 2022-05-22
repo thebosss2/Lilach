@@ -8,28 +8,30 @@ import java.util.Date;
 @MappedSuperclass
 public class User extends Guest implements Serializable {
 
+    @Column(name = " Identification")
+    private String userID;
     @Column(name = "user_name")
     private String userName;
     @Column(name = "pass_word")
     private String password;
+    @Column(name="usermail")
     private String email;
-    private Date birth;
+    private String phoneNum;
     private int balance=0;
     private Boolean connected;
 
-    public User(String name, String userName, String password, String email, Date birth/*,Cart cart*/) {
-        super(name/*,cart*/);
+    public User(String userID, String name, String userName, String password, String email, String phoneNum) {
+        super(name);
+        this.userID=userID;
         this.userName = userName;
         this.password = password;
         this.email = email;
-        this.birth = birth;
+        this.phoneNum=phoneNum;
         this.connected=false;
-        System.out.println("Hello there User!");
     }
 
     public User() {
         super();
-        System.out.println("Hello there default User!");
     }
 
     public String getUserName() {
@@ -56,9 +58,6 @@ public class User extends Guest implements Serializable {
         this.email = email;
     }
 
-    public Date getBirth() {
-        return birth;
-    }
 
     public int getBalance() {
         return balance;
@@ -75,4 +74,21 @@ public class User extends Guest implements Serializable {
     public void setConnected(Boolean connected) {
         this.connected = connected;
     }
+
+    public String getID() {
+        return userID;
+    }
+
+    public void setID(String ID) {
+        this.userID = userID;
+    }
+
+    public String getPhoneNum() {
+        return phoneNum;
+    }
+
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
+    }
+
 }
