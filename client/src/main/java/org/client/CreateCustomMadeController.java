@@ -168,7 +168,7 @@ public class CreateCustomMadeController extends Controller{
         assert sortType != null : "fx:id=\"sortType\" was not injected: check your FXML file 'CreateCustomMade.fxml'.";
 
         min_price.setText("0");
-        max_price.setText("100");
+        max_price.setText("15");
 
         sortType.getItems().add("Flower Arrangement");
         sortType.getItems().add("Blooming Pot");
