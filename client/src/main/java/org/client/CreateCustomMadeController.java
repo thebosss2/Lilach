@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
@@ -53,9 +54,11 @@ public class CreateCustomMadeController extends Controller{
 
     private List<PreMadeProduct> bases;
 
+    private CustomMadeProduct.ItemType itemType;
+
     @FXML
-    void addToCart(ActionEvent event) throws InterruptedException
-    {
+    void addToCart(ActionEvent event) throws InterruptedException, IOException {
+        boolean flagToAdd = false;
         coolButtonClick((Button)event.getTarget());
         int price = 0;
         String description = "";
@@ -66,15 +69,49 @@ public class CreateCustomMadeController extends Controller{
         for (PreMadeProduct product : Client.products) {
             if(product.getType()== PreMadeProduct.ProductType.CUSTOM_CATALOG && product.getAmount()>0)
             {
+                flagToAdd = true;
                 bases.add(product);
                 price += product.getPrice() * product.getAmount();
                 description += product.getName() + " x " + product.getAmount() + ", ";
             }
         }
-        description = description.substring(0,description.length()-2);
-        CustomMadeProduct customMadeProduct = new CustomMadeProduct(bases,price);
-        customMadeProduct.setDescription(description);
-        App.client.cart.insertCustomMade(customMadeProduct);
+        if(flagToAdd) {
+            description = description.substring(0, description.length() - 2);
+            CustomMadeProduct customMadeProduct = new CustomMadeProduct(bases, price);
+            customMadeProduct.setAmount(1);
+            switch (sortType.getValue()) {
+                case "Flower Arrangement":
+                    customMadeProduct.setItemTypeCustom(CustomMadeProduct.ItemType.FLOWER_ARRANGEMENT);
+                    var img = loadImageFromResources(String.format("Flower_Arrangement.jpg"));
+                    customMadeProduct.setImage(img);
+                    break;
+                case "Blooming Pot":
+                    customMadeProduct.setItemTypeCustom(CustomMadeProduct.ItemType.BLOOMING_POT);
+                    var img1 = loadImageFromResources(String.format("Blooming_Pot.jpg"));
+                    customMadeProduct.setImage(img1);
+                    break;
+                case "Bridal Bouquet":
+                    customMadeProduct.setItemTypeCustom(CustomMadeProduct.ItemType.BRIDES_BOUQUET);
+                    var img2 = loadImageFromResources(String.format("Bridal_Bouquet.jpg"));
+                    customMadeProduct.setImage(img2);
+                    break;
+                case "Bouquet":
+                    customMadeProduct.setItemTypeCustom(CustomMadeProduct.ItemType.BOUQUET);
+                    var img3 = loadImageFromResources(String.format("Bouquet.jpg"));
+                    customMadeProduct.setImage(img3);
+                    break;
+                default:
+                    break;
+            }
+            customMadeProduct.setDescription(description);
+            App.client.cart.insertCustomMade(customMadeProduct);
+        }
+    }
+
+    public static byte[] loadImageFromResources(String imageName) throws IOException {
+        var stream = org.client.App.class.getClassLoader().getResourceAsStream(String.format("Icons/%s", imageName));
+
+        return Objects.requireNonNull(stream).readAllBytes();
     }
 
     @FXML
