@@ -29,6 +29,8 @@ public class App {
         configuration.addAnnotatedClass(Complaint.class);
         configuration.addAnnotatedClass(Order.class);
         configuration.addAnnotatedClass(Store.class);
+/*        configuration.addAnnotatedClass(Report.class);
+        configuration.addAnnotatedClass(Cart.class);*/
 
 
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();        //pull session factory config from hibernate properties
@@ -43,7 +45,7 @@ public class App {
         session.flush();
         for (int i = 0; i < 5; i++) {
             var img1 = loadImageFromResources(String.format("Flower%s.jpg", i));
-            PreMadeProduct p1 = new PreMadeProduct("Flower" + i, img1, price = random.nextInt(1000), (price - random.nextInt(500)));
+            PreMadeProduct p1 = new PreMadeProduct("Flower" + i, img1, price = random.nextInt(1000),"asdasd", (price - random.nextInt(500)));
             Customer cust = new Customer("23465", "name","user","pass","mail","56346","credit", Customer.AccountType.MEMBERSHIP,store);
             Complaint c = new Complaint(cust ,new Date(),"bad bad bad", Complaint.Topic.BAD_SERVICE);
             session.save(cust);
@@ -58,6 +60,12 @@ public class App {
         session.flush();
         Employee man = new Employee("34563456","Itai","Itai","Itai","Itai","12341234",Employee.Role.STORE_MANAGER);
         session.save(man);
+        session.flush();
+        Employee Ad = new Employee("4563456","Gal ","Gal","Gal","Sagi","4563456",Employee.Role.ADMIN);
+        session.save(Ad);
+        session.flush();
+        Employee Ce = new Employee("4563456","Tahel","Tahel","Tahel","Sagi","4563456",Employee.Role.CEO);
+        session.save(Ce);
         session.flush();
 
         Customer cust = new Customer("23465", "Sagii","Sagii","Sagii","mail","56346","credit", Customer.AccountType.MEMBERSHIP,store);

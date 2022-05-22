@@ -189,10 +189,10 @@ public class Client extends AbstractClient {
         }else if(this.user instanceof Employee){
             switch(((Employee) this.user).getRole()){
                 case STORE_EMPLOYEE -> storeSkeleton.changeLeft("WorkerMenu");
-                //case CUSTOMER_SERVICE -> storeSkeleton.changeLeft("CustomerServiceMenu");
+                case CUSTOMER_SERVICE -> storeSkeleton.changeLeft("CustomerServiceMenu");
                 case STORE_MANAGER -> storeSkeleton.changeLeft("ManagerMenu");
                 case CEO -> storeSkeleton.changeLeft("ManagerMenu");
-                //case ADMIN -> storeSkeleton.changeLeft("AdminMenu");
+                case ADMIN -> storeSkeleton.changeLeft("AdminMenu");
             }
         }else{
             storeSkeleton.changeLeft("GuestMenu");
