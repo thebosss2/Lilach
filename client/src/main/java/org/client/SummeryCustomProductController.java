@@ -8,16 +8,25 @@ import org.entities.CustomMadeProduct;
 public class SummeryCustomProductController extends Controller{
 
     @FXML
-    private Text description;
+    private Label count;
 
     @FXML
-    private Text price;
+    private Text description;
 
     @FXML
     private Label type;
 
+    @FXML
+    private Label price;
+
+    @FXML
+    private Label totalPrice;
+
+
     public void setSummeryCustomProduct(CustomMadeProduct product) {
         this.price.setText(String.valueOf(product.getPrice()));
+        this.count.setText(String.valueOf(product.getAmount()));
+        this.totalPrice.setText(String.valueOf(product.getAmount() * product.getPrice()));
         switch(product.getItemType()) {
             case FLOWER_ARRANGEMENT:
                 this.type.setText("Custom flower arrangement:");
@@ -41,7 +50,7 @@ public class SummeryCustomProductController extends Controller{
         return description;
     }
 
-    public Text getPrice() {
+    public Label getPrice() {
         return price;
     }
 }

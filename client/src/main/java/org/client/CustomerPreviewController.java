@@ -35,7 +35,7 @@ public class CustomerPreviewController extends ItemController {
     private Text username;
 
     @FXML
-    void freezeAccounts(ActionEvent event) {
+    void changeStatus(ActionEvent event) {
 
     }
 
