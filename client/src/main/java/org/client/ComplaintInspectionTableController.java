@@ -130,7 +130,6 @@ public class ComplaintInspectionTableController extends Controller{
     }
 
     private void goToComplaintInspection(Complaint complaint) {
-        System.out.println(btnCol.getWidth());
         ComplaintInspectionController controller = (ComplaintInspectionController)
                 this.getSkeleton().changeCenter("ComplaintInspection");
         controller.setComplaint(complaint);

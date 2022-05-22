@@ -67,6 +67,9 @@ public class App {
         Employee Ce = new Employee("4563456","Tahel","Tahel","Tahel","Sagi","4563456",Employee.Role.CEO);
         session.save(Ce);
         session.flush();
+        Employee Serv = new Employee("4563456","Yahav ","Yahav","Yahav","Sagi","4563456",Employee.Role.CUSTOMER_SERVICE);
+        session.save(Serv);
+        session.flush();
 
         Customer cust = new Customer("23465", "Sagii","Sagii","Sagii","mail","56346","credit", Customer.AccountType.MEMBERSHIP,store);
         Date date = new Date();
