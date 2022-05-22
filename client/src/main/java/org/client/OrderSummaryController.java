@@ -16,7 +16,7 @@ import org.entities.CustomMadeProduct;
 import org.entities.Order;
 import org.entities.PreMadeProduct;
 
-public class OrderSummaryController extends Controller{
+public class OrderSummaryController extends Controller {
     private Order order;
 
     @FXML
@@ -45,18 +45,18 @@ public class OrderSummaryController extends Controller{
 
     @FXML
     void cancel(ActionEvent event) {
-
-        LinkedList<Object> msg = new LinkedList<Object>();
-        msg.add("#DELETEORDER"); //get stores from db
-        msg.add(order.getId());
-        App.client.setController(this);//TODO maybe remove
-        try {
-            App.client.sendToServer(msg); //Sends a msg contains the command and the current controller
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (this.alertMsg("Cancel", "cancel your order", false)) {
+            LinkedList<Object> msg = new LinkedList<Object>();
+            msg.add("#DELETEORDER"); //get stores from db
+            msg.add(order.getId());
+            App.client.setController(this);//TODO maybe remove
+            try {
+                App.client.sendToServer(msg); //Sends a msg contains the command and the current controller
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            App.client.storeSkeleton.changeCenter("SummaryOrders");
         }
-
-        App.client.storeSkeleton.changeCenter("SummaryOrders");
     }
 
     @FXML
@@ -83,7 +83,7 @@ public class OrderSummaryController extends Controller{
             cancelOrder.setText("Canceled");
         }
 
-        OrderSummaryController orderSummaryController= this;
+        OrderSummaryController orderSummaryController = this;
         for (PreMadeProduct product : order.getPreMadeProducts()) {
             try {
                 displayPreProduct(product, orderSummaryController);
