@@ -10,10 +10,20 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Text;
 
 public class LoginController extends Controller{
 
@@ -27,17 +37,24 @@ public class LoginController extends Controller{
     private Button loginBtn; // Value injected by FXMLLoader
 
     @FXML // fx:id="password"
-    private TextField password; // Value injected by FXMLLoader
+    private PasswordField passwordText; // Value injected by FXMLLoader
+
+    @FXML // fx:id="signUpText"
+    private Text signUpText; // Value injected by FXMLLoader
 
     @FXML // fx:id="username"
-    private TextField username; // Value injected by FXMLLoader
+    private TextField usernameText; // Value injected by FXMLLoader
 
     @FXML
     void login(ActionEvent event) {
+
+        if(usernameText.getText().isEmpty() || passwordText.getText().isEmpty())
+            SignUpController.sendAlert("One or more fields are empty.");
+
         List<Object> msg = new LinkedList<Object>();
         msg.add("#LOGIN");
-        msg.add(username.getText());
-        msg.add(password.getText());
+        msg.add(usernameText.getText());
+        msg.add(passwordText.getText());
         try {
             App.client.sendToServer(msg);
         } catch (IOException e) {
@@ -46,11 +63,35 @@ public class LoginController extends Controller{
     }
 
 
+    @FXML
+    void goToSignup(MouseEvent event) {
+        ObservableList<Node> buttons = ((VBox) this.getSkeleton().mainScreen.getLeft()).getChildren();
+
+        signUpText.setFill(Color.web("#7825fa"));
+
+        for(Node node : buttons){
+            if(node.getId().equals("loginBtn"))
+                node.setStyle("-fx-background-color: #9bc98c");
+
+            if(node.getId().equals("signUpBtn"))
+                node.setStyle("-fx-background-color: #62a74d");
+        }
+
+        this.getSkeleton().changeCenter("SignUp");
+    }
+
+    @FXML
+    void enterLogin(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER)
+            login(new ActionEvent());
+    }
+
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert loginBtn != null : "fx:id=\"lognBtn\" was not injected: check your FXML file 'Login.fxml'.";
-        assert password != null : "fx:id=\"password\" was not injected: check your FXML file 'Login.fxml'.";
-        assert username != null : "fx:id=\"username\" was not injected: check your FXML file 'Login.fxml'.";
+        assert passwordText != null : "fx:id=\"passwordText\" was not injected: check your FXML file 'Login.fxml'.";
+        assert signUpText != null : "fx:id=\"signUpText\" was not injected: check your FXML file 'Login.fxml'.";
+        assert usernameText != null : "fx:id=\"username\" was not injected: check your FXML file 'Login.fxml'.";
 
     }
 

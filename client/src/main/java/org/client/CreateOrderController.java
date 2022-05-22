@@ -151,9 +151,12 @@ public class CreateOrderController extends Controller {
     }
 
     private void getStores() {
-        if (((Customer) (App.client.user)).getAccountType() == Customer.AccountType.STORE)  //if there is certain store for this costumer
-            TAStorePicker.setDisable(true); //disable the combobox
-        else { //get stores for the combobox from db
+        //added check if user is guest or customer
+        if(App.client.user instanceof Customer) {
+            if (((Customer) (App.client.user)).getAccountType() == Customer.AccountType.STORE)  //if there is certain store for this costumer
+                TAStorePicker.setDisable(true); //disable the combobox
+        }
+        else{ //get stores for the combobox from db
             LinkedList<Object> msg = new LinkedList<Object>();
             msg.add("#PULLSTORES"); //get stores from db
             App.client.setController(this);
@@ -213,15 +216,19 @@ public class CreateOrderController extends Controller {
         giftPriceBeforeLabel.setText(String.valueOf(App.client.cart.getTotalCost()));
         selfPriceBeforeLabel.setText(String.valueOf(App.client.cart.getTotalCost()));
 
-        if (((Customer) (App.client.user)).getAccountType() == Customer.AccountType.MEMBERSHIP && App.client.cart.getTotalCost() >= 50) {
-            //if the user is member and have order larger than 50 nis- we give 10% discount
-            TADiscountLabel.setText("10%");
-            giftDiscountLabel.setText("10%");
-            selfDiscountLabel.setText("10%");
-            TAFinalPriceLabel.setText(String.valueOf((int) (0.9 * App.client.cart.getTotalCost())));
-            giftFinalPriceLabel.setText(String.valueOf((int) (0.9 * App.client.cart.getTotalCost()) + 20)); //also added shipping fee
-            selfFinalPriceLabel.setText(String.valueOf((int) (0.9 * App.client.cart.getTotalCost()) + 20));
-        } else { //no discount for not members
+        //added check if user is guest or customer
+        if(App.client.user instanceof Customer) {
+            if(((Customer)(App.client.user)).getAccountType() == Customer.AccountType.MEMBERSHIP && App.client.cart.getTotalCost()>=50){
+                //if the user is member and have order larger than 50 nis- we give 10% discount
+                TADiscountLabel.setText("10%");
+                giftDiscountLabel.setText("10%");
+                selfDiscountLabel.setText("10%");
+                TAFinalPriceLabel.setText(String.valueOf((int)(0.9 * App.client.cart.getTotalCost())));
+                giftFinalPriceLabel.setText(String.valueOf((int)(0.9 * App.client.cart.getTotalCost())+20)); //also added shipping fee
+                selfFinalPriceLabel.setText(String.valueOf((int)(0.9 * App.client.cart.getTotalCost())+20));
+            }
+        }
+        else { //no discount for not members
             TAFinalPriceLabel.setText(String.valueOf(App.client.cart.getTotalCost()));
             giftFinalPriceLabel.setText(String.valueOf(App.client.cart.getTotalCost() + 20)); // added shipping fee
             selfFinalPriceLabel.setText(String.valueOf(App.client.cart.getTotalCost() + 20));

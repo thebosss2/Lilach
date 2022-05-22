@@ -34,12 +34,17 @@ public class Server extends AbstractServer {
                 case "#PULLSTORES" -> pullStores(((LinkedList<Object>) msg), client);  //display updated catalog version
                 case "#SAVEORDER" -> saveOrderServer(((LinkedList<Object>)msg),client);
                 case "#LOGOUT" -> logoutServer((LinkedList<Object>) msg, client);
+                case "#COMPLAINT" -> addComplaint((LinkedList<Object>) msg);
+                case "#PULL_COMPLAINTS" -> pullOpenComplaints(client);
+                case "#CLOSE_COMPLAINT" -> closeComplaintAndCompensate((LinkedList<Object>) msg);
+                case "#UPDATE_CUSTOMER_ACCOUNT" -> updateCustomerAccount((LinkedList<Object>) msg, client);
                 case "#DELETEORDER" -> deleteOrder((LinkedList<Object>) msg, client);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 
     private void deleteOrder(LinkedList<Object> msg, ConnectionToClient client) {
         int id = (int) msg.get(1);
@@ -48,14 +53,86 @@ public class Server extends AbstractServer {
         App.session.flush();
         App.session.clear();
     }
+ private void updateCustomerAccount(LinkedList<Object> msg, ConnectionToClient client) {
+        Customer customer = (Customer) msg.get(1);
+        if(msg.get(2).toString().equals("CONFIRMED")){
+            updateAccount(customer, Customer.AccountType.MEMBERSHIP);
+            updateBalance(customer, (int) msg.get(3));
+        } else{
+            updateAccount(customer, Customer.AccountType.CHAIN);
+        }
+
+        List<Object> newMsg = new LinkedList<>();
+        newMsg.add("#UPDATE_CUSTOMER");
+        newMsg.add(customer);
+        try {
+            client.sendToClient(newMsg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateAccount(Customer customer, Customer.AccountType type) {
+        App.session.beginTransaction();
+        App.session.evict(customer);       //evict current product details from database
+        if(type == Customer.AccountType.MEMBERSHIP)
+            customer.setMemberShipExpire();
+        else
+            customer.setAccountType(type);
+        App.session.merge(customer);           //merge into database with updated info
+        App.session.flush();
+        App.session.getTransaction().commit(); // Save everything.
+    }
+
+    private void closeComplaintAndCompensate(LinkedList<Object> msg) {
+        Complaint complaint = (Complaint) msg.get(1);
+        closeComplaint(complaint);
+        if(msg.get(2).equals("COMPENSATED"))
+            updateBalance(complaint.getCustomer(),complaint.getCustomer().getBalance () + (int) msg.get(3));
+    }
+
+    private void updateBalance(Customer customer, int balance){
+        App.session.beginTransaction();
+        App.session.evict(customer);       //evict current product details from database
+        customer.setBalance(balance);
+        App.session.merge(customer);           //merge into database with updated info
+        App.session.flush();
+        App.session.getTransaction().commit(); // Save everything.
+    }
+
+    private void closeComplaint(Complaint complaint) {
+        App.session.beginTransaction();
+        App.session.evict(complaint);       //evict current product details from database
+        complaint.setStatus(false);
+        App.session.merge(complaint);           //merge into database with updated info
+        App.session.flush();
+        App.session.getTransaction().commit(); // Save everything.
+    }
+
+
+    private void pullOpenComplaints(ConnectionToClient client) throws IOException {
+        List<Complaint> complaints = App.getAllOpenComplaints();
+        List<Object> msg = new LinkedList<>();
+        msg.add("#PULL_COMPLAINTS");
+        msg.add(complaints);
+        client.sendToClient(msg);
+    }
+
+    private static <T> void addNewInstance(T obj){
+        App.session.beginTransaction();
+        App.session.save(obj);
+        App.session.flush();
+        App.session.getTransaction().commit();
+    }
+
+
+    private void addComplaint(LinkedList<Object> msg) {
+        addNewInstance((Complaint) msg.get(1));
+    }
 
 
     private void signUpServer(LinkedList<Object> msg, ConnectionToClient client) {
-        Customer customer = (Customer) msg.get(1);
-        App.session.beginTransaction();
-        App.session.save(customer);
-        App.session.flush();
-        App.session.getTransaction().commit();
+        addNewInstance((Customer) msg.get(1));
     }
 
     private void saveOrderServer(LinkedList<Object> msg, ConnectionToClient client) {
@@ -64,6 +141,7 @@ public class Server extends AbstractServer {
         App.session.save(order);
         App.session.flush();
         App.session.getTransaction().commit();
+
     }
 
     //Checks if the username asked by new signup exists.
@@ -72,12 +150,12 @@ public class Server extends AbstractServer {
         List<Object> newMsg = new LinkedList<Object>();
         newMsg.add(msg.get(0));
         for(User user : users){
-            if(user.getUserName().equals(msg.get(1).toString())){
-                newMsg.add("#USER_EXISTS");
+            if(user.getUserName().equals(msg.get(1).toString()) || user.getID().equals(msg.get(2))){
+                newMsg.add("#USER_EXISTS"); //checks if username or user id already exists
                 client.sendToClient(newMsg);
                 return;
             }
-        }
+        }//TODO check if ID already exists and email
         newMsg.add("#USER_NOT_EXISTS");
         client.sendToClient(newMsg);
     }
@@ -126,6 +204,7 @@ public class Server extends AbstractServer {
         App.session.flush();
         App.session.getTransaction().commit();
     }
+
     private void updateConnected(User user,Boolean connected){
         App.session.beginTransaction();
         App.session.evict(user);       //evict current product details from database

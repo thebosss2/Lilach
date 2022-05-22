@@ -38,11 +38,13 @@ public class App {
     private static void generateProducts() throws Exception {       //generates new products
         Random random = new Random();
         int price;
+        Store store = new Store("Chain", "address");
+        session.save(store);   //saves and flushes to database
+        session.flush();
         for (int i = 0; i < 5; i++) {
             var img1 = loadImageFromResources(String.format("Flower%s.jpg", i));
-
-            PreMadeProduct p1 = new PreMadeProduct("Flower" + i, img1, price = random.nextInt(1000),"descriptionnn", (price - random.nextInt(500)));
-            Customer cust = new Customer("name","user","pass","mail",new Date(),"credit", Customer.AccountType.MEMBERSHIP);
+            PreMadeProduct p1 = new PreMadeProduct("Flower" + i, img1, price = random.nextInt(1000), (price - random.nextInt(500)));
+            Customer cust = new Customer("23465", "name","user","pass","mail","56346","credit", Customer.AccountType.MEMBERSHIP,store);
             Complaint c = new Complaint(cust ,new Date(),"bad bad bad", Complaint.Topic.BAD_SERVICE);
             session.save(cust);
             session.flush();
@@ -51,8 +53,23 @@ public class App {
             session.save(p1);   //saves and flushes to database
             session.flush();
         }
-        Employee emp = new Employee("Sagi","Sagi","Sagi","Sagi",new Date(),Employee.Role.STORE_EMPLOYEE);
+        Employee emp = new Employee("4563456","Sagi","Sagi","Sagi","Sagi","4563456",Employee.Role.STORE_EMPLOYEE);
         session.save(emp);
+        session.flush();
+        Employee man = new Employee("34563456","Itai","Itai","Itai","Itai","12341234",Employee.Role.STORE_MANAGER);
+        session.save(man);
+        session.flush();
+
+        Customer cust = new Customer("23465", "Sagii","Sagii","Sagii","mail","56346","credit", Customer.AccountType.MEMBERSHIP,store);
+        Date date = new Date();
+        date.setYear(date.getYear() - 2);
+        cust.setMemberShipExpireTODELETE(date);
+        cust.setBalance(150);
+        session.save(cust);
+        session.flush();
+
+        Complaint c = new Complaint(cust ,new Date(),"I WANT MONEY", Complaint.Topic.PAYMENT);
+        session.save(c);
         session.flush();
     }
 
@@ -62,6 +79,7 @@ public class App {
             session.save(store);   //saves and flushes to database
             session.flush();
         }
+
     }
 
     private static void generateBaseCustomMadeProduct() throws Exception {       //generates new base products
@@ -104,17 +122,37 @@ public class App {
         return list;
     }
     static List<User> getAllUsers() throws IOException {      //pulls all products from database
+        LinkedList<User> list = new LinkedList<>();
+        list.addAll(getAllCustomers());
+        list.addAll(getAllEmployees());
+        return list;
+    }
+
+    static List<Customer> getAllCustomers() throws IOException{
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Customer> customerQuery = builder.createQuery(Customer.class);
         customerQuery.from(Customer.class);
         List<Customer> customers = session.createQuery(customerQuery).getResultList();
-        LinkedList<User> list = new LinkedList<>(customers);
-        CriteriaQuery<Employee> employeeQuery = builder.createQuery(Employee.class);
-        employeeQuery.from(Employee.class);
-        List<Employee> employees = session.createQuery(employeeQuery).getResultList();
-        list.addAll(employees);
-        return list;
+        return new LinkedList<>(customers);
     }
+
+    static List<Employee> getAllEmployees() throws IOException{
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Employee> customerQuery = builder.createQuery(Employee.class);
+        customerQuery.from(Employee.class);
+        List<Employee> employees = session.createQuery(customerQuery).getResultList();
+        return new LinkedList<>(employees);
+    }
+
+    static List<Complaint> getAllOpenComplaints() throws IOException{
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Complaint> customerQuery = builder.createQuery(Complaint.class);
+        customerQuery.from(Complaint.class);
+        List<Complaint> complaints = session.createQuery(customerQuery).getResultList();
+        complaints.removeIf(complaint -> !complaint.getStatus());
+        return complaints;
+    }
+
 
     public static byte[] loadImageFromResources(String imageName) throws IOException {
         var stream = App.class.getClassLoader().getResourceAsStream(String.format("Images/%s", imageName));

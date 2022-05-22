@@ -5,7 +5,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Lighting?>
@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0" prefWidth="700.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.SignUpController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyPressed="#enterSignup" prefHeight="700.0" prefWidth="700.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.SignUpController">
    <children>
       <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <content>
@@ -28,7 +28,7 @@
                               <Font name="Script MT Bold" size="72.0" />
                            </font>
                            <VBox.margin>
-                              <Insets bottom="30.0" />
+                              <Insets bottom="30.0" top="20.0" />
                            </VBox.margin>
                         </Text>
                         <AnchorPane maxHeight="-Infinity" maxWidth="600.0" prefHeight="50.0" prefWidth="600.0">
@@ -37,6 +37,19 @@
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </TextField>
+                              <FontAwesomeIconView fill="#c6acef" glyphName="ADDRESS_BOOK" layoutY="42.0" size="40" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="7.5" AnchorPane.topAnchor="5.0" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="20.0" left="200.0" right="200.0" />
+                           </VBox.margin>
+                        </AnchorPane>
+                        <AnchorPane maxHeight="-Infinity" maxWidth="600.0" prefHeight="50.0" prefWidth="600.0">
+                           <children>
+                              <TextField fx:id="idText" layoutX="204.0" layoutY="13.0" promptText="ID" style="-fx-background-radius: 15 15 15 15;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="0.0">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -61,11 +74,12 @@
                         </AnchorPane>
                         <AnchorPane maxHeight="-Infinity" maxWidth="600.0" prefHeight="50.0" prefWidth="600.0">
                            <children>
-                              <TextField fx:id="passwordText" layoutX="204.0" layoutY="13.0" promptText="Password" style="-fx-background-radius: 15 15 15 15;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="0.0">
+                              <FontAwesomeIconView fill="#c6acef" glyphName="LOCK" layoutY="42.0" size="40" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="7.5" AnchorPane.topAnchor="5.0" />
+                              <PasswordField fx:id="passwordText" layoutX="61.0" layoutY="13.0" promptText="Password" style="-fx-background-radius: 15 15 15 15;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="0.0">
                                  <font>
                                     <Font size="16.0" />
-                                 </font></TextField>
-                              <FontAwesomeIconView fill="#c6acef" glyphName="LOCK" layoutY="42.0" size="40" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="7.5" AnchorPane.topAnchor="5.0" />
+                                 </font>
+                              </PasswordField>
                            </children>
                            <VBox.margin>
                               <Insets bottom="20.0" left="200.0" right="200.0" />
@@ -85,11 +99,12 @@
                         </AnchorPane>
                         <AnchorPane maxHeight="-Infinity" maxWidth="600.0" prefHeight="50.0" prefWidth="600.0">
                            <children>
-                              <TextField fx:id="creditCardText" layoutX="204.0" layoutY="13.0" promptText="Credit Card" style="-fx-background-radius: 15 15 15 15;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="0.0">
+                              <TextField fx:id="phoneNumberText" layoutX="204.0" layoutY="13.0" promptText="Phone number" style="-fx-background-radius: 15 15 15 15;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="0.0">
                                  <font>
                                     <Font size="16.0" />
-                                 </font></TextField>
-                              <FontAwesomeIconView fill="#c6acef" glyphName="CREDIT_CARD" layoutY="42.0" size="40" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="2.5" AnchorPane.topAnchor="5.0" />
+                                 </font>
+                              </TextField>
+                              <FontAwesomeIconView fill="#c6acef" glyphName="PHONE" layoutY="42.0" size="40" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="7.5" AnchorPane.topAnchor="5.0" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="20.0" left="200.0" right="200.0" />
@@ -97,8 +112,11 @@
                         </AnchorPane>
                         <AnchorPane maxHeight="-Infinity" maxWidth="600.0" prefHeight="50.0" prefWidth="600.0">
                            <children>
-                              <FontAwesomeIconView fill="#c6acef" glyphName="CALENDAR" layoutY="42.0" size="40" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="2.5" AnchorPane.topAnchor="5.0" />
-                              <DatePicker fx:id="birthdatePicker" editable="false" layoutX="63.0" layoutY="12.0" promptText="Birthdate" showWeekNumbers="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="0.0" />
+                              <TextField fx:id="creditCardText" layoutX="204.0" layoutY="13.0" promptText="Credit Card" style="-fx-background-radius: 15 15 15 15;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="0.0">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font></TextField>
+                              <FontAwesomeIconView fill="#c6acef" glyphName="CREDIT_CARD" layoutY="42.0" size="40" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="2.5" AnchorPane.topAnchor="5.0" />
                            </children>
                            <VBox.margin>
                               <Insets bottom="20.0" left="200.0" right="200.0" />
@@ -117,7 +135,7 @@
                                        </bumpInput>
                                     </Lighting>
                                  </effect></ChoiceBox>
-                              <ComboBox fx:id="defaultStore" disable="true" layoutX="154.0" layoutY="11.0" prefWidth="150.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0" />
+                              <ComboBox fx:id="storePicker" disable="true" layoutX="154.0" layoutY="11.0" prefWidth="150.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0" />
                            </children>
                         </AnchorPane>
                         <Button fx:id="signUpBtn" mnemonicParsing="false" onAction="#signUpClicked" prefHeight="32.0" prefWidth="107.0" style="-fx-background-color: #c6acef;" text="Sign-Up">
@@ -125,7 +143,7 @@
                               <Font name="Guttman Aharoni" size="15.0" />
                            </font>
                            <VBox.margin>
-                              <Insets top="10.0" />
+                              <Insets bottom="30.0" top="10.0" />
                            </VBox.margin>
                         </Button>
                      </children>
@@ -134,10 +152,5 @@
             </AnchorPane>
          </content>
       </ScrollPane>
-      <Text fx:id="popup" boundsType="LOGICAL_VERTICAL_CENTER" strokeType="OUTSIDE" strokeWidth="0.0" text="TEXT">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Text>
    </children>
 </AnchorPane>
