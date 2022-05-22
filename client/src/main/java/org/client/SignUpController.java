@@ -169,7 +169,7 @@ public class SignUpController extends Controller{
                 emailText.getText(),
                 phoneNumberText.getText(),
                 creditCardText.getText(),
-                coonvertToAccountType(accountType.getValue()),
+                convertToAccountType(accountType.getValue()),
                 stores.stream().filter(store -> store.getName().equals(storePicker.getValue())).findFirst().get());
         } else{
             customer = new Customer(idText.getText(),fullNameText.getText(),
@@ -178,13 +178,13 @@ public class SignUpController extends Controller{
                     emailText.getText(),
                     phoneNumberText.getText(),
                     creditCardText.getText(),
-                    coonvertToAccountType(accountType.getValue()),
+                    convertToAccountType(accountType.getValue()),
                     stores.stream().filter(store -> store.getName().equals("Chain")).findFirst().get());
         }
         return customer;
     }
 
-    private Customer.AccountType coonvertToAccountType(String accountType) {
+    private Customer.AccountType convertToAccountType(String accountType) {
         return switch (accountType){
             case "Store" -> Customer.AccountType.STORE;
             case "Chain" -> Customer.AccountType.CHAIN;
