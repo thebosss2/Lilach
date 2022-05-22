@@ -58,7 +58,7 @@ public class App {
         Employee emp = new Employee("4563456","Sagi","Sagi","Sagi","Sagi","4563456",Employee.Role.STORE_EMPLOYEE);
         session.save(emp);
         session.flush();
-        Employee man = new Employee("34563456","Itai","Itai","Itai","Itai","12341234",Employee.Role.STORE_MANAGER);
+        Employee man = new Employee("345634576","Itai","Itai","Itai","Itai","12341234",Employee.Role.STORE_MANAGER);
         session.save(man);
         session.flush();
         Employee Ad = new Employee("4563456","Gal ","Gal","Gal","Sagi","4563456",Employee.Role.ADMIN);
@@ -79,7 +79,7 @@ public class App {
         session.save(cust);
         session.flush();
 
-        Complaint c = new Complaint(cust ,new Date(),"I WANT MONEY", Complaint.Topic.PAYMENT);
+        Complaint c = new Complaint(cust ,new Date(122,04,5) ,"I WANT MONEY", Complaint.Topic.PAYMENT);
         session.save(c);
         session.flush();
     }

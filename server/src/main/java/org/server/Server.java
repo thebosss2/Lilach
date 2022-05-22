@@ -36,7 +36,7 @@ public class Server extends AbstractServer {
                 case "#LOGOUT" -> logoutServer((LinkedList<Object>) msg, client);
                 case "#COMPLAINT" -> addComplaint((LinkedList<Object>) msg);
                 case "#PULL_COMPLAINTS" -> pullOpenComplaints(client);
-                case "#CLOSE_COMPLAINT" -> closeComplaintAndCompensate((LinkedList<Object>) msg);
+                case "#CLOSE_COMPLAINT" -> closeComplaintAndCompensate((LinkedList<Object>) msg/*,client*/);
                 case "#UPDATE_CUSTOMER_ACCOUNT" -> updateCustomerAccount((LinkedList<Object>) msg, client);
                 case "#DELETEORDER" -> deleteOrder((LinkedList<Object>) msg, client);
             }
@@ -84,11 +84,19 @@ public class Server extends AbstractServer {
         App.session.getTransaction().commit(); // Save everything.
     }
 
-    private void closeComplaintAndCompensate(LinkedList<Object> msg) {
+    private void closeComplaintAndCompensate(LinkedList<Object> msg/*,ConnectionToClient client*/) {
         Complaint complaint = (Complaint) msg.get(1);
         closeComplaint(complaint);
         if(msg.get(2).equals("COMPENSATED"))
             updateBalance(complaint.getCustomer(),complaint.getCustomer().getBalance () + (int) msg.get(3));
+/*        msg.clear();
+        msg.add("#ComplaintCompleted");
+        try {
+            client.sendToClient(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+
     }
 
     private void updateBalance(Customer customer, int balance){
@@ -150,7 +158,7 @@ public class Server extends AbstractServer {
         List<Object> newMsg = new LinkedList<Object>();
         newMsg.add(msg.get(0));
         for(User user : users){
-            if(user.getUserName().equals(msg.get(1).toString()) || user.getID().equals(msg.get(2))){
+            if(user.getUserName().equals(msg.get(1).toString()) || (user.getID().equals(msg.get(2)) && (user instanceof Customer))){
                 newMsg.add("#USER_EXISTS"); //checks if username or user id already exists
                 client.sendToClient(newMsg);
                 return;
