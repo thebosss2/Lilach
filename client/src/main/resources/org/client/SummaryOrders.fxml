@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.SummaryOrdersController">
+<AnchorPane minWidth="733.0" prefHeight="400.0" prefWidth="733.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.SummaryOrdersController">
    <children>
-      <ScrollPane layoutX="125.0" layoutY="84.0" prefHeight="316.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="84.0">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-        </content>
+      <ScrollPane layoutX="125.0" layoutY="84.0" minWidth="733.0" prefHeight="316.0" prefWidth="733.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="84.0">
+         <content>
+            <AnchorPane minWidth="733.0" prefHeight="316.0" prefWidth="733.0">
+               <children>
+                  <VBox fx:id="vbox" minWidth="733.0" prefHeight="303.0" prefWidth="733.0" spacing="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="13.0">
+                     <padding>
+                        <Insets bottom="200.0" />
+                     </padding></VBox>
+               </children>
+            </AnchorPane>
+         </content>
       </ScrollPane>
-      <Text layoutX="206.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Orders">
+      <Text layoutX="271.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Orders">
          <font>
             <Font name="Script MT Bold" size="72.0" />
          </font>

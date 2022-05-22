@@ -3,6 +3,7 @@ package org.client;
 import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
@@ -50,11 +51,30 @@ public class CreateCustomMadeController extends Controller{
     @FXML
     private ComboBox<String> sortType;
 
+    private List<PreMadeProduct> bases;
+
     @FXML
     void addToCart(ActionEvent event) throws InterruptedException
     {
         coolButtonClick((Button)event.getTarget());
-        //TODO
+        int price = 0;
+        String description = "";
+        if(bases == null)
+            bases = new LinkedList<>();
+        else
+            bases.clear();
+        for (PreMadeProduct product : Client.products) {
+            if(product.getType()== PreMadeProduct.ProductType.CUSTOM_CATALOG && product.getAmount()>0)
+            {
+                bases.add(product);
+                price += product.getPrice() * product.getAmount();
+                description += product.getName() + " x " + product.getAmount() + ", ";
+            }
+        }
+        description = description.substring(0,description.length()-2);
+        CustomMadeProduct customMadeProduct = new CustomMadeProduct(bases,price);
+        customMadeProduct.setDescription(description);
+        App.client.cart.insertCustomMade(customMadeProduct);
     }
 
     @FXML
@@ -138,6 +158,10 @@ public class CreateCustomMadeController extends Controller{
             e.printStackTrace();
         }
 
+    }
+
+    public void setCustomProductView (List<PreMadeProduct> bases) {
+        this.bases = bases;
     }
 
 

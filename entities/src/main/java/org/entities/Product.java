@@ -48,6 +48,14 @@ public class Product implements Serializable {
 
     }
 
+    public Product(int price) {
+        //this.name = name;
+        //image=image;
+        this.price = price;
+        //this.priceBeforeDiscount = priceBeforeDiscount;
+        //this.image = image;
+    }
+
     public Product() {
 
     }

@@ -1,6 +1,5 @@
 package org.client;
 
-import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.application.Preloader;
@@ -23,6 +22,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 public class Client extends AbstractClient {
 
@@ -30,9 +30,10 @@ public class Client extends AbstractClient {
 
     protected static LinkedList<PreMadeProduct> products = new LinkedList<PreMadeProduct>();//(LinkedList<Product>) Catalog.getProducts();
 
+    protected static LinkedList<Order> orders = new LinkedList<Order>();
     private Controller controller;
 
-    public Cart cart= new Cart();
+    public Cart cart = new Cart();
     protected Guest user;
 
     public Client(String localhost, int i) {
@@ -46,7 +47,7 @@ public class Client extends AbstractClient {
     public static void main(String[] args) {
     }
 
-    public static int[] hourList = {8,9,10,11,12,13,14,15,16,17,18};
+    public static int[] hourList = {8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18};
 
     // TODO Maybe delete
     private static Client client = null;
@@ -69,11 +70,13 @@ public class Client extends AbstractClient {
             switch (((LinkedList<Object>) msg).get(0).toString()) {       //switch with all command options sent between client and server
                 case "#PULLCATALOG" -> pushToCatalog(msg);//function gets all data from server to display to client
                 case "#PULLBASES" -> pushToBases(msg);//function gets all data from server to display to client
+                case "#PULLORDERS" -> pushToOrders(msg);//function gets all data from server to display to client
                 case "#LOGIN" -> loginClient((LinkedList<Object>) msg);
                 case "#SIGNUP_AUTHENTICATION" -> authenticationReply((LinkedList<Object>) msg);
                 case "#PULLSTORES" -> pushStores(msg);//function gets all data from server to display to client
                 case "#PULL_COMPLAINTS" -> pushComplaints((LinkedList<Object>) msg);
                 case "#UPDATE_CUSTOMER" -> this.user = (Customer)((LinkedList<Object>) msg).get(1);
+                case "#DELETEORDER" -> changeBalance(msg);//function gets all data from server to display to client
             }
         } catch (Exception e) {
             System.out.println(Arrays.toString(e.getStackTrace()));
@@ -81,6 +84,46 @@ public class Client extends AbstractClient {
             System.out.println("Client Error");
             e.getStackTrace();
         }
+    }
+
+    private void pushToOrders(Object msg) {
+        orders = (LinkedList<Order>) ((LinkedList<Object>) msg).get(1);
+        SummaryOrdersController summaryOrdersController = (SummaryOrdersController) controller;
+        summaryOrdersController.pullOrdersToClient();       //calls static function in client for display
+    }
+
+    private void changeBalance(Object msg) {
+        int refund = 0;
+        int price = (int) ((LinkedList<Object>) msg).get(1);
+        Date date = (Date) ((LinkedList<Object>) msg).get(2);
+        String hour = (String) ((LinkedList<Object>) msg).get(3);
+
+        Date new_date = new Date();
+        long diffInMillies = Math.abs(date.getTime() - new_date.getTime());
+        long diff = TimeUnit.HOURS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+
+        diff += Integer.parseInt(hour.substring(0, 2));
+
+
+        //alert+ change refund
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("Order Cancellation succeeded");
+        alert.setTitle("The Order Has Been Canceled");
+
+        if (diff > 3)
+        {
+            refund = price;
+            alert.setContentText("You have received a full refund");
+        }
+        else if (diff>1)
+        {
+            refund = price/2;
+            alert.setContentText("The refund is half the order price");
+        }
+        else
+            alert.setContentText("I'm sorry, but according to the policy you do not deserve a refund");
+
+        ((User) App.client.user).setBalance(((User) App.client.user).getBalance() + refund);
     }
 
     private void pushComplaints(LinkedList<Object> msg) {
@@ -115,24 +158,24 @@ public class Client extends AbstractClient {
             Executor executor = Executors.newSingleThreadExecutor();
             executor.execute(() -> {
                 Platform.runLater(new Runnable() {
-                                      @Override
-                                      public void run() {
-                                          Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                                          alert.setHeaderText("Sign-up succeeded.");
-                                          //alert.getButtonTypes().clear();
-                                          alert.show();
+                    @Override
+                    public void run() {
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setHeaderText("Sign-up succeeded.");
+                        //alert.getButtonTypes().clear();
+                        alert.show();
                                           /*signUpController.popup.setText("Sign-up succeeded");
                                           signUpController.setPopupInMiddle();*/
-                                          PauseTransition pause = new PauseTransition(Duration.seconds(1));
-                                          //pause.setOnFinished(e -> signUpController.popup.setText(""));
-                                          pause.setOnFinished((e -> alert.close()));
-                                          pause.play();
+                        PauseTransition pause = new PauseTransition(Duration.seconds(1));
+                        //pause.setOnFinished(e -> signUpController.popup.setText(""));
+                        pause.setOnFinished((e -> alert.close()));
+                        pause.play();
 
-                                          //TODO now isntead of text, I can create a mini pane with opacity 0.
-                                      }
-                                  });
+                        //TODO now isntead of text, I can create a mini pane with opacity 0.
+                    }
+                });
 
-                    });
+            });
             /*try {
                 XMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fadingPopupMessage.fxml"));
                 Scene scene = new Scene(fxmlLoader.load());
@@ -153,22 +196,20 @@ public class Client extends AbstractClient {
             }*/
 
 
-            }
-        else{
+        } else {
 
-                signUpController.sendAlert("Username already taken. Please try a new one.");
-            }
+            signUpController.sendAlert("Username already taken. Please try a new one.");
         }
+    }
 
     private void pushStores(Object msg) throws IOException { // takes data received and sends to display function
         CreateOrderController createOrderController;
         CEOReportController ceoReportController;
 
         if (controller instanceof CreateOrderController) {
-            createOrderController = (CreateOrderController)controller;
+            createOrderController = (CreateOrderController) controller;
             createOrderController.pullStoresToClient((LinkedList<Store>) ((LinkedList<Object>) msg).get(1));       //calls static function in client for display
-        }
-        else if(controller instanceof CEOReportController) {
+        } else if (controller instanceof CEOReportController) {
             ceoReportController = (CEOReportController) controller;
             ceoReportController.pullStoresToClient((LinkedList<Store>) ((LinkedList<Object>) msg).get(1));       //calls static function in client for display
         }
@@ -182,7 +223,7 @@ public class Client extends AbstractClient {
     }
 
 
-    private void changeMenu(){
+    private void changeMenu() {
 
         if(this.user instanceof Customer){
             storeSkeleton.changeLeft("CustomerMenu");
@@ -194,14 +235,14 @@ public class Client extends AbstractClient {
                 case CEO -> storeSkeleton.changeLeft("ManagerMenu");
                 case ADMIN -> storeSkeleton.changeLeft("AdminMenu");
             }
-        }else{
+        } else {
             storeSkeleton.changeLeft("GuestMenu");
         }
         storeSkeleton.changeCenter("Catalog");
 
     }
 
-    public void logOut(){   //TODO clean cart
+    public void logOut() {   //TODO clean cart
         List<Object> msg = new LinkedList<Object>();
         msg.add("#LOGOUT");
         msg.add(user);
@@ -212,7 +253,7 @@ public class Client extends AbstractClient {
         }
     }
 
-    private void loginClient (LinkedList < Object > msg) {
+    private void loginClient(LinkedList<Object> msg) {
         if (msg.get(1).equals("#SUCCESS")) {
             switch (msg.get(2).toString()) {
                 case "CUSTOMER" -> this.user = (Customer) msg.get(3);

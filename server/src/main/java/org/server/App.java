@@ -45,7 +45,7 @@ public class App {
         session.flush();
         for (int i = 0; i < 5; i++) {
             var img1 = loadImageFromResources(String.format("Flower%s.jpg", i));
-            PreMadeProduct p1 = new PreMadeProduct("Flower" + i, img1, price = random.nextInt(1000),"asdasd", (price - random.nextInt(500)));
+            PreMadeProduct p1 = new PreMadeProduct("Flower" + i, img1, price = random.nextInt(50),"descriptionnn", price+random.nextInt(50));
             Customer cust = new Customer("23465", "name","user","pass","mail","56346","credit", Customer.AccountType.MEMBERSHIP,store);
             Complaint c = new Complaint(cust ,new Date(),"bad bad bad", Complaint.Topic.BAD_SERVICE);
             session.save(cust);
@@ -100,7 +100,7 @@ public class App {
         String[] colors = {"Red","Pink","Yellow","White","Pink","White","White","Green","Blue","Green","Green"};
         for (int i = 0; i <= num_products; i++) {
             var img = loadImageFromResources(String.format("base%s.jpg", i));
-            PreMadeProduct p = new PreMadeProduct("Base Product " + i, img, price = random.nextInt(100),random.nextInt(50),colors[i]);
+            PreMadeProduct p = new PreMadeProduct("Base Product " + i, img, price = random.nextInt(50),price+random.nextInt(50),colors[i]);
             session.save(p);   //saves and flushes to database
             session.flush();
         }
@@ -116,6 +116,18 @@ public class App {
         LinkedList<PreMadeProduct> list = new LinkedList<PreMadeProduct>();
         for (PreMadeProduct product : data) {     //converts arraylist to linkedlist
             list.add(product);
+        }
+        return list;
+    }
+
+    static List<Order> getAllOrders() throws IOException {      //pulls all products from database
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Order> query = builder.createQuery(Order.class);
+        query.from(Order.class);
+        List<Order> data = session.createQuery(query).getResultList();
+        LinkedList<Order> list = new LinkedList<Order>();
+        for (Order order : data) {     //converts arraylist to linkedlist
+            list.add(order);
         }
         return list;
     }

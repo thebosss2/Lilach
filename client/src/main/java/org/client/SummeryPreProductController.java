@@ -41,4 +41,9 @@ public class SummeryPreProductController extends Controller{
     public void setPrice(Label price) {
         this.price.setText(String.valueOf(price));
     }
+
+    public void setProduct(PreMadeProduct product) {
+        name.setText(product.getName());
+        price.setText(Integer.toString(product.getPrice()));
+    }
 }

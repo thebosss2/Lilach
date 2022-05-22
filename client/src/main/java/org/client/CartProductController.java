@@ -62,17 +62,17 @@ public class CartProductController extends Controller {
         assert total != null : "fx:id=\"total\" was not injected: check your FXML file 'CartProduct.fxml'.";
     }
 
-    @FXML
-    void duplicate(ActionEvent event) {
-        if (product instanceof PreMadeProduct)
-            App.client.cart.insertProduct(new PreMadeProduct(((PreMadeProduct) product).getName(), product.getByteImage(), product.getPrice(), ((PreMadeProduct) product).getDescription(), ((PreMadeProduct) product).getPriceBeforeDiscount()));
-        else{
-            CustomMadeProduct p= new CustomMadeProduct(new LinkedList<PreMadeProduct>(((CustomMadeProduct)product).getProducts()),product.getPrice(), product.getByteImage());
-            App.client.cart.insertProduct(p);
-        }
-
-        App.client.storeSkeleton.changeCenter("Cart");
-    }
+//    @FXML
+//    void duplicate(ActionEvent event) {
+//        if (product instanceof PreMadeProduct)
+//            App.client.cart.insertProduct(new PreMadeProduct(((PreMadeProduct) product).getName(), product.getByteImage(), product.getPrice(), ((PreMadeProduct) product).getDescription(), ((PreMadeProduct) product).getPriceBeforeDiscount()));
+//        else{
+//            CustomMadeProduct p= new CustomMadeProduct(new LinkedList<PreMadeProduct>(((CustomMadeProduct)product).getProducts()),product.getPrice(), product.getByteImage());
+//            App.client.cart.insertProduct(p);
+//        }
+//
+//        App.client.storeSkeleton.changeCenter("Cart");
+//    }
 
     @FXML
     void remove(ActionEvent event) {
@@ -87,7 +87,7 @@ public class CartProductController extends Controller {
     {
         amount.setText(Integer.toString(Integer.parseInt(amount.getText())+1));
         product.setAmount(product.getAmount()+1);
-        total.setText("Total Price: " + product.getPrice() * product.getAmount() + "₪");
+        total.setText("Total Price: ₪" + product.getPrice() * product.getAmount());
         App.client.cart.refreshTotalCost();
         App.client.storeSkeleton.changeCenter("Cart");
     }
@@ -99,7 +99,7 @@ public class CartProductController extends Controller {
         {
             amount.setText(Integer.toString(Integer.parseInt(amount.getText())-1));
             product.setAmount(product.getAmount()-1);
-            total.setText("Total Price: " + product.getPrice() * product.getAmount() + "₪");
+            total.setText("Total Price: ₪" + product.getPrice() * product.getAmount());
             App.client.cart.refreshTotalCost();
             App.client.storeSkeleton.changeCenter("Cart");
 
@@ -109,9 +109,15 @@ public class CartProductController extends Controller {
 
     public void setCartProduct(Product product) {
         this.product = product;
-        image.setImage(product.getImage());
-        price.setText("Price: " + product.getPrice() + "₪");
-        total.setText("Total Price: " + product.getPrice() * product.getAmount() + "₪");
+        if(!(product instanceof CustomMadeProduct))
+            image.setImage(product.getImage());
+        if(product instanceof CustomMadeProduct)
+        {
+            String des = ((CustomMadeProduct)product).getDescription();
+            description.setText(des);
+        }
+        price.setText("Price: ₪" + product.getPrice());
+        total.setText("Total Price: ₪" + product.getPrice() * product.getAmount());
         //price.setText("Price: " + product.getPrice() + "₪");
         amount.setText(Integer.toString(product.getAmount()));
 

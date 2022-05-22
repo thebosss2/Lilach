@@ -7,18 +7,18 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.CartController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.CartController">
    <children>
       <AnchorPane layoutX="200.0" layoutY="309.0" prefHeight="91.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Button fx:id="create_order" layoutX="363.0" layoutY="29.0" mnemonicParsing="false" onAction="#createOrder" style="-fx-background-color: #c6acef;" text="Create Order">
+            <Button fx:id="create_order" layoutX="363.0" layoutY="29.0" mnemonicParsing="false" onAction="#createOrder" style="-fx-background-color: #c6acef;" text="Create Order" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="110.0">
                <font>
-                  <Font name="Cambria" size="15.0" />
+                  <Font size="15.0" />
                </font>
             </Button>
-            <Button fx:id="clean_cart" layoutX="492.0" layoutY="29.0" mnemonicParsing="false" onAction="#cleanCart" style="-fx-background-color: #c6acef;" text="Clean Cart">
+            <Button fx:id="clean_cart" layoutX="492.0" layoutY="29.0" mnemonicParsing="false" onAction="#cleanCart" style="-fx-background-color: #c6acef;" text="Clean Cart" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
                <font>
-                  <Font name="Cambria" size="15.0" />
+                  <Font size="15.0" />
                </font>
             </Button>
             <Text fx:id="total_price" layoutX="14.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Price: ">
@@ -28,11 +28,11 @@
             </Text>
          </children>
       </AnchorPane>
-      <ScrollPane fx:id="scroll_pane" layoutX="160.0" layoutY="14.0" prefHeight="310.0" prefWidth="600.0" AnchorPane.bottomAnchor="89.60000000000002" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ScrollPane fx:id="scroll_pane" layoutX="160.0" layoutY="14.0" prefHeight="310.0" prefWidth="600.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <content>
-            <AnchorPane prefHeight="310.0" prefWidth="598.0">
+            <AnchorPane maxHeight="2000.0" maxWidth="1920.0" minHeight="310.0" minWidth="600.0" style="-fx-background-color: #ffffff;">
                <children>
-                  <VBox fx:id="vbox" layoutX="38.0" layoutY="14.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <VBox fx:id="vbox" layoutX="38.0" layoutY="14.0" minHeight="100.0" minWidth="600.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
          </content>

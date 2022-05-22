@@ -32,9 +32,7 @@ public class Order implements Serializable {     //Product class entity
     protected String orderTime;
     protected Date deliveryDate;
     protected String deliveryHour;
-
-    protected enum Status {PENDING, ARRIVED, CANCELED}
-
+    public enum Status {PENDING, ARRIVED, CANCELED}
     protected Status isDelivered;
 
     protected enum Delivery {SELF_SHIPPING, SHIPPING_GIFT, TAKEAWAY}
@@ -174,4 +172,29 @@ public class Order implements Serializable {     //Product class entity
     public void setAddress(String address) {
         this.address = address;
     }
+
+//    public String getEmail() {
+//        return email;
+//    }
+//
+//    public void setEmail(String email) {
+//        this.email = email;
+//    }
+
+    public String getDeliveryHour() {
+        return deliveryHour;
+    }
+
+    public void setDeliveryHour(String deliveryHour) {
+        this.deliveryHour = deliveryHour;
+    }
+
+    public Date getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public void setDeliveryDate(Date deliveryDate) {
+        this.deliveryDate = deliveryDate;
+    }
+
 }
