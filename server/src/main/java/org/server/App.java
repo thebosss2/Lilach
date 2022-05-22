@@ -38,10 +38,13 @@ public class App {
     private static void generateProducts() throws Exception {       //generates new products
         Random random = new Random();
         int price;
+        Store store = new Store("Chain", "address");
+        session.save(store);   //saves and flushes to database
+        session.flush();
         for (int i = 0; i < 5; i++) {
             var img1 = loadImageFromResources(String.format("Flower%s.jpg", i));
             PreMadeProduct p1 = new PreMadeProduct("Flower" + i, img1, price = random.nextInt(1000), (price - random.nextInt(500)));
-            Customer cust = new Customer("23465", "name","user","pass","mail","56346","credit", Customer.AccountType.MEMBERSHIP);
+            Customer cust = new Customer("23465", "name","user","pass","mail","56346","credit", Customer.AccountType.MEMBERSHIP,store);
             Complaint c = new Complaint(cust ,new Date(),"bad bad bad", Complaint.Topic.BAD_SERVICE);
             session.save(cust);
             session.flush();
@@ -57,7 +60,7 @@ public class App {
         session.save(man);
         session.flush();
 
-        Customer cust = new Customer("23465", "Sagii","Sagii","Sagii","mail","56346","credit", Customer.AccountType.MEMBERSHIP);
+        Customer cust = new Customer("23465", "Sagii","Sagii","Sagii","mail","56346","credit", Customer.AccountType.MEMBERSHIP,store);
         Date date = new Date();
         date.setYear(date.getYear() - 2);
         cust.setMemberShipExpireTODELETE(date);
@@ -78,6 +81,7 @@ public class App {
             session.save(store);   //saves and flushes to database
             session.flush();
         }
+
     }
 
     ///TODO make generic func--------------------------------------------------------------------------------------------------------------

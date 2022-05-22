@@ -178,7 +178,8 @@ public class SignUpController extends Controller{
                     emailText.getText(),
                     phoneNumberText.getText(),
                     creditCardText.getText(),
-                    coonvertToAccountType(accountType.getValue()));
+                    coonvertToAccountType(accountType.getValue()),
+                    stores.stream().filter(store -> store.getName().equals("Chain")).findFirst().get());
         }
         return customer;
     }
@@ -236,9 +237,12 @@ public class SignUpController extends Controller{
     }
 
     public void pullStoresToClient(LinkedList<Store> stores) {
+
         this.stores = stores;
-        for (Store s : stores)
-            storePicker.getItems().add(s.getName());
+        for (Store s : stores) {
+            if(!s.getName().equals("Chain"))
+                storePicker.getItems().add(s.getName());
+        }
     }
 
 }
