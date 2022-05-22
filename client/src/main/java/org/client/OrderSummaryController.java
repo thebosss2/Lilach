@@ -47,7 +47,7 @@ public class OrderSummaryController extends Controller{
             e.printStackTrace();
         }
 
-        App.client.storeSkeleton.changeCenter("SummeryOrders");
+        App.client.storeSkeleton.changeCenter("SummaryOrders");
     }
 
     @FXML
