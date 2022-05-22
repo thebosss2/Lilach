@@ -76,7 +76,6 @@ public class PreMadeProduct extends Product {
         this.name = name;
     }
 
-
     public String getDescription() {
         return description;
     }
@@ -84,13 +83,12 @@ public class PreMadeProduct extends Product {
     public void setDescription(String description) {
         this.description = description;
     }
-    public ProductType getType()
-    {
+
+    public ProductType getType() {
         return this.productType;
     }
 
-    public String getMainColor()
-    {
+    public String getMainColor() {
         return this.mainColor;
     }
 

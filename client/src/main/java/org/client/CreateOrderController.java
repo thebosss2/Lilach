@@ -126,6 +126,9 @@ public class CreateOrderController extends Controller {
         displayDates(TADate, LocalDate.now(), false);
 
         //initialize hour combobox:
+        TAHourPicker.getItems().add("Set Hour");
+        selfHourPicker.getItems().add("Set Hour");
+        giftHourPicker.getItems().add("Set Hour");
         for (int i = 0; i < Client.hourList.length; i++) {
             TAHourPicker.getItems().add(String.valueOf(Client.hourList[i]) + ":00");
             selfHourPicker.getItems().add(String.valueOf(Client.hourList[i]) + ":00");
@@ -148,9 +151,12 @@ public class CreateOrderController extends Controller {
     }
 
     private void getStores() {
-        if (((Customer) (App.client.user)).getAccountType() == Customer.AccountType.STORE)  //if there is certain store for this costumer
-            TAStorePicker.setDisable(true); //disable the combobox
-        else { //get stores for the combobox from db
+        //added check if user is guest or customer
+        if(App.client.user instanceof Customer) {
+            if (((Customer) (App.client.user)).getAccountType() == Customer.AccountType.STORE)  //if there is certain store for this costumer
+                TAStorePicker.setDisable(true); //disable the combobox
+        }
+        else{ //get stores for the combobox from db
             LinkedList<Object> msg = new LinkedList<Object>();
             msg.add("#PULLSTORES"); //get stores from db
             App.client.setController(this);
@@ -164,6 +170,8 @@ public class CreateOrderController extends Controller {
 
     public void pullStoresToClient(LinkedList<Store> stores) { //when server send stores
         this.stores = stores;
+        TAStorePicker.getItems().add("Set Store");
+        TAStorePicker.setValue("Set Store");
         for (Store s : stores)
             TAStorePicker.getItems().add(s.getName());
     }
@@ -192,7 +200,7 @@ public class CreateOrderController extends Controller {
         fxmlLoader = new FXMLLoader(getClass().getResource("SummeryPreProduct.fxml"));
         pane.getChildren().add(fxmlLoader.load());  //Adds new product pane to the screen.
         SummeryPreProductController controller = fxmlLoader.getController();
-        controller.setSummeryPreProduct(product.getName(), product.getPrice());
+        controller.setSummeryPreProduct(product);
     }
 
     protected void displayCustomProduct(CustomMadeProduct product, FlowPane pane) throws IOException {//func displays an item on pane
@@ -208,15 +216,19 @@ public class CreateOrderController extends Controller {
         giftPriceBeforeLabel.setText(String.valueOf(App.client.cart.getTotalCost()));
         selfPriceBeforeLabel.setText(String.valueOf(App.client.cart.getTotalCost()));
 
-        if (((Customer) (App.client.user)).getAccountType() == Customer.AccountType.MEMBERSHIP && App.client.cart.getTotalCost() >= 50) {
-            //if the user is member and have order larger than 50 nis- we give 10% discount
-            TADiscountLabel.setText("10%");
-            giftDiscountLabel.setText("10%");
-            selfDiscountLabel.setText("10%");
-            TAFinalPriceLabel.setText(String.valueOf((int) (0.9 * App.client.cart.getTotalCost())));
-            giftFinalPriceLabel.setText(String.valueOf((int) (0.9 * App.client.cart.getTotalCost()) + 20)); //also added shipping fee
-            selfFinalPriceLabel.setText(String.valueOf((int) (0.9 * App.client.cart.getTotalCost()) + 20));
-        } else { //no discount for not members
+        //added check if user is guest or customer
+        if(App.client.user instanceof Customer) {
+            if(((Customer)(App.client.user)).getAccountType() == Customer.AccountType.MEMBERSHIP && App.client.cart.getTotalCost()>=50){
+                //if the user is member and have order larger than 50 nis- we give 10% discount
+                TADiscountLabel.setText("10%");
+                giftDiscountLabel.setText("10%");
+                selfDiscountLabel.setText("10%");
+                TAFinalPriceLabel.setText(String.valueOf((int)(0.9 * App.client.cart.getTotalCost())));
+                giftFinalPriceLabel.setText(String.valueOf((int)(0.9 * App.client.cart.getTotalCost())+20)); //also added shipping fee
+                selfFinalPriceLabel.setText(String.valueOf((int)(0.9 * App.client.cart.getTotalCost())+20));
+            }
+        }
+        else { //no discount for not members
             TAFinalPriceLabel.setText(String.valueOf(App.client.cart.getTotalCost()));
             giftFinalPriceLabel.setText(String.valueOf(App.client.cart.getTotalCost() + 20)); // added shipping fee
             selfFinalPriceLabel.setText(String.valueOf(App.client.cart.getTotalCost() + 20));
@@ -241,6 +253,8 @@ public class CreateOrderController extends Controller {
     private void enableHours(ComboBox<String> HourPicker, DatePicker datePicker) {
         HourPicker.setDisable(false); //enable the combobox
         HourPicker.getItems().clear();
+        HourPicker.getItems().add("Set Hour");
+        HourPicker.setValue("Set Hour");
         if (datePicker.getValue().atStartOfDay().isEqual(LocalDate.now().atStartOfDay())) { //if the required date is today
             LocalTime now = LocalTime.now();
             for (int i = 0; i < Client.hourList.length; i++)  //the combobox will contain all hours after current hour
@@ -339,20 +353,20 @@ public class CreateOrderController extends Controller {
         //TODO STORE CHECK
 
         return TAHourPicker.isDisabled() ||//if hours are disabled than costumer didnt pick a date
-                !(TAHourPicker.getItems().size() > 0);// if didnt pick hour
+                TAHourPicker.getValue().equals("Set Hour");// if didnt pick hour
     }
 
     @FXML
     private boolean isInvalidSelf() {
         return selfHourPicker.isDisabled() ||//if hours are disabled than costumer didnt pick a date
-                !(selfHourPicker.getItems().size() > 0) || // if didnt pick hour
-                 selfAddressText.getText().isEmpty(); // if didnt write any address
+                selfHourPicker.getValue().equals("Set Hour") || // if didnt pick hour
+                selfAddressText.getText().isEmpty(); // if didnt write any address
     }
 
     @FXML
     private boolean isInvalidGift() {
         if(giftHourPicker.isDisabled() ||//if hours are disabled than costumer didnt pick a date
-                !(giftHourPicker.getItems().size() > 0) ||// if didnt pick hour
+                giftHourPicker.getValue().equals("Set Hour") ||// if didnt pick hour
                 giftReceiverPhoneText.getText().isEmpty() || // if didnt write phone for receiver
                 giftReceiverNameText.getText().isEmpty() || // if didnt write the name of receiver
                 giftReceiverAddressText.getText().isEmpty() ||

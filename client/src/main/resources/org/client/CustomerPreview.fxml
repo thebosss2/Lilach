@@ -5,9 +5,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#goToCustomerView" onMouseEntered="#mouseOnProduct" onMouseExited="#mouseOffProduct" prefHeight="285.0" prefWidth="234.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.CustomerPreviewController">
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#goToCustomerView" onMouseEntered="#mouseOnProduct" onMouseExited="#mouseOffProduct" prefHeight="265.0" prefWidth="250.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.CustomerPreviewController">
    <children>
-      <Button fx:id="freezeBtn" layoutX="97.0" layoutY="245.0" mnemonicParsing="false" onMouseClicked="#freezeAccounts" prefHeight="32.0" prefWidth="130.0" style="-fx-background-color: #c6acef;" text="Freeze Account">
+      <Button fx:id="statusBtn" layoutX="14.0" layoutY="219.0" mnemonicParsing="false" onAction="#changeStatus" prefHeight="32.0" prefWidth="223.0" style="-fx-background-color: #c6acef;" text="Freeze\Unfreeze Account">
          <font>
             <Font name="Guttman Aharoni" size="15.0" />
          </font>
@@ -17,47 +17,47 @@
             <Font name="System Bold" size="21.0" />
          </font>
       </Text>
-      <Text fx:id="debt" layoutX="97.0" layoutY="169.0" onMouseClicked="#goToCustomerView" strokeType="OUTSIDE" strokeWidth="0.0" text="3022₪" textAlignment="RIGHT" wrappingWidth="130.0000000000001">
+      <Text fx:id="email" layoutX="62.0" layoutY="134.0" onMouseClicked="#goToCustomerView" strokeType="OUTSIDE" strokeWidth="0.0" text="\@gmail.com" textAlignment="RIGHT" wrappingWidth="181.99994277954113">
          <font>
             <Font size="19.0" />
          </font>
       </Text>
-      <Text boundsType="LOGICAL_VERTICAL_CENTER" layoutX="1.0" layoutY="70.0" onMouseClicked="#goToCustomerView" strokeType="OUTSIDE" strokeWidth="0.0" text="Username:" textOrigin="CENTER" wrappingWidth="110.66667938232422">
+      <Text boundsType="LOGICAL_VERTICAL_CENTER" layoutX="3.0" layoutY="70.0" onMouseClicked="#goToCustomerView" strokeType="OUTSIDE" strokeWidth="0.0" text="Username:" textOrigin="CENTER" wrappingWidth="110.66667938232422">
          <font>
             <Font size="19.0" />
          </font>
       </Text>
-      <Text fx:id="type" boundsType="LOGICAL_VERTICAL_CENTER" layoutX="136.0" layoutY="22.0" onMouseClicked="#goToCustomerView" strokeType="OUTSIDE" strokeWidth="0.0" text="type" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="97.33338928222668">
+      <Text fx:id="type" boundsType="LOGICAL_VERTICAL_CENTER" layoutX="141.0" layoutY="22.0" onMouseClicked="#goToCustomerView" strokeType="OUTSIDE" strokeWidth="0.0" text="type" textAlignment="CENTER" textOrigin="CENTER" wrappingWidth="97.33338928222668">
          <font>
             <Font name="System Bold" size="21.0" />
          </font>
       </Text>
-      <Text boundsType="LOGICAL_VERTICAL_CENTER" layoutX="2.0" layoutY="131.0" onMouseClicked="#goToCustomerView" strokeType="OUTSIDE" strokeWidth="0.0" text="ID:" textOrigin="CENTER" wrappingWidth="37.99999618530262">
+      <Text boundsType="LOGICAL_VERTICAL_CENTER" layoutX="4.0" layoutY="98.0" onMouseClicked="#goToCustomerView" strokeType="OUTSIDE" strokeWidth="0.0" text="ID:" textOrigin="CENTER" wrappingWidth="37.99999618530262">
          <font>
             <Font size="19.0" />
          </font>
       </Text>
-      <Text boundsType="LOGICAL_VERTICAL_CENTER" layoutX="1.0" layoutY="100.0" onMouseClicked="#goToCustomerView" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" textOrigin="CENTER" wrappingWidth="97.33338928222679">
+      <Text boundsType="LOGICAL_VERTICAL_CENTER" layoutX="3.0" layoutY="125.0" onMouseClicked="#goToCustomerView" strokeType="OUTSIDE" strokeWidth="0.0" text="Email:" textOrigin="CENTER" wrappingWidth="87.719482421875">
          <font>
             <Font size="19.0" />
          </font>
       </Text>
-      <Text boundsType="LOGICAL_VERTICAL_CENTER" layoutX="6.0" layoutY="162.0" onMouseClicked="#goToCustomerView" strokeType="OUTSIDE" strokeWidth="0.0" text="balance:" textOrigin="CENTER" wrappingWidth="87.719482421875">
+      <Text fx:id="id" layoutX="114.0" layoutY="106.0" onMouseClicked="#goToCustomerView" strokeType="OUTSIDE" strokeWidth="0.0" text="203010011" textAlignment="RIGHT" wrappingWidth="130.0000000000001">
          <font>
             <Font size="19.0" />
          </font>
       </Text>
-      <Text fx:id="id" layoutX="97.0" layoutY="138.0" onMouseClicked="#goToCustomerView" strokeType="OUTSIDE" strokeWidth="0.0" text="203010011" textAlignment="RIGHT" wrappingWidth="130.0000000000001">
+      <Text fx:id="username" layoutX="112.0" layoutY="78.0" onMouseClicked="#goToCustomerView" strokeType="OUTSIDE" strokeWidth="0.0" text="user" textAlignment="RIGHT" wrappingWidth="130.0000000000001">
          <font>
             <Font size="19.0" />
          </font>
       </Text>
-      <Text fx:id="password" layoutX="97.0" layoutY="107.0" onMouseClicked="#goToCustomerView" strokeType="OUTSIDE" strokeWidth="0.0" text="pass" textAlignment="RIGHT" wrappingWidth="130.0000000000001">
+      <Text boundsType="LOGICAL_VERTICAL_CENTER" layoutX="3.0" layoutY="152.0" onMouseClicked="#goToCustomerView" strokeType="OUTSIDE" strokeWidth="0.0" text="Status:" textOrigin="CENTER" wrappingWidth="87.719482421875">
          <font>
             <Font size="19.0" />
          </font>
       </Text>
-      <Text fx:id="username" layoutX="97.0" layoutY="77.0" onMouseClicked="#goToCustomerView" strokeType="OUTSIDE" strokeWidth="0.0" text="user" textAlignment="RIGHT" wrappingWidth="130.0000000000001">
+      <Text fx:id="status" fill="#699e25" layoutX="112.0" layoutY="160.0" onMouseClicked="#goToCustomerView" strokeType="OUTSIDE" strokeWidth="0.0" text="Active" textAlignment="RIGHT" wrappingWidth="130.0000000000001">
          <font>
             <Font size="19.0" />
          </font>
