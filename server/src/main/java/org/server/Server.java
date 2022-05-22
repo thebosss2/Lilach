@@ -57,7 +57,6 @@ public class Server extends AbstractServer {
 
     private void deleteOrder(LinkedList<Object> msg, ConnectionToClient client) {
         int id = (int) msg.get(1);
-        System.out.println(id);
         Order order = App.session.find(Order.class, id);
         App.session.beginTransaction();
         App.session.evict(order);       //evict current product details from database
