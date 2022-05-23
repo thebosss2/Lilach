@@ -7,6 +7,7 @@ public class Employee extends User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     public enum Role { STORE_EMPLOYEE, CUSTOMER_SERVICE, STORE_MANAGER, CEO, ADMIN}
     @Column(name = "employee_role")
     private Role role;
@@ -25,5 +26,24 @@ public class Employee extends User {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public String getRoleString() {
+        switch(this.role) {
+            case STORE_EMPLOYEE:
+                return "Store Employee";
+
+            case CUSTOMER_SERVICE:
+                return "Customer Service";
+
+            case CEO:
+                return "CEO";
+
+            case STORE_MANAGER:
+                return "Store Manager";
+
+            default:
+                return "Admin";
+        }
     }
 }

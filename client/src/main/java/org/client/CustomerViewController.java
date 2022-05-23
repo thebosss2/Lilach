@@ -52,9 +52,10 @@ public class CustomerViewController {
             this.status.setText("Inactive");
             this.status.setStyle("-fx-text-inner-color: red;");
         }
-        else
+        else {
             this.status.setText("Active");
-        this.status.setStyle("-fx-text-inner-color: green;");
+            this.status.setStyle("-fx-text-inner-color: green;");
+        }
     }
 
     @FXML

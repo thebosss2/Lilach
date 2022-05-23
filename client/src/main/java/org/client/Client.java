@@ -77,6 +77,7 @@ public class Client extends AbstractClient {
                 case "#PULL_COMPLAINTS" -> pushComplaints((LinkedList<Object>) msg);
                 case "#UPDATE_CUSTOMER" -> this.user = (Customer)((LinkedList<Object>) msg).get(1);
                 case "#DELETEORDER" -> changeBalance(msg);//function gets all data from server to display to client
+                case "#PULLUSERS" -> pushUsers(msg);
             }
         } catch (Exception e) {
             System.out.println(Arrays.toString(e.getStackTrace()));
@@ -84,6 +85,11 @@ public class Client extends AbstractClient {
             System.out.println("Client Error");
             e.getStackTrace();
         }
+    }
+
+    private void pushUsers(Object msg) {
+        ManageAccountsController manageAccountsController = (ManageAccountsController) controller;
+        manageAccountsController.pullUsersToClient((LinkedList<User>) ((LinkedList<Object>) msg).get(1));
     }
 
     private void pushToOrders(Object msg) {

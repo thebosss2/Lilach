@@ -19,26 +19,6 @@ public class Guest implements Serializable {
     public Guest() {
         this.name="Guest";
     }
-    /*    public void setCart(Cart c){
-        this.cart=c;
-    }
-    public Cart getCart(){
-        return cart;
-    }
-    */
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     public String getName() {
         return name;
