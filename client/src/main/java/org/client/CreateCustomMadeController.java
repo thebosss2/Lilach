@@ -14,7 +14,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
-import org.entities.CustomMadeProduct;
 import org.entities.PreMadeProduct;
 
 public class CreateCustomMadeController extends Controller{

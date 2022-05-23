@@ -1,14 +1,10 @@
 package org.client;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 public abstract class ItemController extends Controller {
 

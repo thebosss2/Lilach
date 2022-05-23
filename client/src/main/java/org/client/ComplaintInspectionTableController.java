@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.beans.property.ReadOnlyStringWrapper;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,8 +19,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import org.entities.Complaint;
-import org.entities.Customer;
-import org.entities.User;
 
 public class ComplaintInspectionTableController extends Controller{
 

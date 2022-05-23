@@ -116,6 +116,14 @@ public class Order implements Serializable {     //Product class entity
     }
 
     //getters and setters:
+    public Customer getOrderedBy() {
+        return orderedBy;
+    }
+
+    public void setOrderedBy(Customer orderedBy) {
+        this.orderedBy = orderedBy;
+    }
+
     public List<CustomMadeProduct> getCustomMadeProducts() {
         return this.customMadeProducts;
     }

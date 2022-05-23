@@ -12,7 +12,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import org.entities.Customer;
-import org.entities.User;
 
 public class CartController extends Controller {
 

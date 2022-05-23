@@ -1,6 +1,5 @@
 package org.client;
 import org.entities.PreMadeProduct;
-import org.entities.Product;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -10,9 +9,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
-
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 public class ProductViewController extends Controller{
 

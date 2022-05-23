@@ -1,11 +1,14 @@
+import org.entities.PreMadeProduct;
+import org.entities.Product;
+
 module org.client {
     requires javafx.controls;
     requires javafx.fxml;
     requires org.entities;
     requires org.server;
     requires javafx.graphics;
-    uses org.entities.Product;
-    uses org.entities.PreMadeProduct;
+    uses Product;
+    uses PreMadeProduct;
 
     opens org.client to javafx.fxml;
     exports org.client;
