@@ -152,11 +152,11 @@ public class CreateOrderController extends Controller {
 
     private void getStores() {
         //added check if user is guest or customer
-        if(App.client.user instanceof Customer) {
-            if (((Customer) (App.client.user)).getAccountType() == Customer.AccountType.STORE)  //if there is certain store for this costumer
-                TAStorePicker.setDisable(true); //disable the combobox
-        }
-        else{ //get stores for the combobox from db
+
+        if (((Customer) (App.client.user)).getAccountType() == Customer.AccountType.STORE)  //if there is certain store for this costumer
+            TAStorePicker.setDisable(true); //disable the combobox
+
+        else { //get stores for the combobox from db
             LinkedList<Object> msg = new LinkedList<Object>();
             msg.add("#PULLSTORES"); //get stores from db
             App.client.setController(this);
@@ -173,7 +173,8 @@ public class CreateOrderController extends Controller {
         TAStorePicker.getItems().add("Set Store");
         TAStorePicker.setValue("Set Store");
         for (Store s : stores)
-            TAStorePicker.getItems().add(s.getName());
+            if(!s.getName().equals("Chain"))
+                TAStorePicker.getItems().add(s.getName());
     }
 
     public void displaySummery() throws IOException { //function is called to display all products from cart
@@ -350,10 +351,9 @@ public class CreateOrderController extends Controller {
     
     @FXML
     private boolean isInvalidTA() {
-        //TODO STORE CHECK
-
         return TAHourPicker.isDisabled() ||//if hours are disabled than costumer didnt pick a date
-                TAHourPicker.getValue().equals("Set Hour");// if didnt pick hour
+                TAHourPicker.getValue().equals("Set Hour") ||
+                 TAStorePicker.getValue().equals("Set Store");// if didnt pick hour
     }
 
     @FXML
