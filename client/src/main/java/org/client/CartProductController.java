@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import org.entities.CustomMadeProduct;
 import org.entities.PreMadeProduct;
 import org.entities.Product;
@@ -25,7 +26,7 @@ public class CartProductController extends Controller {
     private Text amount;
 
     @FXML
-    private Text description;
+    private TextFlow description;
 
     @FXML
     private ImageView image;
@@ -108,12 +109,14 @@ public class CartProductController extends Controller {
 
     public void setCartProduct(Product product) {
         this.product = product;
-        if(!(product instanceof CustomMadeProduct))
-            image.setImage(product.getImage());
+        //if(!(product instanceof CustomMadeProduct))
+        image.setImage(product.getImage());
         if(product instanceof CustomMadeProduct)
         {
             String des = ((CustomMadeProduct)product).getDescription();
-            description.setText(des);
+            //description.set("des");
+            description.getChildren().add(new Text(des));
+            //description.setText(des);
         }
         price.setText("Price: ₪" + product.getPrice());
         total.setText("Total Price: ₪" + product.getPrice() * product.getAmount());
@@ -123,11 +126,12 @@ public class CartProductController extends Controller {
 
         if (product instanceof PreMadeProduct) {
             product_name.setText(((PreMadeProduct) product).getName());
-            description.setText("");
+            description.getChildren().add(new Text(""));
+            //description.setText("");
 
         } else //CustomMadeProduct
         {
-            product_name.setText("Custom made product " + Integer.toString(product.getId()));
+            product_name.setText((((CustomMadeProduct)product).getItemTypeCustom()).toString().replace("_", " "));
 
         }
 

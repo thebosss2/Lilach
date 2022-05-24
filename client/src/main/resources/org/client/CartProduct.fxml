@@ -5,11 +5,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
 
-<AnchorPane prefHeight="200.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.CartProductController">
+<AnchorPane prefHeight="200.0" prefWidth="800.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.CartProductController">
    <children>
-      <ImageView fx:id="image" fitHeight="176.0" fitWidth="300.0" layoutX="452.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="11.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="13.0" />
-      <AnchorPane layoutX="55.0" prefHeight="200.0" prefWidth="454.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ImageView fx:id="image" fitHeight="179.0" fitWidth="297.0" layoutX="454.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="480.0" AnchorPane.topAnchor="20.0" />
+      <AnchorPane layoutX="55.0" prefHeight="200.0" prefWidth="454.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Text fx:id="product_name" layoutX="148.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ProductName">
                <font>
@@ -21,16 +22,12 @@
                   <Font size="18.0" />
                </font>
             </Text>
-            <Text fx:id="description" layoutX="197.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description">
-               <font>
-                  <Font name="Yu Gothic Light" size="12.0" />
-               </font>
-            </Text>
             <Button fx:id="remove" layoutX="34.0" layoutY="149.0" mnemonicParsing="false" onAction="#remove" style="-fx-background-color: #c6acef;" text="Remove">
                <font>
                   <Font size="16.0" />
-               </font></Button>
-            <Button fx:id="plus" layoutX="374.0" layoutY="156.0" mnemonicParsing="false" onAction="#addProduct" prefHeight="29.0" prefWidth="29.0" style="-fx-background-color: #c6acef;" text="+">
+               </font>
+            </Button>
+            <Button fx:id="plus" layoutX="376.0" layoutY="156.0" mnemonicParsing="false" onAction="#addProduct" prefHeight="29.0" prefWidth="29.0" style="-fx-background-color: #c6acef;" text="+">
                <font>
                   <Font name="Guttman Aharoni" size="12.0" />
                </font>
@@ -43,12 +40,14 @@
             <Text fx:id="amount" layoutX="359.0" layoutY="176.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1">
                <font>
                   <Font size="16.0" />
-               </font></Text>
+               </font>
+            </Text>
             <Text fx:id="price" layoutX="34.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price: 0₪">
                <font>
                   <Font size="18.0" />
                </font>
             </Text>
+            <TextFlow fx:id="description" layoutX="186.0" layoutY="70.0" prefHeight="75.0" prefWidth="257.0" style="-fx-background-color: #ffffff;" />
          </children>
       </AnchorPane>
    </children>

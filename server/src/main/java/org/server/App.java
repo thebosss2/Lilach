@@ -104,9 +104,10 @@ public class App {
         int price;
         int num_products = 10; //change according to the real
         String[] colors = {"Red","Pink","Yellow","White","Pink","White","White","Green","Blue","Green","Green"};
+        String[] names = {"Red Rose","Pink Plants", "Sunflower","White Plants","Pink Rose","White Rose","White Flower","Leaves1","Blue Flower","Leaves2","Leaves3"};
         for (int i = 0; i <= num_products; i++) {
             var img = loadImageFromResources(String.format("base%s.jpg", i));
-            PreMadeProduct p = new PreMadeProduct("Base Product " + i, img, price = random.nextInt(50),price+random.nextInt(50),colors[i]);
+            PreMadeProduct p = new PreMadeProduct(names[i], img, price = random.nextInt(15)+1,price+random.nextInt(15),colors[i]);
             session.save(p);   //saves and flushes to database
             session.flush();
         }

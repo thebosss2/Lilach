@@ -56,9 +56,12 @@ public class Server extends AbstractServer {
     private void deleteOrder(LinkedList<Object> msg, ConnectionToClient client) {
         int id = (int) msg.get(1);
         Order order = App.session.find(Order.class, id);
-        App.session.remove(order);
+        App.session.beginTransaction();
+        App.session.evict(order);       //evict current product details from database
+        order.setDelivered(Order.Status.CANCELED);
+        App.session.merge(order);           //merge into database with updated info
         App.session.flush();
-        App.session.clear();
+        App.session.getTransaction().commit(); // Save everything.
     }
  private void updateCustomerAccount(LinkedList<Object> msg, ConnectionToClient client) {
         Customer customer = (Customer) msg.get(1);
