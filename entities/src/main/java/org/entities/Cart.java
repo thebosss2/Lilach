@@ -31,6 +31,7 @@ public class Cart {
         for (int i = 0; i < this.products.size(); i++) {
             if (this.products.get(i).getId() == id) {
                 totalCost -= this.products.get(i).getPrice() * this.products.get(i).getAmount();
+                products.get(i).setAmount(0);
                 products.remove(i);
                 break;
             }
@@ -42,19 +43,61 @@ public class Cart {
         boolean flag_here = false;
         int index = 0;
         for(int i=0; i<products.size(); i++)
+        {
+            if (product.getId() == products.get(i).getId()) //same product
+            {
+                flag_here = true;
+                index = i;
+            }
+        }
+
+        if(!flag_here)
+        {
+            System.out.println(product.getAmount());
+            //product.setAmount(1);
+            this.products.add(product);
+        }
+        else
+        {
+            if(flag_here)
+            {
+                int pastAmount = products.get(index).getAmount();
+                //System.out.println(pastAmount);
+                //System.out.println("1");
+                products.get(index).setAmount(pastAmount + 1);
+            }
+        }
+        refreshTotalCost();
+    }
+
+    public void insertSomeProduct(Product product, int amount) {
+        boolean flag_here = false;
+        int index = 0;
+        for(int i=0; i<products.size(); i++)
             if(product.getId() == products.get(i).getId()) //same product
             {
                 flag_here = true;
                 index = i;
             }
 
-        if(!flag_here)
+        if(!flag_here) {
+            product.setAmount(amount);
             this.products.add(product);
+        }
         else
         {
             int pastAmount = products.get(index).getAmount();
-            //products.get(index).setAmount(pastAmount + product.getAmount());
+
+            //System.out.println(pastAmount);
+            //System.out.println(amount);
+
+            products.get(index).setAmount(pastAmount+amount);
         }
+        refreshTotalCost();
+    }
+
+    public void insertCustomMade(CustomMadeProduct product) {
+        this.products.add(product);
         refreshTotalCost();
     }
 

@@ -98,6 +98,6 @@ public class ProductViewController extends Controller{
         this.product.setAmount(Integer.parseInt(orderCount.getText()));
 //        for (int i=0;i<count;i++)
 //            App.client.cart.insertProduct(this.product);
-        App.client.cart.insertProduct(this.product);
+        App.client.cart.insertSomeProduct(this.product,Integer.parseInt(orderCount.getText()));
     }
 }

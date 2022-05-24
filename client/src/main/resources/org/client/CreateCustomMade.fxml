@@ -39,7 +39,7 @@
                               </Label>
                               <TextField fx:id="min_price" prefHeight="22.0" prefWidth="60.0" promptText="0" />
                               <Label text="Maximum Price:" />
-                              <TextField fx:id="max_price" prefHeight="22.0" prefWidth="60.0" promptText="1000" />
+                              <TextField fx:id="max_price" prefHeight="22.0" prefWidth="60.0" promptText="100" />
                               <ComboBox fx:id="sortColor" prefHeight="13.0" prefWidth="160.0" promptText="Main Color" style="-fx-background-color: #c6acef;">
                                  <HBox.margin>
                                     <Insets />
@@ -77,7 +77,7 @@
                <children>
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Button fx:id="AddToCart" mnemonicParsing="false" onAction="#addToCart" style="-fx-background-color: #c6acef;" text="Add To Cart">
+                        <Button fx:id="AddToCart" mnemonicParsing="false" onAction="#addToCart" style="-fx-background-color: #c6acef;" text="Create &amp; Add To Cart">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
