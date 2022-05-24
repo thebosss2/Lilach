@@ -126,17 +126,7 @@ public class App {
         return list;
     }
 
-    static List<Order> getAllOrders() throws IOException {      //pulls all products from database
-        CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<Order> query = builder.createQuery(Order.class);
-        query.from(Order.class);
-        List<Order> data = session.createQuery(query).getResultList();
-        LinkedList<Order> list = new LinkedList<Order>();
-        for (Order order : data) {     //converts arraylist to linkedlist
-            list.add(order);
-        }
-        return list;
-    }
+
 
     ///TODO make generic func--------------------------------------------------------------------------------------------------------------
     static List<Store> getAllStores() throws IOException {      //pulls all stores from database
