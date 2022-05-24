@@ -2,8 +2,6 @@ package org.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.Year;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;

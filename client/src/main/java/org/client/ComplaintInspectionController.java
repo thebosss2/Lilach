@@ -6,6 +6,8 @@ package org.client;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.Duration;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -65,6 +67,16 @@ public class ComplaintInspectionController extends Controller{
         List<Object> msg = new LinkedList<>();
         msg.add("#CLOSE_COMPLAINT");
         msg.add(complaint);
+        Date d = new Date();
+        Date minusDay = new Date(d.getTime()- Duration.ofDays(1).toMillis());
+        Boolean b =complaint.getDate().getTime()-minusDay.getTime()>0;
+        if(!b)
+        {
+/*            System.out.println("sdfasdf");*/
+            //sendAlert closed too late
+        }else{
+            complaint.setStatus(true);
+        }
         if(compensationCheckbox.isSelected()){
             if(compensationField.getText().isEmpty()){
                 //sendAlert
@@ -80,6 +92,7 @@ public class ComplaintInspectionController extends Controller{
         } catch (IOException e) {
             e.printStackTrace();
         }
+        App.client.storeSkeleton.changeCenter("ComplaintInspectionTable");
 
         //TODO alert says complaint fulfilled and send back to table.
 
@@ -103,9 +116,9 @@ public class ComplaintInspectionController extends Controller{
             complaintText.setText(complaint.getCompText());
             complainerName.setText(complaint.getCustomer().getName());
             complaintType.setText(complaint.getTopic().toString());
-            complaintText.setDisable(true);
-            complainerName.setDisable(true);
-            complaintType.setDisable(true);
+            complaintText.setEditable(false);
+            complainerName.setEditable(false);
+            complaintType.setEditable(false);
             compensationField.setDisable(true);
             compensationField.setTextFormatter(formatter1);
         });

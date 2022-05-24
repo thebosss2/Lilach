@@ -12,8 +12,6 @@ import org.entities.Product;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 public class EditProductController extends Controller {
 

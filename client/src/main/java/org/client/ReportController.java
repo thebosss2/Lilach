@@ -7,14 +7,10 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.StackedBarChart;
 import javafx.scene.control.Button;
-import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import org.entities.Store;
 
-import java.io.IOException;
 import java.time.LocalDate;
-import java.util.LinkedList;
 
 public class ReportController extends Controller{
 

@@ -1,7 +1,5 @@
 package org.entities;
 
-import javafx.scene.chart.Chart;
-
 import java.util.Date;
 import java.util.LinkedList;
 

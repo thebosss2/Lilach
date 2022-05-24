@@ -12,6 +12,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class App {
     public static Session session;// encapsulation make public function so this can be private
@@ -58,7 +60,7 @@ public class App {
         Employee emp = new Employee("4563456","Sagi","Sagi","Sagi","Sagi","4563456",Employee.Role.STORE_EMPLOYEE);
         session.save(emp);
         session.flush();
-        Employee man = new Employee("34563456","Itai","Itai","Itai","Itai","12341234",Employee.Role.STORE_MANAGER);
+        Employee man = new Employee("345634576","Itai","Itai","Itai","Itai","12341234",Employee.Role.STORE_MANAGER);
         session.save(man);
         session.flush();
         Employee Ad = new Employee("4563456","Gal ","Gal","Gal","Sagi","4563456",Employee.Role.ADMIN);
@@ -71,7 +73,7 @@ public class App {
         session.save(Serv);
         session.flush();
 
-        Customer cust = new Customer("23465", "Sagii","Sagii","Sagii","mail","56346","credit", Customer.AccountType.MEMBERSHIP,store);
+        Customer cust = new Customer("23465", "Sagii","Sagii","Sagii","sagiman14@gmail.com","56346","credit", Customer.AccountType.MEMBERSHIP,store);
         Date date = new Date();
         date.setYear(date.getYear() - 2);
         cust.setMemberShipExpireTODELETE(date);
@@ -79,7 +81,11 @@ public class App {
         session.save(cust);
         session.flush();
 
-        Complaint c = new Complaint(cust ,new Date(),"I WANT MONEY", Complaint.Topic.PAYMENT);
+        Order ord = new Order(null,null,cust,456,new Date(122,04,24,11,49),"12","123123"," ");
+        session.save(ord);
+        session.flush();
+
+        Complaint c = new Complaint(cust ,new Date(122,04,5) ,"I WANT MONEY", Complaint.Topic.PAYMENT);
         session.save(c);
         session.flush();
     }
@@ -167,6 +173,14 @@ public class App {
         return new LinkedList<>(employees);
     }
 
+    static List<Order> getAllOrders() throws IOException{
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Order> orderQuery = builder.createQuery(Order.class);
+        orderQuery.from(Order.class);
+        List<Order> orders = session.createQuery(orderQuery).getResultList();
+        return new LinkedList<Order>(orders);
+    }
+
     static List<Complaint> getAllOpenComplaints() throws IOException{
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Complaint> customerQuery = builder.createQuery(Complaint.class);
@@ -195,6 +209,8 @@ public class App {
             generateStores();
             generateBaseCustomMadeProduct();
             session.getTransaction().commit(); // Save everything.
+
+            ScheduleMailing.main(null);
 
             server = new Server(3000);      //builds server
             server.listen();                    //listens to client

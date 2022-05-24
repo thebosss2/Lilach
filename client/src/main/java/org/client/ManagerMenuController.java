@@ -3,7 +3,6 @@ package org.client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import org.entities.Employee;
 
 public class ManagerMenuController extends WorkerMenuController {
 
