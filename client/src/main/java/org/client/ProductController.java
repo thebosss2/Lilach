@@ -1,14 +1,11 @@
 package org.client;
-import javafx.scene.image.Image;
 import org.entities.PreMadeProduct;
-import org.entities.Product;
 
 /**
  * Sample Skeleton for 'Product.fxml' Controller Class
  */
 
 
-import java.io.ByteArrayInputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 

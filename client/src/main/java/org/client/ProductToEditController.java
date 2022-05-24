@@ -1,12 +1,9 @@
 package org.client;
 
 import javafx.fxml.FXML;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import org.entities.PreMadeProduct;
-import org.entities.Product;
 
 public class ProductToEditController extends ItemController{
 

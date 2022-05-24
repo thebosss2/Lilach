@@ -4,10 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
-
 public class WorkerMenuController extends Controller {
     @FXML
     protected Button editCatalogBtn;

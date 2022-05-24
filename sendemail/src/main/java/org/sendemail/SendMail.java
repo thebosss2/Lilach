@@ -1,4 +1,4 @@
-package com.sendemail;
+package org.sendemail;
 
 import java.util.Properties;
 
@@ -15,7 +15,7 @@ public class SendMail {
     public static void main(String[] args) {
 
         // Recipient's email ID needs to be mentioned.
-        String to = "itaize33@gmail.com";
+        String to = args[0];
 
         // Sender's email ID needs to be mentioned
         String from = "noreplylilach@gmail.com";
@@ -57,10 +57,10 @@ public class SendMail {
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 
             // Set Subject: header field
-            message.setSubject("Hello there!");
+            message.setSubject(args[2]);
 
             // Now set the actual message
-            message.setText("GENERALLLLL KENOBIII!!");
+            message.setText(args[1]);
 
             System.out.println("sending...");
             // Send message

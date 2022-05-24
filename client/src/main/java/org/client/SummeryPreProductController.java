@@ -3,7 +3,6 @@ package org.client;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import org.entities.PreMadeProduct;
-import org.entities.Product;
 
 public class SummeryPreProductController extends Controller{
 
