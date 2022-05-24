@@ -33,7 +33,7 @@ public class Order implements Serializable {     //Product class entity
     protected Date deliveryDate;
     protected String deliveryHour;
 
-    protected enum Status {PENDING, ARRIVED, CANCELED}
+    public enum Status {PENDING, ARRIVED, CANCELED}
 
     protected Status isDelivered;
 
@@ -181,5 +181,13 @@ public class Order implements Serializable {     //Product class entity
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Date getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public void setDeliveryDate(Date deliveryDate) {
+        this.deliveryDate = deliveryDate;
     }
 }

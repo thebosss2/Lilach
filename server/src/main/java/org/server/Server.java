@@ -185,6 +185,15 @@ public class Server extends AbstractServer {
         p.setPriceBeforeDiscount(p2.getPriceBeforeDiscount());
     }
 
+    public static void orderArrived(Order order, Order.Status status){
+        App.session.beginTransaction();
+        App.session.evict(order);
+        order.setDelivered(status);
+        App.session.merge(order);
+        App.session.flush();
+        App.session.getTransaction().commit();
+    }
+
     private static void pullProducts(List<Object> msg, ConnectionToClient client) throws IOException {       //func pulls products from server
         List<PreMadeProduct> products = App.getAllProducts();
         String commandToClient = msg.get(0).toString();

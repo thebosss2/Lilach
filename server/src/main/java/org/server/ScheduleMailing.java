@@ -4,7 +4,12 @@ import org.entities.Customer;
 import org.entities.Order;
 import org.sendemail.SendMail;
 
-import java.util.Date;
+
+import java.io.IOException;
+import java.time.Duration;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -12,15 +17,57 @@ import java.util.concurrent.TimeUnit;
 public class ScheduleMailing {
 
     public static void orderMail(Order order){
-        ScheduledExecutorService ses = Executors.newScheduledThreadPool(1);
 
         Customer customer = order.getOrderedBy();
 
         Date current = new Date();
-
-        String mail = "General";
-        String subject = "Hello there";
-        ses.schedule(() -> SendMail.main(new String[]{customer.getEmail(), mail, subject}), 5, TimeUnit.SECONDS);
+        Server.orderArrived(order, Order.Status.ARRIVED);
+        String mail = "Order Arrival";
+        String subject = "Hello there" + customer.getName() + ",\n  your order has arrived";
+        SendMail.main(new String[]{customer.getEmail(), mail, subject});
     }
 
+
+
+    public static void main(String[] args){
+
+        ZonedDateTime now = ZonedDateTime.now();
+        ZonedDateTime nextRun = now.withMinute(0).withSecond(0);
+
+        if(now.compareTo(nextRun) > 0)
+            nextRun = nextRun.plusHours(1);
+
+        Duration duration = Duration.between(now, nextRun);
+        long initialDelay = duration.getSeconds();
+        System.out.println(now);
+        System.out.println(nextRun);
+        ScheduledExecutorService ses = Executors.newSingleThreadScheduledExecutor();
+        System.out.println(initialDelay);
+        ses.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("asfdasdfasd");
+                List<Order> orders;
+                Date date = new Date();
+                date.setSeconds(0);
+                //date.setMinutes(0);
+                try {
+                    orders = App.getAllOrders();
+                    for(Order order:orders){
+                        if(order.getDeliveryDate().getTime()<date.getTime() && order.isDelivered() == Order.Status.PENDING){
+                            orderMail(order);
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, initialDelay, 3600, TimeUnit.SECONDS);
+
+
+
+
+
+
+    }
 }
