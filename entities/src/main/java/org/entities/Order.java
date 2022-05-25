@@ -26,6 +26,7 @@ public class Order implements Serializable {     //Product class entity
     protected Customer orderedBy;
 
     @ManyToOne
+    //@JoinColumn(name="stores_orders")
     protected Store store;
 
     protected int price;

@@ -22,7 +22,7 @@ public class Store implements Serializable {
     private String address;
 
     @OneToMany
-    @Column(name="stores_orders")
+    //@Column(name="stores_orders")
     private List<Order> orders;
 
     public Store(String name, String address) {
