@@ -60,7 +60,7 @@ public class UserPreviewController extends ItemController {
 
     public void setUser(User user) {
         this.user = user;
-        this.id.setText(user.getID());
+        this.id.setText(user.getUserID());
         this.username.setText(user.getUserName());
         this.name.setText(user.getName());
         this.email.setText(user.getEmail());

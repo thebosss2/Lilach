@@ -48,7 +48,7 @@ public class Order implements Serializable {     //Product class entity
 
 
     //SELF_SHIPPING constructor
-    public Order(LinkedList<PreMadeProduct> preMadeProducts, LinkedList<CustomMadeProduct> customMadeProducts,
+    public Order(List<PreMadeProduct> preMadeProducts, List<CustomMadeProduct> customMadeProducts,
                  Customer orderedBy, int price, Date deliveryDate, String deliveryHour, String address, String greetingCard) {
 
         Calendar cal = Calendar.getInstance();
@@ -68,7 +68,7 @@ public class Order implements Serializable {     //Product class entity
     }
 
     //SHIPPING_GIFT constructor
-    public Order(LinkedList<PreMadeProduct> preMadeProducts, LinkedList<CustomMadeProduct> customMadeProducts,
+    public Order(List<PreMadeProduct> preMadeProducts, List<CustomMadeProduct> customMadeProducts,
                  Customer orderedBy, int price, Date deliveryDate, String deliveryHour, String receiverPhone,
                  String receiverName, String address, String greetingCard) {
 
@@ -92,7 +92,7 @@ public class Order implements Serializable {     //Product class entity
 
 
     //TAKEAWAY constructor
-    public Order(LinkedList<PreMadeProduct> preMadeProducts, LinkedList<CustomMadeProduct> customMadeProducts,
+    public Order(List<PreMadeProduct> preMadeProducts, List<CustomMadeProduct> customMadeProducts,
                  Customer orderedBy, int price, Store store, Date deliveryDate, String deliveryHour, String greetingCard) {
 
         Calendar cal = Calendar.getInstance();

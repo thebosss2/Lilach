@@ -10,6 +10,7 @@ import org.hibernate.service.ServiceRegistry;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.Executor;
@@ -79,10 +80,6 @@ public class App {
         cust.setMemberShipExpireTODELETE(date);
         cust.setBalance(150);
         session.save(cust);
-        session.flush();
-
-        Order ord = new Order(null,null,cust,456,new Date(122,04,24,11,49),"12","123123"," ");
-        session.save(ord);
         session.flush();
 
         Complaint c = new Complaint(cust ,new Date(122,04,5) ,"I WANT MONEY", Complaint.Topic.PAYMENT);
@@ -164,10 +161,12 @@ public class App {
         return new LinkedList<>(employees);
     }
 
-    static List<Order> getAllOrders() throws IOException{
+    static List<Order> getCostumerOrders(Customer costumer) throws IOException{
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Order> orderQuery = builder.createQuery(Order.class);
         orderQuery.from(Order.class);
+        Root<Order> root = orderQuery.from(Order.class);
+        orderQuery.select(root).where(builder.equal(root.get("orderedBy_id"), costumer.getID()));
         List<Order> orders = session.createQuery(orderQuery).getResultList();
         return new LinkedList<Order>(orders);
     }

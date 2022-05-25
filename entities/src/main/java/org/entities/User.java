@@ -74,11 +74,11 @@ public class User extends Guest implements Serializable {
         this.connected = connected;
     }
 
-    public String getID() {
+    public String getUserID() {
         return userID;
     }
 
-    public void setID(String ID) {
+    public void setUserID(String ID) {
         this.userID = userID;
     }
 

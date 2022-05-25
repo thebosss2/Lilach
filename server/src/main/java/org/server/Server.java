@@ -54,7 +54,7 @@ public class Server extends AbstractServer {
     }
 
     private void pullOrders(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
-        List<Order> orders = App.getAllOrders();
+        List<Order> orders = App.getCostumerOrders((Customer) msg.get(1));
         List<Object> msgToClient = new LinkedList<Object>();
         msgToClient.add(msg.get(0).toString());
         msgToClient.add(orders);
@@ -177,7 +177,7 @@ public class Server extends AbstractServer {
         List<Object> newMsg = new LinkedList<Object>();
         newMsg.add(msg.get(0));
         for(User user : users){
-            if(user.getUserName().equals(msg.get(1).toString()) || (user.getID().equals(msg.get(2)) && (user instanceof Customer))){
+            if(user.getUserName().equals(msg.get(1).toString()) || (user.getUserID().equals(msg.get(2)) && (user instanceof Customer))){
                 newMsg.add("#USER_EXISTS"); //checks if username or user id already exists
                 client.sendToClient(newMsg);
                 return;

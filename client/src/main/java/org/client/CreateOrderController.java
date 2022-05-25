@@ -240,7 +240,7 @@ public class CreateOrderController extends Controller {
     Store getSelectedStore() {
         Store pickedStore = new Store();
         if (TAStorePicker.isDisabled())
-            ;//pickedStore = App.client.user.store;
+            pickedStore = ((Customer)App.client.user).getStore();
         else {
             for (Store s : stores) {
                 if (s.getName().equals(TAStorePicker.getValue()))
@@ -308,8 +308,8 @@ public class CreateOrderController extends Controller {
         Order order;
 
         //prepare separate lists for custom and pre made products
-        LinkedList<PreMadeProduct> preList = new LinkedList<>();
-        LinkedList<CustomMadeProduct> customList = new LinkedList<>();
+        List<PreMadeProduct> preList = new LinkedList<>();
+        List<CustomMadeProduct> customList = new LinkedList<>();
 
         for (Product product : App.client.cart.getProducts()) {//extract products list to PreMadeProduct list and CustomMadeProduct list
             if (product instanceof PreMadeProduct) preList.add((PreMadeProduct) product);
@@ -330,7 +330,7 @@ public class CreateOrderController extends Controller {
                     giftReceiverAddressText.getText(), giftGreetingText.getText());
 
         //set balance for buyer
-        ((Customer) App.client.user).setBalance(((Customer) App.client.user).getBalance() - Integer.parseInt(TAFinalPriceLabel.getText()));
+        ((Customer) App.client.user).setBalance(Math.max((((Customer) App.client.user).getBalance() - Integer.parseInt(TAFinalPriceLabel.getText())),0));
 
         //ask server to save to db
         List<Object> newMsg = new LinkedList<Object>();

@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.VBox;
 import org.entities.CustomMadeProduct;
+import org.entities.Customer;
 import org.entities.Order;
 import org.entities.PreMadeProduct;
 
@@ -30,7 +31,7 @@ public class SummaryOrdersController extends Controller {
 
         LinkedList<Object> msg = new LinkedList<Object>();
         msg.add("#PULLORDERS");
-        // msg.add(this);
+        msg.add(App.client.user);
         App.client.setController(this);
         try {
             App.client.sendToServer(msg); //Sends a msg contains the command and the controller for the catalog.

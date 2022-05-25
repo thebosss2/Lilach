@@ -54,6 +54,10 @@ public class Customer extends User implements Serializable {
         super();
     }
 
+    public int getID() {
+        return id;
+    }
+
     public void setCreditCard(String creditCard) {
         this.creditCard = creditCard;
     }
