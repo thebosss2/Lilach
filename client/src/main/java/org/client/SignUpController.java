@@ -97,7 +97,7 @@ public class SignUpController extends Controller{
     @FXML
     void signUpClicked(ActionEvent event) {
         if(checkFieldsNotEmpty()){
-            sendAlert("One or more fields are empty!");
+            sendAlert("One or more fields are empty!" ,"Sign-Up Failed" , Alert.AlertType.WARNING);
             return;
         }
         if(!idAndEmailCheck()){
@@ -116,21 +116,7 @@ public class SignUpController extends Controller{
         }
     }
 
-    public static void sendAlert(String error) {
-        Platform.runLater(() -> {
-            try{
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Sign-up failed");
-                alert.setHeaderText(error);
-                //alert.setContentText("Are you sure?");
-                alert.showAndWait().get();
-            }catch (Exception e){
-                System.out.println(e.getMessage());
-            }
-        });
 
-
-    }
 
     private boolean idAndEmailCheck() {
         String email = emailText.getText().toString();
@@ -142,7 +128,7 @@ public class SignUpController extends Controller{
             return false;
         if(usernameText.getText().contains(" "))
         {
-            sendAlert("username cannot have spaces");
+            sendAlert("username cannot have spaces" ,"Sign-Up Failed" , Alert.AlertType.WARNING);
             return false;
         }
         return true;

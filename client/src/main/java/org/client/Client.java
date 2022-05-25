@@ -162,10 +162,7 @@ public class Client extends AbstractClient {
                         alert.setHeaderText("Sign-up succeeded.");
                         //alert.getButtonTypes().clear();
                         alert.show();
-                                          /*signUpController.popup.setText("Sign-up succeeded");
-                                          signUpController.setPopupInMiddle();*/
                         PauseTransition pause = new PauseTransition(Duration.seconds(1));
-                        //pause.setOnFinished(e -> signUpController.popup.setText(""));
                         pause.setOnFinished((e -> alert.close()));
                         pause.play();
 
@@ -196,7 +193,7 @@ public class Client extends AbstractClient {
 
         } else {
 
-            signUpController.sendAlert("Username already taken. Please try a new one.");
+            Controller.sendAlert("Username already taken. Please try a new one.", "Sign-Up Failed", Alert.AlertType.WARNING);
         }
     }
 
