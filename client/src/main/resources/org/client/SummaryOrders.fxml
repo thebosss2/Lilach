@@ -3,28 +3,36 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane minWidth="733.0" prefHeight="400.0" prefWidth="733.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.SummaryOrdersController">
+<AnchorPane minWidth="733.0" prefHeight="400.0" prefWidth="733.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.SummaryOrdersController">
    <children>
-      <ScrollPane layoutX="125.0" layoutY="84.0" minWidth="733.0" prefHeight="316.0" prefWidth="733.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="84.0">
-         <content>
-            <AnchorPane minWidth="733.0" prefHeight="316.0" prefWidth="733.0">
-               <children>
-                  <VBox fx:id="vbox" minWidth="733.0" prefHeight="303.0" prefWidth="733.0" spacing="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="13.0">
-                     <padding>
-                        <Insets bottom="200.0" />
-                     </padding></VBox>
-               </children>
-            </AnchorPane>
-         </content>
-      </ScrollPane>
-      <Text layoutX="271.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Orders">
-         <font>
-            <Font name="Script MT Bold" size="72.0" />
-         </font>
-      </Text>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+            <ScrollPane fitToWidth="true" minWidth="733.0" prefHeight="316.0" prefWidth="733.0" style="-fx-background-color: ffffff;" BorderPane.alignment="CENTER">
+               <content>
+                  <AnchorPane minWidth="733.0" prefHeight="316.0" prefWidth="733.0" style="-fx-background-color: ffffff;">
+                     <children>
+                        <VBox fx:id="vbox" minWidth="687.0" prefHeight="303.0" prefWidth="687.0" spacing="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="13.0">
+                           <padding>
+                              <Insets bottom="200.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </ScrollPane>
+         </center>
+         <top>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Orders" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="Script MT Bold" size="72.0" />
+               </font>
+            </Text>
+         </top>
+      </BorderPane>
    </children>
 </AnchorPane>

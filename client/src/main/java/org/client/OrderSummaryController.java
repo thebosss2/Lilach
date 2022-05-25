@@ -16,11 +16,20 @@ import org.entities.CustomMadeProduct;
 import org.entities.Order;
 import org.entities.PreMadeProduct;
 
-public class OrderSummaryController extends Controller{
+public class OrderSummaryController extends Controller {
     private Order order;
 
     @FXML
     private ResourceBundle resources;
+
+    @FXML
+    private Text delivery_date;
+
+    @FXML
+    private Text order_time;
+
+    @FXML
+    private Text store;
 
     @FXML
     private URL location;
@@ -36,18 +45,18 @@ public class OrderSummaryController extends Controller{
 
     @FXML
     void cancel(ActionEvent event) {
-
-        LinkedList<Object> msg = new LinkedList<Object>();
-        msg.add("#DELETEORDER"); //get stores from db
-        msg.add(order.getId());
-        App.client.setController(this);//TODO maybe remove
-        try {
-            App.client.sendToServer(msg); //Sends a msg contains the command and the current controller
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (this.alertMsg("Cancel", "cancel your order", false)) {
+            LinkedList<Object> msg = new LinkedList<Object>();
+            msg.add("#DELETEORDER"); //get stores from db
+            msg.add(order.getId());
+            App.client.setController(this);//TODO maybe remove
+            try {
+                App.client.sendToServer(msg); //Sends a msg contains the command and the current controller
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            App.client.storeSkeleton.changeCenter("SummaryOrders");
         }
-
-        App.client.storeSkeleton.changeCenter("SummeryOrders");
     }
 
     @FXML
@@ -61,13 +70,20 @@ public class OrderSummaryController extends Controller{
 
     public void setOrder(Order order) {
         this.order=order;
+        price.setText("Price: " + Integer.toString(order.getPrice()));
+        order_time.setText("Order Time: " + order.getOrderTime());
+        delivery_date.setText("Delivery Time: " + order.getDeliveryDate().toString());
+
+        if(order.getDelivery() == Order.Delivery.SELF_SHIPPING && order.getStore()!= null)
+            store.setText("Store:" + order.getStore().getName());
+        else
+            store.setText("");
         if(order.isDelivered()== Order.Status.CANCELED){
             cancelOrder.setDisable(true);
-            //T ODO maybe add text that says cancels
-
+            cancelOrder.setText("Canceled");
         }
 
-        OrderSummaryController orderSummaryController= this;
+        OrderSummaryController orderSummaryController = this;
         for (PreMadeProduct product : order.getPreMadeProducts()) {
             try {
                 displayPreProduct(product, orderSummaryController);

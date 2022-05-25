@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.FlowPane;
 import org.entities.PreMadeProduct;
-import org.entities.Product;
 
 import java.io.IOException;
 import java.net.URL;

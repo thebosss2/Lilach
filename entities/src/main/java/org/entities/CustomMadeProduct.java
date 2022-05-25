@@ -61,4 +61,14 @@ public class CustomMadeProduct extends Product {
         return this.description;
     }
 
+    public ItemType getItemTypeCustom()
+    {
+        return this.itemType;
+    }
+
+    public void setItemTypeCustom(ItemType itemType)
+    {
+        this.itemType = itemType;
+    }
+
 }

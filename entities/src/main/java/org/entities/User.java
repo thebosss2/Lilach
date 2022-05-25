@@ -3,7 +3,6 @@ package org.entities;
 import javax.persistence.*;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
-import java.util.Date;
 
 @MappedSuperclass
 public class User extends Guest implements Serializable {

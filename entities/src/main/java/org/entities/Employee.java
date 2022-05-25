@@ -1,6 +1,6 @@
 package org.entities;
 import javax.persistence.*;
-import java.util.Date;
+
 @Entity
 @Table(name = "employees")
 public class Employee extends User {

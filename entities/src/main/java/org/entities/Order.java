@@ -36,7 +36,7 @@ public class Order implements Serializable {     //Product class entity
     public enum Status {PENDING, ARRIVED, CANCELED}
     protected Status isDelivered;
 
-    protected enum Delivery {SELF_SHIPPING, SHIPPING_GIFT, TAKEAWAY}
+    public enum Delivery {SELF_SHIPPING, SHIPPING_GIFT, TAKEAWAY}
 
     protected Delivery delivery;
 
@@ -115,6 +115,14 @@ public class Order implements Serializable {     //Product class entity
     }
 
     //getters and setters:
+    public Customer getOrderedBy() {
+        return orderedBy;
+    }
+
+    public void setOrderedBy(Customer orderedBy) {
+        this.orderedBy = orderedBy;
+    }
+
     public List<CustomMadeProduct> getCustomMadeProducts() {
         return this.customMadeProducts;
     }
@@ -190,12 +198,23 @@ public class Order implements Serializable {     //Product class entity
         this.deliveryHour = deliveryHour;
     }
 
+
     public Date getDeliveryDate() {
         return deliveryDate;
     }
 
     public void setDeliveryDate(Date deliveryDate) {
         this.deliveryDate = deliveryDate;
+    }
+
+    public Delivery getDelivery()
+    {
+        return this.delivery;
+    }
+
+    public Store getStore()
+    {
+        return this.store;
     }
 
 }

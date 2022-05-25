@@ -3,7 +3,6 @@ package org.client;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import org.entities.PreMadeProduct;
-import org.entities.Product;
 
 public class SummeryPreProductController extends Controller{
 
@@ -44,6 +43,8 @@ public class SummeryPreProductController extends Controller{
 
     public void setProduct(PreMadeProduct product) {
         name.setText(product.getName());
-        price.setText(Integer.toString(product.getPrice()));
+        price.setText(""+Integer.toString(product.getPrice()));
+        totalPrice.setText(""+Integer.toString(product.getPrice()*product.getAmount()));
+        count.setText(""+Integer.toString(product.getAmount()));
     }
 }
