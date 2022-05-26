@@ -88,4 +88,17 @@ public class Customer extends User implements Serializable {
         memberShipExpire.setYear(memberShipExpire.getYear() + 1);
         this.memberShipExpire = memberShipExpire;
     }
+
+    public String getTypeString() {
+        switch(this.accountType) {
+            case STORE:
+                return "Store Customer";
+
+            case CHAIN:
+                return "Chain Customer";
+
+            default:
+                return "Membership Customer";
+        }
+    }
 }

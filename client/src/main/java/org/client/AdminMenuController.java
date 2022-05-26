@@ -22,12 +22,11 @@ public class AdminMenuController extends Controller {
 
     @FXML
     void goToManageAccounts(ActionEvent event) {
-
+        this.getSkeleton().changeCenter("ManageAccounts");
     }
 
     @FXML
     void logOut(ActionEvent event) {
 
     }
-
 }

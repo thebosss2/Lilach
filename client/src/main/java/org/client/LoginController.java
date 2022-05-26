@@ -14,6 +14,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -48,7 +49,7 @@ public class LoginController extends Controller{
     void login(ActionEvent event) {
 
         if(usernameText.getText().isEmpty() || passwordText.getText().isEmpty())
-            SignUpController.sendAlert("One or more fields are empty.");
+            Controller.sendAlert("One or more fields are empty.", "Login Failed", Alert.AlertType.WARNING);
 
         List<Object> msg = new LinkedList<Object>();
         msg.add("#LOGIN");
