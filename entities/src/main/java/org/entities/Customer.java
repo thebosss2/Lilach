@@ -16,7 +16,7 @@ public class Customer extends User implements Serializable {
     public enum AccountType{STORE, CHAIN, MEMBERSHIP}
     private AccountType accountType;
     private Date memberShipExpire;
-
+    private int balance=0;
     private String creditCard;
 
     @ManyToOne
@@ -100,5 +100,12 @@ public class Customer extends User implements Serializable {
             default:
                 return "Membership Customer";
         }
+    }
+    public int getBalance() {
+        return balance;
+    }
+
+    public void setBalance(int balance) {
+        this.balance = balance;
     }
 }

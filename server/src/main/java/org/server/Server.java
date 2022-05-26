@@ -120,8 +120,10 @@ public class Server extends AbstractServer {
 
     private void updateBalance(Customer customer, int balance){
         App.session.beginTransaction();
-        App.session.evict(customer);       //evict current product details from database
         customer.setBalance(balance);
+        App.session.evict(customer);       //evict current product details from database
+        //customer.setBalance(balance);/////////////////TODO can evict after change because SQL works with primary key
+        ///TODO make this Generic func
         App.session.merge(customer);           //merge into database with updated info
         App.session.flush();
         App.session.getTransaction().commit(); // Save everything.
@@ -158,8 +160,14 @@ public class Server extends AbstractServer {
     }
 
 
-    private void signUpServer(LinkedList<Object> msg, ConnectionToClient client) {
+    private void signUpServer(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
         addNewInstance((Customer) msg.get(1));
+        User user = (Customer) msg.get(1);
+        msg.clear();
+        msg.add("#LOGIN");
+        msg.add(user.getUserName());
+        msg.add(user.getPassword());
+        loginServer(msg,client);
     }
 
     private void saveOrderServer(LinkedList<Object> msg, ConnectionToClient client) {
@@ -183,7 +191,7 @@ public class Server extends AbstractServer {
                 return;
             }
         }//TODO check if ID already exists and email
-        newMsg.add("#USER_NOT_EXISTS");
+        newMsg.add("#USER_DOES_NOT_EXIST");
         client.sendToClient(newMsg);
     }
 
@@ -253,22 +261,32 @@ public class Server extends AbstractServer {
     private void loginServer(LinkedList<Object> msg,ConnectionToClient client) throws IOException {
         List<User> users = App.getAllUsers();
         for(User user : users){
-            if(user.getUserName().equals(msg.get(1)) && user.getPassword().equals(msg.get(2))){
-                synchronized (this){
-                    if(!user.getConnected()){
-                        updateConnected(user,true);
+            if(user.getUserName().equals(msg.get(1)) && user.getPassword().equals(msg.get(2)) && user.getFrozen()==false) {
+                if (user.getConnected() == true) {
+                    msg.clear();
+                    msg.add("#LOGIN");
+                    msg.add("ALREADYCONNECTED");
+                    client.sendToClient(msg);
+                }
+                synchronized (this) {
+                    if (!user.getConnected()) {
+                        updateConnected(user, true);
                         msg.remove(2);
                         msg.remove(1);
                         msg.add("#SUCCESS");
-                        if(user instanceof Customer) {
+                        if (user instanceof Customer) {
                             msg.add("CUSTOMER");
-                        }else if (user instanceof Employee) {
+                        } else if (user instanceof Employee) {
                             msg.add("EMPLOYEE");
                         }
                         msg.add(user);
                         client.sendToClient(msg);
                     }
                 }
+            }else{
+                List<Object> frozenMsg = new LinkedList<Object>();
+                frozenMsg.add("#FROZEN");
+                client.sendToClient(frozenMsg);
             }
         }
     }

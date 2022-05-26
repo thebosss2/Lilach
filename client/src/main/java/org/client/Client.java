@@ -70,6 +70,7 @@ public class Client extends AbstractClient {
                 case "#UPDATE_CUSTOMER" -> this.user = (Customer)((LinkedList<Object>) msg).get(1);
                 case "#DELETEORDER" -> changeBalance(msg);//function gets all data from server to display to client
                 case "#PULLUSERS" -> pushUsers(msg);
+                case "#FROZEN" -> Controller.sendAlert("User was FROZEN by system Admin" ,"Frozen User" , Alert.AlertType.WARNING);
             }
         } catch (Exception e) {
             System.out.println(Arrays.toString(e.getStackTrace()));
@@ -121,7 +122,7 @@ public class Client extends AbstractClient {
         else
             alert.setContentText("I'm sorry, but according to the policy you do not deserve a refund");
 
-        ((User) App.client.user).setBalance(((User) App.client.user).getBalance() + refund);
+        ((Customer) App.client.user).setBalance(((Customer) App.client.user).getBalance() + refund);
     }
 
     private void pushComplaints(LinkedList<Object> msg) {
@@ -143,7 +144,7 @@ public class Client extends AbstractClient {
 
     private void authenticationReply(LinkedList<Object> msg) {
         SignUpController signUpController = (SignUpController) controller;
-        if (msg.get(1).toString().equals("#USER_NOT_EXISTS")) {
+        if (msg.get(1).toString().equals("#USER_DOES_NOT_EXIST")) {
             List<Object> newMsg = new LinkedList<Object>();
             newMsg.add("#SIGNUP");
             newMsg.add(signUpController.createNewUser());
@@ -222,18 +223,31 @@ public class Client extends AbstractClient {
 
         if(this.user instanceof Customer){
             storeSkeleton.changeLeft("CustomerMenu");
+            storeSkeleton.changeCenter("Catalog");
         }else if(this.user instanceof Employee){
             switch(((Employee) this.user).getRole()){
-                case STORE_EMPLOYEE -> storeSkeleton.changeLeft("WorkerMenu");
-                case CUSTOMER_SERVICE -> storeSkeleton.changeLeft("CustomerServiceMenu");
-                case STORE_MANAGER -> storeSkeleton.changeLeft("ManagerMenu");
-                case CEO -> storeSkeleton.changeLeft("ManagerMenu");
-                case ADMIN -> storeSkeleton.changeLeft("AdminMenu");
+                case STORE_EMPLOYEE -> {
+                    storeSkeleton.changeLeft("WorkerMenu");
+                    storeSkeleton.changeCenter("EditCatalog");}
+                case CUSTOMER_SERVICE -> {
+                    storeSkeleton.changeLeft("CustomerServiceMenu");
+                    storeSkeleton.changeCenter("ComplaintInspectionTable");}
+                case STORE_MANAGER -> {
+                    storeSkeleton.changeLeft("ManagerMenu");
+                    storeSkeleton.changeCenter("EditCatalog");}
+                case CEO -> {
+                    storeSkeleton.changeLeft("ManagerMenu");
+                    storeSkeleton.changeCenter("CEOReport");}
+                case ADMIN -> {
+                    storeSkeleton.changeLeft("AdminMenu");
+                    //storeSkeleton.changeCenter("Catalog"); ///////Waiting on ceo freeze user FXML
+                    }
             }
         } else {
             storeSkeleton.changeLeft("GuestMenu");
+            storeSkeleton.changeCenter("Catalog");
         }
-        storeSkeleton.changeCenter("Catalog");
+
 
     }
 
@@ -249,29 +263,33 @@ public class Client extends AbstractClient {
     }
 
     private void loginClient(LinkedList<Object> msg) {
-        if (msg.get(1).equals("#SUCCESS")) {
-            switch (msg.get(2).toString()) {
-                case "CUSTOMER" -> this.user = (Customer) msg.get(3);
-                case "EMPLOYEE" -> this.user = (Employee) msg.get(3);
-                case "GUEST" -> this.user = new Guest();
-            }
-
-            if(this.user instanceof Customer){
-                Customer customer = (Customer) this.user;
-                if(customer.getAccountType() == Customer.AccountType.MEMBERSHIP && customer.getMemberShipExpire().before(new Date())){
-                    Platform.runLater(() -> updateAccountType(customer));
+        if(msg.get(1).equals("ALREADYCONNECTED")){
+            Controller.sendAlert("User already connected to server" ,"Double connection restricted" , Alert.AlertType.WARNING);
+        }else{
+            if (msg.get(1).equals("#SUCCESS")) {
+                switch (msg.get(2).toString()) {
+                    case "CUSTOMER" -> this.user = (Customer) msg.get(3);
+                    case "EMPLOYEE" -> this.user = (Employee) msg.get(3);
+                    case "GUEST" -> this.user = new Guest();
                 }
-            }
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    changeMenu();
-                }
-            });
 
-            //TODO add menu switch and "hello {name}".
+                if(this.user instanceof Customer){
+                    Customer customer = (Customer) this.user;
+                    if(customer.getAccountType() == Customer.AccountType.MEMBERSHIP && customer.getMemberShipExpire().before(new Date())){
+                        Platform.runLater(() -> updateAccountType(customer));
+                    }
+                }
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        changeMenu();
+                    }
+                });
+
+                //TODO add menu switch and "hello {name}".
+            }
+            //TODO add response to failure.
         }
-        //TODO add response to failure.
     }
 
     @FXML

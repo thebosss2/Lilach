@@ -16,7 +16,7 @@ public class User extends Guest implements Serializable {
     @Column(name="usermail")
     private String email;
     private String phoneNum;
-    private int balance=0;
+    private Boolean frozen=false;
     private Boolean connected;
 
     public User(String userID, String name, String userName, String password, String email, String phoneNum) {
@@ -57,15 +57,6 @@ public class User extends Guest implements Serializable {
         this.email = email;
     }
 
-
-    public int getBalance() {
-        return balance;
-    }
-
-    public void setBalance(int balance) {
-        this.balance = balance;
-    }
-
     public Boolean getConnected() {
         return connected;
     }
@@ -90,4 +81,11 @@ public class User extends Guest implements Serializable {
         this.phoneNum = phoneNum;
     }
 
+    public void setFrozen(Boolean frozen) {
+        this.frozen = frozen;
+    }
+
+    public Boolean getFrozen() {
+        return frozen;
+    }
 }
