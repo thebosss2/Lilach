@@ -9,7 +9,11 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import org.entities.Customer;
 import org.entities.Employee;
+import org.entities.Store;
 import org.entities.User;
+
+import java.io.IOException;
+import java.util.LinkedList;
 
 public class UserPreviewController extends ItemController {
 
@@ -39,6 +43,21 @@ public class UserPreviewController extends ItemController {
 
     private User user;
 
+    private LinkedList<Store> stores;
+
+    @FXML
+    void initialize(){
+        LinkedList<Object> msg = new LinkedList<Object>();
+        msg.add("#PULLSTORES");
+        App.client.setController(this);
+        try {
+            App.client.sendToServer(msg); //Sends a msg contains the command and the controller for the catalog.
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     @FXML
     void changeStatus(ActionEvent event) throws InterruptedException {
         coolButtonClick((Button) event.getTarget());
@@ -55,8 +74,37 @@ public class UserPreviewController extends ItemController {
 
     @FXML
     void goToCustomerView(MouseEvent event) {
+        Controller controller;
+
+        if(user instanceof Employee) {
+            controller = this.getSkeleton().changeCenter("EmployeeView");
+            EmployeeViewController employeeViewController = (EmployeeViewController) controller;
+            employeeViewController.setEmployee((Employee) this.user, stores);
+        }
+
+        else {
+            controller = this.getSkeleton().changeCenter("CustomerView");
+            CustomerViewController customerViewController = (CustomerViewController) controller;
+            customerViewController.setCustomer((Customer) this.user, stores);
+        }
 
     }
+
+
+    @FXML
+    @Override
+    protected void mouseOnProduct(MouseEvent event) {
+        pane.setStyle("-fx-background-color: #e5dcff ; -fx-border-radius: 23 ;" +
+                "-fx-border-color: #8359e5 ; -fx-border-width: 3 ");
+    }
+
+    @FXML
+    @Override
+    protected void mouseOffProduct(MouseEvent event) {
+        pane.setStyle("-fx-background-color: #ffffff ; -fx-border-radius: 23 ;" +
+                "-fx-border-color: #c6acef ; -fx-border-width: 3 ");
+    }
+
 
     public void setUser(User user) {
         this.user = user;
@@ -75,17 +123,7 @@ public class UserPreviewController extends ItemController {
 
     }
 
-    @FXML
-    @Override
-    protected void mouseOnProduct(MouseEvent event) {
-        pane.setStyle("-fx-background-color: #e5dcff ; -fx-border-radius: 23 ;" +
-                "-fx-border-color: #8359e5 ; -fx-border-width: 3 ");
-    }
-
-    @FXML
-    @Override
-    protected void mouseOffProduct(MouseEvent event) {
-        pane.setStyle("-fx-background-color: #ffffff ; -fx-border-radius: 23 ;" +
-                "-fx-border-color: #c6acef ; -fx-border-width: 3 ");
+    public void pullStoresToClient(LinkedList<Store> stores) {
+        this.stores = stores;
     }
 }

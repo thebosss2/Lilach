@@ -46,4 +46,13 @@ public class Employee extends User {
                 return "Admin";
         }
     }
+
+    public static String[] getAllRoles() {
+        String[] roles = new String[4];
+        roles[0] = "Store Employee";
+        roles[1] = "Customer Service";
+        roles[2] = "Store Manager";
+        roles[3] = "CEO";
+        return roles;
+    }
 }

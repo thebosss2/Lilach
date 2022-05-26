@@ -101,4 +101,12 @@ public class Customer extends User implements Serializable {
                 return "Membership Customer";
         }
     }
+
+    static public String[] getAllTypes(){
+        String[] types = new String[3];
+        types[0] = "Store Customer";
+        types[1] = "Chain Customer";
+        types[2] = "Membership Customer";
+        return types;
+    }
 }
