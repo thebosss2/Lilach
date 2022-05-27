@@ -51,6 +51,8 @@ public class CustomMadeProduct extends Product {
         return this.products;
     }
 
+    public void setProduct(int i, PreMadeProduct p) {this.products.set(i,p);}
+
     public void setDescription(String description)
     {
         this.description = description;

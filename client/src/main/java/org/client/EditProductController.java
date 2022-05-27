@@ -92,11 +92,11 @@ public class EditProductController extends Controller {
 
         if (imageChanged > 0)
             p = new PreMadeProduct(nameText.getText(), newImagePath, Integer.parseInt(priceText.getText()),
-                    descriptionText.getText(),Integer.parseInt(priceBeforeDiscountText.getText()));
+                    descriptionText.getText(),Integer.parseInt(priceBeforeDiscountText.getText()),false);
 
         else
             p = new PreMadeProduct(nameText.getText(), product.getByteImage(), Integer.parseInt(priceText.getText()),
-                    descriptionText.getText(),Integer.parseInt(priceBeforeDiscountText.getText()));
+                    descriptionText.getText(),Integer.parseInt(priceBeforeDiscountText.getText()),false);
 
         msg.add(save);          // adds #SAVE command for server
         msg.add(product);       //adds data to msg list

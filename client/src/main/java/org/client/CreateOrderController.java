@@ -289,7 +289,7 @@ public class CreateOrderController extends Controller {
         //checks all that all fields were filled and valid.if not- it lets the user know and fix it.
         if(alertMsg("Submit Order","submit your order!" , checkSaveOrder(b))) {
             saveOrder(b); //if the fields are all valid- save the order
-            globalSkeleton.changeCenter("Catalog"); //and head back to catalog //todo change maybe to orders
+            globalSkeleton.changeCenter("SummaryOrders.fxml"); //and head back to catalog
         }
     }
 
@@ -312,8 +312,19 @@ public class CreateOrderController extends Controller {
         LinkedList<CustomMadeProduct> customList = new LinkedList<>();
 
         for (Product product : App.client.cart.getProducts()) {//extract products list to PreMadeProduct list and CustomMadeProduct list
-            if (product instanceof PreMadeProduct) preList.add((PreMadeProduct) product);
-            else customList.add((CustomMadeProduct) product);
+            if (product instanceof PreMadeProduct) {
+                PreMadeProduct temp = new PreMadeProduct((PreMadeProduct) product);
+                temp.setOrdered(true);
+                preList.add(temp);
+            } else {
+                for (int i = 0; i < ((CustomMadeProduct) product).getProducts().size(); i++) {
+                    PreMadeProduct temp = new PreMadeProduct(((CustomMadeProduct) product).getProducts().get(i)); //todo check without main color
+                    temp.setOrdered(true);
+                    ((CustomMadeProduct) product).setProduct(i, temp);
+                }
+                customList.add((CustomMadeProduct) product);
+
+            }
         }
 
         if (b.getId().equals(TASubmitBtn.getId()))
