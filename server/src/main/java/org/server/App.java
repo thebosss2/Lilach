@@ -57,19 +57,19 @@ public class App {
             session.save(p1);   //saves and flushes to database
             session.flush();
         }
-        Employee emp = new Employee("4563456","Sagi","Sagi","Sagi","Sagi","4563456",Employee.Role.STORE_EMPLOYEE);
+        Employee emp = new Employee("4563456","Sagi","Sagi","Sagi","Sagi","4563456",Employee.Role.STORE_EMPLOYEE,store);
         session.save(emp);
         session.flush();
-        Employee man = new Employee("345634576","Itai","Itai","Itai","Itai","12341234",Employee.Role.STORE_MANAGER);
+        Employee man = new Employee("345634576","Itai","Itai","Itai","Itai","12341234",Employee.Role.STORE_MANAGER,store);
         session.save(man);
         session.flush();
-        Employee Ad = new Employee("4563456","Gal ","Gal","Gal","Sagi","4563456",Employee.Role.ADMIN);
+        Employee Ad = new Employee("4563456","Gal ","Gal","Gal","Sagi","4563456",Employee.Role.ADMIN,store);
         session.save(Ad);
         session.flush();
-        Employee Ce = new Employee("4563456","Tahel","Tahel","Tahel","Sagi","4563456",Employee.Role.CEO);
+        Employee Ce = new Employee("4563456","Tahel","Tahel","Tahel","Sagi","4563456",Employee.Role.CEO,store);
         session.save(Ce);
         session.flush();
-        Employee Serv = new Employee("4563456","Yahav ","Yahav","Yahav","Sagi","4563456",Employee.Role.CUSTOMER_SERVICE);
+        Employee Serv = new Employee("4563456","Yahav ","Yahav","Yahav","Sagi","4563456",Employee.Role.CUSTOMER_SERVICE,store);
         session.save(Serv);
         session.flush();
 
@@ -79,8 +79,6 @@ public class App {
         cust.setMemberShipExpireTODELETE(date);
         cust.setBalance(150);
         session.save(cust);
-        session.flush();
-
         session.flush();
 
         Complaint c = new Complaint(cust ,new Date(122,04,5) ,"I WANT MONEY", Complaint.Topic.PAYMENT);

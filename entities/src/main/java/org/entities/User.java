@@ -16,10 +16,12 @@ public class User extends Guest implements Serializable {
     @Column(name="usermail")
     private String email;
     private String phoneNum;
-    private int balance=0;
+    private Boolean frozen=false;
     private Boolean connected;
+    @ManyToOne
+    private Store store = null; //TODO move to user
 
-    public User(String userID, String name, String userName, String password, String email, String phoneNum) {
+    public User(String userID, String name, String userName, String password, String email, String phoneNum ,Store store) {
         super(name);
         this.userID=userID;
         this.userName = userName;
@@ -27,6 +29,7 @@ public class User extends Guest implements Serializable {
         this.email = email;
         this.phoneNum=phoneNum;
         this.connected=false;
+        this.store=store;
     }
 
     public User() {
@@ -57,15 +60,6 @@ public class User extends Guest implements Serializable {
         this.email = email;
     }
 
-
-    public int getBalance() {
-        return balance;
-    }
-
-    public void setBalance(int balance) {
-        this.balance = balance;
-    }
-
     public Boolean getConnected() {
         return connected;
     }
@@ -90,4 +84,19 @@ public class User extends Guest implements Serializable {
         this.phoneNum = phoneNum;
     }
 
+    public void setFrozen(Boolean frozen) {
+        this.frozen = frozen;
+    }
+
+    public Boolean getFrozen() {
+        return frozen;
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
+    }
 }
