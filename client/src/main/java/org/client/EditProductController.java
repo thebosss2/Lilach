@@ -15,7 +15,7 @@ import java.util.LinkedList;
 
 public class EditProductController extends Controller {
 
-    private Product product;
+    private PreMadeProduct product;
 
     FileChooser fileChooser = new FileChooser();
 
@@ -101,6 +101,29 @@ public class EditProductController extends Controller {
         msg.add(save);          // adds #SAVE command for server
         msg.add(product);       //adds data to msg list
         msg.add(p);             //
+        App.client.setController(this);
+        try {
+            App.client.sendToServer(msg); //Sends a msg contains the command and the controller for the catalog.
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @FXML
+    void clickedDelete(ActionEvent event) throws InterruptedException {
+        coolButtonClick((Button) event.getTarget());
+        if(alertMsg("Delete Product","delete this product!" , false)) {
+            deleteProduct();
+            this.globalSkeleton.changeCenter("EditCatalog");
+        }
+    }
+    @FXML
+    void deleteProduct(){
+        String delete = "#DELETEPRODUCT";
+        LinkedList<Object> msg = new LinkedList<Object>();  //msg has string message with all data in next nodes
+        msg.add(delete);          // adds #SAVE command for server
+        msg.add(product);       //adds data to msg list
         App.client.setController(this);
         try {
             App.client.sendToServer(msg); //Sends a msg contains the command and the controller for the catalog.

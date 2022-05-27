@@ -80,7 +80,7 @@ public class App {
         cust.setBalance(150);
         session.save(cust);
         session.flush();
-
+      
         Complaint c = new Complaint(cust ,new Date(122,04,5) ,"I WANT MONEY", Complaint.Topic.PAYMENT);
         session.save(c);
         session.flush();

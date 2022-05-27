@@ -215,6 +215,10 @@ public class Client extends AbstractClient {
             SignUpController signUpController = (SignUpController) controller;
             signUpController.pullStoresToClient((LinkedList<Store>) ((LinkedList<Object>) msg).get(1));
         }
+        else if(controller instanceof UserPreviewController){
+            UserPreviewController userPreviewController = (UserPreviewController)  controller;
+            userPreviewController.pullStoresToClient((LinkedList<Store>) ((LinkedList<Object>) msg).get(1));
+        }
 
 
 

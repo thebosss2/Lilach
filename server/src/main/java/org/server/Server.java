@@ -39,11 +39,22 @@ public class Server extends AbstractServer {
                 case "#DELETEORDER" -> deleteOrder((LinkedList<Object>) msg, client);
                 case "#PULLORDERS" -> pullOrders((LinkedList<Object>) msg, client);
                 case "#PULLUSERS" -> pullUsers((LinkedList<Object>) msg, client);
+                case "#DELETEPRODUCT" -> deleteProduct((LinkedList<Object>) msg, client);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    //todo!!!!!!!!
+    private void deleteProduct(LinkedList<Object> msg, ConnectionToClient client) {
+        App.session.beginTransaction();
+        PreMadeProduct product = (PreMadeProduct) (msg).get(1);
+        App.session.delete(App.session.find(PreMadeProduct.class, product.getId()));       //evict current product details from database
+        App.session.flush();
+        App.session.getTransaction().commit(); // Save everything.
+    }
+
 
     private void pullUsers(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
         List<User> users = App.getAllUsers();
@@ -176,7 +187,6 @@ public class Server extends AbstractServer {
         App.session.save(order);
         App.session.flush();
         App.session.getTransaction().commit();
-
     }
 
     //Checks if the username asked by new signup exists.
