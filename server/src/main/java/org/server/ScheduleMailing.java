@@ -2,12 +2,11 @@ package org.server;
 
 import org.entities.Customer;
 import org.entities.Order;
-import org.sendemail.SendMail;
+import org.SendEmail.SendMail;
 
 
 import java.io.IOException;
 import java.time.Duration;
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.concurrent.Executors;

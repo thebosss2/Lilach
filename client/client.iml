@@ -59,7 +59,7 @@
     <orderEntry type="library" name="Maven: de.jensd:fontawesomefx-commons:9.1.2" level="project" />
     <orderEntry type="library" name="Maven: org.webjars:font-awesome:6.1.0" level="project" />
     <orderEntry type="module" module-name="server" />
-    <orderEntry type="module" module-name="sendemail" />
+    <orderEntry type="library" name="Maven: org.sendemail:sendemail:1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: com.sun.mail:javax.mail:1.6.2" level="project" />
     <orderEntry type="library" name="Maven: javax.activation:activation:1.1" level="project" />
   </component>
