@@ -12,13 +12,13 @@
    <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
-            <ScrollPane fitToWidth="true" minWidth="733.0" prefHeight="316.0" prefWidth="733.0" style="-fx-background-color: ffffff;" BorderPane.alignment="CENTER">
+            <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="316.0" prefWidth="733.0" style="-fx-background-color: #ffffff;" BorderPane.alignment="CENTER">
                <content>
-                  <AnchorPane minWidth="733.0" prefHeight="316.0" prefWidth="733.0" style="-fx-background-color: ffffff;">
+                  <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="316.0" prefWidth="733.0" style="-fx-background-color: #ffffff;">
                      <children>
-                        <VBox fx:id="vbox" minWidth="687.0" prefHeight="303.0" prefWidth="687.0" spacing="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="13.0">
+                        <VBox fx:id="vbox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="303.0" prefWidth="687.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <padding>
-                              <Insets bottom="200.0" />
+                              <Insets bottom="30.0" />
                            </padding>
                         </VBox>
                      </children>
