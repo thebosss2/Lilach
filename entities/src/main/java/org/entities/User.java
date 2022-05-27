@@ -18,8 +18,10 @@ public class User extends Guest implements Serializable {
     private String phoneNum;
     private Boolean frozen=false;
     private Boolean connected;
+    @ManyToOne
+    private Store store = null; //TODO move to user
 
-    public User(String userID, String name, String userName, String password, String email, String phoneNum) {
+    public User(String userID, String name, String userName, String password, String email, String phoneNum ,Store store) {
         super(name);
         this.userID=userID;
         this.userName = userName;
@@ -27,6 +29,7 @@ public class User extends Guest implements Serializable {
         this.email = email;
         this.phoneNum=phoneNum;
         this.connected=false;
+        this.store=store;
     }
 
     public User() {
@@ -87,5 +90,13 @@ public class User extends Guest implements Serializable {
 
     public Boolean getFrozen() {
         return frozen;
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
     }
 }

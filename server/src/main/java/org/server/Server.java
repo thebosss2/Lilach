@@ -107,7 +107,7 @@ public class Server extends AbstractServer {
         Complaint complaint = (Complaint) msg.get(1);
         closeComplaint(complaint);
         if(msg.get(2).equals("COMPENSATED"))
-            updateBalance(complaint.getCustomer(),complaint.getCustomer().getBalance () + (int) msg.get(3));
+            updateBalance(complaint.getCustomer(),App.session.find(Customer.class,complaint.getCustomer()).getBalance() + (int) msg.get(3));
 /*        msg.clear();
         msg.add("#ComplaintCompleted");
         try {
@@ -260,33 +260,34 @@ public class Server extends AbstractServer {
 
     private void loginServer(LinkedList<Object> msg,ConnectionToClient client) throws IOException {
         List<User> users = App.getAllUsers();
-        for(User user : users){
-            if(user.getUserName().equals(msg.get(1)) && user.getPassword().equals(msg.get(2)) && user.getFrozen()==false) {
-                if (user.getConnected() == true) {
-                    msg.clear();
-                    msg.add("#LOGIN");
-                    msg.add("ALREADYCONNECTED");
-                    client.sendToClient(msg);
-                }
-                synchronized (this) {
-                    if (!user.getConnected()) {
-                        updateConnected(user, true);
-                        msg.remove(2);
-                        msg.remove(1);
-                        msg.add("#SUCCESS");
-                        if (user instanceof Customer) {
-                            msg.add("CUSTOMER");
-                        } else if (user instanceof Employee) {
-                            msg.add("EMPLOYEE");
+        for (User user : users) {
+            if (user.getUserName().equals(msg.get(1)) && user.getPassword().equals(msg.get(2))) {
+                if (!user.getFrozen()) {
+                    synchronized (this) {
+                        if (!user.getConnected()) {
+                            updateConnected(user, true);
+                            msg.remove(2);
+                            msg.remove(1);
+                            msg.add("#SUCCESS");
+                            if (user instanceof Customer) {
+                                msg.add("CUSTOMER");
+                            } else if (user instanceof Employee) {
+                                msg.add("EMPLOYEE");
+                            }
+                            msg.add(user);
+                            client.sendToClient(msg);
+                        }else{
+                            msg.clear();
+                            msg.add("#LOGIN");
+                            msg.add("ALREADYCONNECTED");
+                            client.sendToClient(msg);
                         }
-                        msg.add(user);
-                        client.sendToClient(msg);
                     }
+                }else {
+                    List<Object> frozenMsg = new LinkedList<Object>();
+                    frozenMsg.add("#FROZEN");
+                    client.sendToClient(frozenMsg);
                 }
-            }else{
-                List<Object> frozenMsg = new LinkedList<Object>();
-                frozenMsg.add("#FROZEN");
-                client.sendToClient(frozenMsg);
             }
         }
     }

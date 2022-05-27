@@ -19,9 +19,6 @@ public class Customer extends User implements Serializable {
     private int balance=0;
     private String creditCard;
 
-    @ManyToOne
-    private Store store = null; //TODO move to user
-
     @OneToMany(targetEntity = Complaint.class, mappedBy = "customer")
     @Column(name = "order")
     protected List<Order> orders = new LinkedList<Order>();
@@ -31,14 +28,13 @@ public class Customer extends User implements Serializable {
     private List<Complaint> complaints = new LinkedList<Complaint>();
 
     public Customer(String userID, String name, String userName, String password, String email, String phone, String creditCard, AccountType accountType,Store store) {
-        super(userID, name, userName, password, email, phone);
+        super(userID, name, userName, password, email, phone, store);
         this.creditCard = creditCard;
         this.accountType = accountType;
         if(accountType == AccountType.MEMBERSHIP){
             memberShipExpire = new Date();
             memberShipExpire.setYear(memberShipExpire.getYear()+1);
         }
-        this.store=store;
         //TODO add hashing to password if have time.
     }
 
@@ -64,14 +60,6 @@ public class Customer extends User implements Serializable {
 
     public void setAccountType(AccountType accountType) {
         this.accountType = accountType;
-    }
-
-    public Store getStore() {
-        return store;
-    }
-
-    public void setStore(Store store) {
-        this.store = store;
     }
 
     public Date getMemberShipExpire() {

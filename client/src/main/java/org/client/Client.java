@@ -23,9 +23,11 @@ public class Client extends AbstractClient {
     protected static LinkedList<PreMadeProduct> products = new LinkedList<PreMadeProduct>();//(LinkedList<Product>) Catalog.getProducts();
 
     protected static LinkedList<Order> orders = new LinkedList<Order>();
+
     private Controller controller;
 
     public Cart cart = new Cart();
+
     protected Guest user;
 
     public Client(String localhost, int i) {
@@ -240,7 +242,7 @@ public class Client extends AbstractClient {
                     storeSkeleton.changeCenter("CEOReport");}
                 case ADMIN -> {
                     storeSkeleton.changeLeft("AdminMenu");
-                    //storeSkeleton.changeCenter("Catalog"); ///////Waiting on ceo freeze user FXML
+                    storeSkeleton.changeCenter("ManageAccounts"); ///////Waiting on ceo freeze user FXML
                     }
             }
         } else {
