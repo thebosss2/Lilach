@@ -19,6 +19,7 @@ public class PreMadeProduct extends Product {
     private ProductType productType;
     private String description;
 
+
     //Ctor for catalog product
     public PreMadeProduct(String name, String path, int price, String description, int priceBeforeDiscount) { //constructor
         super(path, price);

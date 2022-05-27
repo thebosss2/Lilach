@@ -81,9 +81,9 @@ public class App {
         session.save(cust);
         session.flush();
 
-        Order ord = new Order(null,null,cust,456,new Date(122,04,24,11,49),"12","123123"," ");
-        session.save(ord);
-        session.flush();
+        //Order ord = new Order(null,null,cust,456,new Date(122,04,24,11,49),"12","123123"," ");
+        //session.save(ord);
+        //session.flush();
 
         Complaint c = new Complaint(cust ,new Date(122,04,5) ,"I WANT MONEY", Complaint.Topic.PAYMENT);
         session.save(c);

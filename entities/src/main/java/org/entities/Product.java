@@ -21,6 +21,8 @@ public class Product implements Serializable {
 
     private int amount;
 
+    private boolean isOrdered = false;
+
     public Product(String path, int price) {      //constructor
 
         this.price = price;
@@ -91,6 +93,14 @@ public class Product implements Serializable {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    public boolean isOrdered() {
+        return isOrdered;
+    }
+
+    public void setOrdered(boolean ordered) {
+        isOrdered = ordered;
     }
 }
 
