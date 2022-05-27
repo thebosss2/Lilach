@@ -49,7 +49,7 @@ public class App {
             var img1 = loadImageFromResources(String.format("Flower%s.jpg", i));
             PreMadeProduct p1 = new PreMadeProduct("Flower" + i, img1, price = random.nextInt(50),"descriptionnn", price+random.nextInt(50));
             Customer cust = new Customer("23465", "name","user","pass","mail","56346","credit", Customer.AccountType.MEMBERSHIP,store);
-            Complaint c = new Complaint(cust ,new Date(),"bad bad bad", Complaint.Topic.BAD_SERVICE);
+            Complaint c = new Complaint(cust ,new Date(),"bad bad bad", Complaint.Topic.BAD_SERVICE, store);
             session.save(cust);
             session.flush();
             session.save(c);
@@ -81,7 +81,7 @@ public class App {
         session.save(cust);
         session.flush();
       
-        Complaint c = new Complaint(cust ,new Date(122,04,5) ,"I WANT MONEY", Complaint.Topic.PAYMENT);
+        Complaint c = new Complaint(cust ,new Date(122,04,5) ,"I WANT MONEY", Complaint.Topic.PAYMENT,store);
         session.save(c);
         session.flush();
     }

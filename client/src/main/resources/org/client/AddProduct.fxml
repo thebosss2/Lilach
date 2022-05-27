@@ -22,7 +22,7 @@
             </font>
         </TextField>
         <TextField fx:id="priceText" alignment="CENTER" layoutX="407.0" layoutY="300.0" prefHeight="26.0" prefWidth="113.0" promptText="Price" />
-        <TextField fx:id="priceBeforeDiscountText" alignment="CENTER" layoutX="527.0" layoutY="301.0" prefHeight="26.0" prefWidth="113.0" promptText="Discount" />
+        <TextField fx:id="discountText" alignment="CENTER" layoutX="527.0" layoutY="301.0" prefHeight="26.0" prefWidth="113.0" promptText="Discount" />
         <Label layoutX="408.0" layoutY="14.0" prefHeight="38.0" prefWidth="234.0" text="Name:">
          <font>
             <Font size="13.0" />

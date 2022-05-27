@@ -20,6 +20,8 @@ public class Complaint implements Serializable {    //only for customers
     private Boolean completedOnTime=false;
     public enum Topic{BAD_SERVICE, LATE_ARRIVAL, BAD_PRODUCT, PAYMENT, OTHER}
     private Topic topic;
+    @ManyToOne
+    private Store store;
 
 
     public static Complaint.Topic convertToTopic(String topic) {
@@ -32,11 +34,12 @@ public class Complaint implements Serializable {    //only for customers
         };
     }
 
-    public Complaint(Customer customer, Date date, String compText, Topic topic) {
+    public Complaint(Customer customer, Date date, String compText, Topic topic,Store store) {
         this.customer = customer;
         this.date = date;
         this.compText = compText;
         this.topic = topic;
+        this.store=store;
     }
 
     public Complaint() {
@@ -85,5 +88,13 @@ public class Complaint implements Serializable {    //only for customers
 
     public Topic getTopic() {
         return topic;
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
     }
 }

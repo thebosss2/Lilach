@@ -22,6 +22,7 @@ import javafx.scene.control.TextArea;
 import javafx.util.Duration;
 import org.entities.Complaint;
 import org.entities.Customer;
+import org.entities.Store;
 
 public class ComplaintSubmissionController extends Controller{
 
@@ -40,6 +41,20 @@ public class ComplaintSubmissionController extends Controller{
     @FXML // fx:id="submitBtn"
     private Button submitBtn; // Value injected by FXMLLoader
 
+    @FXML // fx:id="storePick"
+    private ComboBox<String> storePick; // Value injected by FXMLLoader
+
+    private List<Store> stores = new LinkedList<Store>();
+
+    Store getSelectedStore() {
+        Store pickedStore = new Store();
+        for (Store s : stores)
+            if (s.getName().equals(storePick.getValue()))
+                pickedStore = s;
+        return pickedStore;
+    }
+
+
     @FXML
     void sendComplaint(ActionEvent event) {
 
@@ -47,7 +62,7 @@ public class ComplaintSubmissionController extends Controller{
 
         List<Object> msg = new LinkedList<>();
         msg.add("#COMPLAINT");
-        Complaint complaint = new Complaint((Customer)App.client.user, new Date(), complaintText.getText(), Complaint.convertToTopic(complaintTopic.getValue()));
+        Complaint complaint = new Complaint((Customer)App.client.user, new Date(), complaintText.getText(), Complaint.convertToTopic(complaintTopic.getValue()), getSelectedStore());
         msg.add(complaint);
         try {
             App.client.sendToServer(msg);
@@ -67,15 +82,36 @@ public class ComplaintSubmissionController extends Controller{
 
         });
     }
+    private void getStores() {
+        //added check if user is guest or customer
+        //get stores for the combobox from db
+            LinkedList<Object> msg = new LinkedList<Object>();
+            msg.add("#PULLSTORES"); //get stores from db
+            App.client.setController(this);
+            try {
+                App.client.sendToServer(msg); //Sends a msg contains the command and the current controller
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+    }
+
+    public void pullStoresToClient(LinkedList<Store> stores) { //when server send stores
+        this.stores = stores;
+        storePick.getItems().add("Set Store");
+        storePick.setValue("Set Store");
+        for (Store s : stores)
+            storePick.getItems().add(s.getName());
+    }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert complaintText != null : "fx:id=\"complaintText\" was not injected: check your FXML file 'ComplaintSubmission.fxml'.";
         assert complaintTopic != null : "fx:id=\"complaintTopic\" was not injected: check your FXML file 'ComplaintSubmission.fxml'.";
         assert submitBtn != null : "fx:id=\"submitBtn\" was not injected: check your FXML file 'ComplaintSubmission.fxml'.";
-
+        assert storePick != null : "fx:id=\"storePick\" was not injected: check your FXML file 'ComplaintSubmission.fxml'.";
         complaintTopic.getItems().addAll("Bad service", "Order didn't arrive in time",
                     "Defective product/ not what you ordered", "Payment issue", "Other");
+        getStores();
 
     }
 

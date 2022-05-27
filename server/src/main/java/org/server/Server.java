@@ -220,6 +220,7 @@ public class Server extends AbstractServer {
     private static void changeParam(PreMadeProduct p, PreMadeProduct p2) {     //changes details
         p.setName(p2.getName());
         p.setPrice(p2.getPrice());
+        p.setDiscount(p2.getDiscount());
         p.setImage(p2.getByteImage());
         p.setPriceBeforeDiscount(p2.getPriceBeforeDiscount());
     }

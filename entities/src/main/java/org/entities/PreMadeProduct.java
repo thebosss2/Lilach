@@ -18,43 +18,48 @@ public class PreMadeProduct extends Product {
 
     private ProductType productType;
     private String description;
-
+    private int discount;
 
     //Ctor for catalog product
-    public PreMadeProduct(String name, String path, int price, String description, int priceBeforeDiscount) { //constructor
-        super(path, price);
+    public PreMadeProduct(String name, String path, int priceBeforeDiscount, String description, int discount) { //constructor
+        super(path, (int) (priceBeforeDiscount*(1-discount*0.01)));
         this.priceBeforeDiscount = priceBeforeDiscount;
         this.name = name;
         this.productType = ProductType.CATALOG;
         this.description = description;
+        this.discount=discount;
     }
 
     //Ctor for catalog product
-    public PreMadeProduct(String name, byte[] image, int price, String description, int priceBeforeDiscount) {
-        super(image, price);
+    public PreMadeProduct(String name, byte[] image, int priceBeforeDiscount, String description, int discount) {
+        super(image, (int) (priceBeforeDiscount*(1-discount*0.01)));
         this.priceBeforeDiscount = priceBeforeDiscount;
         this.name = name;
         this.productType = ProductType.CATALOG;
         this.description = description;
+        this.discount=discount;
     }
 
+
     //Ctor for custom-made catalog product
-    public PreMadeProduct(String name, String path, int price, int priceBeforeDiscount, String mainColor) { //constructor
-        super(path, price);
+    public PreMadeProduct(String name, String path, int priceBeforeDiscount, int discount, String mainColor) { //constructor
+        super(path, (int) (priceBeforeDiscount*(1-discount*0.01)));
         this.priceBeforeDiscount = priceBeforeDiscount;
         this.name = name;
         this.mainColor = mainColor;
         this.productType = ProductType.CUSTOM_CATALOG;
+        this.discount=discount;
 
     }
 
     //Ctor for custom-made catalog product
-    public PreMadeProduct(String name, byte[] image, int price, int priceBeforeDiscount, String mainColor) {
-        super(image, price);
+    public PreMadeProduct(String name, byte[] image, int priceBeforeDiscount, int discount, String mainColor) {
+        super(image, (int) (priceBeforeDiscount*(1-discount*0.01)));
         this.priceBeforeDiscount = priceBeforeDiscount;
         this.name = name;
         this.mainColor = mainColor;
         this.productType = ProductType.CUSTOM_CATALOG;
+        this.discount=discount;
     }
 
     public PreMadeProduct() {
@@ -91,6 +96,14 @@ public class PreMadeProduct extends Product {
 
     public String getMainColor() {
         return this.mainColor;
+    }
+
+    public int getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(int discount) {
+        this.discount = discount;
     }
 
 }

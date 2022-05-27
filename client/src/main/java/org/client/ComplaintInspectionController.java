@@ -45,6 +45,9 @@ public class ComplaintInspectionController extends Controller{
     @FXML // fx:id="submitBtn"
     private Button submitBtn; // Value injected by FXMLLoader
 
+    @FXML // fx:id="store"
+    private Label store; // Value injected by FXMLLoader
+
     private Complaint complaint;
 
     public void setComplaint(Complaint complaint) {
@@ -112,6 +115,7 @@ public class ComplaintInspectionController extends Controller{
         assert complaintText != null : "fx:id=\"complaintText\" was not injected: check your FXML file 'ComplaintInspection.fxml'.";
         assert complaintType != null : "fx:id=\"complaintType\" was not injected: check your FXML file 'ComplaintInspection.fxml'.";
         assert submitBtn != null : "fx:id=\"submitBtn\" was not injected: check your FXML file 'ComplaintInspection.fxml'.";
+        assert store != null : "fx:id=\"store\" was not injected: check your FXML file 'ComplaintInspection.fxml'.";
         Platform.runLater(() -> {
             complaintText.setText(complaint.getCompText());
             complainerName.setText(complaint.getCustomer().getName());
@@ -121,6 +125,8 @@ public class ComplaintInspectionController extends Controller{
             complaintType.setEditable(false);
             compensationField.setDisable(true);
             compensationField.setTextFormatter(formatter1);
+            store.setText(complaint.getStore().getName());
+
         });
     }
 
