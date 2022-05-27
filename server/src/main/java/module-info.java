@@ -4,7 +4,7 @@ module org.server {
     requires org.hibernate.orm.core;
     requires org.hibernate.commons.annotations;
     requires org.entities;
-    requires org.SendEmail;
+    requires org.email;
     exports org.server;
 
 

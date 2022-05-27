@@ -2,7 +2,7 @@ package org.server;
 
 import org.entities.Customer;
 import org.entities.Order;
-import org.SendEmail.SendMail;
+import org.email.SendMail;
 
 
 import java.io.IOException;
