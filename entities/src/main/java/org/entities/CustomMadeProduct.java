@@ -7,6 +7,9 @@ import java.util.List;
 @Entity
 @Table(name = "customProducts")
 public class CustomMadeProduct extends Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;         // id generated for each product
 
     @ManyToMany
     @Column(name= "products")
@@ -72,5 +75,8 @@ public class CustomMadeProduct extends Product {
     {
         this.itemType = itemType;
     }
+
+    @Override
+    public int getId() { return id; }
 
 }

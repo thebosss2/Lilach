@@ -1,14 +1,15 @@
 package org.entities;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "premadeProducts")
 public class PreMadeProduct extends Product {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;         // id generated for each product
     @Column(name = "product_name")
     private String name;
     private int priceBeforeDiscount;
@@ -110,6 +111,8 @@ public class PreMadeProduct extends Product {
         return this.mainColor;
     }
 
+    @Override
+    public int getId() { return id; }
 
     public boolean isOrdered() {
         return isOrdered;

@@ -9,10 +9,7 @@ import java.io.FileInputStream;
 import java.io.Serializable;
 
 @MappedSuperclass
-public class Product implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;         // id generated for each product
+public abstract class Product implements Serializable {
 
     @Column(name = "image", length = 65555)
     private byte[] image;
@@ -96,10 +93,6 @@ public class Product implements Serializable {
         this.image = image;
     }
 
-    public int getId() {
-        return id;
-    }
-
     public int getAmount()
     {
         return this.amount;
@@ -108,5 +101,7 @@ public class Product implements Serializable {
     public void setAmount(int amount) {
         this.amount = amount;
     }
+
+    abstract public int getId();
 }
 
