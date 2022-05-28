@@ -8,15 +8,16 @@
         <outputRelativeToContentRoot value="true" />
         <module name="server" />
         <module name="client" />
-        <module name="sendemail" />
         <module name="entities" />
+        <module name="email" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="client" target="15" />
+      <module name="client" target="14" />
+      <module name="email" target="14" />
       <module name="entities" target="15" />
-      <module name="Lilach" target="15" />
-      <module name="sendemail" target="14" />
+      <module name="Lilach" target="14" />
+      <module name="SendEmail" target="14" />
       <module name="server" target="16" />
     </bytecodeTargetLevel>
   </component>

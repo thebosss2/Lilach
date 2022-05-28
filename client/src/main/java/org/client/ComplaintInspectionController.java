@@ -79,7 +79,7 @@ public class ComplaintInspectionController extends Controller{
         }
         if(compensationCheckbox.isSelected()){
             if(compensationField.getText().isEmpty()){
-                //sendAlert
+                //   TODO sendAlert
                 return;
             }
             msg.add("COMPENSATED");

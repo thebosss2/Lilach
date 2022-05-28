@@ -9,7 +9,7 @@
         <module>entities</module>
         <module>server</module>
         <module>client</module>
-        <module>SendEmail</module>
+        <module>email</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
