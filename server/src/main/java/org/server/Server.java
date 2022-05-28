@@ -226,6 +226,10 @@ public class Server extends AbstractServer {
         App.session.merge(productBefore);           //merge into database with updated info
         App.session.flush();
         App.session.getTransaction().commit(); // Save everything.
+        List<Object> newMsg = new LinkedList<Object>();
+        newMsg.add("#REFRESH");     // TODO refresh to all users
+        newMsg.add(App.getAllProducts());
+        App.server.sendToAllClients(newMsg);
     }
 
     private static void changeParam(PreMadeProduct p, PreMadeProduct p2) {     //changes details
@@ -263,12 +267,16 @@ public class Server extends AbstractServer {
         client.sendToClient(msgToClient);
     }
 
-    private void addProduct(LinkedList<Object> msg) {
+    private void addProduct(LinkedList<Object> msg) throws IOException {
         App.session.beginTransaction();
         PreMadeProduct product = (PreMadeProduct) ((LinkedList<Object>) msg).get(1);
         App.session.save(product);   //saves and flushes to database
         App.session.flush();
         App.session.getTransaction().commit();
+        List<Object> newMsg = new LinkedList<Object>();
+        newMsg.add("#REFRESH");     // TODO refresh to all users
+        newMsg.add(App.getAllProducts());
+        App.server.sendToAllClients(newMsg);
     }
 
     private void updateConnected(User user,Boolean connected){
@@ -306,10 +314,18 @@ public class Server extends AbstractServer {
                         }
                     }
                 }else {
-                    List<Object> frozenMsg = new LinkedList<Object>();
-                    frozenMsg.add("#FROZEN");
-                    client.sendToClient(frozenMsg);
+                    List<Object> newMsg = new LinkedList<Object>();
+                    newMsg.add("#ERROR");
+                    newMsg.add( "User was FROZEN by system Admin" );
+                    newMsg.add("Frozen User");
+                    client.sendToClient(newMsg);
                 }
+            }else{
+                List<Object> newMsg = new LinkedList<Object>();
+                newMsg.add("#ERROR");
+                newMsg.add( "UserName or Password do not match");
+                newMsg.add("Login Error");
+                client.sendToClient(newMsg);
             }
         }
     }

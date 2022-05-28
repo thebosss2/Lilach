@@ -122,10 +122,14 @@ public class SignUpController extends Controller{
         String email = emailText.getText().toString();
         String compMail=email;
         int countAt = compMail.length() - compMail.replace("@", "").length();
-        if(countAt!=1 || email.indexOf("@")==0)
+        if(countAt!=1 || email.indexOf("@")==0){
+            sendAlert("Email is not valid", "Invalid Email", Alert.AlertType.WARNING);
             return false;
-        if(idText.getText().length()!=9)
+        }
+        if(idText.getText().length()!=9){
+            sendAlert("ID is not valid", "Invalid ID", Alert.AlertType.WARNING);
             return false;
+        }
         if(usernameText.getText().contains(" "))
         {
             sendAlert("username cannot have spaces" ,"Sign-Up Failed" , Alert.AlertType.WARNING);

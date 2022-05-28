@@ -184,7 +184,7 @@ public class App {
         return Objects.requireNonNull(stream).readAllBytes();
     }
 
-    private static Server server;
+    protected static Server server;
 
     public static void main(String[] args) throws IOException {
         try {
