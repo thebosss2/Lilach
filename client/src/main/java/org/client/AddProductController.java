@@ -89,7 +89,7 @@ public class AddProductController extends Controller {
         String add = "#ADD";
         LinkedList<Object> msg = new LinkedList<Object>();  //msg has string message with all data in next nodes
         PreMadeProduct p = new PreMadeProduct(this.nameText.getText(), newImagePath, Integer.parseInt(this.priceText.getText()),
-        descriptionText.getText(),Integer.parseInt(this.priceBeforeDiscountText.getText()),false);
+        descriptionText.getText(),Integer.parseInt(this.discountText.getText()),false);
         msg.add(add);          // adds #ADD command for server
         msg.add(p);             //adds data to msg list
         App.client.setController(this);

@@ -3,6 +3,9 @@ package org.client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import org.entities.Employee;
+
+import static org.entities.Employee.Role.CEO;
 
 public class ManagerMenuController extends WorkerMenuController {
 
@@ -16,11 +19,12 @@ public class ManagerMenuController extends WorkerMenuController {
     void goToReports(ActionEvent event) throws InterruptedException {       // loads edit catalog view for worker
         coolMenuClick((Button) event.getTarget());
 
-        //if(((Employee)App.client.user).role == CEO)
-        this.getSkeleton().changeCenter("CEOReport");
-        //this.getSkeleton().changeCenter("EditCatalog");
-        //else
-        //    this.getSkeleton().changeCenter("StoreReport");
+        if(((Employee) App.client.user).getRole() == CEO) {
+            this.getSkeleton().changeCenter("CEOReport");
+/*            this.getSkeleton().changeCenter("EditCatalog");*/
+        }
+        else
+            this.getSkeleton().changeCenter("Report");
     }
 
     @FXML
