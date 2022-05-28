@@ -59,28 +59,30 @@ public class ComplaintSubmissionController extends Controller{
     void sendComplaint(ActionEvent event) {
 
         //TODO add topic not empty or text.
+        if(!storePick.getValue().equals("Set Store")){
+            List<Object> msg = new LinkedList<>();
+            msg.add("#COMPLAINT");
+            Complaint complaint = new Complaint((Customer)App.client.user, new Date(), complaintText.getText(), Complaint.convertToTopic(complaintTopic.getValue()), getSelectedStore());
+            msg.add(complaint);
+            try {
+                App.client.sendToServer(msg);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-        List<Object> msg = new LinkedList<>();
-        msg.add("#COMPLAINT");
-        Complaint complaint = new Complaint((Customer)App.client.user, new Date(), complaintText.getText(), Complaint.convertToTopic(complaintTopic.getValue()), getSelectedStore());
-        msg.add(complaint);
-        try {
-            App.client.sendToServer(msg);
-        } catch (IOException e) {
-            e.printStackTrace();
+            Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setHeaderText("Complaint submitted, moving to catalog.");
+                alert.show();
+                PauseTransition pause = new PauseTransition(Duration.seconds(1));
+                pause.setOnFinished((e -> {
+                    alert.close();
+                    this.getSkeleton().changeCenter("Catalog");}));
+                pause.play();
+            });
+        }else{
+            Controller.sendAlert("Did not pick store" ,"Store Pick", Alert.AlertType.WARNING);
         }
-
-        Platform.runLater(() -> {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText("Complaint submitted, moving to catalog.");
-            alert.show();
-            PauseTransition pause = new PauseTransition(Duration.seconds(1));
-            pause.setOnFinished((e -> {
-                alert.close();
-                this.getSkeleton().changeCenter("Catalog");}));
-            pause.play();
-
-        });
     }
     private void getStores() {
         //added check if user is guest or customer
