@@ -177,6 +177,14 @@ public class App {
         return complaints;
     }
 
+    static List<Complaint> getAllComplaints() throws IOException{
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Complaint> customerQuery = builder.createQuery(Complaint.class);
+        customerQuery.from(Complaint.class);
+        List<Complaint> complaints = session.createQuery(customerQuery).getResultList();
+        return complaints;
+    }
+
 
     public static byte[] loadImageFromResources(String imageName) throws IOException {
         var stream = App.class.getClassLoader().getResourceAsStream(String.format("Images/%s", imageName));

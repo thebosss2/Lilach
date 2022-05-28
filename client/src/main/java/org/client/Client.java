@@ -73,6 +73,7 @@ public class Client extends AbstractClient {
                 case "#DELETEORDER" -> changeBalance(msg);//function gets all data from server to display to client
                 case "#PULLUSERS" -> pushUsers(msg);
                 case "#FROZEN" -> Controller.sendAlert("User was FROZEN by system Admin" ,"Frozen User" , Alert.AlertType.WARNING);
+                case "#PULL_MANAGER_REPORT" -> pushManagerReport((LinkedList<Object>) msg);
             }
         } catch (Exception e) {
             System.out.println(Arrays.toString(e.getStackTrace()));
@@ -80,6 +81,12 @@ public class Client extends AbstractClient {
             System.out.println("Client Error");
             e.getStackTrace();
         }
+    }
+
+    private void pushManagerReport(LinkedList<Object> msg) {
+        ReportController reportController = (ReportController) controller;
+        reportController.pullData((LinkedList<Order>) msg.get(1),
+                (LinkedList<Complaint>) msg.get(2));
     }
 
     private void pushUsers(Object msg) {

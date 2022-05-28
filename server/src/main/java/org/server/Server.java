@@ -5,6 +5,7 @@ import org.server.ocsf.AbstractServer;
 import org.server.ocsf.ConnectionToClient;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -40,13 +41,13 @@ public class Server extends AbstractServer {
                 case "#PULLORDERS" -> pullOrders((LinkedList<Object>) msg, client);
                 case "#PULLUSERS" -> pullUsers((LinkedList<Object>) msg, client);
                 case "#DELETEPRODUCT" -> deleteProduct((LinkedList<Object>) msg, client);
+                case "#PULL_MANAGER_REPORT" -> pullManagerReport((LinkedList<Object>) msg, client);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    //todo!!!!!!!!
     private void deleteProduct(LinkedList<Object> msg, ConnectionToClient client) {
         App.session.beginTransaction();
         PreMadeProduct product = (PreMadeProduct) (msg).get(1);
@@ -83,7 +84,8 @@ public class Server extends AbstractServer {
         App.session.flush();
         App.session.getTransaction().commit(); // Save everything.
     }
- private void updateCustomerAccount(LinkedList<Object> msg, ConnectionToClient client) {
+
+    private void updateCustomerAccount(LinkedList<Object> msg, ConnectionToClient client) {
         Customer customer = (Customer) msg.get(1);
         if(msg.get(2).toString().equals("CONFIRMED")){
             updateAccount(customer, Customer.AccountType.MEMBERSHIP);
@@ -328,6 +330,28 @@ public class Server extends AbstractServer {
             e.printStackTrace();
         }
 
+    }
+
+
+    private void pullManagerReport(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
+        String commandToClient = msg.get(0).toString();
+        List<Object> msgToClient = new LinkedList<Object>();
+        msgToClient.add(commandToClient);
+
+        Store rightStore = (Store) msg.get(1);
+        Date toDate = (Date) msg.get(2), fromDate = (Date) msg.get(3);
+        List<Order> orders = App.getAllOrders();
+        List<Complaint> complaints = App.getAllComplaints();
+
+        orders.removeIf(order -> order.getStore().getId() != rightStore.getId()
+                || order.getDeliveryDate().compareTo(fromDate) < 0 || order.getDeliveryDate().compareTo(toDate) > 0);
+
+        complaints.removeIf(complaint -> complaint.getStore().getId() != rightStore.getId()
+                || complaint.getDate().compareTo(fromDate) < 0 || complaint.getDate().compareTo(toDate) > 0);
+
+        msgToClient.add(orders);
+        msgToClient.add(complaints);
+        client.sendToClient(msgToClient);
     }
 
 
