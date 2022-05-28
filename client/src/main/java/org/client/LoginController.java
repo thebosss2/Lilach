@@ -8,22 +8,21 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import org.email.SendMail;
 
 public class LoginController extends Controller{
 
@@ -45,11 +44,29 @@ public class LoginController extends Controller{
     @FXML // fx:id="username"
     private TextField usernameText; // Value injected by FXMLLoader
 
+    private int count=0;
     @FXML
     void login(ActionEvent event) {
-
-        if(usernameText.getText().isEmpty() || passwordText.getText().isEmpty())
+        count++;
+        if(count==5){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Project not working?");
+            alert.setHeaderText("Did you do a big change? \nDid you ask yourself what you need to do FIRST OF ALL??????");
+            alert.setContentText("Maybe in another life you better be running later");
+            alert.getButtonTypes().clear();
+            ButtonType confirmBtn = new ButtonType("Clean Install");
+            alert.getButtonTypes().setAll(confirmBtn);
+            Optional<ButtonType> result = alert.showAndWait();
+            if(result.get() == confirmBtn) {
+                SendMail.openWebpage("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+                count = 0;
+            }
+        }
+        if(usernameText.getText().isEmpty() || passwordText.getText().isEmpty()) {
             Controller.sendAlert("One or more fields are empty.", "Login Failed", Alert.AlertType.WARNING);
+            return;
+        }
+
 
         List<Object> msg = new LinkedList<Object>();
         msg.add("#LOGIN");
@@ -61,6 +78,8 @@ public class LoginController extends Controller{
             e.printStackTrace();
         }
     }
+
+
 
 
     @FXML
@@ -80,11 +99,13 @@ public class LoginController extends Controller{
         this.getSkeleton().changeCenter("SignUp");
     }
 
+
     @FXML
     void enterLogin(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER)
             login(new ActionEvent());
     }
+
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
