@@ -184,6 +184,17 @@ public class Server extends AbstractServer {
     private void saveOrderServer(LinkedList<Object> msg, ConnectionToClient client) {
         Order order = (Order) msg.get(1);
         App.session.beginTransaction();
+        for(PreMadeProduct p : order.getPreMadeProducts()) {
+            App.session.save(p);   //saves and flushes to database
+            App.session.flush();
+        }
+        for(CustomMadeProduct p : order.getCustomMadeProducts()) {
+            for (PreMadeProduct pre : p.getProducts()) {
+                App.session.save(pre);   //saves and flushes to database
+                App.session.flush();
+            }
+            App.session.save(p);
+        }
         App.session.save(order);
         App.session.flush();
         App.session.getTransaction().commit();
