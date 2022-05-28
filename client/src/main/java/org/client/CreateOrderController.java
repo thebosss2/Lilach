@@ -151,8 +151,6 @@ public class CreateOrderController extends Controller {
     }
 
     private void getStores() {
-        //added check if user is guest or customer
-
         if (((Customer) (App.client.user)).getAccountType() == Customer.AccountType.STORE)  //if there is certain store for this costumer
             TAStorePicker.setDisable(true); //disable the combobox
 

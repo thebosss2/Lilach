@@ -42,14 +42,14 @@ public class App {
     private static void generateProducts() throws Exception {       //generates new products
         Random random = new Random();
         int price;
-        Store store = new Store("Chain", "address");
-        session.save(store);   //saves and flushes to database
+        Store chain = new Store("Chain", "address");
+        session.save(chain);   //saves and flushes to database
         session.flush();
         for (int i = 0; i < 5; i++) {
             var img1 = loadImageFromResources(String.format("Flower%s.jpg", i));
             PreMadeProduct p1 = new PreMadeProduct("Flower" + i, img1, price = random.nextInt(50),"descriptionnn", price+random.nextInt(50),false);
-            Customer cust = new Customer("23465", "name","user","pass","mail","56346","credit", Customer.AccountType.MEMBERSHIP,store);
-            Complaint c = new Complaint(cust ,new Date(),"bad bad bad", Complaint.Topic.BAD_SERVICE, store);
+            Customer cust = new Customer("23465111"+i, "name","user" + i,"pass" +i,"mail@ffdff","0000000000","0000000000000000", Customer.AccountType.MEMBERSHIP,chain);
+            Complaint c = new Complaint(cust ,new Date(),"bad bad bad", Complaint.Topic.BAD_SERVICE, chain);
             session.save(cust);
             session.flush();
             session.save(c);
@@ -57,23 +57,23 @@ public class App {
             session.save(p1);   //saves and flushes to database
             session.flush();
         }
-        Employee emp = new Employee("4563456","Sagi","Sagi","Sagi","Sagi","4563456",Employee.Role.STORE_EMPLOYEE,store);
+        Employee emp = new Employee("4563456","Sagi","Sagi","Sagi","Sagi","4563456",Employee.Role.STORE_EMPLOYEE,chain);
         session.save(emp);
         session.flush();
-        Employee man = new Employee("345634576","Itai","Itai","Itai","Itai","12341234",Employee.Role.STORE_MANAGER,store);
+        Employee man = new Employee("345634576","Itai","Itai","Itai","Itai","12341234",Employee.Role.STORE_MANAGER,chain);
         session.save(man);
         session.flush();
-        Employee Ad = new Employee("4563456","Gal ","Gal","Gal","Sagi","4563456",Employee.Role.ADMIN,store);
+        Employee Ad = new Employee("4563456","Gal ","Gal","Gal","Sagi","4563456",Employee.Role.ADMIN,chain);
         session.save(Ad);
         session.flush();
-        Employee Ce = new Employee("4563456","Tahel","Tahel","Tahel","Sagi","4563456",Employee.Role.CEO,store);
+        Employee Ce = new Employee("4563456","Tahel","Tahel","Tahel","Sagi","4563456",Employee.Role.CEO,chain);
         session.save(Ce);
         session.flush();
-        Employee Serv = new Employee("4563456","Yahav ","Yahav","Yahav","Sagi","4563456",Employee.Role.CUSTOMER_SERVICE,store);
+        Employee Serv = new Employee("4563456","Yahav ","Yahav","Yahav","Sagi","4563456",Employee.Role.CUSTOMER_SERVICE,chain);
         session.save(Serv);
         session.flush();
 
-        Customer cust = new Customer("23465", "Sagii","Sagii","Sagii","sagiman14@gmail.com","56346","credit", Customer.AccountType.MEMBERSHIP,store);
+        Customer cust = new Customer("23465", "Sagii","Sagii","Sagii","sagiman14@gmail.com","56346","credit", Customer.AccountType.MEMBERSHIP,chain);
         Date date = new Date();
         date.setYear(date.getYear() - 2);
         cust.setMemberShipExpireTODELETE(date);
@@ -81,7 +81,7 @@ public class App {
         session.save(cust);
         session.flush();
       
-        Complaint c = new Complaint(cust ,new Date(122,04,5) ,"I WANT MONEY", Complaint.Topic.PAYMENT,store);
+        Complaint c = new Complaint(cust ,new Date(122,04,5) ,"I WANT MONEY", Complaint.Topic.PAYMENT,chain);
         session.save(c);
         session.flush();
     }

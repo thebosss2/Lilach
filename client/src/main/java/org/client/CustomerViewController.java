@@ -74,7 +74,7 @@ public class CustomerViewController extends Controller{
         password.setText(customer.getPassword());
         email.setText(customer.getEmail());
         name.setText(customer.getName());
-        id.setText(customer.getID());
+        id.setText(customer.getUserID());
         balance.setText(Integer.toString(customer.getBalance()));
 
         //TODO status for customer

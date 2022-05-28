@@ -16,10 +16,10 @@ public class User extends Guest implements Serializable {
     @Column(name="usermail")
     private String email;
     private String phoneNum;
-    private Boolean frozen=false;
+    protected Boolean frozen=false;
     private Boolean connected;
     @ManyToOne
-    private Store store = null; //TODO move to user
+    protected Store store = null; //TODO move to user
 
     public User(String userID, String name, String userName, String password, String email, String phoneNum ,Store store) {
         super(name);
@@ -68,11 +68,11 @@ public class User extends Guest implements Serializable {
         this.connected = connected;
     }
 
-    public String getID() {
+    public String getUserID() {
         return userID;
     }
 
-    public void setID(String ID) {
+    public void setUserID(String ID) {
         this.userID = userID;
     }
 

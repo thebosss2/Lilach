@@ -81,7 +81,7 @@
          </font>
       </Label>
       <ComboBox fx:id="rolePicker" layoutX="544.0" layoutY="99.0" prefHeight="36.0" prefWidth="187.0" style="-fx-background-color: #c6acef;" />
-      <Button fx:id="saveBtn" layoutX="320.0" layoutY="327.0" mnemonicParsing="false" onAction="#saveChanges" prefHeight="40.0" prefWidth="160.0" style="-fx-background-color: #c6acef;" text="Save Changes">
+      <Button fx:id="saveBtn" layoutX="320.0" layoutY="327.0" mnemonicParsing="false" onAction="#clickedSaveEmployee" prefHeight="40.0" prefWidth="160.0" style="-fx-background-color: #c6acef;" text="Save Changes">
          <font>
             <Font name="System Bold" size="19.0" />
          </font>

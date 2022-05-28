@@ -208,7 +208,7 @@ public class Server extends AbstractServer {
         List<Object> newMsg = new LinkedList<Object>();
         newMsg.add(msg.get(0));
         for(User user : users){
-            if(user.getUserName().equals(msg.get(1).toString()) || (user.getID().equals(msg.get(2)) && (user instanceof Customer))){
+            if(user.getUserName().equals(msg.get(1).toString()) || (user.getUserID().equals(msg.get(2)) && (user instanceof Customer))){
                 newMsg.add("#USER_EXISTS"); //checks if username or user id already exists
                 client.sendToClient(newMsg);
                 return;
