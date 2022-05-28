@@ -218,6 +218,9 @@ public class Client extends AbstractClient {
         else if(controller instanceof UserPreviewController){
             UserPreviewController userPreviewController = (UserPreviewController)  controller;
             userPreviewController.pullStoresToClient((LinkedList<Store>) ((LinkedList<Object>) msg).get(1));
+        }else if(controller instanceof ComplaintSubmissionController){
+            ComplaintSubmissionController complaintSubmissionController = (ComplaintSubmissionController)  controller;
+            complaintSubmissionController.pullStoresToClient((LinkedList<Store>) ((LinkedList<Object>) msg).get(1));
         }
 
 

@@ -2,6 +2,7 @@ package org.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.List;
 
 @Entity
@@ -20,6 +21,9 @@ public class Store implements Serializable {
     private List<Employee> employees;
 
     private String address;
+
+    @OneToMany
+    private List<Complaint> complaints = new LinkedList<Complaint>();
 
     @OneToMany
     //@Column(name="stores_orders")

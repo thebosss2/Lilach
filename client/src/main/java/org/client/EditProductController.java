@@ -12,6 +12,7 @@ import org.entities.Product;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.regex.Pattern;
 
 public class EditProductController extends Controller {
 
@@ -36,22 +37,34 @@ public class EditProductController extends Controller {
     private TextField nameText;
 
     @FXML
-    private TextField priceBeforeDiscountText;
+    private TextField discountText;
 
     @FXML
     private TextField priceText;
 
     @FXML
     private Button saveBtn;
+    Pattern pattern1 = Pattern.compile(".{0,2}");
+    TextFormatter<String> formatter1 = new TextFormatter<String>(change-> {
+        change.setText(change.getText().replaceAll("[^0-9]", ""));
+        return pattern1.matcher(change.getControlNewText()).matches() ? change : null;
+    });
 
+    TextFormatter<String> formatter2 = new TextFormatter<String>(change-> {
+        change.setText(change.getText().replaceAll("[^0-9]", ""));
+        return change;
+    });
     void setProductView(PreMadeProduct product) {
         this.product = product;
         this.nameText.setText(product.getName());
         this.mainImage.setImage(product.getImage());
-        this.priceText.setText(Integer.toString(product.getPrice()));
+        this.priceText.setTextFormatter(formatter2);
+        this.priceText.setText(Integer.toString(product.getPriceBeforeDiscount()));
+        this.discountText.setTextFormatter(formatter1);
         this.descriptionText.setText(product.getDescription());
-        if (product.getPriceBeforeDiscount() != 0)
-            this.priceBeforeDiscountText.setText(Integer.toString(product.getPriceBeforeDiscount()));
+        System.out.println(product.getDiscount());
+        if (product.getDiscount() != 0)
+            this.discountText.setText(Integer.toString(product.getDiscount()));
     }
 
     @FXML
@@ -76,10 +89,10 @@ public class EditProductController extends Controller {
 
     private boolean checkProduct() {
         if(nameText.getText().isEmpty() || priceText.getText().isEmpty() ||
-                priceBeforeDiscountText.getText().isEmpty() || descriptionText.getText().isEmpty())
+                discountText.getText().isEmpty() || descriptionText.getText().isEmpty())
             return true;
         if(nameText.getText().matches ("^[a-zA-Z0-9_ ]*$")  && priceText.getText().matches("^[0-9]*$") &&
-                priceBeforeDiscountText.getText().matches("^[0-9]*$"))
+                discountText.getText().matches("^[0-9]*$"))
             return false;
         return true;
     }

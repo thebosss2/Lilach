@@ -45,7 +45,6 @@ public class ScheduleMailing {
         ses.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
-                System.out.println("asfdasdfasd");
                 List<Order> orders;
                 Date date = new Date();
                 date.setSeconds(0);
