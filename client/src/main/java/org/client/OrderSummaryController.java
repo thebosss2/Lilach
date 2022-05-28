@@ -5,7 +5,6 @@ import java.net.URL;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -103,18 +102,18 @@ public class OrderSummaryController extends Controller {
 
     private void displayCustomProduct(CustomMadeProduct product, OrderSummaryController orderSummaryController) throws IOException {
         FXMLLoader fxmlLoader;
-        fxmlLoader = new FXMLLoader(getClass().getResource("SummeryCustomProduct.fxml"));
+        fxmlLoader = new FXMLLoader(getClass().getResource("SummaryCustomProduct.fxml"));
         vbox.getChildren().add(fxmlLoader.load());  //Adds new product pane to the screen.
-        SummeryCustomProductController controller = fxmlLoader.getController();
+        SummaryCustomProductController controller = fxmlLoader.getController();
         controller.setSkeleton(this.getSkeleton());
         controller.setProduct(product);
     }
 
     private void displayPreProduct(PreMadeProduct product, OrderSummaryController orderSummaryController) throws IOException {
         FXMLLoader fxmlLoader;
-        fxmlLoader = new FXMLLoader(getClass().getResource("SummeryPreProduct.fxml"));
+        fxmlLoader = new FXMLLoader(getClass().getResource("SummaryPreProduct.fxml"));
         vbox.getChildren().add(fxmlLoader.load());  //Adds new product pane to the screen.
-        SummeryPreProductController controller = fxmlLoader.getController();
+        SummaryPreProductController controller = fxmlLoader.getController();
         controller.setSkeleton(this.getSkeleton());
         controller.setProduct(product);
     }

@@ -69,7 +69,7 @@
                               </HBox>
                               <VBox minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: e6b3ff;">
                                  <children>
-                                    <Label alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="170.0" text="Order summery:">
+                                    <Label alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="170.0" text="Order Summary:">
                                        <font>
                                           <Font name="Calibri" size="25.0" />
                                        </font>
@@ -234,7 +234,7 @@
                               </HBox>
                               <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="553.0" prefWidth="470.0" style="-fx-background-color: e6b3ff;">
                                  <children>
-                                    <Label alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="170.0" text="Order summery:">
+                                    <Label alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="170.0" text="Order Summary:">
                                        <font>
                                           <Font name="Calibri" size="25.0" />
                                        </font>
@@ -393,7 +393,7 @@
                               </HBox>
                               <VBox prefHeight="555.0" prefWidth="415.0" style="-fx-background-color: e6b3ff;">
                                  <children>
-                                    <Label alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="170.0" text="Order summery:">
+                                    <Label alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="170.0" text="Order Summary:">
                                        <font>
                                           <Font name="Calibri" size="25.0" />
                                        </font>

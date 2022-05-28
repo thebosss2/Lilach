@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import org.entities.PreMadeProduct;
 
-public class SummeryPreProductController extends Controller{
+public class SummaryPreProductController extends Controller{
 
     @FXML
     private Label count;
@@ -18,7 +18,7 @@ public class SummeryPreProductController extends Controller{
     @FXML
     private Label totalPrice;
 
-    public void setSummeryPreProduct(PreMadeProduct product) {
+    public void setSummaryPreProduct(PreMadeProduct product) {
         this.name.setText(product.getName());
         this.price.setText(String.valueOf(product.getPrice()));
         this.count.setText(String.valueOf(product.getAmount()));

@@ -143,8 +143,8 @@ public class CreateOrderController extends Controller {
         //initialize store combobox
         getStores();
 
-        //initialize order summery
-        displaySummery();
+        //initialize order summary
+        displaySummary();
 
         //initialize discount and final price
         setPrices();
@@ -177,7 +177,7 @@ public class CreateOrderController extends Controller {
                 TAStorePicker.getItems().add(s.getName());
     }
 
-    public void displaySummery() throws IOException { //function is called to display all products from cart
+    public void displaySummary() throws IOException { //function is called to display all products from cart
         CreateOrderController createOrderController = this;
         for (Product product : App.client.cart.getProducts()) {
             try {
@@ -198,18 +198,18 @@ public class CreateOrderController extends Controller {
 
     protected void displayPreProduct(PreMadeProduct product, FlowPane pane) throws IOException {//func displays an item on pane
         FXMLLoader fxmlLoader;
-        fxmlLoader = new FXMLLoader(getClass().getResource("SummeryPreProduct.fxml"));
+        fxmlLoader = new FXMLLoader(getClass().getResource("SummaryPreProduct.fxml"));
         pane.getChildren().add(fxmlLoader.load());  //Adds new product pane to the screen.
-        SummeryPreProductController controller = fxmlLoader.getController();
-        controller.setSummeryPreProduct(product);
+        SummaryPreProductController controller = fxmlLoader.getController();
+        controller.setSummaryPreProduct(product);
     }
 
     protected void displayCustomProduct(CustomMadeProduct product, FlowPane pane) throws IOException {//func displays an item on pane
         FXMLLoader fxmlLoader;
-        fxmlLoader = new FXMLLoader(getClass().getResource("SummeryCustomProduct.fxml"));
+        fxmlLoader = new FXMLLoader(getClass().getResource("SummaryCustomProduct.fxml"));
         pane.getChildren().add(fxmlLoader.load());  //Adds new product pane to the screen.
-        SummeryCustomProductController controller = fxmlLoader.getController();
-        controller.setSummeryCustomProduct(product);
+        SummaryCustomProductController controller = fxmlLoader.getController();
+        controller.setSummaryCustomProduct(product);
     }
 
     private void setPrices() {
