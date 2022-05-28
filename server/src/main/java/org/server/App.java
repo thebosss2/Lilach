@@ -47,7 +47,7 @@ public class App {
         session.flush();
         for (int i = 0; i < 5; i++) {
             var img1 = loadImageFromResources(String.format("Flower%s.jpg", i));
-            PreMadeProduct p1 = new PreMadeProduct("Flower" + i, img1, price = random.nextInt(50),"descriptionnn", price+random.nextInt(50));
+            PreMadeProduct p1 = new PreMadeProduct("Flower" + i, img1, price = random.nextInt(50),"descriptionnn", price+random.nextInt(50),false);
             Customer cust = new Customer("23465", "name","user","pass","mail","56346","credit", Customer.AccountType.MEMBERSHIP,store);
             Complaint c = new Complaint(cust ,new Date(),"bad bad bad", Complaint.Topic.BAD_SERVICE);
             session.save(cust);
@@ -103,7 +103,7 @@ public class App {
         String[] names = {"Red Rose","Pink Plants", "Sunflower","White Plants","Pink Rose","White Rose","White Flower","Leaves1","Blue Flower","Leaves2","Leaves3"};
         for (int i = 0; i <= num_products; i++) {
             var img = loadImageFromResources(String.format("base%s.jpg", i));
-            PreMadeProduct p = new PreMadeProduct(names[i], img, price = random.nextInt(15)+1,price+random.nextInt(15),colors[i]);
+            PreMadeProduct p = new PreMadeProduct(names[i], img, price = random.nextInt(15)+1,price+random.nextInt(15),false,colors[i]);
             session.save(p);   //saves and flushes to database
             session.flush();
         }

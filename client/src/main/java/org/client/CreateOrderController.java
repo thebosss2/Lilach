@@ -143,8 +143,8 @@ public class CreateOrderController extends Controller {
         //initialize store combobox
         getStores();
 
-        //initialize order summery
-        displaySummery();
+        //initialize order summary
+        displaySummary();
 
         //initialize discount and final price
         setPrices();
@@ -177,7 +177,7 @@ public class CreateOrderController extends Controller {
                 TAStorePicker.getItems().add(s.getName());
     }
 
-    public void displaySummery() throws IOException { //function is called to display all products from cart
+    public void displaySummary() throws IOException { //function is called to display all products from cart
         CreateOrderController createOrderController = this;
         for (Product product : App.client.cart.getProducts()) {
             try {
@@ -198,18 +198,18 @@ public class CreateOrderController extends Controller {
 
     protected void displayPreProduct(PreMadeProduct product, FlowPane pane) throws IOException {//func displays an item on pane
         FXMLLoader fxmlLoader;
-        fxmlLoader = new FXMLLoader(getClass().getResource("SummeryPreProduct.fxml"));
+        fxmlLoader = new FXMLLoader(getClass().getResource("SummaryPreProduct.fxml"));
         pane.getChildren().add(fxmlLoader.load());  //Adds new product pane to the screen.
-        SummeryPreProductController controller = fxmlLoader.getController();
-        controller.setSummeryPreProduct(product);
+        SummaryPreProductController controller = fxmlLoader.getController();
+        controller.setSummaryPreProduct(product);
     }
 
     protected void displayCustomProduct(CustomMadeProduct product, FlowPane pane) throws IOException {//func displays an item on pane
         FXMLLoader fxmlLoader;
-        fxmlLoader = new FXMLLoader(getClass().getResource("SummeryCustomProduct.fxml"));
+        fxmlLoader = new FXMLLoader(getClass().getResource("SummaryCustomProduct.fxml"));
         pane.getChildren().add(fxmlLoader.load());  //Adds new product pane to the screen.
-        SummeryCustomProductController controller = fxmlLoader.getController();
-        controller.setSummeryCustomProduct(product);
+        SummaryCustomProductController controller = fxmlLoader.getController();
+        controller.setSummaryCustomProduct(product);
     }
 
     private void setPrices() {
@@ -217,17 +217,14 @@ public class CreateOrderController extends Controller {
         giftPriceBeforeLabel.setText(String.valueOf(App.client.cart.getTotalCost()));
         selfPriceBeforeLabel.setText(String.valueOf(App.client.cart.getTotalCost()));
 
-        //added check if user is guest or customer
-        if(App.client.user instanceof Customer) {
-            if(((Customer)(App.client.user)).getAccountType() == Customer.AccountType.MEMBERSHIP && App.client.cart.getTotalCost()>=50){
-                //if the user is member and have order larger than 50 nis- we give 10% discount
-                TADiscountLabel.setText("10%");
-                giftDiscountLabel.setText("10%");
-                selfDiscountLabel.setText("10%");
-                TAFinalPriceLabel.setText(String.valueOf((int)(0.9 * App.client.cart.getTotalCost())));
-                giftFinalPriceLabel.setText(String.valueOf((int)(0.9 * App.client.cart.getTotalCost())+20)); //also added shipping fee
-                selfFinalPriceLabel.setText(String.valueOf((int)(0.9 * App.client.cart.getTotalCost())+20));
-            }
+        if(((Customer)(App.client.user)).getAccountType() == Customer.AccountType.MEMBERSHIP && App.client.cart.getTotalCost()>=50){
+            //if the user is member and have order larger than 50 nis- we give 10% discount
+            TADiscountLabel.setText("10%");
+            giftDiscountLabel.setText("10%");
+            selfDiscountLabel.setText("10%");
+            TAFinalPriceLabel.setText(String.valueOf((int)(0.9 * App.client.cart.getTotalCost())));
+            giftFinalPriceLabel.setText(String.valueOf((int)(0.9 * App.client.cart.getTotalCost())+20)); //also added shipping fee
+            selfFinalPriceLabel.setText(String.valueOf((int)(0.9 * App.client.cart.getTotalCost())+20));
         }
         else { //no discount for not members
             TAFinalPriceLabel.setText(String.valueOf(App.client.cart.getTotalCost()));
@@ -289,7 +286,7 @@ public class CreateOrderController extends Controller {
         //checks all that all fields were filled and valid.if not- it lets the user know and fix it.
         if(alertMsg("Submit Order","submit your order!" , checkSaveOrder(b))) {
             saveOrder(b); //if the fields are all valid- save the order
-            globalSkeleton.changeCenter("Catalog"); //and head back to catalog //todo change maybe to orders
+            App.client.getSkeleton().changeCenter("SummaryOrders"); //and head back to catalog
         }
     }
 
@@ -312,25 +309,37 @@ public class CreateOrderController extends Controller {
         LinkedList<CustomMadeProduct> customList = new LinkedList<>();
 
         for (Product product : App.client.cart.getProducts()) {//extract products list to PreMadeProduct list and CustomMadeProduct list
-            if (product instanceof PreMadeProduct) preList.add((PreMadeProduct) product);
-            else customList.add((CustomMadeProduct) product);
+            if (product instanceof PreMadeProduct) {
+                PreMadeProduct temp = new PreMadeProduct((PreMadeProduct) product);
+                temp.setOrdered(true);
+                preList.add(temp);
+            } else {
+                for (int i = 0; i < ((CustomMadeProduct) product).getProducts().size(); i++) {
+                    PreMadeProduct temp = new PreMadeProduct(((CustomMadeProduct) product).getProducts().get(i)); //todo check without main color
+                    temp.setOrdered(true);
+                    ((CustomMadeProduct) product).setProduct(i, temp);
+                }
+                customList.add((CustomMadeProduct) product);
+
+            }
         }
 
-        if (b.getId().equals(TASubmitBtn.getId()))
+        if (b.getId().equals(TASubmitBtn.getId())) {
             order = new Order(preList, customList, (Customer) App.client.user, Integer.parseInt(TAFinalPriceLabel.getText()),
                     getSelectedStore(), getPickedDate(TADate), TAHourPicker.getValue(), TAGreetingText.getText());
-
-        else if (b.getId().equals(selfSubmitBtn.getId()))
+            ((Customer) App.client.user).setBalance(((Customer) App.client.user).getBalance() - Integer.parseInt(TAFinalPriceLabel.getText()));
+        }
+        else if (b.getId().equals(selfSubmitBtn.getId())) {
             order = new Order(preList, customList, (Customer) App.client.user, Integer.parseInt(selfFinalPriceLabel.getText()),
                     getPickedDate(selfShippingDate), selfHourPicker.getValue(), selfAddressText.getText(), selfGreetingText.getText());
-
-        else //this is gift order
+            ((Customer) App.client.user).setBalance(((Customer) App.client.user).getBalance() - Integer.parseInt(selfFinalPriceLabel.getText()));
+        }
+        else { //this is gift order
             order = new Order(preList, customList, (Customer) App.client.user, Integer.parseInt(giftFinalPriceLabel.getText()),
                     getPickedDate(giftShippingDate), giftHourPicker.getValue(), giftReceiverPhoneText.getText(), giftReceiverNameText.getText(),
                     giftReceiverAddressText.getText(), giftGreetingText.getText());
-
-        //set balance for buyer
-        ((Customer) App.client.user).setBalance(((Customer) App.client.user).getBalance() - Integer.parseInt(TAFinalPriceLabel.getText()));
+            ((Customer) App.client.user).setBalance(((Customer) App.client.user).getBalance() - Integer.parseInt(giftFinalPriceLabel.getText()));
+        }
 
         //ask server to save to db
         List<Object> newMsg = new LinkedList<Object>();

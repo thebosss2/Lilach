@@ -5,7 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import org.entities.CustomMadeProduct;
 
-public class SummeryCustomProductController extends Controller{
+public class SummaryCustomProductController extends Controller{
 
     @FXML
     private Label count;
@@ -23,7 +23,7 @@ public class SummeryCustomProductController extends Controller{
     private Label totalPrice;
 
 
-    public void setSummeryCustomProduct(CustomMadeProduct product) {
+    public void setSummaryCustomProduct(CustomMadeProduct product) {
         this.price.setText(String.valueOf(product.getPrice()));
         this.count.setText(String.valueOf(product.getAmount()));
         this.totalPrice.setText(String.valueOf(product.getAmount() * product.getPrice()));

@@ -1,14 +1,15 @@
 package org.entities;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "premadeProducts")
 public class PreMadeProduct extends Product {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;         // id generated for each product
     @Column(name = "product_name")
     private String name;
     private int priceBeforeDiscount;
@@ -18,43 +19,60 @@ public class PreMadeProduct extends Product {
 
     private ProductType productType;
     private String description;
+    private boolean isOrdered;
 
+    //copyCtor for catalog product
+    public PreMadeProduct(PreMadeProduct p) { //constructor
+        super(p.getByteImage(), p.getPrice(),p.getAmount());
+        this.priceBeforeDiscount = p.getPriceBeforeDiscount();
+        this.name = p.getName();
+        this.productType = p.getType() ;
+        if(p.getType() == ProductType.CATALOG)
+            this.description = p.getDescription();
+        else
+            if(p.getMainColor() != null)
+                this.mainColor = p.getMainColor();
+        this.isOrdered = p.isOrdered();
+    }
 
     //Ctor for catalog product
-    public PreMadeProduct(String name, String path, int price, String description, int priceBeforeDiscount) { //constructor
+    public PreMadeProduct(String name, String path, int price, String description, int priceBeforeDiscount, boolean isOrdered) { //constructor
         super(path, price);
         this.priceBeforeDiscount = priceBeforeDiscount;
         this.name = name;
         this.productType = ProductType.CATALOG;
         this.description = description;
+        this.isOrdered = isOrdered;
     }
 
     //Ctor for catalog product
-    public PreMadeProduct(String name, byte[] image, int price, String description, int priceBeforeDiscount) {
+    public PreMadeProduct(String name, byte[] image, int price, String description, int priceBeforeDiscount,boolean isOrdered) {
         super(image, price);
         this.priceBeforeDiscount = priceBeforeDiscount;
         this.name = name;
         this.productType = ProductType.CATALOG;
         this.description = description;
+        this.isOrdered = isOrdered;
     }
 
     //Ctor for custom-made catalog product
-    public PreMadeProduct(String name, String path, int price, int priceBeforeDiscount, String mainColor) { //constructor
+    public PreMadeProduct(String name, String path, int price, int priceBeforeDiscount, boolean isOrdered,String mainColor) { //constructor
         super(path, price);
         this.priceBeforeDiscount = priceBeforeDiscount;
         this.name = name;
         this.mainColor = mainColor;
         this.productType = ProductType.CUSTOM_CATALOG;
-
+        this.isOrdered = isOrdered;
     }
 
     //Ctor for custom-made catalog product
-    public PreMadeProduct(String name, byte[] image, int price, int priceBeforeDiscount, String mainColor) {
+    public PreMadeProduct(String name, byte[] image, int price, int priceBeforeDiscount,boolean isOrdered, String mainColor) {
         super(image, price);
         this.priceBeforeDiscount = priceBeforeDiscount;
         this.name = name;
         this.mainColor = mainColor;
         this.productType = ProductType.CUSTOM_CATALOG;
+        this.isOrdered = isOrdered;
     }
 
     public PreMadeProduct() {
@@ -93,4 +111,15 @@ public class PreMadeProduct extends Product {
         return this.mainColor;
     }
 
+    @Override
+    public int getId() { return id; }
+
+    public boolean isOrdered() {
+        return isOrdered;
+    }
+
+
+    public void setOrdered(boolean ordered) {
+        isOrdered = ordered;
+    }
 }

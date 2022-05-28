@@ -66,11 +66,13 @@ public class CatalogController extends Controller {
             @Override
             public void run() {
                 for (PreMadeProduct product : Client.products) {
-                    try {
-                        if(product.getType()== PreMadeProduct.ProductType.CATALOG)
-                            displayProduct(product, catalogController);
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    if(!product.isOrdered()) {
+                        try {
+                            if (product.getType() == PreMadeProduct.ProductType.CATALOG)
+                                displayProduct(product, catalogController);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
