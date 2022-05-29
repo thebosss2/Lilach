@@ -306,11 +306,13 @@ public class Server extends AbstractServer {
                             }
                             msg.add(user);
                             client.sendToClient(msg);
+                            return;
                         }else{
                             msg.clear();
                             msg.add("#LOGIN");
                             msg.add("ALREADYCONNECTED");
                             client.sendToClient(msg);
+                            return;
                         }
                     }
                 }else {
@@ -319,15 +321,15 @@ public class Server extends AbstractServer {
                     newMsg.add( "User was FROZEN by system Admin" );
                     newMsg.add("Frozen User");
                     client.sendToClient(newMsg);
+                    return;
                 }
-            }else{
-                List<Object> newMsg = new LinkedList<Object>();
-                newMsg.add("#ERROR");
-                newMsg.add( "UserName or Password do not match");
-                newMsg.add("Login Error");
-                client.sendToClient(newMsg);
             }
         }
+        List<Object> newMsg = new LinkedList<Object>();
+        newMsg.add("#ERROR");
+        newMsg.add( "UserName or Password do not match");
+        newMsg.add("Login Error");
+        client.sendToClient(newMsg);
     }
 
     private void logoutServer(LinkedList<Object> msg, ConnectionToClient client){

@@ -1,10 +1,13 @@
 package org.client;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.entities.Guest;
+import org.entities.User;
 
 import java.io.IOException;
 
@@ -24,6 +27,23 @@ public class App extends Application {
         stage.show();
 
     }
+
+    @Override
+    public void stop(){
+        if(client.user instanceof User){
+            App.client.logOut();
+        }
+        if(client.isConnected()){
+            try {
+                client.closeConnection();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        Platform.exit();
+    }
+
     static Scene getScene(){
         return scene;
     }
@@ -37,10 +57,6 @@ public class App extends Application {
     }
 
     public static void main(String[] args) throws IOException {
-
-        client = new Client("127.0.0.1", 3000);
-        client.openConnection();
-
         launch();
 
 

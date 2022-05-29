@@ -75,9 +75,10 @@ public class StoreSkeleton {
         assert catalogBtn != null : "fx:id=\"catalog\" was not injected: check your FXML file 'First catalog try.fxml'.";
         assert mainScreen != null : "fx:id=\"mainScreen\" was not injected: check your FXML file 'First catalog try.fxml'.";
         assert cartBtn != null : "fx:id=\"openImage\" was not injected: check your FXML file 'First catalog try.fxml'.";
+        App.client = new Client(null, 3000);
         App.client.storeSkeleton=this;
-        changeCenter("Catalog");
-        changeLeft("GuestMenu");
+        changeCenter("ClientBoot");
+
 
     }
 
