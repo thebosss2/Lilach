@@ -18,9 +18,6 @@ import java.util.LinkedList;
 public class UserPreviewController extends ItemController {
 
     @FXML
-    private Button freezeBtn;
-
-    @FXML
     private Text id;
 
     @FXML
@@ -59,14 +56,6 @@ public class UserPreviewController extends ItemController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-
-    @FXML
-    void changeStatus(ActionEvent event) throws InterruptedException {
-        coolButtonClick((Button) event.getTarget());
-        if(this.status.getText().equals("Active")) setInactive();
-        else setActive();
     }
 
     @FXML
