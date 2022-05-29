@@ -235,7 +235,7 @@ public class CreateOrderController extends Controller {
     Store getSelectedStore() {
         Store pickedStore = new Store();
         if (TAStorePicker.isDisabled())
-            ;//pickedStore = App.client.user.store;
+            ;//pickedStore = (Customer)(App.client.user).s;
         else {
             for (Store s : stores) {
                 if (s.getName().equals(TAStorePicker.getValue()))

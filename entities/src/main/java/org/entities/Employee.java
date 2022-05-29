@@ -18,6 +18,11 @@ public class Employee extends User {
         this.role = role;
     }
 
+    public Employee(String userID, String name, String userName, String password, String email, String phone, Role role, Store store, boolean frozen) {
+        super(userID, name, userName, password,  email, phone, store, frozen);
+        this.role = role;
+    }
+
     public Employee() {
         super();
     }

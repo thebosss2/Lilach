@@ -39,11 +39,15 @@ public class UserPreviewController extends ItemController {
     private Text email;
 
     @FXML
+    protected Text store;
+
+    @FXML
     private Text status;
 
     private User user;
 
     private LinkedList<Store> stores;
+
 
     @FXML
     void initialize(){
@@ -61,15 +65,8 @@ public class UserPreviewController extends ItemController {
     @FXML
     void changeStatus(ActionEvent event) throws InterruptedException {
         coolButtonClick((Button) event.getTarget());
-        if(this.status.getText().equals("Active")) {
-            this.status.setText("Inactive");
-            this.status.setFill(Paint.valueOf("RED"));
-        }
-        else {
-            this.status.setText("Active");
-            this.status.setFill(Paint.valueOf("GREEN"));
-        }
-
+        if(this.status.getText().equals("Active")) setInactive();
+        else setActive();
     }
 
     @FXML
@@ -112,15 +109,30 @@ public class UserPreviewController extends ItemController {
         this.username.setText(user.getUserName());
         this.name.setText(user.getName());
         this.email.setText(user.getEmail());
-        //this.status.setText(user.getStatus());
-        //this.store.setText(user.getStore());
+        if (user.getFrozen())
+            setInactive();
+        else
+            setActive();
+        this.store.setText(user.getStore().getName());
 
         if(user instanceof Customer)
-            this.type.setText(((Customer) user).getTypeString());
+            this.type.setText(((Customer) user).getTypeToString());
 
         else
             this.type.setText(((Employee) user).getRoleToString() );
 
+    }
+
+    @FXML
+    private void setInactive() {
+        this.status.setText("Inactive");
+        this.status.setFill(Paint.valueOf("RED"));
+    }
+
+    @FXML
+    private void setActive() {
+        this.status.setText("Active");
+        this.status.setFill(Paint.valueOf("GREEN"));
     }
 
     public void pullStoresToClient(LinkedList<Store> stores) {

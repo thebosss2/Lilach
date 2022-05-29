@@ -2,9 +2,12 @@ package org.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+
+import static org.entities.Customer.AccountType.*;
 
 @Entity
 @Table(name = "customers")
@@ -12,6 +15,8 @@ public class Customer extends User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+
 
     public enum AccountType{STORE, CHAIN, MEMBERSHIP}
     private AccountType accountType;
@@ -27,6 +32,15 @@ public class Customer extends User implements Serializable {
     @Column(name = "complaint")
     private List<Complaint> complaints = new LinkedList<Complaint>();
 
+    public Customer(String userID, String name, String userName, String password, String email, String phone, String creditCard, AccountType accountType,Store store, boolean frozen) {
+        super(userID, name, userName, password, email, phone, store, frozen);
+        this.creditCard = creditCard;
+        this.accountType = accountType;
+        if (accountType == AccountType.MEMBERSHIP) {
+            memberShipExpire = new Date();
+            memberShipExpire.setYear(memberShipExpire.getYear() + 1);
+        }
+    }
     public Customer(String userID, String name, String userName, String password, String email, String phone, String creditCard, AccountType accountType,Store store) {
         super(userID, name, userName, password, email, phone, store);
         this.creditCard = creditCard;
@@ -54,6 +68,9 @@ public class Customer extends User implements Serializable {
         this.creditCard = creditCard;
     }
 
+    public String getCreditCard() {
+        return creditCard;
+    }
     public AccountType getAccountType() {
         return accountType;
     }
@@ -77,17 +94,19 @@ public class Customer extends User implements Serializable {
         this.memberShipExpire = memberShipExpire;
     }
 
-    public String getTypeString() {
-        switch(this.accountType) {
-            case STORE:
-                return "Store Customer";
-
-            case CHAIN:
-                return "Chain Customer";
-
-            default:
-                return "Membership Customer";
-        }
+    public String getTypeToString() {
+        return switch (this.accountType) {
+            case STORE -> "Store Customer";
+            case CHAIN -> "Chain Customer";
+            default -> "Membership Customer";
+        };
+    }
+    public AccountType getStringToType(String type) {
+        return switch (type) {
+            case "Store Customer" -> STORE;
+            case "Chain Customer" -> CHAIN;
+            default -> MEMBERSHIP;
+        };
     }
 
     static public String[] getAllTypes() {

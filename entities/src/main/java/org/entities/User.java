@@ -31,6 +31,17 @@ public class User extends Guest implements Serializable {
         this.connected=false;
         this.store=store;
     }
+    public User(String userID, String name, String userName, String password, String email, String phoneNum ,Store store, boolean frozen) {
+        super(name);
+        this.userID=userID;
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.phoneNum=phoneNum;
+        this.connected=false;
+        this.store=store;
+        this.frozen = frozen;
+    }
 
     public User() {
         super();

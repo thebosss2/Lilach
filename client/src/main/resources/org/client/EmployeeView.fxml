@@ -60,17 +60,17 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Text fx:id="status" fill="#699e25" layoutX="516.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Active" wrappingWidth="69.0">
+      <Text fx:id="status" fill="#699e25" layoutX="501.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Active" textAlignment="CENTER" wrappingWidth="100.0">
          <font>
             <Font name="System Bold" size="22.0" />
          </font>
       </Text>
-      <Button fx:id="statusBtn" layoutX="600.0" layoutY="227.0" mnemonicParsing="false" onAction="#changeStatus" prefHeight="40.0" prefWidth="132.0" style="-fx-background-color: #c6acef;" text="Freeze\Unfreeze">
+      <Button fx:id="statusBtn" layoutX="607.0" layoutY="227.0" mnemonicParsing="false" onAction="#changeStatus" prefHeight="40.0" prefWidth="132.0" style="-fx-background-color: #c6acef;" text="Freeze\Unfreeze">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <TextField fx:id="id" layoutX="544.0" layoutY="163.0" prefHeight="36.0" prefWidth="187.0" text="123456789">
+      <TextField fx:id="id" layoutX="544.0" layoutY="163.0" prefHeight="36.0" prefWidth="196.0" text="123456789">
          <font>
             <Font size="15.0" />
          </font>
@@ -80,7 +80,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <ComboBox fx:id="rolePicker" layoutX="544.0" layoutY="99.0" prefHeight="36.0" prefWidth="187.0" style="-fx-background-color: #c6acef;" />
+      <ComboBox fx:id="rolePicker" layoutX="544.0" layoutY="99.0" prefHeight="36.0" prefWidth="196.0" style="-fx-background-color: #c6acef;" />
       <Button fx:id="saveBtn" layoutX="320.0" layoutY="327.0" mnemonicParsing="false" onAction="#clickedSaveEmployee" prefHeight="40.0" prefWidth="160.0" style="-fx-background-color: #c6acef;" text="Save Changes">
          <font>
             <Font name="System Bold" size="19.0" />
@@ -91,6 +91,6 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <ComboBox fx:id="storePicker" layoutX="543.0" layoutY="34.0" prefHeight="36.0" prefWidth="187.0" style="-fx-background-color: #c6acef;" />
+      <ComboBox fx:id="storePicker" layoutX="543.0" layoutY="34.0" prefHeight="36.0" prefWidth="196.0" style="-fx-background-color: #c6acef;" />
    </children>
 </AnchorPane>

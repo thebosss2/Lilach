@@ -5,11 +5,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import org.entities.Employee;
 import org.entities.Store;
 
+import java.io.IOException;
 import java.util.LinkedList;
+import java.util.List;
 
 public class EmployeeViewController extends Controller {
 
@@ -57,13 +60,22 @@ public class EmployeeViewController extends Controller {
         name.setText(employee.getName());
         id.setText(employee.getUserID());
         storePicker.setValue(employee.getStore().getName());
-        if (employee.getFrozen())
-            setInactive();
-        else
-            setActive();
-
+        if (employee.getFrozen()) setInactive();
+        else setActive();
         setStores();
         setRoles();
+    }
+
+    @FXML
+    private void setInactive() {
+        this.status.setText("Inactive");
+        this.status.setFill(Paint.valueOf("RED"));
+    }
+
+    @FXML
+    private void setActive() {
+        this.status.setText("Active");
+        this.status.setFill(Paint.valueOf("GREEN"));
     }
 
     private void setStores() {
@@ -85,19 +97,6 @@ public class EmployeeViewController extends Controller {
     void changeStatus(ActionEvent event) {
         if (this.status.getText().equals("Active")) setInactive();
         else setActive();
-
-    }
-
-    @FXML
-    private void setInactive() {
-        this.status.setText("Inactive");
-        this.status.setStyle("-fx-text-inner-color: red;");
-    }
-
-    @FXML
-    private void setActive() {
-        this.status.setText("Active");
-        this.status.setStyle("-fx-text-inner-color: green;");
     }
 
     @FXML
@@ -122,7 +121,7 @@ public class EmployeeViewController extends Controller {
     }
 
     private boolean emailValid() {
-        String email = this.email.getText().toString();
+        String email = this.email.getText();
         String compMail = email;
         int countAt = compMail.length() - compMail.replace("@", "").length();
         return countAt == 1 && email.indexOf("@") != 0 && !this.email.getText().isEmpty();
@@ -130,19 +129,25 @@ public class EmployeeViewController extends Controller {
 
     @FXML
     void saveChanges() {
-        employee.setRole(employee.getStringToRole(this.rolePicker.getValue()));
+        Store store = new Store();
         for (Store s : stores) {
             if (s.getName().equals(storePicker.getValue()))
-                employee.setStore(s);
+                store = s;
         }
-        employee.setUserName(this.username.getText());
-        employee.setPassword(this.password.getText());
-        employee.setEmail(this.email.getText());
-        employee.setName(this.name.getText());
-        employee.setUserID(this.id.getText());
-        employee.setFrozen(!this.status.getText().equals("Active"));
+        Employee emp = new Employee(this.id.getText(), this.name.getText(), this.username.getText(),
+                this.password.getText(), this.email.getText(), employee.getPhoneNum(),
+                employee.getStringToRole(this.rolePicker.getValue()), store, !this.status.getText().equals("Active"));
 
-        //todo save to db
+        List<Object> msg = new LinkedList<Object>();
+        msg.add("#SAVEEMPLOYEE");          // adds #SAVE command for server
+        msg.add(employee);       //adds data to msg list
+        msg.add(emp);             //
+        App.client.setController(this);
+        try {
+            App.client.sendToServer(msg); //Sends a msg contains the command and the controller for the catalog.
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

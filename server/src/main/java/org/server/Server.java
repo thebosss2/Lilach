@@ -42,10 +42,36 @@ public class Server extends AbstractServer {
                 case "#PULLUSERS" -> pullUsers((LinkedList<Object>) msg, client);
                 case "#DELETEPRODUCT" -> deleteProduct((LinkedList<Object>) msg, client);
                 case "#PULL_MANAGER_REPORT" -> pullManagerReport((LinkedList<Object>) msg, client);
+                case "#SAVEEMPLOYEE" -> saveEmployee((LinkedList<Object>) msg, client);
+                case "#SAVECUSTOMER" -> saveCustomer((LinkedList<Object>) msg, client);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void saveCustomer(LinkedList<Object> msg, ConnectionToClient client) {
+        App.session.beginTransaction();
+        Customer customerBefore = (Customer) msg.get(1);
+        Customer customerAfter = (Customer) msg.get(2);
+
+        App.session.evict(customerBefore);       //evict current product details from database
+        changeParamCus(customerBefore, customerAfter);   //func changes product to updates details
+        App.session.merge(customerBefore);           //merge into database with updated info
+        App.session.flush();
+        App.session.getTransaction().commit(); // Save everything.
+    }
+
+    private void saveEmployee(LinkedList<Object> msg, ConnectionToClient client) {
+        App.session.beginTransaction();
+        Employee employeeBefore = (Employee) msg.get(1);
+        Employee employeeAfter = (Employee) msg.get(2);
+
+        App.session.evict(employeeBefore);       //evict current product details from database
+        changeParamEmp(employeeBefore, employeeAfter);   //func changes product to updates details
+        App.session.merge(employeeBefore);           //merge into database with updated info
+        App.session.flush();
+        App.session.getTransaction().commit(); // Save everything.
     }
 
     private void deleteProduct(LinkedList<Object> msg, ConnectionToClient client) {
@@ -236,6 +262,30 @@ public class Server extends AbstractServer {
         p.setDiscount(p2.getDiscount());
         p.setImage(p2.getByteImage());
         p.setPriceBeforeDiscount(p2.getPriceBeforeDiscount());
+    }
+    private static void changeParamEmp(Employee e, Employee e2) {     //changes details
+        e.setName(e2.getName());
+        e.setFrozen(e2.getFrozen());
+        e.setUserID(e2.getUserID());
+        e.setUserName(e2.getUserName());
+        e.setPassword(e2.getPassword());
+        e.setEmail(e2.getEmail());
+        e.setStore(e2.getStore());
+        e.setRole(e2.getRole());
+        e.setPhoneNum(e2.getPhoneNum());
+    }
+
+    private static void changeParamCus(Customer c, Customer c2) {     //changes details
+        c.setName(c2.getName());
+        c.setFrozen(c2.getFrozen());
+        c.setUserID(c2.getUserID());
+        c.setUserName(c2.getUserName());
+        c.setPassword(c2.getPassword());
+        c.setEmail(c2.getEmail());
+        c.setStore(c2.getStore());
+        c.setAccountType(c2.getAccountType());
+        c.setPhoneNum(c2.getPhoneNum());
+        c.setCreditCard(c2.getCreditCard());
     }
 
     public static void orderArrived(Order order, Order.Status status){
