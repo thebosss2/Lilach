@@ -121,6 +121,7 @@ public class App {
             else
                 storeN = s.size()-1;
             Customer cust = new Customer(customerId[i], customerNames[i], customerUserNames[i], "pass", customerEmails[i], "0522245484", "5434456321581234", Customer.AccountType.MEMBERSHIP, s.get(storeN));
+            cust.setBalance(50*(new Random().nextInt(10)));
             customers.add(cust);
             session.save(cust);
             session.flush();

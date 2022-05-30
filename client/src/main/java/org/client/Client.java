@@ -236,6 +236,7 @@ public class Client extends AbstractClient {
 
         if(this.user instanceof Customer){
             storeSkeleton.changeLeft("CustomerMenu");
+            storeSkeleton.helloLabel.setText("Hello "+ ((Customer) this.user).getUserName() + " Your Balance is "+((Customer) this.user).getBalance());
             storeSkeleton.changeCenter("Catalog");
         }else if(this.user instanceof Employee){
             switch(((Employee) this.user).getRole()){
@@ -255,9 +256,12 @@ public class Client extends AbstractClient {
                     storeSkeleton.changeLeft("AdminMenu");
                     storeSkeleton.changeCenter("ManageAccounts"); ///////Waiting on ceo freeze user FXML
                     }
+
             }
+            storeSkeleton.helloLabel.setText("Hello "+ ((Employee) this.user).getUserName());
         } else {
             storeSkeleton.changeLeft("GuestMenu");
+            storeSkeleton.helloLabel.setText("Hello Guest");
             storeSkeleton.changeCenter("Catalog");
         }
 

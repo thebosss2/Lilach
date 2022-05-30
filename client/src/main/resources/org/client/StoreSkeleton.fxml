@@ -28,7 +28,7 @@
                             </ToolBar>
                         <ToolBar maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #62a74d; -fx-background-radius: 0 0 20 0;">
                            <items>
-                              <Label fx:id="helloLabel1" alignment="CENTER_RIGHT" text="Hello Guest" textFill="WHITE">
+                              <Label fx:id="helloLabel" alignment="CENTER_RIGHT" text="Hello Guest" textFill="WHITE">
                                  <font>
                                     <Font name="Script MT Bold" size="24.0" />
                                  </font>
