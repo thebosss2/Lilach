@@ -101,7 +101,7 @@ public class App {
         String[] flowerNames = new String[]{"SunFlower","Calanit","Shibolet","Rose","Rakefet","Lilach","Lily","Tulip","Pickachu","Charmander","Thanos","PushPush","Runlater","Clean Install","Orchid"};
         for(int i=0;i< flowerNames.length;i++){
             var img = loadImageFromResources(String.format("Flower%s.jpg",i));
-            PreMadeProduct p = new PreMadeProduct(flowerNames[i], img, random.nextInt(30),"this is a " + flowerNames[i] +" Flower", 0,false);
+            PreMadeProduct p = new PreMadeProduct(flowerNames[i], img, random.nextInt(30)+1,"this is a " + flowerNames[i] +" Flower", 0,false);
             products.add(p);
             session.save(p);   //saves and flushes to database
             session.flush();
