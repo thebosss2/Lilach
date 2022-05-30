@@ -18,7 +18,7 @@ public class Store implements Serializable {
     private Employee storeManager;
 
     @OneToMany
-    private List<Employee> employees;
+    private List<Employee> employees = new LinkedList<Employee>();
 
     private String address;
 
@@ -50,8 +50,8 @@ public class Store implements Serializable {
         return employees;
     }
 
-    public void setEmployees(List<Employee> employees) {
-        employees = employees;
+    public void addEmployees(Employee employee) {
+        employees.add(employee);
     }
 
     public String getAddress() {

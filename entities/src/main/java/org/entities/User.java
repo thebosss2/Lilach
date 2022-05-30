@@ -19,7 +19,7 @@ public class User extends Guest implements Serializable {
     private Boolean frozen=false;
     private Boolean connected;
     @ManyToOne
-    private Store store = null; //TODO move to user
+    private Store store = null;
 
     public User(String userID, String name, String userName, String password, String email, String phoneNum ,Store store) {
         super(name);
