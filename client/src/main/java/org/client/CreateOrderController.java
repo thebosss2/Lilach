@@ -237,7 +237,8 @@ public class CreateOrderController extends Controller {
     Store getSelectedStore() {
         Store pickedStore = new Store();
         if (TAStorePicker.isDisabled())
-            ;//pickedStore = App.client.user.store;
+            pickedStore = ((Customer) App.client.user).getStore();
+
         else {
             for (Store s : stores) {
                 if (s.getName().equals(TAStorePicker.getValue()))
@@ -331,12 +332,14 @@ public class CreateOrderController extends Controller {
         }
         else if (b.getId().equals(selfSubmitBtn.getId())) {
             order = new Order(preList, customList, (Customer) App.client.user, Integer.parseInt(selfFinalPriceLabel.getText()),
-                    getPickedDate(selfShippingDate), selfHourPicker.getValue(), selfAddressText.getText(), selfGreetingText.getText());
+                    getPickedDate(selfShippingDate), ((Customer) App.client.user).getStore(), selfHourPicker.getValue(), selfAddressText.getText(), selfGreetingText.getText());
             ((Customer) App.client.user).setBalance(((Customer) App.client.user).getBalance() - Integer.parseInt(selfFinalPriceLabel.getText()));
         }
         else { //this is gift order
-            order = new Order(preList, customList, (Customer) App.client.user, Integer.parseInt(giftFinalPriceLabel.getText()),
-                    getPickedDate(giftShippingDate), giftHourPicker.getValue(), giftReceiverPhoneText.getText(), giftReceiverNameText.getText(),
+            order = new Order(preList, customList, (Customer) App.client.user,
+                    Integer.parseInt(giftFinalPriceLabel.getText()), getPickedDate(giftShippingDate),
+                    ((Customer) App.client.user).getStore(), giftHourPicker.getValue(),
+                    giftReceiverPhoneText.getText(), giftReceiverNameText.getText(),
                     giftReceiverAddressText.getText(), giftGreetingText.getText());
             ((Customer) App.client.user).setBalance(((Customer) App.client.user).getBalance() - Integer.parseInt(giftFinalPriceLabel.getText()));
         }

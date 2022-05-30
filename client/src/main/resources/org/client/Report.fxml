@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.ReportController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.ReportController">
    <children>
       <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="1050.0" style="-fx-background-color: ffffff;">
          <content>
@@ -66,7 +66,7 @@
                                           <Font size="15.0" />
                                        </font>
                                     </Label>
-                                    <PieChart fx:id="ordersChart" prefHeight="257.0" prefWidth="293.0" title="Orders Report" />
+                                    <PieChart fx:id="ordersChart" legendSide="LEFT" prefHeight="257.0" prefWidth="293.0" title="Orders Report" />
                                  </children>
                               </VBox>
                               <VBox prefHeight="539.0" prefWidth="564.0">
