@@ -52,12 +52,12 @@ public class CustomerViewController extends Controller{
 
     private Customer customer;
 
-    private LinkedList<Store> stores = new LinkedList<Store>();
+    private List<Store> stores = new LinkedList<Store>();
 
 
-    public void setCustomer(Customer customer, LinkedList<Store> stores) {
+    public void setCustomer(Customer customer) {
         this.customer = customer;
-        this.stores = stores;
+        this.stores = App.client.getStores();
         username.setText(customer.getUserName());
         password.setText(customer.getPassword());
         email.setText(customer.getEmail());

@@ -1,5 +1,6 @@
 package org.client;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -48,12 +49,12 @@ public class EmployeeViewController extends Controller {
 
     private Employee employee;
 
-    private LinkedList<Store> stores = new LinkedList<Store>();
+    private List<Store> stores = new LinkedList<Store>();
 
     //initialize
-    public void setEmployee(Employee employee, LinkedList<Store> stores) {
+    public void setEmployee(Employee employee) {
         this.employee = employee;
-        this.stores = stores;
+        this.stores = App.client.getStores();
         username.setText(employee.getUserName());
         password.setText(employee.getPassword());
         email.setText(employee.getEmail());
@@ -79,10 +80,11 @@ public class EmployeeViewController extends Controller {
     }
 
     private void setStores() {
-        for (Store s : stores) {
-            storePicker.getItems().add(s.getName());
-        }
-        storePicker.setValue(employee.getStore().getName());
+            for (Store s : stores) {
+                storePicker.getItems().add(s.getName());
+            }
+            storePicker.setValue(employee.getStore().getName());
+
     }
 
     private void setRoles() {

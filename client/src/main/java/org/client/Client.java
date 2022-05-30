@@ -30,6 +30,8 @@ public class Client extends AbstractClient {
 
     protected Guest user;
 
+    private List<Store> stores;
+
     public Client(String localhost, int i) {
         super(localhost, i);
     }
@@ -208,30 +210,7 @@ public class Client extends AbstractClient {
     }
 
     private void pushStores(Object msg) throws IOException { // takes data received and sends to display function
-        CreateOrderController createOrderController;
-        CEOReportController ceoReportController;
-
-        if (controller instanceof CreateOrderController) {
-            createOrderController = (CreateOrderController) controller;
-            createOrderController.pullStoresToClient((LinkedList<Store>) ((LinkedList<Object>) msg).get(1));       //calls static function in client for display
-        } else if (controller instanceof CEOReportController) {
-            ceoReportController = (CEOReportController) controller;
-            ceoReportController.pullStoresToClient((LinkedList<Store>) ((LinkedList<Object>) msg).get(1));       //calls static function in client for display
-        }
-        else if(controller instanceof SignUpController){
-            SignUpController signUpController = (SignUpController) controller;
-            signUpController.pullStoresToClient((LinkedList<Store>) ((LinkedList<Object>) msg).get(1));
-        }
-        else if(controller instanceof UserPreviewController){
-            UserPreviewController userPreviewController = (UserPreviewController)  controller;
-            userPreviewController.pullStoresToClient((LinkedList<Store>) ((LinkedList<Object>) msg).get(1));
-        }else if(controller instanceof ComplaintSubmissionController){
-            ComplaintSubmissionController complaintSubmissionController = (ComplaintSubmissionController)  controller;
-            complaintSubmissionController.pullStoresToClient((LinkedList<Store>) ((LinkedList<Object>) msg).get(1));
-        }
-
-
-
+        this.stores = (LinkedList<Store>) (((LinkedList<Object>) msg).get(1));
     }
 
 
@@ -343,4 +322,11 @@ public class Client extends AbstractClient {
     }
 
 
+    public List<Store> getStores() {
+        return stores;
+    }
+
+    public void setStores(List<Store> stores) {
+        this.stores = stores;
+    }
 }

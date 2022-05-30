@@ -1,5 +1,6 @@
 package org.client;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,6 +15,7 @@ import org.entities.User;
 
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.List;
 
 public class UserPreviewController extends ItemController {
 
@@ -43,19 +45,13 @@ public class UserPreviewController extends ItemController {
 
     private User user;
 
-    private LinkedList<Store> stores;
+    protected List<Store> stores;
 
 
     @FXML
     void initialize(){
         LinkedList<Object> msg = new LinkedList<Object>();
-        msg.add("#PULLSTORES");
-        App.client.setController(this);
-        try {
-            App.client.sendToServer(msg); //Sends a msg contains the command and the controller for the catalog.
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        this.stores = App.client.getStores();
     }
 
     @FXML
@@ -65,13 +61,19 @@ public class UserPreviewController extends ItemController {
         if(user instanceof Employee) {
             controller = this.getSkeleton().changeCenter("EmployeeView");
             EmployeeViewController employeeViewController = (EmployeeViewController) controller;
-            employeeViewController.setEmployee((Employee) this.user, stores);
+            Platform.runLater(()->{
+                employeeViewController.setEmployee((Employee) this.user);
+            });
+
         }
 
         else {
             controller = this.getSkeleton().changeCenter("CustomerView");
             CustomerViewController customerViewController = (CustomerViewController) controller;
-            customerViewController.setCustomer((Customer) this.user, stores);
+            Platform.runLater(()->{
+                customerViewController.setCustomer((Customer) this.user);
+            });
+
         }
 
     }
@@ -124,7 +126,4 @@ public class UserPreviewController extends ItemController {
         this.status.setFill(Paint.valueOf("GREEN"));
     }
 
-    public void pullStoresToClient(LinkedList<Store> stores) {
-        this.stores = stores;
-    }
 }

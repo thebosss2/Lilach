@@ -12,6 +12,7 @@ import org.entities.Store;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.LinkedList;
+import java.util.List;
 
 public class CEOReportController extends Controller {
 
@@ -78,21 +79,16 @@ public class CEOReportController extends Controller {
     @FXML
     private DatePicker toDate2;
 
-    private LinkedList<Store> stores = new LinkedList<Store>();
+    private List<Store> stores = new LinkedList<Store>();
 
 
     @FXML
     void initialize() {
         displayDates(fromDate1, LocalDate.now(), true);
         displayDates(fromDate2, LocalDate.now(),true);
-        LinkedList<Object> msg = new LinkedList<Object>();
-        msg.add("#PULLSTORES");
-        App.client.setController(this);
-        try {
-            App.client.sendToServer(msg); //Sends a msg contains the command and the controller for the catalog.
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        this.stores = App.client.getStores();
+        for (Store s : stores)
+            storePicker.getItems().add(s.getName());
     }
 
 
@@ -107,13 +103,6 @@ public class CEOReportController extends Controller {
         coolButtonClick((Button) event.getTarget());
 
     }
-
-    public void pullStoresToClient(LinkedList<Store> stores) {
-        this.stores = stores;
-        for (Store s : stores)
-            storePicker.getItems().add(s.getName());
-    }
-
 
     public void changedFromDate1 (ActionEvent event) throws InterruptedException {
         toDate1.setDisable(false);
