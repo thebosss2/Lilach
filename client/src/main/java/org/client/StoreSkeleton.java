@@ -12,6 +12,7 @@ import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
 
 public class StoreSkeleton {
@@ -76,6 +77,14 @@ public class StoreSkeleton {
         assert mainScreen != null : "fx:id=\"mainScreen\" was not injected: check your FXML file 'First catalog try.fxml'.";
         assert cartBtn != null : "fx:id=\"openImage\" was not injected: check your FXML file 'First catalog try.fxml'.";
         App.client.storeSkeleton=this;
+
+        LinkedList<Object> msg = new LinkedList<Object>();
+        msg.add("#PULLSTORES");
+        try {
+            App.client.sendToServer(msg); //Sends a msg contains the command and the controller for the catalog.
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         changeCenter("Catalog");
         changeLeft("GuestMenu");
 

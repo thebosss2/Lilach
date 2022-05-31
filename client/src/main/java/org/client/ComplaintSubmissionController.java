@@ -85,20 +85,7 @@ public class ComplaintSubmissionController extends Controller{
         }
     }
     private void getStores() {
-        //added check if user is guest or customer
-        //get stores for the combobox from db
-            LinkedList<Object> msg = new LinkedList<Object>();
-            msg.add("#PULLSTORES"); //get stores from db
-            App.client.setController(this);
-            try {
-                App.client.sendToServer(msg); //Sends a msg contains the command and the current controller
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-    }
-
-    public void pullStoresToClient(LinkedList<Store> stores) { //when server send stores
-        this.stores = stores;
+        this.stores = App.client.getStores();
         storePick.getItems().add("Set Store");
         storePick.setValue("Set Store");
         for (Store s : stores)

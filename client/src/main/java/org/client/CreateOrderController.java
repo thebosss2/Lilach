@@ -115,7 +115,7 @@ public class CreateOrderController extends Controller {
     @FXML
     private Label selfPriceBeforeLabel;
 
-    private LinkedList<Store> stores = new LinkedList<Store>();
+    private List<Store> stores = new LinkedList<Store>();
 
     @FXML
     void initialize() throws IOException {
@@ -151,30 +151,17 @@ public class CreateOrderController extends Controller {
     }
 
     private void getStores() {
-        //added check if user is guest or customer
-
         if (((Customer) (App.client.user)).getAccountType() == Customer.AccountType.STORE)  //if there is certain store for this costumer
             TAStorePicker.setDisable(true); //disable the combobox
 
         else { //get stores for the combobox from db
-            LinkedList<Object> msg = new LinkedList<Object>();
-            msg.add("#PULLSTORES"); //get stores from db
-            App.client.setController(this);
-            try {
-                App.client.sendToServer(msg); //Sends a msg contains the command and the current controller
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            this.stores = App.client.getStores();
+            TAStorePicker.getItems().add("Set Store");
+            TAStorePicker.setValue("Set Store");
+            for (Store s : stores)
+                if(!s.getName().equals("Chain"))
+                    TAStorePicker.getItems().add(s.getName());
         }
-    }
-
-    public void pullStoresToClient(LinkedList<Store> stores) { //when server send stores
-        this.stores = stores;
-        TAStorePicker.getItems().add("Set Store");
-        TAStorePicker.setValue("Set Store");
-        for (Store s : stores)
-            if(!s.getName().equals("Chain"))
-                TAStorePicker.getItems().add(s.getName());
     }
 
     public void displaySummary() throws IOException { //function is called to display all products from cart
@@ -238,7 +225,6 @@ public class CreateOrderController extends Controller {
         Store pickedStore = new Store();
         if (TAStorePicker.isDisabled())
             pickedStore = ((Customer) App.client.user).getStore();
-
         else {
             for (Store s : stores) {
                 if (s.getName().equals(TAStorePicker.getValue()))

@@ -1,6 +1,8 @@
 package org.entities;
 import javax.persistence.*;
 
+import static org.entities.Employee.Role.*;
+
 @Entity
 @Table(name = "employees")
 public class Employee extends User {
@@ -16,10 +18,19 @@ public class Employee extends User {
         this.role = role;
     }
 
+    public Employee(String userID, String name, String userName, String password, String email, String phone, Role role, Store store, boolean frozen) {
+        super(userID, name, userName, password,  email, phone, store, frozen);
+        this.role = role;
+    }
+
     public Employee() {
         super();
     }
 
+    @Override
+    public int getId() {
+        return id;
+    }
     public Role getRole() {
         return role;
     }
@@ -28,23 +39,25 @@ public class Employee extends User {
         this.role = role;
     }
 
-    public String getRoleString() {
-        switch(this.role) {
-            case STORE_EMPLOYEE:
-                return "Store Employee";
 
-            case CUSTOMER_SERVICE:
-                return "Customer Service";
+    public String getRoleToString() {
+        return switch (this.role) {
+            case STORE_EMPLOYEE -> "Store Employee";
+            case CUSTOMER_SERVICE -> "Customer Service";
+            case CEO -> "CEO";
+            case STORE_MANAGER -> "Store Manager";
+            default -> "Admin";
+        };
+    }
 
-            case CEO:
-                return "CEO";
-
-            case STORE_MANAGER:
-                return "Store Manager";
-
-            default:
-                return "Admin";
-        }
+    public Role getStringToRole(String role) {
+        return switch (role) {
+            case "Store Employee" -> STORE_EMPLOYEE;
+            case "Customer Service" -> CUSTOMER_SERVICE;
+            case "CEO" -> CEO;
+            case "Store Manager" -> STORE_MANAGER;
+            default -> ADMIN;
+        };
     }
 
     public static String[] getAllRoles() {
