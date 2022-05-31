@@ -6,6 +6,8 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import org.entities.CustomMadeProduct;
+import org.entities.Customer;
 import org.entities.PreMadeProduct;
 
 import java.io.File;
@@ -23,6 +25,13 @@ public class AddProductController extends Controller {
 
     @FXML
     private Button addImageBtn;
+
+    @FXML
+    private ComboBox<String> colorBox;
+
+    @FXML
+    private ComboBox<String> productTypeBox;
+
 
     @FXML
     private TextArea descriptionText;
@@ -77,7 +86,7 @@ public class AddProductController extends Controller {
 
     private boolean isProductInvalid() {
         if(nameText.getText().isEmpty() || priceText.getText().isEmpty() ||
-                discountText.getText().isEmpty() || descriptionText.getText().isEmpty() || imageAdded == 0)
+                discountText.getText().isEmpty() || descriptionText.getText().isEmpty() || imageAdded == 0 || (productTypeBox.getValue().equals("Custom") && colorBox.getSelectionModel().isEmpty()))
             return true;
         if(nameText.getText().matches ("^[a-zA-Z0-9_ ]*$")  && priceText.getText().matches("^[0-9]*$") &&
                 discountText.getText().matches("^[0-9]*$"))
@@ -85,11 +94,29 @@ public class AddProductController extends Controller {
         return true;
     }
 
+    @FXML
+    void openColor(ActionEvent event) {
+        if(productTypeBox.getValue().equals("Pre-made")){
+            colorBox.setValue("");
+            colorBox.setDisable(true);
+        }else{
+            colorBox.setDisable(false);
+        }
+    }
+
     private void addProduct() { //create a new product with information from worker, then save on DB
         String add = "#ADD";
         LinkedList<Object> msg = new LinkedList<Object>();  //msg has string message with all data in next nodes
-        PreMadeProduct p = new PreMadeProduct(this.nameText.getText(), newImagePath, Integer.parseInt(this.priceText.getText()),
-        descriptionText.getText(),Integer.parseInt(this.discountText.getText()),false);
+        PreMadeProduct p;
+        if (productTypeBox.getValue().equals("Pre-made")){
+             p = new PreMadeProduct(this.nameText.getText(), newImagePath, Integer.parseInt(this.priceText.getText()),
+                    descriptionText.getText(), Integer.parseInt(this.discountText.getText()), false);
+        }else
+        {
+            p = new PreMadeProduct(this.nameText.getText(), newImagePath, Integer.parseInt(this.priceText.getText()),
+                    Integer.parseInt(this.discountText.getText()), false,colorBox.getValue());
+            p.setDescription(descriptionText.getText());
+        }
         msg.add(add);          // adds #ADD command for server
         msg.add(p);             //adds data to msg list
         App.client.setController(this);
@@ -104,14 +131,19 @@ public class AddProductController extends Controller {
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert addImageBtn != null : "fx:id=\"addImageBtn\" was not injected: check your FXML file 'AddProduct.fxml'.";
+        assert colorBox != null : "fx:id=\"colorBox\" was not injected: check your FXML file 'AddProduct.fxml'.";
         assert descriptionText != null : "fx:id=\"descriptionText\" was not injected: check your FXML file 'AddProduct.fxml'.";
-        this.discountText.setTextFormatter(formatter1);
         assert discountText != null : "fx:id=\"discountText\" was not injected: check your FXML file 'AddProduct.fxml'.";
         assert mainImage != null : "fx:id=\"mainImage\" was not injected: check your FXML file 'AddProduct.fxml'.";
         assert nameText != null : "fx:id=\"nameText\" was not injected: check your FXML file 'AddProduct.fxml'.";
-        this.priceText.setTextFormatter(formatter2);
         assert priceText != null : "fx:id=\"priceText\" was not injected: check your FXML file 'AddProduct.fxml'.";
+        assert productTypeBox != null : "fx:id=\"productTypeBox\" was not injected: check your FXML file 'AddProduct.fxml'.";
         assert saveBtn != null : "fx:id=\"saveBtn\" was not injected: check your FXML file 'AddProduct.fxml'.";
+        this.discountText.setTextFormatter(formatter1);
+        this.priceText.setTextFormatter(formatter2);
+        colorBox.getItems().addAll("White","Red" ,"Yellow" , "Green","Pink" , "Blue");
+        productTypeBox.getItems().addAll("Pre-made", "Custom");
+        colorBox.setDisable(true);
 
     }
 

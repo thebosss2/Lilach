@@ -88,6 +88,10 @@ public class PreMadeProduct extends Product {
 
     }
 
+    public void setMainColor(String mainColor) {
+        this.mainColor = mainColor;
+    }
+
     public int getPriceBeforeDiscount() {
         return priceBeforeDiscount;
     }

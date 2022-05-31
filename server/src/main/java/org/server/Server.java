@@ -238,6 +238,9 @@ public class Server extends AbstractServer {
         p.setDiscount(p2.getDiscount());
         p.setImage(p2.getByteImage());
         p.setPriceBeforeDiscount(p2.getPriceBeforeDiscount());
+        if(p.getType()== PreMadeProduct.ProductType.CUSTOM_CATALOG){
+            p.setMainColor(p2.getMainColor());
+        }
     }
 
     public static void orderArrived(Order order, Order.Status status){
