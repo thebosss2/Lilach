@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class ReportController extends Controller{
+public class ReportController extends AbstractReport{
 
     @FXML
     private StackedBarChart<String, Number> complaintChart;
@@ -66,6 +66,7 @@ public class ReportController extends Controller{
     @FXML
     void makeReport(ActionEvent event) throws InterruptedException {
         coolButtonClick((Button) event.getTarget());
+        salesNum.setText("");
         if(isInvalid())
             sendAlert("Must pick time interval to make a report!", "Date Missing", Alert.AlertType.ERROR);
 
@@ -98,10 +99,6 @@ public class ReportController extends Controller{
         displayDates(fromDate, addLocalDate(toDate, -30), toDate.getValue());
     }
 
-    public boolean isInvalid(){
-        return toDate.isDisabled() || toDate.getValue() == null;
-    }
-
     public void pullData(LinkedList<Order> orders, LinkedList<Complaint> complaints) {
         Platform.runLater(()-> {
             int daysNum = numOfDays(getPickedDate(fromDate), getPickedDate(toDate));
@@ -110,7 +107,6 @@ public class ReportController extends Controller{
             showChart(complaints, daysNum);
         });
     }
-
 
     private void showOrders(LinkedList<Order> orders) {
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
@@ -128,23 +124,6 @@ public class ReportController extends Controller{
                 }
             });
         }
-    }
-
-    private Map<String,Integer> getMap(LinkedList<Order> orders) {
-        Map<String, Integer> map = new HashMap<String, Integer>();
-
-        for(Product product : Client.products)
-            map.put(((PreMadeProduct) product).getName(), 0);
-
-        for(Order order : orders) {
-            for(PreMadeProduct product : order.getPreMadeProducts())
-                map.put(product.getName(), map.get(product.getName()) + product.getAmount());
-
-            for(CustomMadeProduct customProduct : order.getCustomMadeProducts())
-                for(PreMadeProduct baseProduct : customProduct.getProducts())
-                    map.put(baseProduct.getName(), map.get(baseProduct.getName()) + baseProduct.getAmount());
-        }
-        return map;
     }
 
     private void showIncome(LinkedList<Order> orders, int daysNum) {
@@ -187,57 +166,7 @@ public class ReportController extends Controller{
                 , seriesLinkedList.get(3), seriesLinkedList.get(4));
     }
 
-    static int numOfDays(Date d1, Date d2) {
-        long difference_In_Time = d2.getTime() - d1.getTime();
-        return  ((int) TimeUnit.MILLISECONDS.toDays(difference_In_Time) % 365) + 1;
-    }
-
-    static int numOfDays(LocalDate d1, LocalDate d2) {
-        return numOfDays(localDateToDate(d1), localDateToDate(d2));
-    }
-
-    static int numOfDays(DatePicker d1, DatePicker d2) {
-        return numOfDays(localDateToDate(d1.getValue()), localDateToDate(d2.getValue()));
-    }
-
-    public static List<LocalDate> getDatesBetween(LocalDate startDate, LocalDate endDate) {
-
-        endDate = addLocalDate(endDate, 1);
-        long numOfDaysBetween = ChronoUnit.DAYS.between(startDate, endDate);
-        return IntStream.iterate(0, i -> i + 1).limit(numOfDaysBetween)
-                .mapToObj(i -> startDate.plusDays(i))
-                .collect(Collectors.toList());
-    }
-
-    public static LocalDate dateToLocalDate(Date dateToConvert) {
-        return dateToConvert.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-    }
-
-    public static Date localDateToDate(LocalDate date) { //get the picked localDate and convert it to Date
-        Instant instant = Instant.from(date.atStartOfDay(ZoneId.systemDefault())); //convert LocalDate to Date
-        Date pickedDate = Date.from(instant);
-        return pickedDate;
-    }
-
-    private boolean dateAreEqual(LocalDate date1, LocalDate date2) {
-        return date1.atStartOfDay().isEqual(date2.atStartOfDay());
-    }
-
-    public static Date addDays(Date date, int daysToAdd)
-    {
-        Date d;
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        cal.add(Calendar.DATE, daysToAdd); //minus number would decrement the days
-        d = cal.getTime();
-        return cal.getTime();
-    }
-
-    public static LocalDate addLocalDate(DatePicker toDate, int daysToAdd) {
-        return dateToLocalDate(addDays(localDateToDate(toDate.getValue()), daysToAdd));
-    }
-
-    public static LocalDate addLocalDate(LocalDate toDate, int daysToAdd) {
-        return dateToLocalDate(addDays(localDateToDate(toDate), daysToAdd));
+    public boolean isInvalid(){
+        return toDate.isDisabled() || toDate.getValue() == null;
     }
 }

@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.LinkedList;
 
-public class CEOReportController extends Controller {
+public class CEOReportController extends AbstractReport {
 
     @FXML
     private Label companyIncome1;
