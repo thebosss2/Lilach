@@ -32,10 +32,10 @@ public class ReportController extends Controller{
     private StackedBarChart<String, Number> complaintChart;
 
     @FXML
-    private NumberAxis complaintsAxis1;
+    private NumberAxis complaintsAxis;
 
     @FXML
-    private CategoryAxis daysAxis1;
+    private CategoryAxis daysAxis;
 
     @FXML
     private DatePicker fromDate;
@@ -74,7 +74,7 @@ public class ReportController extends Controller{
             msg.add("#PULL_MANAGER_REPORT"); //get stores from db
             msg.add( ((User)App.client.user).getStore() );
             msg.add(getPickedDate(fromDate));
-            msg.add(addDay(getPickedDate(toDate)));
+            msg.add(addDays(getPickedDate(toDate), 1));
             App.client.setController(this);
             try {
                 App.client.sendToServer(msg); //Sends a msg contains the command and the current controller
@@ -86,12 +86,16 @@ public class ReportController extends Controller{
 
     public void changedFromDate (ActionEvent event) throws InterruptedException {
         toDate.setDisable(false);
-        displayDates(toDate, fromDate.getValue(), LocalDate.now());
+        if(numOfDays(fromDate.getValue(), LocalDate.now()) <= 31)
+            displayDates(toDate, fromDate.getValue(), LocalDate.now());
+
+        else
+            displayDates(toDate, addLocalDate(fromDate, 30), LocalDate.now());
     }
 
     public void changedToDate (ActionEvent event) throws InterruptedException {
         toDate.setDisable(false);
-        displayDates(fromDate, toDate.getValue(), true);
+        displayDates(fromDate, addLocalDate(toDate, -30), toDate.getValue());
     }
 
     public boolean isInvalid(){
@@ -188,9 +192,17 @@ public class ReportController extends Controller{
         return  ((int) TimeUnit.MILLISECONDS.toDays(difference_In_Time) % 365) + 1;
     }
 
+    static int numOfDays(LocalDate d1, LocalDate d2) {
+        return numOfDays(localDateToDate(d1), localDateToDate(d2));
+    }
+
+    static int numOfDays(DatePicker d1, DatePicker d2) {
+        return numOfDays(localDateToDate(d1.getValue()), localDateToDate(d2.getValue()));
+    }
+
     public static List<LocalDate> getDatesBetween(LocalDate startDate, LocalDate endDate) {
 
-        endDate = dateToLocalDate(addDay(localDateToDate(endDate)));
+        endDate = addLocalDate(endDate, 1);
         long numOfDaysBetween = ChronoUnit.DAYS.between(startDate, endDate);
         return IntStream.iterate(0, i -> i + 1).limit(numOfDaysBetween)
                 .mapToObj(i -> startDate.plusDays(i))
@@ -211,11 +223,21 @@ public class ReportController extends Controller{
         return date1.atStartOfDay().isEqual(date2.atStartOfDay());
     }
 
-    public static Date addDay(Date date)
+    public static Date addDays(Date date, int daysToAdd)
     {
+        Date d;
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
-        cal.add(Calendar.DATE, 1); //minus number would decrement the days
+        cal.add(Calendar.DATE, daysToAdd); //minus number would decrement the days
+        d = cal.getTime();
         return cal.getTime();
+    }
+
+    public static LocalDate addLocalDate(DatePicker toDate, int daysToAdd) {
+        return dateToLocalDate(addDays(localDateToDate(toDate.getValue()), daysToAdd));
+    }
+
+    public static LocalDate addLocalDate(LocalDate toDate, int daysToAdd) {
+        return dateToLocalDate(addDays(localDateToDate(toDate), daysToAdd));
     }
 }

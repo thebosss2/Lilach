@@ -102,10 +102,10 @@
                                     </Label>
                                     <StackedBarChart fx:id="complaintChart" animated="false" prefHeight="458.0" prefWidth="564.0">
                                        <xAxis>
-                                          <CategoryAxis fx:id="daysAxis1" label="Days" side="BOTTOM" />
+                                          <CategoryAxis fx:id="daysAxis" label="Days" side="BOTTOM" />
                                        </xAxis>
                                        <yAxis>
-                                          <NumberAxis fx:id="complaintsAxis1" label="Number Of Complaints" side="LEFT" upperBound="20.0" />
+                                          <NumberAxis fx:id="complaintsAxis" label="Number Of Complaints" side="LEFT" upperBound="20.0" />
                                        </yAxis>
                                     </StackedBarChart>
                                  </children>

@@ -61,7 +61,8 @@ public class EditProductController extends Controller {
         this.priceText.setTextFormatter(formatter2);
         this.priceText.setText(Integer.toString(product.getPriceBeforeDiscount()));
         this.discountText.setTextFormatter(formatter1);
-        this.descriptionText.setText(product.getDescription());
+        if(product.getDescription() != null)
+            this.descriptionText.setText(product.getDescription());
         System.out.println(product.getDiscount());
         if (product.getDiscount() != 0)
             this.discountText.setText(Integer.toString(product.getDiscount()));
@@ -101,7 +102,6 @@ public class EditProductController extends Controller {
         String save = "#SAVE";
         LinkedList<Object> msg = new LinkedList<Object>();  //msg has string message with all data in next nodes
         PreMadeProduct p;
-
 
         if (imageChanged > 0)
             p = new PreMadeProduct(nameText.getText(), newImagePath, Integer.parseInt(priceText.getText()),
