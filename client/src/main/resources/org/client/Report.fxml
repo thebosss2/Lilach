@@ -16,11 +16,11 @@
 
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.ReportController">
    <children>
-      <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="1050.0" style="-fx-background-color: ffffff;">
+      <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="615.0" prefWidth="1050.0" style="-fx-background-color: ffffff;">
          <content>
             <AnchorPane maxHeight="600.0" maxWidth="1000.0" style="-fx-background-color: ffffff;">
                <children>
-                  <VBox prefHeight="600.0" prefWidth="1043.0" spacing="20.0">
+                  <VBox layoutX="11.0" prefHeight="615.0" prefWidth="1032.0" spacing="20.0">
                      <children>
                         <HBox prefHeight="60.0" prefWidth="1043.0" spacing="10.0">
                            <children>
@@ -57,26 +57,55 @@
                               <Insets left="20.0" top="30.0" />
                            </VBox.margin>
                         </HBox>
-                        <HBox prefHeight="539.0" prefWidth="1043.0">
+                        <HBox prefHeight="539.0" prefWidth="1036.0">
                            <children>
-                              <VBox prefHeight="539.0" prefWidth="469.0">
+                              <VBox prefHeight="539.0" prefWidth="468.0">
                                  <children>
-                                    <Label fx:id="incomeReport" alignment="TOP_LEFT" prefHeight="216.0" prefWidth="468.0" text="     Income report:">
+                                    <Label alignment="TOP_LEFT" prefHeight="36.0" prefWidth="468.0" text="Income Report:">
                                        <font>
-                                          <Font size="15.0" />
+                                          <Font name="Script MT Bold" size="23.0" />
                                        </font>
                                     </Label>
-                                    <PieChart fx:id="ordersChart" legendSide="LEFT" prefHeight="257.0" prefWidth="293.0" title="Orders Report" />
+                                    <HBox prefHeight="70.0" prefWidth="470.0">
+                                       <children>
+                                          <Label fx:id="incomeReport" alignment="TOP_LEFT" prefHeight="70.0" prefWidth="235.0">
+                                             <font>
+                                                <Font name="Yu Gothic Medium" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="ordersReport" alignment="TOP_LEFT" prefHeight="70.0" prefWidth="235.0">
+                                             <font>
+                                                <Font name="Yu Gothic Medium" size="15.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <Label prefHeight="35.0" prefWidth="468.0" text="Orders Report:">
+                                       <font>
+                                          <Font name="Script MT Bold" size="23.0" />
+                                       </font>
+                                    </Label>
+                                    <PieChart fx:id="ordersChart" legendSide="LEFT" legendVisible="false" prefHeight="310.0" prefWidth="468.0" />
+                                    <Label fx:id="salesNum" alignment="CENTER" prefHeight="42.0" prefWidth="468.0">
+                                       <font>
+                                          <Font name="Yu Gothic Medium" size="18.0" />
+                                       </font>
+                                    </Label>
                                  </children>
                               </VBox>
                               <VBox prefHeight="539.0" prefWidth="564.0">
                                  <children>
-                                    <StackedBarChart fx:id="complaintChart" prefHeight="423.0" prefWidth="555.0" title="Complaint Chart">
+                                    <Label prefHeight="35.0" prefWidth="566.0" text="Complaint Char:">
+                                       <font>
+                                          <Font name="Script MT Bold" size="22.0" />
+                                       </font>
+                                    </Label>
+                                    <StackedBarChart fx:id="complaintChart" animated="false" prefHeight="458.0" prefWidth="564.0">
                                        <xAxis>
                                           <CategoryAxis fx:id="daysAxis1" label="Days" side="BOTTOM" />
                                        </xAxis>
                                        <yAxis>
-                                          <NumberAxis fx:id="complaintsAxis1" label="Number Of Complaints" side="LEFT" />
+                                          <NumberAxis fx:id="complaintsAxis1" label="Number Of Complaints" side="LEFT" upperBound="20.0" />
                                        </yAxis>
                                     </StackedBarChart>
                                  </children>

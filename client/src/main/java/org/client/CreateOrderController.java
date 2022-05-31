@@ -354,12 +354,6 @@ public class CreateOrderController extends Controller {
             e.printStackTrace();
         }
     }
-
-    private Date getPickedDate(DatePicker dp) { //get the picked localDate and convert it to Date
-        Instant instant = Instant.from(dp.getValue().atStartOfDay(ZoneId.systemDefault())); //convert LocalDate to Date
-        Date pickedDate = Date.from(instant);
-        return pickedDate;
-    }
     
     @FXML
     private boolean isInvalidTA() {

@@ -341,7 +341,7 @@ public class Server extends AbstractServer {
 
             Store rightStore = (Store) msg.get(1);
 
-            Date toDate = (Date) msg.get(2), fromDate = (Date) msg.get(3);
+            Date fromDate = (Date) msg.get(2), toDate = (Date) msg.get(3);
 
             List<Order> orders = App.getAllOrders();
             List<Complaint> complaints = (LinkedList<Complaint>) App.getAllComplaints();
