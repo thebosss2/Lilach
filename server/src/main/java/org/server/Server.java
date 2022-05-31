@@ -419,24 +419,30 @@ public class Server extends AbstractServer {
 
 
     private void pullManagerReport(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
-        String commandToClient = msg.get(0).toString();
-        List<Object> msgToClient = new LinkedList<Object>();
-        msgToClient.add(commandToClient);
+        try {
+            String commandToClient = msg.get(0).toString();
+            List<Object> msgToClient = new LinkedList<Object>();
+            msgToClient.add(commandToClient);
 
-        Store rightStore = (Store) msg.get(1);
-        Date toDate = (Date) msg.get(2), fromDate = (Date) msg.get(3);
-        List<Order> orders = App.getAllOrders();
-        List<Complaint> complaints = App.getAllComplaints();
+            Store rightStore = (Store) msg.get(1);
 
-        orders.removeIf(order -> order.getStore().getId() != rightStore.getId()
-                || order.getDeliveryDate().compareTo(fromDate) < 0 || order.getDeliveryDate().compareTo(toDate) > 0);
+            Date fromDate = (Date) msg.get(2), toDate = (Date) msg.get(3);
 
-        complaints.removeIf(complaint -> complaint.getStore().getId() != rightStore.getId()
-                || complaint.getDate().compareTo(fromDate) < 0 || complaint.getDate().compareTo(toDate) > 0);
+            List<Order> orders = App.getAllOrders();
+            List<Complaint> complaints = (LinkedList<Complaint>) App.getAllComplaints();
 
-        msgToClient.add(orders);
-        msgToClient.add(complaints);
-        client.sendToClient(msgToClient);
+            orders.removeIf(order -> order.getStore().getId() != rightStore.getId()
+                    || order.getDeliveryDate().compareTo(fromDate) < 0 || order.getDeliveryDate().compareTo(toDate) > 0);
+
+            complaints.removeIf(complaint -> complaint.getStore().getId() != rightStore.getId()
+                    || complaint.getDate().compareTo(fromDate) < 0 || complaint.getDate().compareTo(toDate) > 0);
+
+            msgToClient.add(orders);
+            msgToClient.add(complaints);
+            client.sendToClient(msgToClient);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
     }
 
 

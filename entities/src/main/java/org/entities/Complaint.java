@@ -97,4 +97,24 @@ public class Complaint implements Serializable {    //only for customers
     public void setStore(Store store) {
         this.store = store;
     }
+
+    public static Topic[] getAllTopics(){
+        Topic[] topics = new Topic[5];
+        topics[0] = Topic.PAYMENT;
+        topics[1] = Topic.BAD_SERVICE;
+        topics[2] = Topic.BAD_PRODUCT;
+        topics[3] = Topic.LATE_ARRIVAL;
+        topics[4] = Topic.OTHER;
+        return topics;
+    }
+
+    public static String topicToString(Complaint.Topic topic){
+        return switch (topic){
+            case BAD_SERVICE -> "Bad Service";
+            case LATE_ARRIVAL -> "Order didn't arrive in time";
+            case BAD_PRODUCT -> "Defective product / not what you ordered";
+            case PAYMENT -> "Payment issue";
+            case OTHER -> "Other";
+        };
+    }
 }

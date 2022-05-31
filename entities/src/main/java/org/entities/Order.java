@@ -1,5 +1,8 @@
 package org.entities;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -16,10 +19,12 @@ public class Order implements Serializable {     //Product class entity
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int id;         // id generated for each product
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SELECT)
     protected List<PreMadeProduct> preMadeProducts;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SELECT)
     protected List<CustomMadeProduct> customMadeProducts;
 
     @ManyToOne
@@ -49,7 +54,8 @@ public class Order implements Serializable {     //Product class entity
 
     //SELF_SHIPPING constructor
     public Order(LinkedList<PreMadeProduct> preMadeProducts, LinkedList<CustomMadeProduct> customMadeProducts,
-                 Customer orderedBy, int price, Date deliveryDate, String deliveryHour, String address, String greetingCard) {
+                 Customer orderedBy, int price, Date deliveryDate, Store store, String deliveryHour,
+                 String address, String greetingCard) {
 
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat simpleformat = new SimpleDateFormat("dd/MMMM/yyyy hh:mm:s");
@@ -61,6 +67,7 @@ public class Order implements Serializable {     //Product class entity
         this.orderedBy = orderedBy;
         this.price = price;
         this.deliveryDate = deliveryDate;
+        this.store = store;
         this.deliveryHour = deliveryHour;
         this.isDelivered = Status.PENDING;
         this.address = address;
@@ -69,7 +76,7 @@ public class Order implements Serializable {     //Product class entity
 
     //SHIPPING_GIFT constructor
     public Order(LinkedList<PreMadeProduct> preMadeProducts, LinkedList<CustomMadeProduct> customMadeProducts,
-                 Customer orderedBy, int price, Date deliveryDate, String deliveryHour, String receiverPhone,
+                 Customer orderedBy, int price, Date deliveryDate, Store store, String deliveryHour, String receiverPhone,
                  String receiverName, String address, String greetingCard) {
 
         Calendar cal = Calendar.getInstance();
@@ -82,6 +89,7 @@ public class Order implements Serializable {     //Product class entity
         this.orderedBy = orderedBy;
         this.price = price;
         this.deliveryDate = deliveryDate;
+        this.store = store;
         this.deliveryHour = deliveryHour;
         this.isDelivered = Status.PENDING;
         this.receiverPhone = receiverPhone;
@@ -142,6 +150,7 @@ public class Order implements Serializable {     //Product class entity
     public int getId() {
         return id;
     }
+
     public int getPrice() {
         return price;
     }
