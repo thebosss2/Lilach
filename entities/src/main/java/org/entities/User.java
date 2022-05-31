@@ -5,7 +5,7 @@ import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 
 @MappedSuperclass
-public class User extends Guest implements Serializable {
+public abstract class User extends Guest implements Serializable {
 
     @Column(name = " Identification")
     private String userID;
@@ -47,6 +47,8 @@ public class User extends Guest implements Serializable {
         super();
     }
 
+    public abstract int getId();
+
     public String getUserName() {
         return userName;
     }
@@ -83,7 +85,7 @@ public class User extends Guest implements Serializable {
         return userID;
     }
 
-    public void setUserID(String ID) {
+    public void setUserID(String userID) {
         this.userID = userID;
     }
 

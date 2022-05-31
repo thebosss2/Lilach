@@ -16,8 +16,6 @@ public class Customer extends User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-
-
     public enum AccountType{STORE, CHAIN, MEMBERSHIP}
     private AccountType accountType;
     private Date memberShipExpire;
@@ -62,6 +60,11 @@ public class Customer extends User implements Serializable {
 
     public Customer() {
         super();
+    }
+
+    @Override
+    public int getId() {
+        return id;
     }
 
     public void setCreditCard(String creditCard) {

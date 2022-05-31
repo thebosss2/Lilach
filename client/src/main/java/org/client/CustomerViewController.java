@@ -2,6 +2,7 @@ package org.client;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -92,10 +93,39 @@ public class CustomerViewController extends Controller{
 
     @FXML
     void clickedSaveCustomer(ActionEvent event) {
-        if (alertMsg("Save User", "save an customer's account", isCustomerInvalid())) {
-            saveChanges(); //if the fields are all valid- save the order
-            App.client.getSkeleton().changeCenter("ManageAccounts"); //and head back to catalog
+        if (storeInvalid())
+            sendAlert("Store is invalid! ", "Saving failed", Alert.AlertType.WARNING);
+        else{
+            if(this.username.getText().equals(customer.getUserName())){
+                if(alertMsg("Save User", "save an customer's account", isCustomerInvalid())){ checkAndSave();}
+            }
+            else usernameInvalid();
         }
+    }
+    private void usernameInvalid() {
+        App.client.setController(this);
+        List<Object> msg = new LinkedList<Object>();
+        msg.add("#SIGNUP_AUTHENTICATION");
+        msg.add(this.username.getText());
+        msg.add(this.id.getText()); //todo deal with id in itai and sagi func
+        try {
+            App.client.sendToServer(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private boolean storeInvalid() {
+        if(this.storePicker.getValue().equals("Chain"))
+            return this.typePicker.getValue().equals("Store Customer");
+        else  //store is normal store
+            return !this.typePicker.getValue().equals("Store Customer");//so if the type is chain or member this is invalid
+    }
+
+    protected void checkAndSave() {
+        saveChanges(); //if the fields are all valid- save the order
+        App.client.getSkeleton().changeCenter("ManageAccounts"); //and head back to catalog
+
     }
 
     @FXML
@@ -122,7 +152,7 @@ public class CustomerViewController extends Controller{
     }
 
 
-    private boolean isCustomerInvalid() {
+    protected boolean isCustomerInvalid() {
         return !emailValid() ||
                 this.username.getText().isEmpty() ||
                 this.password.getText().isEmpty() ||

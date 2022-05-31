@@ -29,6 +29,7 @@ public class Server extends AbstractServer {
                 case "#ADD" -> addProduct((LinkedList<Object>) msg);           // add product to the DB
                 case "#LOGIN" -> loginServer((LinkedList<Object>)msg,client);
                 case "#SIGNUP_AUTHENTICATION" -> authinticateUser((LinkedList<Object>) msg, client);
+                case "#CHECK_USER_AUTHENTICATION" -> checkUser((LinkedList<Object>) msg, client);
                 case "#SIGNUP" -> signUpServer(((LinkedList<Object>)msg),client);
                 case "#PULLSTORES" -> pullStores(((LinkedList<Object>) msg), client);  //display updated catalog version
                 case "#SAVEORDER" -> saveOrderServer(((LinkedList<Object>)msg),client);
@@ -227,6 +228,34 @@ public class Server extends AbstractServer {
         App.session.flush();
         App.session.getTransaction().commit();
     }
+
+    private void checkUser(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
+        List<User> users = App.getAllUsers();
+        List<Object> newMsg = new LinkedList<Object>();
+        newMsg.add("#SIGNUP_AUTHENTICATION");
+        for(User user : users) {
+            if(user.getId()!=(int)msg.get(3)) {
+                if((boolean)(msg.get(4))){ //user is employee
+                    if (user.getUserName().equals(msg.get(1).toString()) || (user.getUserID().equals(msg.get(2)) && (user instanceof Employee))){
+                            newMsg.add("#USER_EXISTS"); //checks if username or user id already exists
+                            client.sendToClient(newMsg);
+                            return;
+                    }
+                }
+                else {
+                    if (user.getUserName().equals(msg.get(1).toString()) || (user.getUserID().equals(msg.get(2)) && (user instanceof Customer))) {
+                        newMsg.add("#USER_EXISTS"); //checks if username or user id already exists
+                        client.sendToClient(newMsg);
+                        return;
+                    }
+                }
+
+            }
+        }
+        newMsg.add("#USER_DOES_NOT_EXIST");
+        client.sendToClient(newMsg);
+    }
+
 
     //Checks if the username asked by new signup exists.
     private void authinticateUser(LinkedList<Object> msg, ConnectionToClient client) throws IOException {

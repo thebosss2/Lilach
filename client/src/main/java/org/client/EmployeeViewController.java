@@ -3,6 +3,7 @@ package org.client;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -103,13 +104,41 @@ public class EmployeeViewController extends Controller {
 
     @FXML
     void clickedSaveEmployee(ActionEvent event) {
-        if (alertMsg("Save User", "save an employee's account", isEmployeeInvalid())) {
+        if (storeInvalid())
+            sendAlert("Store is invalid! ", "Saving failed", Alert.AlertType.WARNING);
+        else usernameInvalid();
+    }
+
+    protected void checkAndSave() {
             saveChanges(); //if the fields are all valid- save the order
             App.client.getSkeleton().changeCenter("ManageAccounts"); //and head back to catalog
+
+    }
+
+    private void usernameInvalid() {
+        App.client.setController(this);
+        List<Object> msg = new LinkedList<Object>();
+        msg.add("#CHECK_USER_AUTHENTICATION");
+        msg.add(this.username.getText());
+        msg.add(this.id.getText());
+        msg.add(employee.getId());
+        msg.add(true); //true for employee
+        try {
+            App.client.sendToServer(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    private boolean isEmployeeInvalid() {
+    private boolean storeInvalid() {
+        if(!this.storePicker.getValue().equals("Chain"))
+            if(this.rolePicker.getValue().equals("CEO") || this.rolePicker.getValue().equals("Customer Service"))
+                return true;
+        if(this.rolePicker.getValue().equals("Store Manager"));
+            return false;//todo check db
+    }
+
+    protected boolean isEmployeeInvalid() {
         return !emailValid() ||
                 this.username.getText().isEmpty() ||
                 this.password.getText().isEmpty() ||

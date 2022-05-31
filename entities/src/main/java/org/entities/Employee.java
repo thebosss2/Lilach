@@ -27,6 +27,10 @@ public class Employee extends User {
         super();
     }
 
+    @Override
+    public int getId() {
+        return id;
+    }
     public Role getRole() {
         return role;
     }
