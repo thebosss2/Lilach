@@ -106,23 +106,19 @@ public class EmployeeViewController extends Controller {
     void clickedSaveEmployee(ActionEvent event) {
         if (storeInvalid())
             sendAlert("Store is invalid! ", "Saving failed", Alert.AlertType.WARNING);
-        else usernameInvalid();
+        else userInvalid();
     }
 
-    protected void checkAndSave() {
-            saveChanges(); //if the fields are all valid- save the order
-            App.client.getSkeleton().changeCenter("ManageAccounts"); //and head back to catalog
-
-    }
-
-    private void usernameInvalid() {
+    private void userInvalid() {
         App.client.setController(this);
         List<Object> msg = new LinkedList<Object>();
         msg.add("#CHECK_USER_AUTHENTICATION");
         msg.add(this.username.getText());
         msg.add(this.id.getText());
         msg.add(employee.getId());
-        msg.add(true); //true for employee
+        msg.add(employee);
+        msg.add(this.rolePicker.getValue());
+        msg.add(this.storePicker.getValue());
         try {
             App.client.sendToServer(msg);
         } catch (IOException e) {
@@ -131,11 +127,10 @@ public class EmployeeViewController extends Controller {
     }
 
     private boolean storeInvalid() {
-        if(!this.storePicker.getValue().equals("Chain"))
-            if(this.rolePicker.getValue().equals("CEO") || this.rolePicker.getValue().equals("Customer Service"))
-                return true;
-        if(this.rolePicker.getValue().equals("Store Manager"));
-            return false;//todo check db
+        if(!this.storePicker.getValue().equals("Chain")) {
+            return this.rolePicker.getValue().equals("CEO") || this.rolePicker.getValue().equals("Customer Service");
+        }
+            return false;
     }
 
     protected boolean isEmployeeInvalid() {
@@ -159,7 +154,7 @@ public class EmployeeViewController extends Controller {
     }
 
     @FXML
-    void saveChanges() {
+    protected void saveChanges() {
         Store store = new Store();
         for (Store s : stores) {
             if (s.getName().equals(storePicker.getValue()))
@@ -179,6 +174,9 @@ public class EmployeeViewController extends Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        App.client.getSkeleton().changeCenter("ManageAccounts"); //and head back to catalog
+
     }
 
 }

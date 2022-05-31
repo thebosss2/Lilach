@@ -95,19 +95,16 @@ public class CustomerViewController extends Controller{
     void clickedSaveCustomer(ActionEvent event) {
         if (storeInvalid())
             sendAlert("Store is invalid! ", "Saving failed", Alert.AlertType.WARNING);
-        else{
-            if(this.username.getText().equals(customer.getUserName())){
-                if(alertMsg("Save User", "save an customer's account", isCustomerInvalid())){ checkAndSave();}
-            }
-            else usernameInvalid();
-        }
+        else usernameInvalid();
     }
     private void usernameInvalid() {
         App.client.setController(this);
         List<Object> msg = new LinkedList<Object>();
-        msg.add("#SIGNUP_AUTHENTICATION");
+        msg.add("#CHECK_USER_AUTHENTICATION");
         msg.add(this.username.getText());
-        msg.add(this.id.getText()); //todo deal with id in itai and sagi func
+        msg.add(this.id.getText());
+        msg.add(customer.getId());
+        msg.add(customer);
         try {
             App.client.sendToServer(msg);
         } catch (IOException e) {
@@ -120,12 +117,6 @@ public class CustomerViewController extends Controller{
             return this.typePicker.getValue().equals("Store Customer");
         else  //store is normal store
             return !this.typePicker.getValue().equals("Store Customer");//so if the type is chain or member this is invalid
-    }
-
-    protected void checkAndSave() {
-        saveChanges(); //if the fields are all valid- save the order
-        App.client.getSkeleton().changeCenter("ManageAccounts"); //and head back to catalog
-
     }
 
     @FXML
@@ -149,6 +140,8 @@ public class CustomerViewController extends Controller{
         } catch (IOException e) {
             e.printStackTrace();
         }
+        App.client.getSkeleton().changeCenter("ManageAccounts"); //and head back to catalog
+
     }
 
 

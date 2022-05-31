@@ -205,16 +205,22 @@ public class Client extends AbstractClient {
                 Controller.sendAlert("Username already taken. Please try a new one.", "Sign-Up Failed", Alert.AlertType.WARNING);
             }
         } else {
-            if (msg.get(1).toString().equals("#USER_DOES_NOT_EXIST")) {
-                if(this.controller instanceof EmployeeViewController)
-                    Platform.runLater(()->{if (((EmployeeViewController) this.controller).alertMsg("Save User", "save an employee's account", ((EmployeeViewController) this.controller).isEmployeeInvalid())) {
-                        ((EmployeeViewController)(this.controller)).checkAndSave();
-                    }});
+            if (msg.get(1).toString().equals("#STORE_INVALID")) {
+                this.controller.sendAlert("Store already has a manager! ", "Saving failed", Alert.AlertType.WARNING);
+            } else if (msg.get(1).toString().equals("#USER_DOES_NOT_EXIST")) {
+                if (this.controller instanceof EmployeeViewController)
+                    Platform.runLater(() -> {
+                        if (((EmployeeViewController) this.controller).alertMsg("Save User", "save an employee's account", ((EmployeeViewController) this.controller).isEmployeeInvalid())) {
+                            ((EmployeeViewController) (this.controller)).saveChanges();
+                        }
+                    });
 
                 else
-                    Platform.runLater(()->{if (((CustomerViewController) this.controller).alertMsg("Save User", "save an employee's account", ((CustomerViewController) this.controller).isCustomerInvalid())) {
-                        ((CustomerViewController)(this.controller)).checkAndSave();
-                    }});
+                    Platform.runLater(() -> {
+                        if (((CustomerViewController) this.controller).alertMsg("Save User", "save an employee's account", ((CustomerViewController) this.controller).isCustomerInvalid())) {
+                            ((CustomerViewController) (this.controller)).saveChanges();
+                        }
+                    });
             } else
                 this.controller.sendAlert("Username or ID are already taken! ", "Saving failed", Alert.AlertType.WARNING);
         }

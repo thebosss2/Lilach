@@ -235,8 +235,14 @@ public class Server extends AbstractServer {
         newMsg.add("#SIGNUP_AUTHENTICATION");
         for(User user : users) {
             if(user.getId()!=(int)msg.get(3)) {
-                if((boolean)(msg.get(4))){ //user is employee
-                    if (user.getUserName().equals(msg.get(1).toString()) || (user.getUserID().equals(msg.get(2)) && (user instanceof Employee))){
+                if((msg.get(4)) instanceof Employee){ //user is employee
+                    if(msg.get(5).equals("Store Manager") && (user instanceof Employee) &&
+                    ((Employee) user).getRole() == Employee.Role.STORE_MANAGER && (msg.get(6).equals(user.getStore().getName()))) {
+                        newMsg.add("#STORE_INVALID"); //checks if username or user id already exists
+                        client.sendToClient(newMsg);
+                        return;
+                    }
+                    else if (user.getUserName().equals(msg.get(1).toString()) || (user.getUserID().equals(msg.get(2)) && (user instanceof Employee))){
                             newMsg.add("#USER_EXISTS"); //checks if username or user id already exists
                             client.sendToClient(newMsg);
                             return;
