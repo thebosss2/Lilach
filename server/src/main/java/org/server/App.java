@@ -274,11 +274,11 @@ public class App {
 
             SessionFactory sessionFactory = getSessionFactory();        //calls and creates session factory
             session = sessionFactory.openSession(); //opens session
-            /*session.beginTransaction();       //transaction for generation
+            session.beginTransaction();       //transaction for generation
             generateProducts();             //generate
             generateStores();
             generateBaseCustomMadeProduct();
-            session.getTransaction().commit(); // Save everything.*/
+            session.getTransaction().commit(); // Save everything.
 
             ScheduleMailing.main(null);
 

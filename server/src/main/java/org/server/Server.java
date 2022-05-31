@@ -432,7 +432,7 @@ public class Server extends AbstractServer {
             List<Complaint> complaints = (LinkedList<Complaint>) App.getAllComplaints();
 
             orders.removeIf(order -> order.getStore().getId() != rightStore.getId()
-                    || order.getDeliveryDate().compareTo(fromDate) < 0 || order.getDeliveryDate().compareTo(toDate) > 0);
+                    || order.getOrderDate().compareTo(fromDate) < 0 || order.getOrderDate().compareTo(toDate) > 0);
 
             complaints.removeIf(complaint -> complaint.getStore().getId() != rightStore.getId()
                     || complaint.getDate().compareTo(fromDate) < 0 || complaint.getDate().compareTo(toDate) > 0);
