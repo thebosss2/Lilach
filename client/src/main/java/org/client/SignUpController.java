@@ -143,8 +143,10 @@ public class SignUpController extends Controller{
     }
 
     private boolean checkFieldsNotEmpty() {
+/*
         if(Integer.parseInt(idText.getText())==69)
             SendMail.openWebpage((new Random().nextInt()%2==0) ? "https://www.youtube.com/watch?v=TlTb0o2XAyg" : "https://youtu.be/26lZvxwWzY0");
+*/
 
         return fullNameText.getText().isEmpty() || usernameText.getText().isEmpty() || passwordText.getText().isEmpty() ||idText.getText().isEmpty()||
                 emailText.getText().isEmpty() || creditCardText.getText().isEmpty() || accountType.getSelectionModel().isEmpty() ||
