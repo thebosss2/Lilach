@@ -13,7 +13,7 @@
 
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="615.0" prefWidth="600.0" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.ReportController">
     <children>
-        <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="815.0" prefWidth="600.0" style="-fx-background-color: ffffff;">
+        <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="815.0" prefWidth="600.0" style="-fx-background-color: ffffff;">
             <content>
                 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="819.0" prefWidth="598.0" style="-fx-background-color: ffffff;">
                     <children>

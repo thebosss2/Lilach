@@ -69,9 +69,9 @@ public class ProductViewController extends Controller{
         this.mainImage.setImage(product.getImage());
         this.image1.setImage(product.getImage());
         this.description.setText(product.getDescription());
-        this.price.setText(Double.toString(product.getPrice()));
-        if(product.getPriceBeforeDiscount() != 0)
-            this.priceBeforeDiscount.setText(Double.toString(product.getPriceBeforeDiscount()));
+        this.price.setText(Integer.toString(product.getPrice()));
+        if(product.getDiscount() != 0)
+            this.priceBeforeDiscount.setText(Integer.toString(product.getPriceBeforeDiscount()));
     }
 
     @FXML

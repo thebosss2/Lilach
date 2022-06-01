@@ -335,6 +335,7 @@ public class CreateOrderController extends Controller {
         List<Object> newMsg = new LinkedList<Object>();
         newMsg.add("#SAVEORDER");
         newMsg.add(order);
+        App.client.cart.emptyProducts();
         try {
             App.client.sendToServer(newMsg);
         } catch (IOException e) {

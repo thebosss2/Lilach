@@ -89,6 +89,7 @@ public class GuestMenuController extends Controller {
         catalogBtn.setStyle("-fx-background-color: #9bc98c");
         signUpBtn.setStyle("-fx-background-color: #9bc98c");
         loginBtn.setStyle("-fx-background-color: #9bc98c");
+        customMade.setStyle("-fx-background-color: #9bc98c");
         button.setStyle("-fx-background-color: #62a74d");
     }
 

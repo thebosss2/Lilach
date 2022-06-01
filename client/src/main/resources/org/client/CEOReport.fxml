@@ -16,15 +16,15 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.CEOReportController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.CEOReportController">
    <children>
-      <ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="1064.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="1064.0" style="-fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <content>
-            <AnchorPane maxHeight="2000.0" maxWidth="1920.0" style="-fx-background-color: ffffff;">
+            <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: #FFFFFF;">
                <children>
                   <VBox prefHeight="899.0" prefWidth="1084.0">
                      <children>
-                        <HBox prefHeight="45.0" prefWidth="1083.0" spacing="10.0">
+                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="45.0" prefWidth="1083.0" spacing="10.0">
                            <children>
                               <Label text="from" />
                               <DatePicker fx:id="fromDate1" onAction="#changedFromDate" prefHeight="28.0" prefWidth="100.0">
@@ -69,7 +69,7 @@
                               <Insets top="15.0" />
                            </VBox.margin>
                         </HBox>
-                        <HBox prefHeight="382.0" prefWidth="1084.0">
+                        <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="382.0" prefWidth="1084.0">
                            <children>
                               <VBox prefHeight="266.0" prefWidth="1084.0">
                                  <children>

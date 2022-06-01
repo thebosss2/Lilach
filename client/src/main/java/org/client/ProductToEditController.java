@@ -39,7 +39,7 @@ public class ProductToEditController extends ItemController{
         price.setText(product.getPrice() + "₪");
         name.setText(product.getName());
 
-        if(product.getPriceBeforeDiscount() != 0)
+        if(product.getDiscount() != 0)
             priceBeforeDiscount.setText(product.getPriceBeforeDiscount() + " ₪");
         else
             priceBeforeDiscount.setText("");

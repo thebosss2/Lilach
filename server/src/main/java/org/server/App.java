@@ -133,8 +133,8 @@ public class App {
         List<Employee> employees = new LinkedList<Employee>();
         String[] employeeId = new String[]{"987654321","876543219","765432198","654321987","543219876","432198765","321987654","219876543","334574567","345234556",
         "534563456","345634564","332141234","567856786","653294462","870767907","567944332"};
-        String[] employeeNames = new String[]{"Itai","Sagi","Gal","Tahel","Yahav","May", "Lillian", "Nellie", "Chantelle", "Tia",       "Christine", "Hayley", "Alice", "Wanda", "Tara", "Rose", "Ruby"};
-        String[] employeeUserNames = new String[]{"itai","sagi","gal","tahel","yahav","may", "lilly", "nella", "chantelle", "tia",      "christa", "tookYourChildren", "Halle", "Ali", "Scarlet", "Tara", "Rose"};
+        String[] employeeNames = new String[]{"Itai","Sagi","Gal","Tahel","Yahav","May", "Lillian", "Nellie", "Chantelle", "Tia", "Christine", "Hayley", "Alice", "Wanda", "Tara", "Rose", "Ruby"};
+        String[] employeeUserNames = new String[]{"itai","sagi","gal","tahel","yahav","may", "lilly", "nella", "chantelle", "tia", "christa", "tookYourChildren", "Halle", "Ali", "Scarlet", "Tara", "Rose"};
         String[] employeeEmails = new String[]{"Itai@gmail.com", "Sagi@gmail.com", "Gal@gmail.com", "Tahel@gmail.com", "Yahav@gmail.com", "May@gmail.com",
         "Lillian@gmail.com", "Nellie@gmail.com", "Chantelle@gmail.com", "Tia@gmail.com", "Christa@gmail.com", "tookYourChildren@gmail.com", "Halle@gmail.com", "Ali@gmail.com", "Scarlet@gmail.com", "Tara@gmail.com", "Rose@gmail.com"};
         int storeN;
