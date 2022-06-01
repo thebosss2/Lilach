@@ -77,6 +77,7 @@ public class Client extends AbstractClient {
                 case "#PULLUSERS" -> pushUsers(msg);
                 case "#ERROR" -> errorMsg((LinkedList<Object>)msg);
                 case "#UPDATEBALANCE"-> updateBalance((Customer) ((LinkedList<Object>) msg).get(1));
+                case "#REFRESH" -> refresh((LinkedList<Object>)msg);
             }
         } catch (Exception e) {
             System.out.println(Arrays.toString(e.getStackTrace()));
@@ -84,6 +85,10 @@ public class Client extends AbstractClient {
             System.out.println("Client Error");
             e.getStackTrace();
         }
+    }
+
+    private void refresh(LinkedList<Object> msg) {
+
     }
 
 
