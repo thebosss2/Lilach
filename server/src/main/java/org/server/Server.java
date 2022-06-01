@@ -1,12 +1,16 @@
 package org.server;
 
+import javafx.scene.control.Alert;
 import org.entities.*;
 import org.server.ocsf.AbstractServer;
 import org.server.ocsf.ConnectionToClient;
 
+import javax.naming.NamingEnumeration;
 import java.io.IOException;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Server extends AbstractServer {
 
@@ -72,16 +76,64 @@ public class Server extends AbstractServer {
         client.sendToClient(msgToClient);
     }
 
+    private void changeBalance(Order order, ConnectionToClient client) {
+        int refund = 0;
+        int price = order.getPrice();
+        Date date = order.getDeliveryDate();
+        String hour =order.getDeliveryHour() ;
+        Customer customer = order.getOrderedBy();
+        Date new_date = new Date();
+        long diffInMillies = Math.abs(date.getTime() - new_date.getTime());
+        long diff = TimeUnit.HOURS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+
+        diff += Integer.parseInt(hour.substring(0, 2));
+
+
+        String addition;
+/*        //alert+ change refund
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("Order Cancellation succeeded");
+        alert.setTitle("The Order Has Been Canceled");*/
+
+        if (diff > 3)
+        {
+            refund = price;
+            addition="You have received a full refund";
+        }
+        else if (diff>1)
+        {
+            refund = price/2;
+            addition="The refund is half the order price";
+        }
+        else
+            addition="I'm sorry, but according to the policy you do not deserve a refund";
+
+        updateBalance(customer,App.session.find(Customer.class,customer.getSerialId()).getBalance() + refund);
+
+        List<Object> newMsg = new LinkedList<Object>();
+        newMsg.add("#DELETEORDER");
+        newMsg.add("Order Cancellation succeeded" + addition);
+        newMsg.add("The Order Has Been Canceled");
+        newMsg.add(App.session.find(Customer.class,customer.getSerialId()));
+        try {
+            client.sendToClient(newMsg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     private void deleteOrder(LinkedList<Object> msg, ConnectionToClient client) {
         int id = (int) msg.get(1);
         Order order = App.session.find(Order.class, id);
+
         App.session.beginTransaction();
         App.session.evict(order);       //evict current product details from database
         order.setDelivered(Order.Status.CANCELED);
         App.session.merge(order);           //merge into database with updated info
         App.session.flush();
         App.session.getTransaction().commit(); // Save everything.
+        changeBalance(order,client);
     }
  private void updateCustomerAccount(LinkedList<Object> msg, ConnectionToClient client) {
         Customer customer = (Customer) msg.get(1);
@@ -131,10 +183,10 @@ public class Server extends AbstractServer {
 
     private void updateBalance(Customer customer, int balance){
         App.session.beginTransaction();
-        customer.setBalance(balance);
         App.session.evict(customer);       //evict current product details from database
         //customer.setBalance(balance);/////////////////TODO can evict after change because SQL works with primary key
         ///TODO make this Generic func
+        customer.setBalance(balance);
         App.session.merge(customer);           //merge into database with updated info
         App.session.flush();
         App.session.getTransaction().commit(); // Save everything.
@@ -198,6 +250,15 @@ public class Server extends AbstractServer {
         App.session.save(order);
         App.session.flush();
         App.session.getTransaction().commit();
+        updateBalance(order.getOrderedBy(), order.getOrderedBy().getBalance());
+        msg.clear();
+        msg.add("#UPDATEBALANCE");
+        msg.add(order.getOrderedBy());
+        try {
+            client.sendToClient(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     //Checks if the username asked by new signup exists.
@@ -226,6 +287,10 @@ public class Server extends AbstractServer {
         App.session.merge(productBefore);           //merge into database with updated info
         App.session.flush();
         App.session.getTransaction().commit(); // Save everything.
+        List<Object> newMsg = new LinkedList<Object>();
+        newMsg.add("#REFRESH");     // TODO refresh to all users
+        newMsg.add(App.getAllProducts());
+        App.server.sendToAllClients(newMsg);
     }
 
     private static void changeParam(PreMadeProduct p, PreMadeProduct p2) {     //changes details
@@ -234,6 +299,9 @@ public class Server extends AbstractServer {
         p.setDiscount(p2.getDiscount());
         p.setImage(p2.getByteImage());
         p.setPriceBeforeDiscount(p2.getPriceBeforeDiscount());
+        if(p.getType()== PreMadeProduct.ProductType.CUSTOM_CATALOG){
+            p.setMainColor(p2.getMainColor());
+        }
     }
 
     public static void orderArrived(Order order, Order.Status status){
@@ -263,12 +331,16 @@ public class Server extends AbstractServer {
         client.sendToClient(msgToClient);
     }
 
-    private void addProduct(LinkedList<Object> msg) {
+    private void addProduct(LinkedList<Object> msg) throws IOException {
         App.session.beginTransaction();
         PreMadeProduct product = (PreMadeProduct) ((LinkedList<Object>) msg).get(1);
         App.session.save(product);   //saves and flushes to database
         App.session.flush();
         App.session.getTransaction().commit();
+        List<Object> newMsg = new LinkedList<Object>();
+        newMsg.add("#REFRESH");     // TODO refresh to all users
+        newMsg.add(App.getAllProducts());
+        App.server.sendToAllClients(newMsg);
     }
 
     private void updateConnected(User user,Boolean connected){
@@ -298,20 +370,30 @@ public class Server extends AbstractServer {
                             }
                             msg.add(user);
                             client.sendToClient(msg);
+                            return;
                         }else{
                             msg.clear();
                             msg.add("#LOGIN");
                             msg.add("ALREADYCONNECTED");
                             client.sendToClient(msg);
+                            return;
                         }
                     }
                 }else {
-                    List<Object> frozenMsg = new LinkedList<Object>();
-                    frozenMsg.add("#FROZEN");
-                    client.sendToClient(frozenMsg);
+                    List<Object> newMsg = new LinkedList<Object>();
+                    newMsg.add("#ERROR");
+                    newMsg.add( "User was FROZEN by system Admin" );
+                    newMsg.add("Frozen User");
+                    client.sendToClient(newMsg);
+                    return;
                 }
             }
         }
+        List<Object> newMsg = new LinkedList<Object>();
+        newMsg.add("#ERROR");
+        newMsg.add( "UserName or Password do not match");
+        newMsg.add("Login Error");
+        client.sendToClient(newMsg);
     }
 
     private void logoutServer(LinkedList<Object> msg, ConnectionToClient client){

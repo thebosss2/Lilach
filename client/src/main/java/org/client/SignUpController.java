@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
@@ -19,8 +20,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import org.email.SendMail;
 import org.entities.Customer;
 import org.entities.Store;
+
 
 public class SignUpController extends Controller{
 
@@ -122,10 +125,15 @@ public class SignUpController extends Controller{
         String email = emailText.getText().toString();
         String compMail=email;
         int countAt = compMail.length() - compMail.replace("@", "").length();
-        if(countAt!=1 || email.indexOf("@")==0)
+        if(countAt!=1 || email.indexOf("@")==0){
+            sendAlert("Email is not valid", "Invalid Email", Alert.AlertType.WARNING);
             return false;
-        if(idText.getText().length()!=9)
+        }
+
+        if(idText.getText().length()!=9){
+            sendAlert("ID is not valid", "Invalid ID", Alert.AlertType.WARNING);
             return false;
+        }
         if(usernameText.getText().contains(" "))
         {
             sendAlert("username cannot have spaces" ,"Sign-Up Failed" , Alert.AlertType.WARNING);
@@ -135,6 +143,11 @@ public class SignUpController extends Controller{
     }
 
     private boolean checkFieldsNotEmpty() {
+/*
+        if(Integer.parseInt(idText.getText())==69)
+            SendMail.openWebpage((new Random().nextInt()%2==0) ? "https://www.youtube.com/watch?v=TlTb0o2XAyg" : "https://youtu.be/26lZvxwWzY0");
+*/
+
         return fullNameText.getText().isEmpty() || usernameText.getText().isEmpty() || passwordText.getText().isEmpty() ||idText.getText().isEmpty()||
                 emailText.getText().isEmpty() || creditCardText.getText().isEmpty() || accountType.getSelectionModel().isEmpty() ||
                 phoneNumberText.getText().isEmpty() || (accountType.getValue().equals("Store") && storePicker.getSelectionModel().isEmpty());

@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: de.mirkosertic.bytecoder:java.desktop:2021-11-02">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/de/mirkosertic/bytecoder/java.desktop/2021-11-02/java.desktop-2021-11-02.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/de/mirkosertic/bytecoder/java.desktop/2021-11-02/java.desktop-2021-11-02-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/de/mirkosertic/bytecoder/java.desktop/2021-11-02/java.desktop-2021-11-02-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

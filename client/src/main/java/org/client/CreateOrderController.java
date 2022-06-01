@@ -327,18 +327,18 @@ public class CreateOrderController extends Controller {
         if (b.getId().equals(TASubmitBtn.getId())) {
             order = new Order(preList, customList, (Customer) App.client.user, Integer.parseInt(TAFinalPriceLabel.getText()),
                     getSelectedStore(), getPickedDate(TADate), TAHourPicker.getValue(), TAGreetingText.getText());
-            ((Customer) App.client.user).setBalance(((Customer) App.client.user).getBalance() - Integer.parseInt(TAFinalPriceLabel.getText()));
+            ((Customer) App.client.user).setBalance(Math.max(0,((Customer) App.client.user).getBalance() - Integer.parseInt(TAFinalPriceLabel.getText())));
         }
         else if (b.getId().equals(selfSubmitBtn.getId())) {
             order = new Order(preList, customList, (Customer) App.client.user, Integer.parseInt(selfFinalPriceLabel.getText()),
                     getPickedDate(selfShippingDate), selfHourPicker.getValue(), selfAddressText.getText(), selfGreetingText.getText());
-            ((Customer) App.client.user).setBalance(((Customer) App.client.user).getBalance() - Integer.parseInt(selfFinalPriceLabel.getText()));
+            ((Customer) App.client.user).setBalance(Math.max(0,((Customer) App.client.user).getBalance() - Integer.parseInt(selfFinalPriceLabel.getText())));
         }
         else { //this is gift order
             order = new Order(preList, customList, (Customer) App.client.user, Integer.parseInt(giftFinalPriceLabel.getText()),
                     getPickedDate(giftShippingDate), giftHourPicker.getValue(), giftReceiverPhoneText.getText(), giftReceiverNameText.getText(),
                     giftReceiverAddressText.getText(), giftGreetingText.getText());
-            ((Customer) App.client.user).setBalance(((Customer) App.client.user).getBalance() - Integer.parseInt(giftFinalPriceLabel.getText()));
+            ((Customer) App.client.user).setBalance(Math.max(0,((Customer) App.client.user).getBalance() - Integer.parseInt(giftFinalPriceLabel.getText())));
         }
 
         //ask server to save to db
