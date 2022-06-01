@@ -77,12 +77,37 @@ public class Client extends AbstractClient {
                 case "#PULLUSERS" -> pushUsers(msg);
                 case "#ERROR" -> errorMsg((LinkedList<Object>)msg);
                 case "#UPDATEBALANCE"-> updateBalance((Customer) ((LinkedList<Object>) msg).get(1));
+                case "#USERREFRESH"-> clientUserRefresh((LinkedList<Object>) msg);
             }
         } catch (Exception e) {
             System.out.println(Arrays.toString(e.getStackTrace()));
             System.out.println(e.getMessage());
             System.out.println("Client Error");
             e.getStackTrace();
+        }
+    }
+    private void clientUserRefresh(List<Object> msg){
+
+        if(user instanceof Customer){
+            if(((Customer) user).getId() == ((Customer)msg.get(2)).getId()) {
+                if (msg.get(1).toString().equals("FREEZE")) {
+                    Controller.sendAlert("Your account has been frozen by the system Admin", "Banned account", Alert.AlertType.WARNING);
+                    user = (Customer) msg.get(2);
+                    logOut();
+                } else if (msg.get(1).toString().equals("BALANCEUPDATE")) {
+                    user = (Customer) msg.get(2);
+                    updateBalance((Customer) msg.get(2));
+                }
+            }
+
+        }else if(user instanceof Employee && msg.get(2) instanceof Employee){ //TODO check that msg sends employee
+            if(((Employee) user).getId() == ((Employee)msg.get(2)).getId()) {
+                if (msg.get(1).toString().equals("FREEZE")) {
+                    Controller.sendAlert("Your account has been frozen by the system Admin", "Banned account", Alert.AlertType.WARNING);
+                    user = (Employee) msg.get(2);
+                    logOut();
+                }
+            }
         }
     }
 
