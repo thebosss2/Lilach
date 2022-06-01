@@ -5,7 +5,7 @@ import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 
 @MappedSuperclass
-public class User extends Guest implements Serializable {
+public abstract class User extends Guest implements Serializable {
 
     @Column(name = " Identification")
     private String userID;
@@ -16,10 +16,11 @@ public class User extends Guest implements Serializable {
     @Column(name="usermail")
     private String email;
     private String phoneNum;
-    private Boolean frozen=false;
+    protected Boolean frozen=false;
     private Boolean connected;
     @ManyToOne
-    private Store store = null;
+    protected Store store = null; 
+
 
     public User(String userID, String name, String userName, String password, String email, String phoneNum ,Store store) {
         super(name);
@@ -31,10 +32,23 @@ public class User extends Guest implements Serializable {
         this.connected=false;
         this.store=store;
     }
+    public User(String userID, String name, String userName, String password, String email, String phoneNum ,Store store, boolean frozen) {
+        super(name);
+        this.userID=userID;
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.phoneNum=phoneNum;
+        this.connected=false;
+        this.store=store;
+        this.frozen = frozen;
+    }
 
     public User() {
         super();
     }
+
+    public abstract int getId();
 
     public String getUserName() {
         return userName;
@@ -68,11 +82,11 @@ public class User extends Guest implements Serializable {
         this.connected = connected;
     }
 
-    public String getID() {
+    public String getUserID() {
         return userID;
     }
 
-    public void setID(String ID) {
+    public void setUserID(String userID) {
         this.userID = userID;
     }
 

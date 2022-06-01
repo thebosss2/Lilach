@@ -19,10 +19,9 @@ public class ManagerMenuController extends WorkerMenuController {
     void goToReports(ActionEvent event) throws InterruptedException {       // loads edit catalog view for worker
         coolMenuClick((Button) event.getTarget());
 
-        if(((Employee) App.client.user).getRole() == CEO) {
+        if(((Employee) App.client.user).getRole() == CEO)
             this.getSkeleton().changeCenter("CEOReport");
-/*            this.getSkeleton().changeCenter("EditCatalog");*/
-        }
+
         else
             this.getSkeleton().changeCenter("Report");
     }

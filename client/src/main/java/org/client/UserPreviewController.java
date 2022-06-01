@@ -1,5 +1,6 @@
 package org.client;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,11 +15,9 @@ import org.entities.User;
 
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.List;
 
 public class UserPreviewController extends ItemController {
-
-    @FXML
-    private Button freezeBtn;
 
     @FXML
     private Text id;
@@ -39,37 +38,20 @@ public class UserPreviewController extends ItemController {
     private Text email;
 
     @FXML
+    protected Text store;
+
+    @FXML
     private Text status;
 
     private User user;
 
-    private LinkedList<Store> stores;
+    protected List<Store> stores;
+
 
     @FXML
     void initialize(){
         LinkedList<Object> msg = new LinkedList<Object>();
-        msg.add("#PULLSTORES");
-        App.client.setController(this);
-        try {
-            App.client.sendToServer(msg); //Sends a msg contains the command and the controller for the catalog.
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    @FXML
-    void changeStatus(ActionEvent event) throws InterruptedException {
-        coolButtonClick((Button) event.getTarget());
-        if(this.status.getText().equals("Active")) {
-            this.status.setText("Inactive");
-            this.status.setFill(Paint.valueOf("RED"));
-        }
-        else {
-            this.status.setText("Active");
-            this.status.setFill(Paint.valueOf("GREEN"));
-        }
-
+        this.stores = App.client.getStores();
     }
 
     @FXML
@@ -79,13 +61,19 @@ public class UserPreviewController extends ItemController {
         if(user instanceof Employee) {
             controller = this.getSkeleton().changeCenter("EmployeeView");
             EmployeeViewController employeeViewController = (EmployeeViewController) controller;
-            employeeViewController.setEmployee((Employee) this.user, stores);
+            Platform.runLater(()->{
+                employeeViewController.setEmployee((Employee) this.user);
+            });
+
         }
 
         else {
             controller = this.getSkeleton().changeCenter("CustomerView");
             CustomerViewController customerViewController = (CustomerViewController) controller;
-            customerViewController.setCustomer((Customer) this.user, stores);
+            Platform.runLater(()->{
+                customerViewController.setCustomer((Customer) this.user);
+            });
+
         }
 
     }
@@ -108,22 +96,34 @@ public class UserPreviewController extends ItemController {
 
     public void setUser(User user) {
         this.user = user;
-        this.id.setText(user.getID());
+        this.id.setText(user.getUserID());
         this.username.setText(user.getUserName());
         this.name.setText(user.getName());
         this.email.setText(user.getEmail());
-        //this.status.setText(user.getStatus());
-        //this.store.setText(user.getStore());
+        if (user.getFrozen())
+            setInactive();
+        else
+            setActive();
+        this.store.setText(user.getStore().getName());
 
         if(user instanceof Customer)
-            this.type.setText(((Customer) user).getTypeString());
+            this.type.setText(((Customer) user).getTypeToString());
 
         else
-            this.type.setText(((Employee) user).getRoleString() );
+            this.type.setText(((Employee) user).getRoleToString() );
 
     }
 
-    public void pullStoresToClient(LinkedList<Store> stores) {
-        this.stores = stores;
+    @FXML
+    private void setInactive() {
+        this.status.setText("Inactive");
+        this.status.setFill(Paint.valueOf("RED"));
     }
+
+    @FXML
+    private void setActive() {
+        this.status.setText("Active");
+        this.status.setFill(Paint.valueOf("GREEN"));
+    }
+
 }

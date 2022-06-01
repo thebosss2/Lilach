@@ -3,7 +3,10 @@ package org.client;
 import javafx.application.Platform;
 import javafx.scene.control.*;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -89,7 +92,11 @@ public abstract class Controller {
                 System.out.println(e.getMessage());
             }
         });
+    }
 
-
+    protected Date getPickedDate(DatePicker dp) { //get the picked localDate and convert it to Date
+        Instant instant = Instant.from(dp.getValue().atStartOfDay(ZoneId.systemDefault())); //convert LocalDate to Date
+        Date pickedDate = Date.from(instant);
+        return pickedDate;
     }
 }

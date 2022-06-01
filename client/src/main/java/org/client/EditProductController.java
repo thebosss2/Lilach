@@ -101,7 +101,6 @@ public class EditProductController extends Controller {
         LinkedList<Object> msg = new LinkedList<Object>();  //msg has string message with all data in next nodes
         PreMadeProduct p;
 
-
         if (imageChanged > 0)
             p = new PreMadeProduct(nameText.getText(), newImagePath, Integer.parseInt(priceText.getText()),
                     descriptionText.getText(),Integer.parseInt(discountText.getText()),false);

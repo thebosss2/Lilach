@@ -13,6 +13,7 @@ import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
 
 public class StoreSkeleton {
@@ -81,8 +82,6 @@ public class StoreSkeleton {
         App.client = new Client(null, 3000);
         App.client.storeSkeleton=this;
         changeCenter("ClientBoot");
-
-
     }
 
 }

@@ -1,8 +1,15 @@
 package org.entities;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
@@ -16,10 +23,12 @@ public class Order implements Serializable {     //Product class entity
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int id;         // id generated for each product
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SELECT)
     protected List<PreMadeProduct> preMadeProducts;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SELECT)
     protected List<CustomMadeProduct> customMadeProducts;
 
     @ManyToOne
@@ -31,6 +40,7 @@ public class Order implements Serializable {     //Product class entity
 
     protected int price;
     protected String orderTime;
+    protected Date orderDate;
     protected Date deliveryDate;
     protected String deliveryHour;
     public enum Status {PENDING, ARRIVED, CANCELED}
@@ -49,11 +59,13 @@ public class Order implements Serializable {     //Product class entity
 
     //SELF_SHIPPING constructor
     public Order(LinkedList<PreMadeProduct> preMadeProducts, LinkedList<CustomMadeProduct> customMadeProducts,
-                 Customer orderedBy, int price, Date deliveryDate, String deliveryHour, String address, String greetingCard) {
+                 Customer orderedBy, int price, Date deliveryDate, Store store, String deliveryHour,
+                 String address, String greetingCard) {
 
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat simpleformat = new SimpleDateFormat("dd/MMMM/yyyy hh:mm:s");
         this.orderTime = simpleformat.format(cal.getTime());
+        this.orderDate = localDateToDate(LocalDate.now());
         this.delivery = Delivery.SELF_SHIPPING;
 
         this.preMadeProducts = preMadeProducts;
@@ -61,6 +73,7 @@ public class Order implements Serializable {     //Product class entity
         this.orderedBy = orderedBy;
         this.price = price;
         this.deliveryDate = deliveryDate;
+        this.store = store;
         this.deliveryHour = deliveryHour;
         this.isDelivered = Status.PENDING;
         this.address = address;
@@ -69,12 +82,13 @@ public class Order implements Serializable {     //Product class entity
 
     //SHIPPING_GIFT constructor
     public Order(LinkedList<PreMadeProduct> preMadeProducts, LinkedList<CustomMadeProduct> customMadeProducts,
-                 Customer orderedBy, int price, Date deliveryDate, String deliveryHour, String receiverPhone,
+                 Customer orderedBy, int price, Date deliveryDate, Store store, String deliveryHour, String receiverPhone,
                  String receiverName, String address, String greetingCard) {
 
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat simpleformat = new SimpleDateFormat("dd/MMMM/yyyy hh:mm:s");
         this.orderTime = simpleformat.format(cal.getTime());
+        this.orderDate = localDateToDate(LocalDate.now());
         this.delivery = Delivery.SHIPPING_GIFT;
 
         this.preMadeProducts = preMadeProducts;
@@ -82,6 +96,7 @@ public class Order implements Serializable {     //Product class entity
         this.orderedBy = orderedBy;
         this.price = price;
         this.deliveryDate = deliveryDate;
+        this.store = store;
         this.deliveryHour = deliveryHour;
         this.isDelivered = Status.PENDING;
         this.receiverPhone = receiverPhone;
@@ -98,6 +113,8 @@ public class Order implements Serializable {     //Product class entity
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat simpleformat = new SimpleDateFormat("dd/MMMM/yyyy hh:mm:s");
         this.orderTime = simpleformat.format(cal.getTime());
+        this.orderDate = localDateToDate(LocalDate.now());
+
         this.delivery = Delivery.TAKEAWAY;
         this.preMadeProducts = preMadeProducts;
         this.customMadeProducts = customMadeProducts;
@@ -110,10 +127,13 @@ public class Order implements Serializable {     //Product class entity
         this.greetingCard = greetingCard;
     }
 
-    public Order() {
+    public Order() {}
 
+    public static Date localDateToDate(LocalDate date) { //get the picked localDate and convert it to Date
+        Instant instant = Instant.from(date.atStartOfDay(ZoneId.systemDefault())); //convert LocalDate to Date
+        Date pickedDate = Date.from(instant);
+        return pickedDate;
     }
-
     //getters and setters:
     public Customer getOrderedBy() {
         return orderedBy;
@@ -142,6 +162,7 @@ public class Order implements Serializable {     //Product class entity
     public int getId() {
         return id;
     }
+
     public int getPrice() {
         return price;
     }
@@ -198,6 +219,9 @@ public class Order implements Serializable {     //Product class entity
         this.deliveryHour = deliveryHour;
     }
 
+    public Date getOrderDate() {
+        return orderDate;
+    }
 
     public Date getDeliveryDate() {
         return deliveryDate;

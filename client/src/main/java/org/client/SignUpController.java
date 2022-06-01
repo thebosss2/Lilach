@@ -69,7 +69,7 @@ public class SignUpController extends Controller{
     @FXML // fx:id="PhoneNumberText"
     private TextField phoneNumberText; // Value injected by FXMLLoader
 
-    private LinkedList<Store> stores = new LinkedList<Store>();
+    private List<Store> stores = new LinkedList<Store>();
 
 
 
@@ -216,27 +216,16 @@ public class SignUpController extends Controller{
         idText.setTextFormatter(formatter2);
         creditCardText.setTextFormatter(formatter3);
 
-        List<Object> msg = new LinkedList<>();
-        App.client.setController(this);
-        msg.add("#PULLSTORES");
-        try {
-            App.client.sendToServer(msg);
-        } catch (IOException e) {
-            e.printStackTrace();
+        this.stores = App.client.getStores();
+        for (Store s : stores) {
+            if(!s.getName().equals("Chain"))
+                storePicker.getItems().add(s.getName());
         }
 
         accountType.setOnAction(event -> enableStorePicker());
 
     }
 
-    public void pullStoresToClient(LinkedList<Store> stores) {
-
-        this.stores = stores;
-        for (Store s : stores) {
-            if(!s.getName().equals("Chain"))
-                storePicker.getItems().add(s.getName());
-        }
-    }
 
 }
 
