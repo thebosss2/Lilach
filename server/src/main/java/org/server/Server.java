@@ -78,12 +78,16 @@ public class Server extends AbstractServer {
         App.session.getTransaction().commit(); // Save everything.
     }
 
-    private void deleteProduct(LinkedList<Object> msg, ConnectionToClient client) {
+    private void deleteProduct(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
         App.session.beginTransaction();
         PreMadeProduct product = (PreMadeProduct) (msg).get(1);
         App.session.delete(App.session.find(PreMadeProduct.class, product.getId()));       //evict current product details from database
         App.session.flush();
         App.session.getTransaction().commit(); // Save everything.
+        List<Object> newMsg = new LinkedList<Object>();
+        newMsg.add("#REFRESH");
+        newMsg.add(App.getAllProducts());
+        App.server.sendToAllClients(newMsg);
     }
 
 
@@ -350,7 +354,7 @@ public class Server extends AbstractServer {
         App.session.flush();
         App.session.getTransaction().commit(); // Save everything.
         List<Object> newMsg = new LinkedList<Object>();
-        newMsg.add("#REFRESH");     // TODO refresh to all users
+        newMsg.add("#REFRESH");
         newMsg.add(App.getAllProducts());
         App.server.sendToAllClients(newMsg);
     }

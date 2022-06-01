@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 public class Client extends AbstractClient {
 
@@ -72,12 +71,12 @@ public class Client extends AbstractClient {
                 case "#PULLSTORES" -> pushStores(msg);//function gets all data from server to display to client
                 case "#PULL_COMPLAINTS" -> pushComplaints((LinkedList<Object>) msg);
                 case "#PULL_MANAGER_REPORT" -> pushManagerReport((LinkedList<Object>) msg);
-                case "#UPDATE_CUSTOMER" -> this.user = (Customer)((LinkedList<Object>) msg).get(1);
-                case "#DELETEORDER" -> deletedOrder((LinkedList<Object>)msg);//function gets all data from server to display to client
+                case "#UPDATE_CUSTOMER" -> this.user = (Customer) ((LinkedList<Object>) msg).get(1);
+                case "#DELETEORDER" -> deletedOrder((LinkedList<Object>) msg);//function gets all data from server to display to client
                 case "#PULLUSERS" -> pushUsers(msg);
-                case "#ERROR" -> errorMsg((LinkedList<Object>)msg);
-                case "#UPDATEBALANCE"-> updateBalance((Customer) ((LinkedList<Object>) msg).get(1));
-                case "#REFRESH" -> refresh((LinkedList<Object>)msg);
+                case "#ERROR" -> errorMsg((LinkedList<Object>) msg);
+                case "#UPDATEBALANCE" -> updateBalance((Customer) ((LinkedList<Object>) msg).get(1));
+                case "#REFRESH" -> refresh((LinkedList<Object>) msg);
             }
         } catch (Exception e) {
             System.out.println(Arrays.toString(e.getStackTrace()));
@@ -87,8 +86,86 @@ public class Client extends AbstractClient {
         }
     }
 
-    private void refresh(LinkedList<Object> msg) {
+    private void refresh(LinkedList<Object> msg) throws IOException {
+        Client.products = new LinkedList<>((List<PreMadeProduct>) msg.get(1));
+        refreshCart();
+        Platform.runLater(() -> {
+            if (this.controller instanceof CatalogController) {
+                try {
+                    ((CatalogController) this.controller).pullProductsToClient();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else if (this.controller instanceof CartController)
+                this.getSkeleton().changeCenter("Cart");
 
+            Controller.sendAlert("We are sorry for the inconvenience, we made some changes in our catalog and updated your cart too! hope you like it :)", "Catalog Update", Alert.AlertType.INFORMATION);
+
+        });
+
+
+    }
+
+    private void refreshCart() { //this function will update the cart: if any product were updated- the cart will be updated as well
+        //if any product was deleted- delete it from the cart (including deleting custom made if base were deleted)
+        boolean preExists, cusExists;
+        for (Product p : this.cart.getProducts()) { //for every cart product
+            cusExists = true; //unless any base product was deleted- dont delete the custom made
+            if (p instanceof PreMadeProduct) { //if is catalog product
+                preExists = isExists((PreMadeProduct) p);
+                if (!preExists) //if the product was deleted
+                    this.cart.removeProduct(p.getId()); //remove from cart
+            } else{//if is custom product
+                for (PreMadeProduct base : ((CustomMadeProduct) p).getProducts()) { //check all base products
+                    if (!isExists(base, (CustomMadeProduct) p)) //if any base product was deleted
+                        cusExists = false; //remove from cart soon
+                }
+                if (!cusExists)
+                    this.cart.removeProduct(p.getId());
+            }
+        }
+
+    }
+
+    //this function finds if our cart catalog product is in the updated products list.
+    // if it is- fix it and return true, else return false cause it was deleted
+    private boolean isExists(PreMadeProduct p) {
+        boolean exists = false; //by default if you didnt find product with the same id- it was deleted
+        for (PreMadeProduct newP : Client.products) {
+            if (p.getId() == newP.getId()) { //if it still exists
+                updateProduct((PreMadeProduct) p, newP); //fix it
+                exists = true;
+            }
+        }
+        return exists;
+    }
+
+    //this function finds if our cart base custom made product is in the updated products list.
+    // if it is- fix it and return true, else return false cause it was deleted
+    private boolean isExists(PreMadeProduct base, CustomMadeProduct c) {
+        boolean exists = false; //by default if you didnt find product with the same id- it was deleted
+        for (PreMadeProduct newP : Client.products) {
+            if (base.getId() == newP.getId()) { //if it still exists
+                this.cart.removeProduct(c.getId()); //remove the whole custom product
+                c.getProducts().remove(base); //remove the bse product from copy of the custom product
+                updateProduct(base, newP); //update a copy o the base product
+                c.getProducts().add(base); //insert it to the custom product
+                this.cart.getProducts().add(c); //insert the updated custom product to the cart
+                exists = true;
+            }
+        }
+        return exists;
+    }
+
+    //this function fixes the cart premade product to be updated
+    private void updateProduct(PreMadeProduct p, PreMadeProduct newP) {
+        p.setName(newP.getName());
+        p.setImage(newP.getByteImage());
+        p.setDiscount(newP.getDiscount());
+        p.setMainColor(newP.getMainColor());
+        p.setDescription(newP.getDescription());
+        p.setPrice(newP.getPrice());
+        p.setPriceBeforeDiscount(newP.getPriceBeforeDiscount());
     }
 
 
@@ -97,26 +174,26 @@ public class Client extends AbstractClient {
         reportController.pullData((LinkedList<Order>) msg.get(1),
                 (LinkedList<Complaint>) msg.get(2));
     }
-  
-  
-    private void updateBalance(Customer customer){
+
+
+    private void updateBalance(Customer customer) {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                storeSkeleton.helloLabel.setText("Hello "+ customer.getUserName() + " Your Balance is "+customer.getBalance());
+                storeSkeleton.helloLabel.setText("Hello " + customer.getUserName() + " Your Balance is " + customer.getBalance());
             }
         });
 
     }
 
-    private void deletedOrder(LinkedList<Object> msg){
-        Controller.sendAlert((String) msg.get(1),(String) msg.get(2),Alert.AlertType.INFORMATION);
-        App.client.user=(Customer)msg.get(3);
-        updateBalance((Customer)msg.get(3));
+    private void deletedOrder(LinkedList<Object> msg) {
+        Controller.sendAlert((String) msg.get(1), (String) msg.get(2), Alert.AlertType.INFORMATION);
+        App.client.user = (Customer) msg.get(3);
+        updateBalance((Customer) msg.get(3));
     }
 
-    private void errorMsg(List<Object> msg){
-        Controller.sendAlert(msg.get(1).toString() ,msg.get(2).toString() , Alert.AlertType.WARNING);
+    private void errorMsg(List<Object> msg) {
+        Controller.sendAlert(msg.get(1).toString(), msg.get(2).toString(), Alert.AlertType.WARNING);
     }
 
     private void pushUsers(Object msg) {
@@ -233,7 +310,7 @@ public class Client extends AbstractClient {
 
         if (this.user instanceof Customer) {
             storeSkeleton.changeLeft("CustomerMenu");
-            storeSkeleton.helloLabel.setText("Hello "+ ((Customer) this.user).getUserName() + " Your Balance is "+((Customer) this.user).getBalance());
+            storeSkeleton.helloLabel.setText("Hello " + ((Customer) this.user).getUserName() + " Your Balance is " + ((Customer) this.user).getBalance());
             storeSkeleton.changeCenter("Catalog");
         } else if (this.user instanceof Employee) {
             switch (((Employee) this.user).getRole()) {
@@ -259,7 +336,7 @@ public class Client extends AbstractClient {
                 }
 
             }
-            storeSkeleton.helloLabel.setText("Hello "+ ((Employee) this.user).getUserName());
+            storeSkeleton.helloLabel.setText("Hello " + ((Employee) this.user).getUserName());
         } else {
             storeSkeleton.changeLeft("GuestMenu");
             storeSkeleton.helloLabel.setText("Hello Guest");
