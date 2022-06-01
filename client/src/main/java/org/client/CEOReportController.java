@@ -21,7 +21,7 @@ import java.util.Map;
 
 public class CEOReportController extends AbstractReport {
 
-    final static int SCREEN = 0, FROMDATE = 1, TODATE = 2, COMPLAINT_CHART = 3, INCOME_COMPANY = 4, ORDERS_COMPANY = 5,
+    final static int SCREEN = 0, FROM_DATE = 1, TO_DATE = 2, COMPLAINT_CHART = 3, INCOME_COMPANY = 4, ORDERS_COMPANY = 5,
         ORDERS_COMPANY_CHART = 6, SALES_COMPANY = 7, INCOME_STORE = 8, ORDERS_STORE = 9, ORDERS_STORE_CHART = 10,
         SALES_STORE = 11;
 
@@ -130,6 +130,8 @@ public class CEOReportController extends AbstractReport {
         displayDates(fromDate1, LocalDate.now(), true);
         displayDates(fromDate2, LocalDate.now(),true);
         this.stores = App.client.getStores();
+        storePicker.getItems().add("Set Store");
+        storePicker.setValue("Set Store");
         for (Store s : stores)
             storePicker.getItems().add(s.getName());
     }
@@ -140,14 +142,14 @@ public class CEOReportController extends AbstractReport {
         coolButtonClick((Button) event.getTarget());
 
         List<Object> list = getScreen(event);
-        DatePicker toDate = (DatePicker) list.get(TODATE), fromDate = (DatePicker) list.get(FROMDATE);
+        DatePicker toDate = (DatePicker) list.get(TO_DATE), fromDate = (DatePicker) list.get(FROM_DATE);
         String screen = (String) list.get(SCREEN);
 
         if(isInvalid(toDate))
             sendAlert("Must pick time interval to make a report!", "Date Missing", Alert.AlertType.ERROR);
 
-        //TODO
-        //else if()
+        else if(storePicker.getValue().equals("Set Store"))
+            sendAlert("Must pick a store to make a report!", "Store Missing", Alert.AlertType.ERROR);
 
         else{   // send request to server to pull data for report, with store and date interval
             LinkedList<Object> msg = new LinkedList<Object>();
@@ -167,7 +169,7 @@ public class CEOReportController extends AbstractReport {
 
     public void changedFromDate (ActionEvent event) throws InterruptedException {
         List<Object> list = getScreen(event);
-        DatePicker toDate = (DatePicker) list.get(TODATE), fromDate = (DatePicker) list.get(FROMDATE);
+        DatePicker toDate = (DatePicker) list.get(TO_DATE), fromDate = (DatePicker) list.get(FROM_DATE);
         toDate.setDisable(false);
 
         if(numOfDays(fromDate.getValue(), LocalDate.now()) <= 31)
@@ -179,14 +181,14 @@ public class CEOReportController extends AbstractReport {
 
     public void changedToDate (ActionEvent event) throws InterruptedException {
         List<Object> list = getScreen(event);
-        DatePicker toDate = (DatePicker) list.get(TODATE), fromDate = (DatePicker) list.get(FROMDATE);
+        DatePicker toDate = (DatePicker) list.get(TO_DATE), fromDate = (DatePicker) list.get(FROM_DATE);
         toDate.setDisable(false);
         displayDates(fromDate, addLocalDate(toDate, -30), toDate.getValue());
     }
 
     public void pullData(String screen, LinkedList<Order> orders, LinkedList<Complaint> complaints) {
         List<Object> list = getScreen(screen);
-        DatePicker toDate = (DatePicker) list.get(TODATE), fromDate = (DatePicker) list.get(FROMDATE);
+        DatePicker toDate = (DatePicker) list.get(TO_DATE), fromDate = (DatePicker) list.get(FROM_DATE);
 
         companyOrders = new LinkedList<>(orders);
         storeOrders = getStoreOrders(orders);
@@ -277,7 +279,7 @@ public class CEOReportController extends AbstractReport {
 
     private void showChart(LinkedList<Complaint> complaints, List<Object> list) {
         StackedBarChart<String, Number> complaintChart = (StackedBarChart<String, Number>) list.get(COMPLAINT_CHART);
-        DatePicker toDate = (DatePicker) list.get(TODATE), fromDate = (DatePicker) list.get(FROMDATE);
+        DatePicker toDate = (DatePicker) list.get(TO_DATE), fromDate = (DatePicker) list.get(FROM_DATE);
 
         complaintChart.getData().clear();
         LinkedList<XYChart.Series<String, Number>> seriesLinkedList = new LinkedList<XYChart.Series<String, Number>>();
