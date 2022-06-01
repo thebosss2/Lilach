@@ -127,7 +127,7 @@ public class Client extends AbstractClient {
 
     private void pushComplaints(LinkedList<Object> msg) {
         ComplaintInspectionTableController tableController = (ComplaintInspectionTableController) controller;
-        tableController.pullComplaints(FXCollections.observableArrayList(((ArrayList<Complaint>) msg.get(1))));
+        tableController.pullComplaints(FXCollections.observableArrayList(((List<Complaint>) msg.get(1))));
     }
 
     private void pushToCatalog(Object msg) throws IOException { // takes data received and sends to display function
