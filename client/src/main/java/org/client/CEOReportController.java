@@ -2,12 +2,14 @@ package org.client;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.StackedBarChart;
 import javafx.scene.control.*;
 import org.entities.Store;
+import org.entities.User;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -15,6 +17,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class CEOReportController extends AbstractReport {
+
+    final static int TODATE = 0, FROMDATE = 1, SCREEN = 2;
 
     @FXML
     private Label companyIncome1;
@@ -93,36 +97,70 @@ public class CEOReportController extends AbstractReport {
 
 
     @FXML
-    void makeReport1(ActionEvent event) throws InterruptedException {
+    void makeReport(ActionEvent event) throws InterruptedException {
         coolButtonClick((Button) event.getTarget());
 
+        List<Object> list = getScreen(event);
+        DatePicker toDate = (DatePicker) list.get(TODATE), fromDate = (DatePicker) list.get(FROMDATE);
+        String screen = (String) list.get(SCREEN);
+
+        if(isInvalid(toDate))
+            sendAlert("Must pick time interval to make a report!", "Date Missing", Alert.AlertType.ERROR);
+
+        else{   // send request to server to pull data for report, with store and date interval
+            LinkedList<Object> msg = new LinkedList<Object>();
+            msg.add("#PULL_CEO_REPORT"); //get stores from db
+            msg.add(screen);
+            msg.add( ((User)App.client.user).getStore() );
+            msg.add(getPickedDate(fromDate));
+            msg.add(addDays(getPickedDate(toDate), 1));
+            App.client.setController(this);
+            try {
+                App.client.sendToServer(msg); //Sends a msg contains the command and the current controller
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    @FXML
-    void makeReport2(ActionEvent event) throws InterruptedException {
-        coolButtonClick((Button) event.getTarget());
+    public void changedFromDate (ActionEvent event) throws InterruptedException {
+        List<Object> list = getScreen(event);
+        DatePicker toDate = (DatePicker) list.get(TODATE), fromDate = (DatePicker) list.get(FROMDATE);
+        toDate.setDisable(false);
 
+        if(numOfDays(fromDate.getValue(), LocalDate.now()) <= 31)
+            displayDates(toDate, fromDate.getValue(), LocalDate.now());
+
+        else
+            displayDates(toDate ,fromDate.getValue(), addLocalDate(fromDate, 30));
     }
 
-    public void changedFromDate1 (ActionEvent event) throws InterruptedException {
-        toDate1.setDisable(false);
-        displayDates(toDate1, fromDate1.getValue(), LocalDate.now());
+    public void changedToDate (ActionEvent event) throws InterruptedException {
+        List<Object> list = getScreen(event);
+        DatePicker toDate = (DatePicker) list.get(TODATE), fromDate = (DatePicker) list.get(FROMDATE);
+        toDate.setDisable(false);
+        displayDates(fromDate, addLocalDate(toDate, -30), toDate.getValue());
     }
 
-    public void changedFromDate2 (ActionEvent event) throws InterruptedException {
-        toDate2.setDisable(false);
-        displayDates(toDate2, fromDate2.getValue(), LocalDate.now());
+    public boolean isInvalid(DatePicker dp){
+        return dp.isDisabled() || dp.getValue() == null;
     }
 
+    public List<Object> getScreen(ActionEvent event){
+        Node node = (Node) event.getTarget();
+        LinkedList<Object> list = new LinkedList<>();
+        if(node.getId().equals("toDate1") || node.getId().equals("fromDate1")
+                || node.getId().equals("makeReportBtn1")){
+            list.add(toDate1);
+            list.add(fromDate1);
+            list.add("FirstScreen");
+        }
+        else {
+            list.add(toDate2);
+            list.add(fromDate2);
+            list.add("SecondScreen");
+        }
 
-    public void changedToDate1 (ActionEvent event) throws InterruptedException {
-        toDate1.setDisable(false);
-        displayDates(fromDate1, toDate1.getValue(), true);
+        return list;
     }
-
-    public void changedToDate2 (ActionEvent event) throws InterruptedException {
-        toDate2.setDisable(false);
-        displayDates(fromDate2, toDate2.getValue(), true);
-    }
-
 }

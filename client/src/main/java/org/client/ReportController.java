@@ -91,7 +91,7 @@ public class ReportController extends AbstractReport{
             displayDates(toDate, fromDate.getValue(), LocalDate.now());
 
         else
-            displayDates(toDate, addLocalDate(fromDate, 30), LocalDate.now());
+            displayDates(toDate ,fromDate.getValue(), addLocalDate(fromDate, 30));
     }
 
     public void changedToDate (ActionEvent event) throws InterruptedException {

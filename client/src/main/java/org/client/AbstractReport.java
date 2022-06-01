@@ -17,8 +17,6 @@ import java.util.stream.IntStream;
 
 public abstract class AbstractReport extends Controller{
 
-
-
     public Map<String,Integer> getMap(LinkedList<Order> orders) {
         Map<String, Integer> map = new HashMap<String, Integer>();
 

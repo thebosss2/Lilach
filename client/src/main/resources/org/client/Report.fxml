@@ -6,106 +6,168 @@
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.chart.StackedBarChart?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: ffffff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.ReportController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.CEOReportController">
    <children>
-      <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="615.0" prefWidth="1050.0" style="-fx-background-color: ffffff;">
+      <ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="1050.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <content>
-            <AnchorPane maxHeight="600.0" maxWidth="1000.0" style="-fx-background-color: ffffff;">
+            <AnchorPane maxHeight="2000.0" maxWidth="1920.0" style="-fx-background-color: ffffff;">
                <children>
-                  <VBox layoutX="11.0" prefHeight="615.0" prefWidth="1032.0" spacing="20.0">
+                  <VBox prefHeight="899.0" prefWidth="1084.0">
                      <children>
-                        <HBox prefHeight="60.0" prefWidth="1043.0" spacing="10.0">
+                        <HBox prefHeight="45.0" prefWidth="1083.0" spacing="10.0">
                            <children>
-                              <Label alignment="CENTER" prefHeight="39.0" prefWidth="41.0" text="from:">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <DatePicker fx:id="fromDate" onAction="#changedFromDate" prefHeight="28.0" prefWidth="108.0">
+                              <Label text="from" />
+                              <DatePicker fx:id="fromDate1" onAction="#changedFromDate" prefHeight="28.0" prefWidth="100.0">
                                  <HBox.margin>
-                                    <Insets right="40.0" top="5.0" />
+                                    <Insets right="20.0" />
                                  </HBox.margin>
                               </DatePicker>
-                              <Label prefHeight="37.0" prefWidth="21.0" text="to:">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Label>
-                              <DatePicker fx:id="toDate" disable="true" onAction="#changedToDate" prefHeight="28.0" prefWidth="111.0">
+                              <Label text="to" />
+                              <DatePicker fx:id="toDate1" disable="true" onAction="#changedToDate" prefHeight="28.0" prefWidth="100.0">
                                  <HBox.margin>
-                                    <Insets right="70.0" top="5.0" />
+                                    <Insets right="20.0" />
                                  </HBox.margin>
                               </DatePicker>
-                              <Button fx:id="makeReportBtn" mnemonicParsing="false" onAction="#makeReport" prefHeight="36.0" prefWidth="125.0" style="-fx-background-color: #c6acef;" text="make report">
+                              <Button fx:id="makeReportBtn1" mnemonicParsing="false" onAction="#makeReport" prefHeight="30.0" prefWidth="110.0" style="-fx-background-color: #c6acef;" text="make report">
                                  <font>
-                                    <Font size="18.0" />
+                                    <Font name="Guttman Aharoni" size="15.0" />
                                  </font>
                                  <HBox.margin>
                                     <Insets right="50.0" />
                                  </HBox.margin>
                               </Button>
+                              <ComboBox fx:id="storePicker" prefHeight="36.0" prefWidth="120.0" promptText="pick a store" style="-fx-background-color: #c6acef;">
+                                 <HBox.margin>
+                                    <Insets right="50.0" />
+                                 </HBox.margin>
+                              </ComboBox>
+                              <Label text="from" />
+                              <DatePicker fx:id="fromDate2" onAction="#changedFromDate" prefHeight="28.0" prefWidth="100.0" />
+                              <Label text="to" />
+                              <DatePicker fx:id="toDate2" disable="true" onAction="#changedToDate" prefHeight="28.0" prefWidth="100.0">
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                              </DatePicker>
+                              <Button fx:id="makeReportBtn2" mnemonicParsing="false" onAction="#makeReport2" prefHeight="31.0" prefWidth="113.0" style="-fx-background-color: #c6acef;" text="make report">
+                                 <font>
+                                    <Font name="Guttman Aharoni" size="15.0" />
+                                 </font>
+                              </Button>
                            </children>
                            <VBox.margin>
-                              <Insets left="20.0" top="30.0" />
+                              <Insets top="15.0" />
                            </VBox.margin>
                         </HBox>
-                        <HBox prefHeight="539.0" prefWidth="1036.0">
+                        <HBox prefHeight="269.0" prefWidth="1084.0">
                            <children>
-                              <VBox prefHeight="539.0" prefWidth="468.0">
+                              <VBox prefHeight="262.0" prefWidth="1084.0">
                                  <children>
-                                    <Label alignment="TOP_LEFT" prefHeight="36.0" prefWidth="468.0" text="Income Report:">
-                                       <font>
-                                          <Font name="Script MT Bold" size="23.0" />
-                                       </font>
-                                    </Label>
-                                    <HBox prefHeight="70.0" prefWidth="470.0">
+                                    <HBox prefHeight="33.0" prefWidth="1084.0">
                                        <children>
-                                          <Label fx:id="incomeReport" alignment="TOP_LEFT" prefHeight="70.0" prefWidth="235.0">
+                                          <Label prefHeight="32.0" prefWidth="558.0" text="Company Report 1:">
                                              <font>
-                                                <Font name="Yu Gothic Medium" size="15.0" />
+                                                <Font size="15.0" />
                                              </font>
                                           </Label>
-                                          <Label fx:id="ordersReport" alignment="TOP_LEFT" prefHeight="70.0" prefWidth="235.0">
+                                          <Label prefHeight="32.0" prefWidth="536.0" text="Company Report 2:">
                                              <font>
-                                                <Font name="Yu Gothic Medium" size="15.0" />
+                                                <Font size="15.0" />
                                              </font>
                                           </Label>
                                        </children>
                                     </HBox>
-                                    <Label prefHeight="35.0" prefWidth="468.0" text="Orders Report:">
-                                       <font>
-                                          <Font name="Script MT Bold" size="23.0" />
-                                       </font>
-                                    </Label>
-                                    <PieChart fx:id="ordersChart" legendSide="LEFT" legendVisible="false" prefHeight="310.0" prefWidth="468.0" />
-                                    <Label fx:id="salesNum" alignment="CENTER" prefHeight="42.0" prefWidth="468.0">
-                                       <font>
-                                          <Font name="Yu Gothic Medium" size="18.0" />
-                                       </font>
-                                    </Label>
+                                    <HBox prefHeight="238.0" prefWidth="1084.0">
+                                       <children>
+                                          <Label fx:id="companyIncome1" alignment="TOP_LEFT" prefHeight="237.0" prefWidth="266.0" text="Income report:">
+                                             <font>
+                                                <Font size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <PieChart fx:id="companyOrders1" prefHeight="237.0" prefWidth="302.0" title="Orders Report" />
+                                          <Separator orientation="VERTICAL" prefHeight="200.0" />
+                                          <Label fx:id="companyIncome2" alignment="TOP_LEFT" prefHeight="237.0" prefWidth="267.0" text="Income report: ">
+                                             <font>
+                                                <Font size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <PieChart fx:id="companyOrders2" prefHeight="237.0" prefWidth="285.0" title="Orders Report" />
+                                       </children>
+                                    </HBox>
+                                    <Separator prefWidth="200.0" />
                                  </children>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
                               </VBox>
-                              <VBox prefHeight="539.0" prefWidth="564.0">
+                           </children>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox prefHeight="609.0" prefWidth="1084.0">
+                           <children>
+                              <VBox prefHeight="609.0" prefWidth="587.0">
                                  <children>
-                                    <Label prefHeight="35.0" prefWidth="566.0" text="Complaint Char:">
+                                    <Label prefHeight="31.0" prefWidth="100.0" text="Store Report 1:">
                                        <font>
-                                          <Font name="Script MT Bold" size="22.0" />
+                                          <Font size="15.0" />
                                        </font>
                                     </Label>
-                                    <StackedBarChart fx:id="complaintChart" animated="false" prefHeight="458.0" prefWidth="564.0">
+                                    <HBox prefHeight="257.0" prefWidth="527.0">
+                                       <children>
+                                          <Label fx:id="incomeReport1" alignment="TOP_LEFT" prefHeight="257.0" prefWidth="252.0" text="Income report:">
+                                             <font>
+                                                <Font size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <PieChart fx:id="ordersChart1" prefHeight="257.0" prefWidth="293.0" title="Orders Report" />
+                                       </children>
+                                    </HBox>
+                                    <StackedBarChart fx:id="complaintChart1" prefHeight="316.0" prefWidth="546.0" title="Complaint Chart">
                                        <xAxis>
-                                          <CategoryAxis fx:id="daysAxis" label="Days" side="BOTTOM" />
+                                          <CategoryAxis fx:id="daysAxis1" label="Days" side="BOTTOM" />
                                        </xAxis>
                                        <yAxis>
-                                          <NumberAxis fx:id="complaintsAxis" label="Number Of Complaints" side="LEFT" upperBound="20.0" />
+                                          <NumberAxis fx:id="complaintsAxis1" label="Number Of Complaints" side="LEFT" />
+                                       </yAxis>
+                                    </StackedBarChart>
+                                 </children>
+                              </VBox>
+                              <Separator orientation="VERTICAL" prefHeight="200.0" />
+                              <VBox prefHeight="461.0" prefWidth="573.0">
+                                 <children>
+                                    <Label prefHeight="31.0" prefWidth="100.0" text="Store Report 2:">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox prefHeight="255.0" prefWidth="558.0">
+                                       <children>
+                                          <Label fx:id="incomeReport2" alignment="TOP_LEFT" prefHeight="255.0" prefWidth="264.0" text="Income report:">
+                                             <font>
+                                                <Font size="13.0" />
+                                             </font>
+                                          </Label>
+                                          <PieChart fx:id="ordersChart2" prefHeight="255.0" prefWidth="269.0" title="Orders Report" />
+                                       </children>
+                                    </HBox>
+                                    <StackedBarChart fx:id="complaintChart2" prefHeight="318.0" prefWidth="558.0" title="Complaint Chart">
+                                       <xAxis>
+                                          <CategoryAxis fx:id="daysAxis2" label="Days" side="BOTTOM" />
+                                       </xAxis>
+                                       <yAxis>
+                                          <NumberAxis fx:id="complaintsAxis2" label="Number Of Complaints" side="LEFT" />
                                        </yAxis>
                                     </StackedBarChart>
                                  </children>
