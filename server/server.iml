@@ -60,5 +60,11 @@
     <orderEntry type="module" module-name="email" />
     <orderEntry type="library" name="Maven: com.sun.mail:javax.mail:1.6.2" level="project" />
     <orderEntry type="library" name="Maven: javax.activation:activation:1.1" level="project" />
+    <orderEntry type="library" name="Maven: de.mirkosertic.bytecoder:java.desktop:2021-11-02" level="project" />
+    <orderEntry type="library" name="Maven: de.mirkosertic.bytecoder:bytecoder.api:2021-11-02" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.32" level="project" />
+    <orderEntry type="library" name="Maven: de.mirkosertic.bytecoder:java.datatransfer:2021-11-02" level="project" />
+    <orderEntry type="library" name="Maven: de.mirkosertic.bytecoder:java.base:2021-11-02" level="project" />
+    <orderEntry type="library" name="Maven: de.mirkosertic.bytecoder:java.xml:2021-11-02" level="project" />
   </component>
 </module>

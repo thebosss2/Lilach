@@ -5,6 +5,7 @@ module org.server {
     requires org.hibernate.commons.annotations;
     requires org.entities;
     requires org.email;
+    requires javafx.controls;
     exports org.server;
 
 

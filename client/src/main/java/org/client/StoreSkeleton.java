@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
@@ -31,6 +32,9 @@ public class StoreSkeleton {
 
     @FXML // fx:id="cartBtn"
     private Button cartBtn; // Value injected by FXMLLoader
+
+    @FXML // fx:id="helloLabel"
+    protected Label helloLabel; // Value injected by FXMLLoader
 
     @FXML
     void MoveToCatalog(ActionEvent event) {
@@ -73,21 +77,11 @@ public class StoreSkeleton {
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() throws IOException {
-        assert catalogBtn != null : "fx:id=\"catalog\" was not injected: check your FXML file 'First catalog try.fxml'.";
         assert mainScreen != null : "fx:id=\"mainScreen\" was not injected: check your FXML file 'First catalog try.fxml'.";
-        assert cartBtn != null : "fx:id=\"openImage\" was not injected: check your FXML file 'First catalog try.fxml'.";
+        assert helloLabel != null : "fx:id=\"helloLabel\" was not injected: check your FXML file 'StoreSkeleton.fxml'.";
+        App.client = new Client(null, 3000);
         App.client.storeSkeleton=this;
-
-        LinkedList<Object> msg = new LinkedList<Object>();
-        msg.add("#PULLSTORES");
-        try {
-            App.client.sendToServer(msg); //Sends a msg contains the command and the controller for the catalog.
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        changeCenter("Catalog");
-        changeLeft("GuestMenu");
-
+        changeCenter("ClientBoot");
     }
 
 }

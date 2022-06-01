@@ -68,7 +68,7 @@ public class CatalogController extends Controller {
                 for (PreMadeProduct product : Client.products) {
                     if(!product.isOrdered()) {
                         try {
-                            if (product.getType() == PreMadeProduct.ProductType.CATALOG)
+                            //if (product.getType() == PreMadeProduct.ProductType.CATALOG)
                                 displayProduct(product, catalogController);
                         } catch (IOException e) {
                             e.printStackTrace();

@@ -19,7 +19,8 @@ public abstract class User extends Guest implements Serializable {
     protected Boolean frozen=false;
     private Boolean connected;
     @ManyToOne
-    protected Store store = null; //TODO move to user
+    protected Store store = null; 
+
 
     public User(String userID, String name, String userName, String password, String email, String phoneNum ,Store store) {
         super(name);

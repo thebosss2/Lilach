@@ -61,9 +61,7 @@ public class EditProductController extends Controller {
         this.priceText.setTextFormatter(formatter2);
         this.priceText.setText(Integer.toString(product.getPriceBeforeDiscount()));
         this.discountText.setTextFormatter(formatter1);
-        if(product.getDescription() != null)
-            this.descriptionText.setText(product.getDescription());
-        System.out.println(product.getDiscount());
+        this.descriptionText.setText(product.getDescription());
         if (product.getDiscount() != 0)
             this.discountText.setText(Integer.toString(product.getDiscount()));
     }

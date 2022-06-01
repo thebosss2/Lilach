@@ -39,60 +39,163 @@ public class App {
         return configuration.buildSessionFactory(serviceRegistry);
     }
 
-    private static void generateProducts() throws Exception {       //generates new products
-        Random random = new Random();
-        int price;
-        Store chain = new Store("Chain", "address");
-        session.save(chain);   //saves and flushes to database
-        session.flush();
-        for (int i = 0; i < 5; i++) {
-            var img1 = loadImageFromResources(String.format("Flower%s.jpg", i));
-            PreMadeProduct p1 = new PreMadeProduct("Flower" + i, img1, price = random.nextInt(50),"descriptionnn", price+random.nextInt(50),false);
-            Customer cust = new Customer("23465111"+i, "name","user" + i,"pass" +i,"mail@ffdff","0000000000","0000000000000000", Customer.AccountType.MEMBERSHIP,chain);
-            Complaint c = new Complaint(cust ,new Date(),"bad bad bad", Complaint.Topic.BAD_SERVICE, chain);
-            session.save(cust);
-            session.flush();
-            session.save(c);
-            session.flush();
-            session.save(p1);   //saves and flushes to database
-            session.flush();
-        }
-        Employee emp = new Employee("4563456","Sagi","Sagi","Sagi","Sagi","4563456",Employee.Role.STORE_EMPLOYEE,chain);
-        session.save(emp);
-        session.flush();
-        Employee man = new Employee("345634576","Itai","Itai","Itai","Itai","12341234",Employee.Role.STORE_MANAGER,chain);
-        session.save(man);
-        session.flush();
-        Employee Ad = new Employee("4563456","Gal ","Gal","Gal","Sagi","4563456",Employee.Role.ADMIN,chain);
-        session.save(Ad);
-        session.flush();
-        Employee Ce = new Employee("4563456","Tahel","Tahel","Tahel","Sagi","4563456",Employee.Role.CEO,chain);
-        session.save(Ce);
-        session.flush();
-        Employee Serv = new Employee("4563456","Yahav ","Yahav","Yahav","Sagi","4563456",Employee.Role.CUSTOMER_SERVICE,chain);
-        session.save(Serv);
-        session.flush();
 
-        Customer cust = new Customer("23465", "Sagii","Sagii","Sagii","sagiman14@gmail.com","56346","credit", Customer.AccountType.MEMBERSHIP,chain);
+    private static void generateEntities() throws Exception {       //generates all entities
+        //--------------------STORES-----------------------------------------------------
+        List<Store> stores = new LinkedList<Store>();
+        stores=generateStores();
+        //--------------------END-OF-STORES----------------------------------------------
+
+        //--------------------CUSTOMERS-AND-COMPLAINTS-----------------------------------
+        List<Customer> customers= new LinkedList<Customer>();
+        customers=generateCustomers(stores);
+
+        List<Complaint> complaints = new LinkedList<Complaint>();
+        complaints=generateComplaints(stores,customers);
+        //--------------------END-OF-CUSTOMERS-AND-COMPLAINTS----------------------------
+
+        //--------------------EMPLOYEES--------------------------------------------------
+        List<Employee> employees = new LinkedList<Employee>();
+        employees=generateEmployees(stores);
+        //--------------------END-OF-EMPLOYEES-------------------------------------------
+
+        //--------------------FLOWERS----------------------------------------------------
+        List<PreMadeProduct> products = new LinkedList<PreMadeProduct>();
+        products = generateProducts();
+        //--------------------END-OF-FLOWERS---------------------------------------------
+
+        //--------------------EXAMPLE-FOR-EMAIL-DELIVERY---------------------------------
+        Customer cust = new Customer("23465", "Sagii","Sagii","Sagii","sagiman14@gmail.com","56346","credit", Customer.AccountType.MEMBERSHIP,stores.get(stores.size()-1));
         Date date = new Date();
         date.setYear(date.getYear() - 2);
         cust.setMemberShipExpireTODELETE(date);
         cust.setBalance(150);
         session.save(cust);
         session.flush();
-      
-        Complaint c = new Complaint(cust ,new Date(122,04,5) ,"I WANT MONEY", Complaint.Topic.PAYMENT,chain);
+     
+        Complaint c = new Complaint(cust ,new Date(122,04,5) ,"I WANT MONEY", Complaint.Topic.PAYMENT,stores.get(stores.size()-1));
         session.save(c);
         session.flush();
+        //--------------------END-OF-EXAMPLE-FOR-EMAIL-DELIVERY--------------------------
     }
 
-    private static void generateStores() throws Exception {       //generates new products
-        for (int i = 0; i < 5; i++) {
-            Store store = new Store("store" + i, "address" + i);
+    private static List<Store> generateStores() throws Exception {       //generates new products
+        List<Store> stores = new LinkedList<Store>();
+        String[] storeNames = new String[]{"Lilac Haifa", "Lilac Tel-Aviv", "Lilac Be'er Sheva", "Lilac Rehovot", "Lilac Jerusalem", "Lilac Eilat"};
+        String[] storeAddress = new String[]{"Grand Canyon Haifa - Derech Simha Golan 54", "Azrieli Mall - Derech Menachem Begin 132", "Big Beer Sheva - Derekh Hebron 21",
+                "Rehovot Mall - Bilu St 2", "Malcha Mall - Derech Agudat Sport Beitar 1", "Kanyon ha-Ir - HaMelacha St 12"};
+        for(int i=0;i<storeNames.length;i++){
+            Store store = new Store(storeNames[i], storeAddress[i]);
+            stores.add(store);
             session.save(store);   //saves and flushes to database
             session.flush();
         }
+        Store chain = new Store("Chain", "address");
+        stores.add(chain);
+        session.save(chain);   //saves and flushes to database
+        session.flush();
+        return stores;
+    }
+    private static List<PreMadeProduct> generateProducts() throws Exception {       //generates new products
+        Random random = new Random();
+        List<PreMadeProduct> products = new LinkedList<PreMadeProduct>();
+        String[] flowerNames = new String[]{"SunFlower","Calanit","Shibolet","Rose","Rakefet","Lilach","Lily","Tulip","Pickachu","Charmander","Thanos","PushPush","Runlater","Clean Install","Orchid"};
+        for(int i=0;i< flowerNames.length;i++){
+            var img = loadImageFromResources(String.format("Flower%s.jpg",i));
+            PreMadeProduct p = new PreMadeProduct(flowerNames[i], img, random.nextInt(30)+1,"this is a " + flowerNames[i] +" Flower", 0,false);
+            products.add(p);
+            session.save(p);   //saves and flushes to database
+            session.flush();
+        }
+        return products;
+    }
+    private static List<Customer> generateCustomers(List<Store> s) throws Exception {       //generates new products
+        List<Customer> customers = new LinkedList<Customer>();
+        String[] customerId = new String[]{"123456789","234567891","345678912","456789123","567891234","678912345","789123456","891234567"};
+        String[] customerNames = new String[]{"user","Ash Ketchum", "Obi-Wan Kenobi", "Cynthia", "Amity Blight", "Mariette Cheng", "Matt", "Augustus Porter"};
+        String[] customerUserNames = new String[]{"user","pokemon_master", "Jedi_master", "Cynthi", "Cotton_Candy", "Ladybug", "Wii1", "TOH"};
+        String[] customerEmails = new String[]{"user@gmail.com","Ash@gmail.com","Obi-Wan@gmail.com","Cynthia@gmail.com","Amity@gmail.com","Mariette@gmail.com","Matt@gmail.com", "Augustus@gmail.com"};
+        int storeN;
+        for(int i=0;i< customerNames.length;i++) {
+            if (i < s.size())
+                storeN = i;
+            else
+                storeN = s.size()-1;
+            Customer cust = new Customer(customerId[i], customerNames[i], customerUserNames[i], "pass", customerEmails[i], "0522245484", "5434456321581234", Customer.AccountType.MEMBERSHIP, s.get(storeN));
+            cust.setBalance(50*(new Random().nextInt(10)));
+            customers.add(cust);
+            session.save(cust);
+            session.flush();
+        }
+        return customers;
+    }
+    private static List<Employee> generateEmployees(List<Store> s) throws Exception {       //generates new products
+        List<Employee> employees = new LinkedList<Employee>();
+        String[] employeeId = new String[]{"987654321","876543219","765432198","654321987","543219876","432198765","321987654","219876543","334574567","345234556",
+        "534563456","345634564","332141234","567856786","653294462","870767907","567944332"};
+        String[] employeeNames = new String[]{"Itai","Sagi","Gal","Tahel","Yahav","May", "Lillian", "Nellie", "Chantelle", "Tia",       "Christine", "Hayley", "Alice", "Wanda", "Tara", "Rose", "Ruby"};
+        String[] employeeUserNames = new String[]{"itai","sagi","gal","tahel","yahav","may", "Lilly", "Nella", "Chantelle", "Tia",      "Christa", "tookYourChildren", "Halle", "Ali", "Scarlet", "Tara", "Rose"};
+        String[] employeeEmails = new String[]{"Itai@gmail.com", "Sagi@gmail.com", "Gal@gmail.com", "Tahel@gmail.com", "Yahav@gmail.com", "May@gmail.com",
+        "Lillian@gmail.com", "Nellie@gmail.com", "Chantelle@gmail.com", "Tia@gmail.com", "Christa@gmail.com", "tookYourChildren@gmail.com", "Halle@gmail.com", "Ali@gmail.com", "Scarlet@gmail.com", "Tara@gmail.com", "Rose@gmail.com"};
+        int storeN;
+        for(int i=0;i< employeeNames.length;i++){
+            storeN=i%7;
+            Employee emp = new Employee(employeeId[i], employeeNames[i], employeeUserNames[i], employeeUserNames[i], employeeEmails[i], "052224548"+i, Employee.Role.values()[(i%2==0)?0:2], s.get(storeN));
+            if(emp.getRole()== Employee.Role.STORE_EMPLOYEE)
+                emp.getStore().addEmployees(emp);
+            else if(emp.getStore().getStoreManager()==null)
+                   emp.getStore().setStoreManager(emp);
+            employees.add(emp);
+            session.save(emp);
+            session.flush();
+        }
 
+
+        Employee cService = new Employee("465364524", "Karen", "Karen", "Karen", "KarenAnakin@gmail.com", "0522245342", Employee.Role.values()[1], s.get(s.size()-1));
+        employees.add(cService);
+        session.save(cService);
+        session.flush();
+        Employee ceo = new Employee("345623411", "TonyStark", "IronMan", "IronMan", "TonyStark@gmail.com", "0522245483", Employee.Role.values()[3], s.get(s.size()-1));
+        employees.add(ceo);
+        session.save(ceo);
+        session.flush();
+        Employee admin = new Employee("796079534", "Anakin Skywalker", "younglingSlayer", "younglingSlayer", "Anakin@gmail.com", "0522245483", Employee.Role.values()[4], s.get(s.size()-1));
+        employees.add(admin);
+        session.save(admin);
+        session.flush();
+
+
+
+
+        return employees;
+    }
+    private static List<Complaint> generateComplaints(List<Store> s,List<Customer> c) throws Exception {       //generates new products
+        List<Complaint> complaints = new LinkedList<Complaint>();
+        int storeN;
+        String[] complaintsDiscription = new String[]{"Hello, a couple of days ago I went to your store in Haifa, and the receptionist Shlomit was being rude to me. \n Thanks.",
+                "Dear customer support, my order has arrived 2 hours later then what I asked for and ruined the surprise party.",
+                "Hello, I ordered 2 tulips but got only 1. I'd like to get refunded for that.",
+                "Dear Customer Support, I tried to buy with my visa and it didn't work, and then after multiple tries it charged me twice.",
+                "Hello there, I ordered from your chain, and didn't receive what I wanted.",
+                "Hello there, I ordered from your chain, and didn't receive what I desired."};
+        for(int i=0;i< c.size();i++){
+            if(i<s.size())
+                storeN=i;
+            else
+                storeN=s.size()-1;
+            if(i< complaintsDiscription.length){
+                Complaint comp = new Complaint(c.get(i) ,new Date(),complaintsDiscription[i], Complaint.Topic.values()[Math.min(i, Complaint.Topic.values().length-1)], s.get(i));
+                complaints.add(comp);
+                session.save(comp);
+                session.flush();
+            }else if(i== complaintsDiscription.length){
+                Complaint comp = new Complaint(c.get(i) ,new Date(),complaintsDiscription[complaintsDiscription.length-1], Complaint.Topic.OTHER, s.get(storeN));
+                complaints.add(comp);
+                session.save(comp);
+                session.flush();
+            }
+        }
+        return complaints;
     }
 
     private static void generateBaseCustomMadeProduct() throws Exception {       //generates new base products
@@ -177,14 +280,6 @@ public class App {
         return productsList;
     }
 
-    /*private static void generateOrders() throws Exception {
-
-        for(int j = 0; j < 40; j++){
-            Order order = new Order(getPreMadeProductList(), getCustomMadeProductList(), );
-        }
-
-    }*/
-
     ///TODO make generic func--------------------------------------------------------------------------------------------------------------
     static List<PreMadeProduct> getAllProducts() throws IOException {      //pulls all products from database
         CriteriaBuilder builder = session.getCriteriaBuilder();
@@ -267,16 +362,16 @@ public class App {
         return Objects.requireNonNull(stream).readAllBytes();
     }
 
-    private static Server server;
+    protected static Server server;
 
     public static void main(String[] args) throws IOException {
         try {
 
             SessionFactory sessionFactory = getSessionFactory();        //calls and creates session factory
             session = sessionFactory.openSession(); //opens session
-            /*session.beginTransaction();       //transaction for generation
-            generateProducts();             //generate
-            generateStores();
+            session.beginTransaction();       //transaction for generation
+            generateEntities();             //generate
+            //generateStores();
             generateBaseCustomMadeProduct();
             session.getTransaction().commit(); // Save everything.*/
 

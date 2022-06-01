@@ -4,6 +4,7 @@ import org.entities.Product;
 module org.client {
     requires javafx.controls;
     requires javafx.fxml;
+    requires org.email;
     requires org.entities;
     requires org.server;
     requires javafx.graphics;

@@ -71,11 +71,12 @@ public class Client extends AbstractClient {
                 case "#SIGNUP_AUTHENTICATION" -> authenticationReply((LinkedList<Object>) msg);
                 case "#PULLSTORES" -> pushStores(msg);//function gets all data from server to display to client
                 case "#PULL_COMPLAINTS" -> pushComplaints((LinkedList<Object>) msg);
-                case "#UPDATE_CUSTOMER" -> this.user = (Customer) ((LinkedList<Object>) msg).get(1);
-                case "#DELETEORDER" -> changeBalance(msg);//function gets all data from server to display to client
-                case "#PULLUSERS" -> pushUsers(msg);
-                case "#FROZEN" -> Controller.sendAlert("User was FROZEN by system Admin", "Frozen User", Alert.AlertType.WARNING);
                 case "#PULL_MANAGER_REPORT" -> pushManagerReport((LinkedList<Object>) msg);
+                case "#UPDATE_CUSTOMER" -> this.user = (Customer)((LinkedList<Object>) msg).get(1);
+                case "#DELETEORDER" -> deletedOrder((LinkedList<Object>)msg);//function gets all data from server to display to client
+                case "#PULLUSERS" -> pushUsers(msg);
+                case "#ERROR" -> errorMsg((LinkedList<Object>)msg);
+                case "#UPDATEBALANCE"-> updateBalance((Customer) ((LinkedList<Object>) msg).get(1));
             }
         } catch (Exception e) {
             System.out.println(Arrays.toString(e.getStackTrace()));
@@ -85,10 +86,32 @@ public class Client extends AbstractClient {
         }
     }
 
+
     private void pushManagerReport(LinkedList<Object> msg) {
         ReportController reportController = (ReportController) controller;
         reportController.pullData((LinkedList<Order>) msg.get(1),
                 (LinkedList<Complaint>) msg.get(2));
+    }
+  
+  
+    private void updateBalance(Customer customer){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                storeSkeleton.helloLabel.setText("Hello "+ customer.getUserName() + " Your Balance is "+customer.getBalance());
+            }
+        });
+
+    }
+
+    private void deletedOrder(LinkedList<Object> msg){
+        Controller.sendAlert((String) msg.get(1),(String) msg.get(2),Alert.AlertType.INFORMATION);
+        App.client.user=(Customer)msg.get(3);
+        updateBalance((Customer)msg.get(3));
+    }
+
+    private void errorMsg(List<Object> msg){
+        Controller.sendAlert(msg.get(1).toString() ,msg.get(2).toString() , Alert.AlertType.WARNING);
     }
 
     private void pushUsers(Object msg) {
@@ -100,36 +123,6 @@ public class Client extends AbstractClient {
         orders = (LinkedList<Order>) ((LinkedList<Object>) msg).get(1);
         SummaryOrdersController summaryOrdersController = (SummaryOrdersController) controller;
         summaryOrdersController.pullOrdersToClient();       //calls static function in client for display
-    }
-
-    private void changeBalance(Object msg) {
-        int refund = 0;
-        int price = (int) ((LinkedList<Object>) msg).get(1);
-        Date date = (Date) ((LinkedList<Object>) msg).get(2);
-        String hour = (String) ((LinkedList<Object>) msg).get(3);
-
-        Date new_date = new Date();
-        long diffInMillies = Math.abs(date.getTime() - new_date.getTime());
-        long diff = TimeUnit.HOURS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-
-        diff += Integer.parseInt(hour.substring(0, 2));
-
-
-        //alert+ change refund
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText("Order Cancellation succeeded");
-        alert.setTitle("The Order Has Been Canceled");
-
-        if (diff > 3) {
-            refund = price;
-            alert.setContentText("You have received a full refund");
-        } else if (diff > 1) {
-            refund = price / 2;
-            alert.setContentText("The refund is half the order price");
-        } else
-            alert.setContentText("I'm sorry, but according to the policy you do not deserve a refund");
-
-        ((Customer) App.client.user).setBalance(((Customer) App.client.user).getBalance() + refund);
     }
 
     private void pushComplaints(LinkedList<Object> msg) {
@@ -235,6 +228,7 @@ public class Client extends AbstractClient {
 
         if (this.user instanceof Customer) {
             storeSkeleton.changeLeft("CustomerMenu");
+            storeSkeleton.helloLabel.setText("Hello "+ ((Customer) this.user).getUserName() + " Your Balance is "+((Customer) this.user).getBalance());
             storeSkeleton.changeCenter("Catalog");
         } else if (this.user instanceof Employee) {
             switch (((Employee) this.user).getRole()) {
@@ -258,9 +252,12 @@ public class Client extends AbstractClient {
                     storeSkeleton.changeLeft("AdminMenu");
                     storeSkeleton.changeCenter("ManageAccounts"); ///////Waiting on ceo freeze user FXML
                 }
+
             }
+            storeSkeleton.helloLabel.setText("Hello "+ ((Employee) this.user).getUserName());
         } else {
             storeSkeleton.changeLeft("GuestMenu");
+            storeSkeleton.helloLabel.setText("Hello Guest");
             storeSkeleton.changeCenter("Catalog");
         }
 

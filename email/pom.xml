@@ -29,6 +29,11 @@
             <artifactId>javax.mail</artifactId>
             <version>1.6.2</version>
         </dependency>
+        <dependency>
+            <groupId>de.mirkosertic.bytecoder</groupId>
+            <artifactId>java.desktop</artifactId>
+            <version>2021-11-02</version>
+        </dependency>
     </dependencies>
 
     <build>

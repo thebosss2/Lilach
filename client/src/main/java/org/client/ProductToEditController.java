@@ -19,9 +19,18 @@ public class ProductToEditController extends ItemController{
     void goToEditProduct(MouseEvent event) throws InterruptedException {
         clickOnProductEffect(event);
         Controller controller = null;
-        controller = this.getSkeleton().changeCenter("EditProduct");
-        EditProductController editProduct = (EditProductController) controller;
-        editProduct.setProductView(this.product);
+        if(this.product.getType() == PreMadeProduct.ProductType.CATALOG) {
+            controller = this.getSkeleton().changeCenter("EditProduct");
+            EditProductController editProduct = (EditProductController) controller;
+            editProduct.setProductView(this.product);
+        }
+        else {
+            controller = this.getSkeleton().changeCenter("EditCustomProduct");
+            EditCustomProductController editProduct = (EditCustomProductController) controller;
+            editProduct.setProductView(this.product);
+        }
+
+
     }
 
     public void setProduct(PreMadeProduct product) {
