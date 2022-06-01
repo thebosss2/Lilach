@@ -70,9 +70,10 @@ public class Client extends AbstractClient {
                 case "#PULLSTORES" -> pushStores(msg);//function gets all data from server to display to client
                 case "#PULL_COMPLAINTS" -> pushComplaints((LinkedList<Object>) msg);
                 case "#UPDATE_CUSTOMER" -> this.user = (Customer)((LinkedList<Object>) msg).get(1);
-                case "#DELETEORDER" -> changeBalance(msg);//function gets all data from server to display to client
+                case "#DELETEORDER" -> deletedOrder((LinkedList<Object>)msg);//function gets all data from server to display to client
                 case "#PULLUSERS" -> pushUsers(msg);
                 case "#ERROR" -> errorMsg((LinkedList<Object>)msg);
+                case "#UPDATEBALANCE"-> updateBalance((Customer) ((LinkedList<Object>) msg).get(1));
             }
         } catch (Exception e) {
             System.out.println(Arrays.toString(e.getStackTrace()));
@@ -80,6 +81,22 @@ public class Client extends AbstractClient {
             System.out.println("Client Error");
             e.getStackTrace();
         }
+    }
+
+    private void updateBalance(Customer customer){
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                storeSkeleton.helloLabel.setText("Hello "+ customer.getUserName() + " Your Balance is "+customer.getBalance());
+            }
+        });
+
+    }
+
+    private void deletedOrder(LinkedList<Object> msg){
+        Controller.sendAlert((String) msg.get(1),(String) msg.get(2),Alert.AlertType.INFORMATION);
+        App.client.user=(Customer)msg.get(3);
+        updateBalance((Customer)msg.get(3));
     }
 
     private void errorMsg(List<Object> msg){
@@ -97,39 +114,7 @@ public class Client extends AbstractClient {
         summaryOrdersController.pullOrdersToClient();       //calls static function in client for display
     }
 
-    private void changeBalance(Object msg) {
-        int refund = 0;
-        int price = (int) ((LinkedList<Object>) msg).get(1);
-        Date date = (Date) ((LinkedList<Object>) msg).get(2);
-        String hour = (String) ((LinkedList<Object>) msg).get(3);
 
-        Date new_date = new Date();
-        long diffInMillies = Math.abs(date.getTime() - new_date.getTime());
-        long diff = TimeUnit.HOURS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-
-        diff += Integer.parseInt(hour.substring(0, 2));
-
-
-        //alert+ change refund
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText("Order Cancellation succeeded");
-        alert.setTitle("The Order Has Been Canceled");
-
-        if (diff > 3)
-        {
-            refund = price;
-            alert.setContentText("You have received a full refund");
-        }
-        else if (diff>1)
-        {
-            refund = price/2;
-            alert.setContentText("The refund is half the order price");
-        }
-        else
-            alert.setContentText("I'm sorry, but according to the policy you do not deserve a refund");
-
-        ((Customer) App.client.user).setBalance(((Customer) App.client.user).getBalance() + refund);
-    }
 
     private void pushComplaints(LinkedList<Object> msg) {
         ComplaintInspectionTableController tableController = (ComplaintInspectionTableController) controller;

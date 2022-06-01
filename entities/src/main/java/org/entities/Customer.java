@@ -46,6 +46,10 @@ public class Customer extends User implements Serializable {
         //TODO add hashing to password if have time.
     }*/
 
+    public int getSerialId() {
+        return id;
+    }
+
     public Customer() {
         super();
     }
