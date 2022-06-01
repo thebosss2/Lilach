@@ -72,6 +72,7 @@ public class Client extends AbstractClient {
                 case "#PULLSTORES" -> pushStores(msg);//function gets all data from server to display to client
                 case "#PULL_COMPLAINTS" -> pushComplaints((LinkedList<Object>) msg);
                 case "#PULL_MANAGER_REPORT" -> pushManagerReport((LinkedList<Object>) msg);
+                case "#PULL_CEO_REPORT" -> pushCeoReport((LinkedList<Object>) msg, client);
                 case "#UPDATE_CUSTOMER" -> this.user = (Customer)((LinkedList<Object>) msg).get(1);
                 case "#DELETEORDER" -> deletedOrder((LinkedList<Object>)msg);//function gets all data from server to display to client
                 case "#PULLUSERS" -> pushUsers(msg);
@@ -87,6 +88,7 @@ public class Client extends AbstractClient {
         }
     }
 
+
     private void refresh(LinkedList<Object> msg) {
 
     }
@@ -96,6 +98,12 @@ public class Client extends AbstractClient {
         ReportController reportController = (ReportController) controller;
         reportController.pullData((LinkedList<Order>) msg.get(1),
                 (LinkedList<Complaint>) msg.get(2));
+    }
+
+    private void pushCeoReport(LinkedList<Object> msg, Client client) {
+        CEOReportController ceoReportController = (CEOReportController) controller;
+        ceoReportController.pullData((String) msg.get(1), (LinkedList<Order>) msg.get(2),
+                (LinkedList<Complaint>) msg.get(3));
     }
   
   
