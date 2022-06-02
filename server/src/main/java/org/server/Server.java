@@ -229,7 +229,7 @@ public class Server extends AbstractServer {
         Complaint complaint = (Complaint) msg.get(1);
         closeComplaint(complaint);
         if(msg.get(2).equals("COMPENSATED"))
-            updateBalance(complaint.getCustomer(),App.session.find(Customer.class,complaint.getCustomer().getId()).getBalance() + (int) msg.get(3));
+            updateBalance(App.session.find(Customer.class,complaint.getCustomer().getId()),App.session.find(Customer.class,complaint.getCustomer().getId()).getBalance() + (int) msg.get(3));
         clientUserUpdate("BALANCEUPDATE",App.session.find(Customer.class,complaint.getCustomer().getId()));
     }
 

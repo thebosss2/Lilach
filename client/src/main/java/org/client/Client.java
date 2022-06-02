@@ -88,7 +88,7 @@ public class Client extends AbstractClient {
     }
     private void clientUserRefresh(List<Object> msg){
 
-        if(user instanceof Customer){
+        if(user instanceof Customer && msg.get(2) instanceof Customer){
             if(((Customer) user).getId() == ((Customer)msg.get(2)).getId()) {
                 if (msg.get(1).toString().equals("FREEZE")) {
                     Controller.sendAlert("Your account has been frozen by the system Admin", "Banned account", Alert.AlertType.WARNING);

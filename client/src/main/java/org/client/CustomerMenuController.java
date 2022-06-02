@@ -77,7 +77,6 @@ public class CustomerMenuController extends Controller {
         catalogBtn.setStyle("-fx-background-color: #9bc98c");
         complaintBtn.setStyle("-fx-background-color: #9bc98c");
         customMadeBtn.setStyle("-fx-background-color: #9bc98c");
-        logoutBtn.setStyle("-fx-background-color: #9bc98c");
         ordersBtn.setStyle("-fx-background-color: #9bc98c");
         button.setStyle("-fx-background-color: #62a74d");
 
