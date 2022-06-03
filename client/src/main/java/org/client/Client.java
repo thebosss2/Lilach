@@ -99,6 +99,14 @@ public class Client extends AbstractClient {
             } else if (this.controller instanceof CartController)
                 this.getSkeleton().changeCenter("Cart");
 
+            else if (this.controller instanceof CreateOrderController) {
+                try {
+                    ((CreateOrderController)this.controller).displaySummary();
+                    ((CreateOrderController)this.controller).setPrices();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
             Controller.sendAlert("We are sorry for the inconvenience, we made some changes in our catalog and updated your cart too! hope you like it :)", "Catalog Update", Alert.AlertType.INFORMATION);
 
         });
@@ -108,20 +116,40 @@ public class Client extends AbstractClient {
 
     private void refreshCart() { //this function will update the cart: if any product were updated- the cart will be updated as well
         //if any product was deleted- delete it from the cart (including deleting custom made if base were deleted)
+
+        List<Product> cartProducts = this.cart.getProducts();
         boolean preExists, cusExists;
-        for (Product p : this.cart.getProducts()) { //for every cart product
+
+        for (Product p : cartProducts) { //for every cart product
             cusExists = true; //unless any base product was deleted- dont delete the custom made
+
             if (p instanceof PreMadeProduct) { //if is catalog product
                 preExists = isExists((PreMadeProduct) p);
                 if (!preExists) //if the product was deleted
                     this.cart.removeProduct(p.getId()); //remove from cart
-            } else{//if is custom product
+
+            } else {//if is custom product
+                List<PreMadeProduct> newBases = new LinkedList<>();
                 for (PreMadeProduct base : ((CustomMadeProduct) p).getProducts()) { //check all base products
-                    if (!isExists(base, (CustomMadeProduct) p)) //if any base product was deleted
+                    if (!isExists(base, newBases)) //if any base product was deleted
                         cusExists = false; //remove from cart soon
                 }
                 if (!cusExists)
                     this.cart.removeProduct(p.getId());
+                else {
+                    //reset products.description and price:
+                    p.setPrice(0);
+                    ((CustomMadeProduct) p).setDescription("");
+                    ((CustomMadeProduct) p).getProducts().clear();
+                    //calculate from start for the new products
+                    for (PreMadeProduct base : newBases) {
+                        ((CustomMadeProduct) p).getProducts().add(base);
+                        p.setPrice(p.getPrice() + base.getPrice() * base.getAmount());
+                        String des =((CustomMadeProduct) p).getDescription();
+                        ((CustomMadeProduct) p).setDescription(des + base.getName() + " x " + base.getAmount() + ", ");
+                    }
+                    this.cart.refreshTotalCost();
+                }
             }
         }
 
@@ -142,15 +170,12 @@ public class Client extends AbstractClient {
 
     //this function finds if our cart base custom made product is in the updated products list.
     // if it is- fix it and return true, else return false cause it was deleted
-    private boolean isExists(PreMadeProduct base, CustomMadeProduct c) {
+    private boolean isExists(PreMadeProduct base, List<PreMadeProduct> list) {
         boolean exists = false; //by default if you didnt find product with the same id- it was deleted
         for (PreMadeProduct newP : Client.products) {
             if (base.getId() == newP.getId()) { //if it still exists
-                this.cart.removeProduct(c.getId()); //remove the whole custom product
-                c.getProducts().remove(base); //remove the bse product from copy of the custom product
                 updateProduct(base, newP); //update a copy o the base product
-                c.getProducts().add(base); //insert it to the custom product
-                this.cart.getProducts().add(c); //insert the updated custom product to the cart
+                list.add(base); //insert it to the custom product
                 exists = true;
             }
         }

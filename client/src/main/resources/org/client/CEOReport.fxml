@@ -52,17 +52,17 @@
                                                                   <Insets left="10.0" />
                                                                </padding>
                                                             </Label>
-                                                            <Label fx:id="incomeCompany1" alignment="TOP_LEFT" prefHeight="95.0" prefWidth="190.0">
+                                                            <Label fx:id="incomeCompany1" alignment="TOP_LEFT" prefHeight="55.0" prefWidth="190.0">
                                                                <font>
-                                                                  <Font name="Yu Gothic Medium" size="15.0" />
+                                                                  <Font name="Yu Gothic Medium" size="13.0" />
                                                                </font>
                                                                <padding>
                                                                   <Insets left="10.0" />
                                                                </padding>
                                                             </Label>
-                                                            <Label fx:id="ordersCompany1" alignment="CENTER" prefHeight="52.0" prefWidth="200.0">
+                                                            <Label fx:id="ordersCompany1" alignment="TOP_LEFT" prefHeight="52.0" prefWidth="200.0">
                                                                <font>
-                                                                  <Font name="Yu Gothic Medium" size="18.0" />
+                                                                  <Font name="Yu Gothic Medium" size="13.0" />
                                                                </font>
                                                                <padding>
                                                                   <Insets left="10.0" />
@@ -78,7 +78,7 @@
                                                                </font>
                                                             </Label>
                                                             <PieChart fx:id="ordersCompanyChart1" legendSide="LEFT" legendVisible="false" prefHeight="341.0" prefWidth="398.0" />
-                                                            <Label fx:id="salesCompany1" alignment="TOP_LEFT" prefHeight="48.0" prefWidth="398.0">
+                                                            <Label fx:id="salesCompany1" alignment="CENTER" prefHeight="48.0" prefWidth="398.0">
                                                                <font>
                                                                   <Font name="Yu Gothic Medium" size="15.0" />
                                                                </font>
@@ -109,15 +109,15 @@
                                                                         </Label>
                                                                         <Label fx:id="incomeStore1" alignment="TOP_LEFT" prefHeight="63.0" prefWidth="200.0">
                                                                             <font>
-                                                                                <Font name="Yu Gothic Medium" size="15.0" />
+                                                                                <Font name="Yu Gothic Medium" size="13.0" />
                                                                             </font>
                                                                <padding>
                                                                   <Insets left="10.0" />
                                                                </padding>
                                                                         </Label>
-                                                                        <Label fx:id="ordersStore1" alignment="CENTER" prefHeight="52.0" prefWidth="200.0">
+                                                                        <Label fx:id="ordersStore1" alignment="TOP_LEFT" prefHeight="52.0" prefWidth="200.0">
                                                                             <font>
-                                                                                <Font name="Yu Gothic Medium" size="18.0" />
+                                                                                <Font name="Yu Gothic Medium" size="13.0" />
                                                                             </font>
                                                                <padding>
                                                                   <Insets left="10.0" />
@@ -133,7 +133,7 @@
                                                                             </font>
                                                                         </Label>
                                                                         <PieChart fx:id="ordersStoreChart1" legendSide="LEFT" legendVisible="false" prefHeight="341.0" prefWidth="398.0" />
-                                                                        <Label fx:id="salesStore1" alignment="TOP_LEFT" prefHeight="48.0" prefWidth="398.0">
+                                                                        <Label fx:id="salesStore1" alignment="CENTER" prefHeight="48.0" prefWidth="398.0">
                                                                             <font>
                                                                                 <Font name="Yu Gothic Medium" size="15.0" />
                                                                             </font>
@@ -189,12 +189,12 @@
                                                             </Label>
                                                             <Label fx:id="incomeCompany2" alignment="TOP_LEFT" prefHeight="63.0" prefWidth="200.0">
                                                                <font>
-                                                                  <Font name="Yu Gothic Medium" size="15.0" />
+                                                                  <Font name="Yu Gothic Medium" size="13.0" />
                                                                </font>
                                                             </Label>
-                                                            <Label fx:id="ordersCompany2" alignment="CENTER" prefHeight="52.0" prefWidth="200.0">
+                                                            <Label fx:id="ordersCompany2" alignment="TOP_LEFT" prefHeight="52.0" prefWidth="200.0">
                                                                <font>
-                                                                  <Font name="Yu Gothic Medium" size="18.0" />
+                                                                  <Font name="Yu Gothic Medium" size="13.0" />
                                                                </font>
                                                             </Label>
                                                          </children>
@@ -207,7 +207,7 @@
                                                                </font>
                                                             </Label>
                                                             <PieChart fx:id="ordersCompanyChart2" legendSide="LEFT" legendVisible="false" prefHeight="341.0" prefWidth="398.0" />
-                                                            <Label fx:id="salesCompany2" alignment="TOP_LEFT" prefHeight="48.0" prefWidth="398.0">
+                                                            <Label fx:id="salesCompany2" alignment="CENTER" prefHeight="48.0" prefWidth="398.0">
                                                                <font>
                                                                   <Font name="Yu Gothic Medium" size="15.0" />
                                                                </font>
@@ -232,12 +232,12 @@
                                                             </Label>
                                                             <Label fx:id="incomeStore2" alignment="TOP_LEFT" prefHeight="63.0" prefWidth="200.0">
                                                                <font>
-                                                                  <Font name="Yu Gothic Medium" size="15.0" />
+                                                                  <Font name="Yu Gothic Medium" size="13.0" />
                                                                </font>
                                                             </Label>
-                                                            <Label fx:id="ordersStore2" alignment="CENTER" prefHeight="52.0" prefWidth="200.0">
+                                                            <Label fx:id="ordersStore2" alignment="TOP_LEFT" prefHeight="52.0" prefWidth="200.0">
                                                                <font>
-                                                                  <Font name="Yu Gothic Medium" size="18.0" />
+                                                                  <Font name="Yu Gothic Medium" size="13.0" />
                                                                </font>
                                                             </Label>
                                                          </children>
@@ -250,7 +250,7 @@
                                                                </font>
                                                             </Label>
                                                             <PieChart fx:id="ordersStoreChart2" legendSide="LEFT" legendVisible="false" prefHeight="341.0" prefWidth="398.0" />
-                                                            <Label fx:id="salesStore2" alignment="TOP_LEFT" prefHeight="48.0" prefWidth="398.0">
+                                                            <Label fx:id="salesStore2" alignment="CENTER" prefHeight="48.0" prefWidth="398.0">
                                                                <font>
                                                                   <Font name="Yu Gothic Medium" size="15.0" />
                                                                </font>
