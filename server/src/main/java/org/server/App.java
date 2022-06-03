@@ -11,6 +11,7 @@ import org.hibernate.service.ServiceRegistry;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -62,8 +63,13 @@ public class App {
         //--------------------FLOWERS----------------------------------------------------
         List<PreMadeProduct> products = new LinkedList<PreMadeProduct>();
         products = generateProducts();
+        products.addAll(generateBaseCustomMadeProduct());
         //--------------------END-OF-FLOWERS---------------------------------------------
 
+        //--------------------ORDERS-----------------------------------------------------
+        List<Order> orders = new LinkedList<Order>();
+        orders = generateOrders(products,(LinkedList<Customer>) customers,stores);
+        //--------------------END-OF-ORDERS----------------------------------------------
         //--------------------EXAMPLE-FOR-EMAIL-DELIVERY---------------------------------
         Customer cust = new Customer("23465", "Sagii","Sagii","Sagii","sagiman14@gmail.com","56346","credit", Customer.AccountType.MEMBERSHIP,stores.get(stores.size()-1));
         Date date = new Date();
@@ -221,9 +227,49 @@ public class App {
         }
         return complaints;
     }
+    public static int totalCost(List<CustomMadeProduct> customMadeList, List<PreMadeProduct> preMadeList)
+    {
+        int totalCost = 0, customPrice=0;
+        for (CustomMadeProduct custom : customMadeList) {
+            for (PreMadeProduct preMadeProduct : custom.getProducts()) {
+                customPrice += preMadeProduct.getPrice() * preMadeProduct.getAmount();
+            }
+            totalCost += customPrice;
+            custom.setPrice(customPrice);
+            customPrice=0;
+        }
 
-    private static void generateBaseCustomMadeProduct() throws Exception {       //generates new base products
+        for (PreMadeProduct preMadeProduct : preMadeList)
+            totalCost += preMadeProduct.getPrice() * preMadeProduct.getAmount();
+
+        return totalCost;
+    }
+    private static List<Order> generateOrders(List<PreMadeProduct>products, LinkedList<Customer> customers, List<Store>stores) throws IOException {
+        LinkedList<CustomMadeProduct> customMadeList = new LinkedList<CustomMadeProduct>();
+        LinkedList<PreMadeProduct> preMadeList = new LinkedList<PreMadeProduct>();
+        List<Order> orders = new LinkedList<Order>();
+        Order order;
+        Date date = new Date();
+        Date delivery = new Date(date.getTime()+ Duration.ofDays(1).toMillis());
+        Random rand = new Random();
+        for(int i=0;i<20;i++){
+            int c=rand.nextInt(customers.size());
+            customMadeList =(LinkedList<CustomMadeProduct>)getCustomMadeProductList(products);
+            preMadeList = (LinkedList<PreMadeProduct>)getPreMadeProductList(products);
+            order = new Order( preMadeList,customMadeList,customers.get(c),totalCost(customMadeList,preMadeList),delivery, customers.get(c).getStore(),Integer.toString(delivery.getHours()),customers.get(c).getStore().getAddress(),"dfgsdfgsnfdf");
+            orders.add(order);
+            App.session.save(order);
+            App.session.flush();
+        }
+        return orders;
+
+    }
+
+
+
+    private static List<PreMadeProduct> generateBaseCustomMadeProduct() throws Exception {       //generates new base products
         Random random = new Random();
+        List<PreMadeProduct> customProducts = new LinkedList<PreMadeProduct>();
         int price;
         int num_products = 10; //change according to the real
         String[] colors = {"Red","Pink","Yellow","White","Pink","White","White","Green","Blue","Green","Green"};
@@ -231,13 +277,15 @@ public class App {
         for (int i = 0; i <= num_products; i++) {
             var img = loadImageFromResources(String.format("base%s.jpg", i));
             PreMadeProduct p = new PreMadeProduct(names[i], img, price = random.nextInt(15)+1,price+random.nextInt(15),false,colors[i]);
+            customProducts.add(p);
             session.save(p);   //saves and flushes to database
             session.flush();
         }
+        return customProducts;
     }
 
-    private static List<PreMadeProduct> getAllBaseCustomMadeProduct() throws IOException {
-        List<PreMadeProduct> products = getAllProducts(), baseProducts = new LinkedList<PreMadeProduct>();
+    private static List<PreMadeProduct> getAllBaseCustomMadeProduct(List<PreMadeProduct> productsList) throws IOException {
+        List<PreMadeProduct> products = productsList, baseProducts = new LinkedList<PreMadeProduct>();
         for(PreMadeProduct product : products)
             if(product.getType() == PreMadeProduct.ProductType.CUSTOM_CATALOG)
                 baseProducts.add(product);
@@ -245,81 +293,80 @@ public class App {
         return baseProducts;
     }
 
-    private static List<CustomMadeProduct> getCustomMadeProductList() throws IOException {
+    private static List<CustomMadeProduct> getCustomMadeProductList( List<PreMadeProduct> products) throws IOException {
         List<CustomMadeProduct> custom = new LinkedList<CustomMadeProduct>();
-        int price = 0, rand;
-
+        int price = 0;
+        Random rand = new Random();
+        int size = rand.nextInt(4);
         // make 10 customMadeProducts,
-        for(int i = 0; i < 10; i++) {
-            // make a customMadeProduct form 3-10 random baseCustomMadeProducts
-            custom.add(new CustomMadeProduct(getBaseProductList(), price, "path",
-                    CustomMadeProduct.ItemType.BLOOMING_POT));
+        for(int i = 0; i < size; i++) {
+            // make a customMadeProduct from 3-10 random baseCustomMadeProducts
+            int type = rand.nextInt(3);
+            List<PreMadeProduct> list = getBaseProductList(products);
+            CustomMadeProduct c = new CustomMadeProduct(list, price);
+            c.setItemTypeCustom(CustomMadeProduct.ItemType.values()[type]);
+            c.setAmount(rand.nextInt(4) + 1);
+            custom.add(c);
+            App.session.save(c);
+            App.session.flush();
         }
         return custom;
     }
 
-    private static List<PreMadeProduct> getBaseProductList() throws IOException {
-        List<PreMadeProduct> baseProducts = getAllBaseCustomMadeProduct();
+    private static List<PreMadeProduct> getBaseProductList(List<PreMadeProduct> products) throws IOException {
+        List<PreMadeProduct> baseProducts = getAllBaseCustomMadeProduct(products);
         LinkedList<Integer> randomNumbers = new LinkedList<Integer>();
         LinkedList<PreMadeProduct> productsForCustom = new LinkedList<PreMadeProduct>();
         Random random = new Random();
-        int rand;
+        int rand,loopRand;
+        loopRand = random.nextInt(4);
+        for(int j = 0; j < loopRand; j++) {
+            rand = random.nextInt(11);
 
-        for(int j = 0; j < random.nextInt(7) + 3; j++) {
-            do {
-                rand = random.nextInt(11);
-            } while(randomNumbers.contains(rand));
-
-            PreMadeProduct base = baseProducts.get(rand);
+            PreMadeProduct base = new PreMadeProduct(baseProducts.get(rand));
             base.setAmount(random.nextInt(5) + 1);
+            base.setOrdered(true);
             productsForCustom.add(base);
+            session.save(base);
+            session.flush();
         }
         return productsForCustom;
     }
 
-    private static List<PreMadeProduct> getPreMadeProductList() throws IOException {
+    private static List<PreMadeProduct> getPreMadeProductList(List<PreMadeProduct> products) throws IOException {
         LinkedList<Integer> randomNumbers = new LinkedList<Integer>();
         LinkedList<PreMadeProduct> productsList = new LinkedList<PreMadeProduct>();
-        List<PreMadeProduct> allProducts = getAllProducts();
+        List<PreMadeProduct> allProducts = products;
         Random random = new Random();
-        int rand;
+        int rand,loopRand;
+        loopRand = random.nextInt(4);
 
+        for(int j = 0; j < loopRand; j++) {
+            rand = random.nextInt(11);
 
-        for(PreMadeProduct product : allProducts)
-            if(product.getType() == PreMadeProduct.ProductType.CUSTOM_CATALOG)
-                allProducts.remove(product);
-
-        for(int j = 0; j < (random.nextInt(6) + 1); j++) {
-            do {
-                rand = random.nextInt(11);
-            } while(randomNumbers.contains(rand));
-
-            PreMadeProduct randomProduct = allProducts.get(rand);
+            PreMadeProduct randomProduct = new PreMadeProduct(allProducts.get(rand));
             randomProduct.setAmount(random.nextInt(5) + 1);
             randomProduct = new PreMadeProduct(randomProduct);
             randomProduct.setOrdered(true);
             productsList.add(randomProduct);
+            App.session.save(randomProduct);
+            App.session.flush();
         }
 
         return productsList;
     }
 
-    ///TODO make generic func--------------------------------------------------------------------------------------------------------------
     static List<PreMadeProduct> getAllProducts() throws IOException {      //pulls all products from database
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<PreMadeProduct> query = builder.createQuery(PreMadeProduct.class);
         query.from(PreMadeProduct.class);
-        List<PreMadeProduct> data = session.createQuery(query).getResultList();
-        LinkedList<PreMadeProduct> list = new LinkedList<PreMadeProduct>();
-        for (PreMadeProduct product : data) {     //converts arraylist to linkedlist
-            list.add(product);
-        }
-        return list;
+        List<PreMadeProduct> list = session.createQuery(query).getResultList();
+        list.removeIf(PreMadeProduct::isOrdered);
+        return new LinkedList<>(list);
     }
 
 
 
-    ///TODO make generic func--------------------------------------------------------------------------------------------------------------
     static List<Store> getAllStores() throws IOException {      //pulls all stores from database
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Store> query = builder.createQuery(Store.class);
@@ -396,7 +443,6 @@ public class App {
             session.beginTransaction();       //transaction for generation
             generateEntities();             //generate
             //generateStores();
-            generateBaseCustomMadeProduct();
             session.getTransaction().commit(); // Save everything.*/
 
             ScheduleMailing.main(null);
