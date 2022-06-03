@@ -177,23 +177,47 @@ public class App {
                 "Hello, I ordered 2 tulips but got only 1. I'd like to get refunded for that.",
                 "Dear Customer Support, I tried to buy with my visa and it didn't work, and then after multiple tries it charged me twice.",
                 "Hello there, I ordered from your chain, and didn't receive what I wanted.",
-                "Hello there, I ordered from your chain, and didn't receive what I desired."};
-        for(int i=0;i< c.size();i++){
+                "Hello there, I ordered from your chain, and didn't receive what I desired.",
+                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
+                "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
+                "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii",
+                "jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj",
+                "kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk",
+                "llllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll",
+                "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm",
+                "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn",
+                "oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo",
+                "pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp",
+                "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq",
+                "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
+                "ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
+                "tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+                "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu",
+                "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv",
+                "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+                "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+                "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+                "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"};
+        for(int i=0;i< complaintsDiscription.length;i++){
             if(i<s.size())
-                storeN=i;
-            else
-                storeN=s.size()-1;
+                storeN=i%s.size();
             if(i< complaintsDiscription.length){
-                Complaint comp = new Complaint(c.get(i) ,new Date(),complaintsDiscription[i], Complaint.Topic.values()[Math.min(i, Complaint.Topic.values().length-1)], s.get(i));
+                Complaint comp = new Complaint(c.get(i%c.size()) ,new Date(),complaintsDiscription[i], Complaint.Topic.values()[i%Complaint.Topic.values().length/*Math.min(i, Complaint.Topic.values().length-1)*/], s.get(i%s.size()));
                 complaints.add(comp);
                 session.save(comp);
                 session.flush();
-            }else if(i== complaintsDiscription.length){
+            }/*else if(i== complaintsDiscription.length){
                 Complaint comp = new Complaint(c.get(i) ,new Date(),complaintsDiscription[complaintsDiscription.length-1], Complaint.Topic.OTHER, s.get(storeN));
                 complaints.add(comp);
                 session.save(comp);
                 session.flush();
-            }
+            }*/
         }
         return complaints;
     }
