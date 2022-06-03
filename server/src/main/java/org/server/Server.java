@@ -1,6 +1,7 @@
 package org.server;
 
 import javafx.scene.control.Alert;
+import org.email.SendMail;
 import org.entities.*;
 import org.server.ocsf.AbstractServer;
 import org.server.ocsf.ConnectionToClient;
@@ -228,9 +229,14 @@ public class Server extends AbstractServer {
     private void closeComplaintAndCompensate(LinkedList<Object> msg/*,ConnectionToClient client*/) {
         Complaint complaint = (Complaint) msg.get(1);
         closeComplaint(complaint);
-        if(msg.get(2).equals("COMPENSATED"))
-            updateBalance(App.session.find(Customer.class,complaint.getCustomer().getId()),App.session.find(Customer.class,complaint.getCustomer().getId()).getBalance() + (int) msg.get(3));
-        clientUserUpdate("BALANCEUPDATE",App.session.find(Customer.class,complaint.getCustomer().getId()));
+        if(msg.get(2).equals("COMPENSATED")) {
+            updateBalance(App.session.find(Customer.class, complaint.getCustomer().getId()), App.session.find(Customer.class, complaint.getCustomer().getId()).getBalance() + (int) msg.get(3));
+            clientUserUpdate("BALANCEUPDATE", App.session.find(Customer.class, complaint.getCustomer().getId()));
+            SendMail.main(new String[]{complaint.getCustomer().getEmail(),"your complaint has been processed and you have been compensated in the amount of " + (int)msg.get(3) + "₪\n","complaint processed"});
+        }else{
+            SendMail.main(new String[]{complaint.getCustomer().getEmail(),"your complaint has been processed and no refund has been issued","complaint processed"});
+        }
+
     }
 
     private void updateBalance(Customer customer, int balance){
