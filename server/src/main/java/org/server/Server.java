@@ -46,6 +46,7 @@ public class Server extends AbstractServer {
                 case "#PULLUSERS" -> pullUsers((LinkedList<Object>) msg, client);
                 case "#DELETEPRODUCT" -> deleteProduct((LinkedList<Object>) msg, client);
                 case "#PULL_MANAGER_REPORT" -> pullManagerReport((LinkedList<Object>) msg, client);
+                case "#PULL_CEO_REPORT" -> pullCeoReport((LinkedList<Object>) msg, client);
                 case "#SAVEEMPLOYEE" -> saveEmployee((LinkedList<Object>) msg, client);
                 case "#SAVECUSTOMER" -> saveCustomer((LinkedList<Object>) msg, client);
             }
@@ -530,6 +531,35 @@ public class Server extends AbstractServer {
             System.out.println(e.toString());
         }
     }
+
+    private void pullCeoReport(LinkedList<Object> msg, ConnectionToClient client) {
+        try {
+            String commandToClient = msg.get(0).toString();
+            List<Object> msgToClient = new LinkedList<Object>();
+            msgToClient.add(commandToClient);
+            msgToClient.add(msg.get(1)); // send the controller on which screen to show data
+
+            Store rightStore = (Store) msg.get(2);
+            Date fromDate = (Date) msg.get(3), toDate = (Date) msg.get(4);
+
+            List<Order> orders = App.getAllOrders();
+            List<Complaint> complaints = (LinkedList<Complaint>) App.getAllComplaints();
+
+            complaints.removeIf(complaint -> complaint.getStore().getId() != rightStore.getId()
+                    || complaint.getDate().compareTo(fromDate) < 0 || complaint.getDate().compareTo(toDate) > 0);
+
+            orders.removeIf(order -> order.getOrderDate().compareTo(fromDate) < 0 || order.getOrderDate().compareTo(toDate) > 0
+                    || order.isDelivered() == Order.Status.CANCELED);
+
+            msgToClient.add(orders);
+            msgToClient.add(complaints);
+            client.sendToClient(msgToClient);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+
+    }
+
 
 
     @Override

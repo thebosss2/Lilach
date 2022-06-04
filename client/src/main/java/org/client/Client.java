@@ -71,8 +71,9 @@ public class Client extends AbstractClient {
                 case "#PULLSTORES" -> pushStores(msg);//function gets all data from server to display to client
                 case "#PULL_COMPLAINTS" -> pushComplaints((LinkedList<Object>) msg);
                 case "#PULL_MANAGER_REPORT" -> pushManagerReport((LinkedList<Object>) msg);
-                case "#UPDATE_CUSTOMER" -> this.user = (Customer) ((LinkedList<Object>) msg).get(1);
-                case "#DELETEORDER" -> deletedOrder((LinkedList<Object>) msg);//function gets all data from server to display to client
+                case "#PULL_CEO_REPORT" -> pushCeoReport((LinkedList<Object>) msg, client);
+                case "#UPDATE_CUSTOMER" -> this.user = (Customer)((LinkedList<Object>) msg).get(1);
+                case "#DELETEORDER" -> deletedOrder((LinkedList<Object>)msg);//function gets all data from server to display to client
                 case "#PULLUSERS" -> pushUsers(msg);
                 case "#ERROR" -> errorMsg((LinkedList<Object>) msg);
                 case "#UPDATEBALANCE" -> updateBalance((Customer) ((LinkedList<Object>) msg).get(1));
@@ -131,8 +132,6 @@ public class Client extends AbstractClient {
                 Controller.sendAlert(e.getMessage(), "Catalog Update", Alert.AlertType.INFORMATION);
             }
         });
-
-
     }
 
     private void refreshCart() { //this function will update the cart: if any product were updated- the cart will be updated as well
@@ -228,6 +227,12 @@ public class Client extends AbstractClient {
                 (LinkedList<Complaint>) msg.get(2));
     }
 
+    private void pushCeoReport(LinkedList<Object> msg, Client client) {
+        CEOReportController ceoReportController = (CEOReportController) controller;
+        ceoReportController.pullData((String) msg.get(1), (LinkedList<Order>) msg.get(2),
+                (LinkedList<Complaint>) msg.get(3));
+    }
+  
 
     private void updateBalance(Customer customer) {
         Platform.runLater(new Runnable() {
