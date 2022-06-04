@@ -119,6 +119,7 @@ public class CreateOrderController extends Controller {
 
     @FXML
     void initialize() throws IOException {
+        App.client.setController(this);
 
         //initialize all datePickers:
         displayDates(selfShippingDate, LocalDate.now(), false);
@@ -166,6 +167,10 @@ public class CreateOrderController extends Controller {
 
     public void displaySummary() throws IOException { //function is called to display all products from cart
         CreateOrderController createOrderController = this;
+        createOrderController.selfCartPane.getChildren().clear();
+        createOrderController.giftCartPane.getChildren().clear();
+        createOrderController.TACartPane.getChildren().clear();
+
         for (Product product : App.client.cart.getProducts()) {
             try {
                 if (product instanceof PreMadeProduct) {
@@ -199,7 +204,7 @@ public class CreateOrderController extends Controller {
         controller.setSummaryCustomProduct(product);
     }
 
-    private void setPrices() {
+    protected void setPrices() {
         TAPriceBeforeLabel.setText(String.valueOf(App.client.cart.getTotalCost()));
         giftPriceBeforeLabel.setText(String.valueOf(App.client.cart.getTotalCost()));
         selfPriceBeforeLabel.setText(String.valueOf(App.client.cart.getTotalCost()));
