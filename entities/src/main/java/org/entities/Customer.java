@@ -30,6 +30,16 @@ public class Customer extends User implements Serializable {
     @Column(name = "complaint")
     private List<Complaint> complaints = new LinkedList<Complaint>();
 
+    public Customer(String userID, String name, String userName, String password, String email, String phone, String creditCard, AccountType accountType,Store store, boolean frozen, int balance) {
+        super(userID, name, userName, password, email, phone, store, frozen);
+        this.balance = balance;
+        this.creditCard = creditCard;
+        this.accountType = accountType;
+        if (accountType == AccountType.MEMBERSHIP) {
+            memberShipExpire = new Date();
+            memberShipExpire.setYear(memberShipExpire.getYear() + 1);
+        }
+    }
     public Customer(String userID, String name, String userName, String password, String email, String phone, String creditCard, AccountType accountType,Store store, boolean frozen) {
         super(userID, name, userName, password, email, phone, store, frozen);
         this.creditCard = creditCard;
