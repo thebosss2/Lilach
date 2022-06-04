@@ -29,16 +29,16 @@ public class SummaryCustomProductController extends Controller{
         this.totalPrice.setText(String.valueOf(product.getAmount() * product.getPrice()));
         switch(product.getItemType()) {
             case FLOWER_ARRANGEMENT:
-                this.type.setText("Custom flower arrangement:");
+                this.type.setText("Flower arrangement:");
                 break;
             case BLOOMING_POT:
-                this.type.setText("Custom blooming pot:");
+                this.type.setText("Blooming pot:");
                 break;
             case BRIDES_BOUQUET:
-                this.type.setText("Custom bride bouquet:");
+                this.type.setText("Bride bouquet:");
                 break;
             case BOUQUET:
-                this.type.setText("Custom bouquet:");
+                this.type.setText("Bouquet:");
         }
         for(int i=0; i < (product.getProducts()).size(); i++){
             this.description.setText(this.description.getText() + product.getProducts().get(i).getName() + ", ");

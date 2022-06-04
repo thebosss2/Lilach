@@ -53,6 +53,7 @@ public class StoreSkeleton {
             controller = fxmlLoader.getController();
 
             controller.setSkeleton(this);
+            App.client.setController(controller);
             //return controller;
         } catch (IOException e) {
             e.printStackTrace();
