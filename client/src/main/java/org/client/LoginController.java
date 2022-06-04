@@ -48,7 +48,7 @@ public class LoginController extends Controller{
     @FXML
     void login(ActionEvent event) {
         count++;
-        if(count==5){
+        if(count==10){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Project not working?");
             alert.setHeaderText("Did you do a big change? \nDid you ask yourself what you need to do FIRST OF ALL??????");

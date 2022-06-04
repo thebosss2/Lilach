@@ -140,7 +140,7 @@ public class Client extends AbstractClient {
                 } else if (this.controller instanceof CreateOrderController) {
                     try {
                         if (this.cart.getProducts().isEmpty()) {
-                            this.getSkeleton().changeCenter("Cart");
+                            this.getSkeleton().changeCenter("Catalog");
                             errorMsg = "We are sorry for the inconvenience, your products are no longer available! check out the catalog :)";
                         } else {
                             ((CreateOrderController) this.controller).displaySummary();

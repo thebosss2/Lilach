@@ -30,7 +30,7 @@
                                             <content>
                                                 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="819.0" prefWidth="585.0" style="-fx-background-color: ffffff;">
                                                     <children>
-                                                        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="903.0" prefWidth="585.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="1150.0" prefHeight="1150.0" prefWidth="585.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             <children>
                                                                 <Label alignment="TOP_LEFT" minWidth="167.0" prefHeight="29.0" prefWidth="202.0" text="Company Report 1:">
                                                                     <font>
@@ -171,7 +171,7 @@
                                             <content>
                                                 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="585.0" prefHeight="903.0" prefWidth="582.0" style="-fx-background-color: ffffff;">
                                                     <children>
-                                                        <VBox maxHeight="1.7976931348623157E308" prefHeight="903.0" prefWidth="585.0" style="-fx-background-color: ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                        <VBox maxHeight="1.7976931348623157E308" minHeight="1150.0" prefHeight="1150.0" prefWidth="585.0" style="-fx-background-color: ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                             <children>
                                                                 <Label alignment="TOP_LEFT" minWidth="167.0" prefHeight="29.0" prefWidth="198.0" text="Company Report 2:">
                                                                     <font>
