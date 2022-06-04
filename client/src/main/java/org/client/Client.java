@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
 public class Client extends AbstractClient {
 
@@ -72,12 +71,14 @@ public class Client extends AbstractClient {
                 case "#PULLSTORES" -> pushStores(msg);//function gets all data from server to display to client
                 case "#PULL_COMPLAINTS" -> pushComplaints((LinkedList<Object>) msg);
                 case "#PULL_MANAGER_REPORT" -> pushManagerReport((LinkedList<Object>) msg);
+                case "#PULL_CEO_REPORT" -> pushCeoReport((LinkedList<Object>) msg, client);
                 case "#UPDATE_CUSTOMER" -> this.user = (Customer)((LinkedList<Object>) msg).get(1);
                 case "#DELETEORDER" -> deletedOrder((LinkedList<Object>)msg);//function gets all data from server to display to client
                 case "#PULLUSERS" -> pushUsers(msg);
                 case "#ERROR" -> errorMsg((LinkedList<Object>)msg);
                 case "#UPDATEBALANCE"-> updateBalance((Customer) ((LinkedList<Object>) msg).get(1));
                 case "#USERREFRESH"-> clientUserRefresh((LinkedList<Object>) msg);
+                case "#REFRESH" -> refresh((LinkedList<Object>) msg);
             }
         } catch (Exception e) {
             System.out.println(Arrays.toString(e.getStackTrace()));
@@ -111,32 +112,171 @@ public class Client extends AbstractClient {
         }
     }
 
+    private void refresh(LinkedList<Object> msg) throws IOException {
+
+        Client.products = new LinkedList<>((List<PreMadeProduct>) msg.get(1));
+        refreshCart();
+        Platform.runLater(() -> {
+            try {
+                String errorMsg;
+                if (this.user instanceof Employee)
+                    errorMsg = "Notice that there were made some changes in the catalog! have a nice shift :)";
+                else
+                    errorMsg = "We are sorry for the inconvenience, we made some changes in our catalog and updated your cart too! hope you like it :)";
+
+                if (this.controller instanceof CatalogController) {
+                    try {
+                        ((CatalogController) this.controller).pullProductsToClient();
+                        if (this.user instanceof Employee)
+                            errorMsg = "Notice that there were made some changes in the catalog! have a nice shift :)";
+                        else
+                            errorMsg = "We are sorry for the inconvenience, we made some changes in our catalog and updated your cart too! hope you like it :)";
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else if (this.controller instanceof CartController) {
+                    errorMsg = "We are sorry for the inconvenience, we made some changes in our catalog so notice that your cart is updated now! hope you like it :)";
+                    this.getSkeleton().changeCenter("Cart");
+                } else if (this.controller instanceof CreateOrderController) {
+                    try {
+                        if (this.cart.getProducts().isEmpty()) {
+                            this.getSkeleton().changeCenter("Cart");
+                            errorMsg = "We are sorry for the inconvenience, your products are no longer available! check out the catalog :)";
+                        } else {
+                            ((CreateOrderController) this.controller).displaySummary();
+                            ((CreateOrderController) this.controller).setPrices();
+                            errorMsg = "We are sorry for the inconvenience, we made some changes in our catalog so notice that your cart is updated now! hope you like it :)";
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                Controller.sendAlert(errorMsg, "Catalog Update", Alert.AlertType.INFORMATION);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                Controller.sendAlert(e.getMessage(), "Catalog Update", Alert.AlertType.INFORMATION);
+            }
+        });
+    }
+
+    private void refreshCart() { //this function will update the cart: if any product were updated- the cart will be updated as well
+        //if any product was deleted- delete it from the cart (including deleting custom made if base were deleted)
+
+        List<Product> cartProducts = this.cart.getProducts();
+        boolean preExists, cusExists;
+        int i =0;
+
+        while (i < cartProducts.size()) { //for every cart product
+            cusExists = true; //unless any base product was deleted- dont delete the custom made
+            Product p = cartProducts.get(i);
+
+            if (p instanceof PreMadeProduct) { //if is catalog product
+                preExists = isExists((PreMadeProduct) p);
+                if (!preExists) { //if the product was deleted
+                    this.cart.removeProduct(p.getId()); //remove from cart
+                    i--;
+                }
+
+            } else {//if is custom product
+                List<PreMadeProduct> newBases = new LinkedList<>();
+                for (PreMadeProduct base : ((CustomMadeProduct) p).getProducts()) { //check all base products
+                    if (!isExists(base, newBases)) //if any base product was deleted
+                        cusExists = false; //remove from cart soon
+                }
+                if (!cusExists){
+                    this.cart.removeProduct(p.getId());
+                    i--;
+                }
+                else {
+                    //reset products.description and price:
+                    p.setPrice(0);
+                    ((CustomMadeProduct) p).setDescription("");
+                    ((CustomMadeProduct) p).getProducts().clear();
+                    //calculate from start for the new products
+                    for (PreMadeProduct base : newBases) {
+                        ((CustomMadeProduct) p).getProducts().add(base);
+                        p.setPrice(p.getPrice() + base.getPrice() * base.getAmount());
+                        String des = ((CustomMadeProduct) p).getDescription();
+                        ((CustomMadeProduct) p).setDescription(des + base.getName() + " x " + base.getAmount() + ", ");
+                    }
+                }
+            }
+            this.cart.refreshTotalCost();
+            i++;
+        }
+
+    }
+
+    //this function finds if our cart catalog product is in the updated products list.
+    // if it is- fix it and return true, else return false cause it was deleted
+    private boolean isExists(PreMadeProduct p) {
+        boolean exists = false; //by default if you didnt find product with the same id- it was deleted
+        for (PreMadeProduct newP : Client.products) {
+            if (p.getId() == newP.getId()) { //if it still exists
+                updateProduct((PreMadeProduct) p, newP); //fix it
+                exists = true;
+            }
+        }
+        return exists;
+    }
+
+    //this function finds if our cart base custom made product is in the updated products list.
+    // if it is- fix it and return true, else return false cause it was deleted
+    private boolean isExists(PreMadeProduct base, List<PreMadeProduct> list) {
+        boolean exists = false; //by default if you didnt find product with the same id- it was deleted
+        for (PreMadeProduct newP : Client.products) {
+            if (base.getId() == newP.getId()) { //if it still exists
+                updateProduct(base, newP); //update a copy o the base product
+                list.add(base); //insert it to the custom product
+                exists = true;
+            }
+        }
+        return exists;
+    }
+
+    //this function fixes the cart premade product to be updated
+    private void updateProduct(PreMadeProduct p, PreMadeProduct newP) {
+        p.setName(newP.getName());
+        p.setImage(newP.getByteImage());
+        p.setDiscount(newP.getDiscount());
+        p.setMainColor(newP.getMainColor());
+        p.setDescription(newP.getDescription());
+        p.setPrice(newP.getPrice());
+        p.setPriceBeforeDiscount(newP.getPriceBeforeDiscount());
+    }
+
 
     private void pushManagerReport(LinkedList<Object> msg) {
         ReportController reportController = (ReportController) controller;
         reportController.pullData((LinkedList<Order>) msg.get(1),
                 (LinkedList<Complaint>) msg.get(2));
     }
+
+    private void pushCeoReport(LinkedList<Object> msg, Client client) {
+        CEOReportController ceoReportController = (CEOReportController) controller;
+        ceoReportController.pullData((String) msg.get(1), (LinkedList<Order>) msg.get(2),
+                (LinkedList<Complaint>) msg.get(3));
+    }
   
-  
-    private void updateBalance(Customer customer){
+
+    private void updateBalance(Customer customer) {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                storeSkeleton.helloLabel.setText("Hello "+ customer.getUserName() + " Your Balance is "+customer.getBalance());
+                storeSkeleton.helloLabel.setText("Hello " + customer.getUserName() + " Your Balance is " + customer.getBalance());
             }
         });
 
     }
 
-    private void deletedOrder(LinkedList<Object> msg){
-        Controller.sendAlert((String) msg.get(1),(String) msg.get(2),Alert.AlertType.INFORMATION);
-        App.client.user=(Customer)msg.get(3);
-        updateBalance((Customer)msg.get(3));
+    private void deletedOrder(LinkedList<Object> msg) {
+        Controller.sendAlert((String) msg.get(1), (String) msg.get(2), Alert.AlertType.INFORMATION);
+        App.client.user = (Customer) msg.get(3);
+        updateBalance((Customer) msg.get(3));
     }
 
-    private void errorMsg(List<Object> msg){
-        Controller.sendAlert(msg.get(1).toString() ,msg.get(2).toString() , Alert.AlertType.WARNING);
+    private void errorMsg(List<Object> msg) {
+        Controller.sendAlert(msg.get(1).toString(), msg.get(2).toString(), Alert.AlertType.WARNING);
     }
 
     private void pushUsers(Object msg) {
@@ -253,7 +393,7 @@ public class Client extends AbstractClient {
 
         if (this.user instanceof Customer) {
             storeSkeleton.changeLeft("CustomerMenu");
-            storeSkeleton.helloLabel.setText("Hello "+ ((Customer) this.user).getUserName() + " Your Balance is "+((Customer) this.user).getBalance());
+            storeSkeleton.helloLabel.setText("Hello " + ((Customer) this.user).getUserName() + " Your Balance is " + ((Customer) this.user).getBalance());
             storeSkeleton.changeCenter("Catalog");
         } else if (this.user instanceof Employee) {
             switch (((Employee) this.user).getRole()) {
@@ -279,7 +419,7 @@ public class Client extends AbstractClient {
                 }
 
             }
-            storeSkeleton.helloLabel.setText("Hello "+ ((Employee) this.user).getUserName());
+            storeSkeleton.helloLabel.setText("Hello " + ((Employee) this.user).getUserName());
         } else {
             storeSkeleton.changeLeft("GuestMenu");
             storeSkeleton.helloLabel.setText("Hello Guest");

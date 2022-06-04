@@ -128,7 +128,7 @@ public class CustomerViewController extends Controller{
         }
         Customer cus = new Customer(this.id.getText(), this.name.getText(), this.username.getText(),
                 this.password.getText(), this.email.getText(), customer.getPhoneNum(), customer.getCreditCard(),
-                customer.getStringToType(this.typePicker.getValue()), store, !this.status.getText().equals("Active"));
+                customer.getStringToType(this.typePicker.getValue()), store, !this.status.getText().equals("Active"), Integer.parseInt(this.balance.getText()));
 
         List<Object> msg = new LinkedList<Object>();
         msg.add("#SAVECUSTOMER");          // adds #SAVE command for server

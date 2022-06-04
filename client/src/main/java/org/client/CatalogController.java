@@ -65,6 +65,7 @@ public class CatalogController extends Controller {
         Platform.runLater(new Runnable() {      //runlater used to wait for server and client threads to finish
             @Override
             public void run() {
+                mainPane.getChildren().clear();
                 for (PreMadeProduct product : Client.products) {
                     if(!product.isOrdered()) {
                         try {

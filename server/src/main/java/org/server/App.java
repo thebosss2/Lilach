@@ -440,7 +440,7 @@ public class App {
 
             SessionFactory sessionFactory = getSessionFactory();        //calls and creates session factory
             session = sessionFactory.openSession(); //opens session
-            session.beginTransaction();       //transaction for generation
+            /*session.beginTransaction();       //transaction for generation
             generateEntities();             //generate
             //generateStores();
             session.getTransaction().commit(); // Save everything.*/
