@@ -31,7 +31,7 @@ public class EditCatalogController extends CatalogController {
     void initialize() {
         assert mainPane != null : "fx:id=\"mainPane\" was not injected: check your FXML file 'Catalog.fxml'.";
         try {
-            displayAddItem();
+            //displayAddItem();
             LinkedList<Object> msg = new LinkedList<Object>();
             msg.add("#PULLCATALOG");
             App.client.setController(this);

@@ -249,14 +249,17 @@ public class App {
         LinkedList<PreMadeProduct> preMadeList = new LinkedList<PreMadeProduct>();
         List<Order> orders = new LinkedList<Order>();
         Order order;
-        Date date = new Date();
-        Date delivery = new Date(date.getTime()+ Duration.ofDays(1).toMillis());
+        Date date;
         Random rand = new Random();
-        for(int i=0;i<20;i++){
+        //TODO add order time to Order constructor and add date of purchase
+        for(int i=0;i<31;i++){
+            Date d = new Date();
+            date = new Date(d.getTime() - Duration.ofDays(i).toMillis());
+            Date delivery = new Date(date.getTime()+ Duration.ofDays(1).toMillis());
             int c=rand.nextInt(customers.size());
             customMadeList =(LinkedList<CustomMadeProduct>)getCustomMadeProductList(products);
             preMadeList = (LinkedList<PreMadeProduct>)getPreMadeProductList(products);
-            order = new Order( preMadeList,customMadeList,customers.get(c),totalCost(customMadeList,preMadeList),delivery, customers.get(c).getStore(),Integer.toString(delivery.getHours()),customers.get(c).getStore().getAddress(),"dfgsdfgsnfdf");
+            order = new Order(preMadeList,customMadeList,customers.get(c),totalCost(customMadeList,preMadeList),delivery, customers.get(c).getStore(),Integer.toString(delivery.getHours()),customers.get(c).getStore().getAddress(),"dfgsdfgsnfdf");
             orders.add(order);
             App.session.save(order);
             App.session.flush();
@@ -297,7 +300,7 @@ public class App {
         List<CustomMadeProduct> custom = new LinkedList<CustomMadeProduct>();
         int price = 0;
         Random rand = new Random();
-        int size = rand.nextInt(4);
+        int size = rand.nextInt(4)+1;
         // make 10 customMadeProducts,
         for(int i = 0; i < size; i++) {
             // make a customMadeProduct from 3-10 random baseCustomMadeProducts
@@ -319,7 +322,7 @@ public class App {
         LinkedList<PreMadeProduct> productsForCustom = new LinkedList<PreMadeProduct>();
         Random random = new Random();
         int rand,loopRand;
-        loopRand = random.nextInt(4);
+        loopRand = random.nextInt(4)+1;
         for(int j = 0; j < loopRand; j++) {
             rand = random.nextInt(11);
 
@@ -339,7 +342,7 @@ public class App {
         List<PreMadeProduct> allProducts = products;
         Random random = new Random();
         int rand,loopRand;
-        loopRand = random.nextInt(4);
+        loopRand = random.nextInt(4)+1;
 
         for(int j = 0; j < loopRand; j++) {
             rand = random.nextInt(11);
@@ -440,10 +443,10 @@ public class App {
 
             SessionFactory sessionFactory = getSessionFactory();        //calls and creates session factory
             session = sessionFactory.openSession(); //opens session
-            /*session.beginTransaction();       //transaction for generation
+            session.beginTransaction();       //transaction for generation
             generateEntities();             //generate
             //generateStores();
-            session.getTransaction().commit(); // Save everything.*/
+            session.getTransaction().commit(); // Save everything.
 
             ScheduleMailing.main(null);
 

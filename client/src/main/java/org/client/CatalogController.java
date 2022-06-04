@@ -66,6 +66,13 @@ public class CatalogController extends Controller {
             @Override
             public void run() {
                 mainPane.getChildren().clear();
+                if(catalogController instanceof EditCatalogController){
+                    try {
+                        ((EditCatalogController) catalogController).displayAddItem();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
                 for (PreMadeProduct product : Client.products) {
                     if(!product.isOrdered()) {
                         try {
