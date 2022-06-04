@@ -72,11 +72,10 @@ public class ComplaintInspectionController extends Controller{
         msg.add(complaint);
         Date d = new Date();
         Date minusDay = new Date(d.getTime()- Duration.ofDays(1).toMillis());
-        Boolean b =complaint.getDate().getTime()-minusDay.getTime()>0;
+        Boolean b =complaint.getDate().getTime()-minusDay.getTime()>=0;
         if(!b)
         {
-/*            System.out.println("sdfasdf");*/
-            //sendAlert closed too late
+            Controller.sendAlert("Complaint completed too late","Late Inspection", Alert.AlertType.WARNING);
         }else{
             complaint.setStatus(true);
         }

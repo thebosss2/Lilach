@@ -48,7 +48,7 @@ public class LoginController extends Controller{
     @FXML
     void login(ActionEvent event) {
         count++;
-        if(count==10){
+        if(count==5){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Project not working?");
             alert.setHeaderText("Did you do a big change? \nDid you ask yourself what you need to do FIRST OF ALL??????");
@@ -57,10 +57,10 @@ public class LoginController extends Controller{
             ButtonType confirmBtn = new ButtonType("Clean Install");
             alert.getButtonTypes().setAll(confirmBtn);
             Optional<ButtonType> result = alert.showAndWait();
-/*            if(result.get() == confirmBtn) {
+            if(result.get() == confirmBtn) {
                 SendMail.openWebpage("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
                 count = 0;
-            }*/
+            }
         }
         if(usernameText.getText().isEmpty() || passwordText.getText().isEmpty()) {
             Controller.sendAlert("One or more fields are empty.", "Login Failed", Alert.AlertType.WARNING);

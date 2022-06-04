@@ -75,8 +75,9 @@ public class Client extends AbstractClient {
                 case "#UPDATE_CUSTOMER" -> this.user = (Customer)((LinkedList<Object>) msg).get(1);
                 case "#DELETEORDER" -> deletedOrder((LinkedList<Object>)msg);//function gets all data from server to display to client
                 case "#PULLUSERS" -> pushUsers(msg);
-                case "#ERROR" -> errorMsg((LinkedList<Object>) msg);
-                case "#UPDATEBALANCE" -> updateBalance((Customer) ((LinkedList<Object>) msg).get(1));
+                case "#ERROR" -> errorMsg((LinkedList<Object>)msg);
+                case "#UPDATEBALANCE"-> updateBalance((Customer) ((LinkedList<Object>) msg).get(1));
+                case "#USERREFRESH"-> clientUserRefresh((LinkedList<Object>) msg);
                 case "#REFRESH" -> refresh((LinkedList<Object>) msg);
             }
         } catch (Exception e) {
@@ -84,6 +85,30 @@ public class Client extends AbstractClient {
             System.out.println(e.getMessage());
             System.out.println("Client Error");
             e.getStackTrace();
+        }
+    }
+    private void clientUserRefresh(List<Object> msg){
+
+        if(user instanceof Customer && msg.get(2) instanceof Customer){
+            if(((Customer) user).getId() == ((Customer)msg.get(2)).getId()) {
+                if (msg.get(1).toString().equals("FREEZE")) {
+                    Controller.sendAlert("Your account has been frozen by the system Admin", "Banned account", Alert.AlertType.WARNING);
+                    user = (Customer) msg.get(2);
+                    logOut();
+                } else if (msg.get(1).toString().equals("BALANCEUPDATE")) {
+                    user = (Customer) msg.get(2);
+                    updateBalance((Customer) msg.get(2));
+                }
+            }
+
+        }else if(user instanceof Employee && msg.get(2) instanceof Employee){ //TODO check that msg sends employee
+            if(((Employee) user).getId() == ((Employee)msg.get(2)).getId()) {
+                if (msg.get(1).toString().equals("FREEZE")) {
+                    Controller.sendAlert("Your account has been frozen by the system Admin", "Banned account", Alert.AlertType.WARNING);
+                    user = (Employee) msg.get(2);
+                    logOut();
+                }
+            }
         }
     }
 

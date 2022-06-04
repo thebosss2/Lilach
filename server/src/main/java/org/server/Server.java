@@ -1,6 +1,7 @@
 package org.server;
 
 import javafx.scene.control.Alert;
+import org.email.SendMail;
 import org.entities.*;
 import org.server.ocsf.AbstractServer;
 import org.server.ocsf.ConnectionToClient;
@@ -55,6 +56,23 @@ public class Server extends AbstractServer {
         }
     }
 
+    private void clientUserUpdate(String msg, User user){
+        User user1=null;
+        if(user instanceof Customer){
+            user1 = App.session.find(Customer.class,user.getId());
+        }else if(user instanceof Employee){
+            user1 = App.session.find(Employee.class,user.getId());
+        }
+
+        if(user1.getConnected()){
+            List<Object> newMsg = new LinkedList<Object>();
+            newMsg.add("#USERREFRESH");
+            newMsg.add(msg);
+            newMsg.add(user1);
+            sendToAllClients(newMsg);
+        }
+    }
+
     private void saveCustomer(LinkedList<Object> msg, ConnectionToClient client) {
         App.session.beginTransaction();
         Customer customerBefore = (Customer) msg.get(1);
@@ -65,6 +83,13 @@ public class Server extends AbstractServer {
         App.session.merge(customerBefore);           //merge into database with updated info
         App.session.flush();
         App.session.getTransaction().commit(); // Save everything.
+        if(customerBefore.getFrozen() && customerBefore.getConnected()) {
+            List<Object> newMsg = new LinkedList<Object>();
+            newMsg.add("#USERREFRESH");
+            newMsg.add("FREEZE");
+            newMsg.add(App.session.find(Customer.class, customerBefore.getId()));
+            sendToAllClients(newMsg);
+        }
     }
 
     private void saveEmployee(LinkedList<Object> msg, ConnectionToClient client) {
@@ -77,6 +102,13 @@ public class Server extends AbstractServer {
         App.session.merge(employeeBefore);           //merge into database with updated info
         App.session.flush();
         App.session.getTransaction().commit(); // Save everything.
+        if(((Employee) msg.get(2)).getFrozen()) {
+            List<Object> newMsg = new LinkedList<Object>();
+            newMsg.add("#USERREFRESH");
+            newMsg.add("FREEZE");
+            newMsg.add(App.session.find(Employee.class, employeeBefore.getId()));
+            sendToAllClients(newMsg);
+        }
     }
 
     private void deleteProduct(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
@@ -140,13 +172,13 @@ public class Server extends AbstractServer {
         else
             addition="I'm sorry, but according to the policy you do not deserve a refund";
 
-        updateBalance(customer,App.session.find(Customer.class,customer.getSerialId()).getBalance() + refund);
+        updateBalance(customer,App.session.find(Customer.class,customer.getId()).getBalance() + refund);
 
         List<Object> newMsg = new LinkedList<Object>();
         newMsg.add("#DELETEORDER");
         newMsg.add("Order Cancellation succeeded" + addition);
         newMsg.add("The Order Has Been Canceled");
-        newMsg.add(App.session.find(Customer.class,customer.getSerialId()));
+        newMsg.add(App.session.find(Customer.class,customer.getId()));
         try {
             client.sendToClient(newMsg);
         } catch (IOException e) {
@@ -202,15 +234,13 @@ public class Server extends AbstractServer {
     private void closeComplaintAndCompensate(LinkedList<Object> msg/*,ConnectionToClient client*/) {
         Complaint complaint = (Complaint) msg.get(1);
         closeComplaint(complaint);
-        if(msg.get(2).equals("COMPENSATED"))
-            updateBalance(complaint.getCustomer(),App.session.find(Customer.class,complaint.getCustomer()).getBalance() + (int) msg.get(3));
-/*        msg.clear();
-        msg.add("#ComplaintCompleted");
-        try {
-            client.sendToClient(msg);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
+        if(msg.get(2).equals("COMPENSATED")) {
+            updateBalance(App.session.find(Customer.class, complaint.getCustomer().getId()), App.session.find(Customer.class, complaint.getCustomer().getId()).getBalance() + (int) msg.get(3));
+            clientUserUpdate("BALANCEUPDATE", App.session.find(Customer.class, complaint.getCustomer().getId()));
+            SendMail.main(new String[]{complaint.getCustomer().getEmail(),"your complaint has been processed and you have been compensated in the amount of " + (int)msg.get(3) + "₪\n","complaint processed"});
+        }else{
+            SendMail.main(new String[]{complaint.getCustomer().getEmail(),"your complaint has been processed and no refund has been issued","complaint processed"});
+        }
 
     }
 
