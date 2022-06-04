@@ -22,7 +22,7 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Button>
-      <Text fx:id="price" layoutX="475.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order Price: " AnchorPane.leftAnchor="475.0">
+      <Text fx:id="price" layoutX="472.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Order Price: " AnchorPane.leftAnchor="472.0">
          <font>
             <Font size="16.0" />
          </font>
@@ -37,7 +37,12 @@
             <Font size="16.0" />
          </font>
       </Text>
-      <Text fx:id="store" layoutX="475.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Store:">
+      <Text fx:id="delivery_hour" layoutX="475.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Delivery Hour:">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+      <Text fx:id="store" layoutX="475.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Store:">
          <font>
             <Font size="16.0" />
          </font>
