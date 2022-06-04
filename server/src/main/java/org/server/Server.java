@@ -1,6 +1,7 @@
 package org.server;
 
 import javafx.scene.control.Alert;
+import org.email.SendMail;
 import org.entities.*;
 import org.server.ocsf.AbstractServer;
 import org.server.ocsf.ConnectionToClient;
@@ -46,11 +47,29 @@ public class Server extends AbstractServer {
                 case "#PULLUSERS" -> pullUsers((LinkedList<Object>) msg, client);
                 case "#DELETEPRODUCT" -> deleteProduct((LinkedList<Object>) msg, client);
                 case "#PULL_MANAGER_REPORT" -> pullManagerReport((LinkedList<Object>) msg, client);
+                case "#PULL_CEO_REPORT" -> pullCeoReport((LinkedList<Object>) msg, client);
                 case "#SAVEEMPLOYEE" -> saveEmployee((LinkedList<Object>) msg, client);
                 case "#SAVECUSTOMER" -> saveCustomer((LinkedList<Object>) msg, client);
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void clientUserUpdate(String msg, User user){
+        User user1=null;
+        if(user instanceof Customer){
+            user1 = App.session.find(Customer.class,user.getId());
+        }else if(user instanceof Employee){
+            user1 = App.session.find(Employee.class,user.getId());
+        }
+
+        if(user1.getConnected()){
+            List<Object> newMsg = new LinkedList<Object>();
+            newMsg.add("#USERREFRESH");
+            newMsg.add(msg);
+            newMsg.add(user1);
+            sendToAllClients(newMsg);
         }
     }
 
@@ -64,6 +83,13 @@ public class Server extends AbstractServer {
         App.session.merge(customerBefore);           //merge into database with updated info
         App.session.flush();
         App.session.getTransaction().commit(); // Save everything.
+        if(customerBefore.getFrozen() && customerBefore.getConnected()) {
+            List<Object> newMsg = new LinkedList<Object>();
+            newMsg.add("#USERREFRESH");
+            newMsg.add("FREEZE");
+            newMsg.add(App.session.find(Customer.class, customerBefore.getId()));
+            sendToAllClients(newMsg);
+        }
     }
 
     private void saveEmployee(LinkedList<Object> msg, ConnectionToClient client) {
@@ -76,14 +102,25 @@ public class Server extends AbstractServer {
         App.session.merge(employeeBefore);           //merge into database with updated info
         App.session.flush();
         App.session.getTransaction().commit(); // Save everything.
+        if(((Employee) msg.get(2)).getFrozen()) {
+            List<Object> newMsg = new LinkedList<Object>();
+            newMsg.add("#USERREFRESH");
+            newMsg.add("FREEZE");
+            newMsg.add(App.session.find(Employee.class, employeeBefore.getId()));
+            sendToAllClients(newMsg);
+        }
     }
 
-    private void deleteProduct(LinkedList<Object> msg, ConnectionToClient client) {
+    private void deleteProduct(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
         App.session.beginTransaction();
         PreMadeProduct product = (PreMadeProduct) (msg).get(1);
         App.session.delete(App.session.find(PreMadeProduct.class, product.getId()));       //evict current product details from database
         App.session.flush();
         App.session.getTransaction().commit(); // Save everything.
+        List<Object> newMsg = new LinkedList<Object>();
+        newMsg.add("#REFRESH");
+        newMsg.add(App.getAllProducts());
+        App.server.sendToAllClients(newMsg);
     }
 
 
@@ -135,13 +172,13 @@ public class Server extends AbstractServer {
         else
             addition="I'm sorry, but according to the policy you do not deserve a refund";
 
-        updateBalance(customer,App.session.find(Customer.class,customer.getSerialId()).getBalance() + refund);
+        updateBalance(customer,App.session.find(Customer.class,customer.getId()).getBalance() + refund);
 
         List<Object> newMsg = new LinkedList<Object>();
         newMsg.add("#DELETEORDER");
         newMsg.add("Order Cancellation succeeded" + addition);
         newMsg.add("The Order Has Been Canceled");
-        newMsg.add(App.session.find(Customer.class,customer.getSerialId()));
+        newMsg.add(App.session.find(Customer.class,customer.getId()));
         try {
             client.sendToClient(newMsg);
         } catch (IOException e) {
@@ -197,15 +234,13 @@ public class Server extends AbstractServer {
     private void closeComplaintAndCompensate(LinkedList<Object> msg/*,ConnectionToClient client*/) {
         Complaint complaint = (Complaint) msg.get(1);
         closeComplaint(complaint);
-        if(msg.get(2).equals("COMPENSATED"))
-            updateBalance(complaint.getCustomer(),App.session.find(Customer.class,complaint.getCustomer()).getBalance() + (int) msg.get(3));
-/*        msg.clear();
-        msg.add("#ComplaintCompleted");
-        try {
-            client.sendToClient(msg);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
+        if(msg.get(2).equals("COMPENSATED")) {
+            updateBalance(App.session.find(Customer.class, complaint.getCustomer().getId()), App.session.find(Customer.class, complaint.getCustomer().getId()).getBalance() + (int) msg.get(3));
+            clientUserUpdate("BALANCEUPDATE", App.session.find(Customer.class, complaint.getCustomer().getId()));
+            SendMail.main(new String[]{complaint.getCustomer().getEmail(),"your complaint has been processed and you have been compensated in the amount of " + (int)msg.get(3) + "₪\n","complaint processed"});
+        }else{
+            SendMail.main(new String[]{complaint.getCustomer().getEmail(),"your complaint has been processed and no refund has been issued","complaint processed"});
+        }
 
     }
 
@@ -350,7 +385,7 @@ public class Server extends AbstractServer {
         App.session.flush();
         App.session.getTransaction().commit(); // Save everything.
         List<Object> newMsg = new LinkedList<Object>();
-        newMsg.add("#REFRESH");     // TODO refresh to all users
+        newMsg.add("#REFRESH");
         newMsg.add(App.getAllProducts());
         App.server.sendToAllClients(newMsg);
     }
@@ -526,6 +561,35 @@ public class Server extends AbstractServer {
             System.out.println(e.toString());
         }
     }
+
+    private void pullCeoReport(LinkedList<Object> msg, ConnectionToClient client) {
+        try {
+            String commandToClient = msg.get(0).toString();
+            List<Object> msgToClient = new LinkedList<Object>();
+            msgToClient.add(commandToClient);
+            msgToClient.add(msg.get(1)); // send the controller on which screen to show data
+
+            Store rightStore = (Store) msg.get(2);
+            Date fromDate = (Date) msg.get(3), toDate = (Date) msg.get(4);
+
+            List<Order> orders = App.getAllOrders();
+            List<Complaint> complaints = (LinkedList<Complaint>) App.getAllComplaints();
+
+            complaints.removeIf(complaint -> complaint.getStore().getId() != rightStore.getId()
+                    || complaint.getDate().compareTo(fromDate) < 0 || complaint.getDate().compareTo(toDate) > 0);
+
+            orders.removeIf(order -> order.getOrderDate().compareTo(fromDate) < 0 || order.getOrderDate().compareTo(toDate) > 0
+                    || order.isDelivered() == Order.Status.CANCELED);
+
+            msgToClient.add(orders);
+            msgToClient.add(complaints);
+            client.sendToClient(msgToClient);
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+
+    }
+
 
 
     @Override

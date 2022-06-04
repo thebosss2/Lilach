@@ -10,7 +10,7 @@
    <children>
       <VBox layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="400.0" prefWidth="220.0" style="-fx-background-color: #9bc98c;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button fx:id="complaintsBtn" alignment="BASELINE_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#goToComplaints" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: #9bc98c;" text="Complaints" textFill="WHITE">
+            <Button fx:id="complaintsBtn" alignment="BASELINE_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#goToComplaints" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: #62a74d;" text="Complaints" textFill="WHITE">
                <font>
                   <Font size="20.0" />
                </font>

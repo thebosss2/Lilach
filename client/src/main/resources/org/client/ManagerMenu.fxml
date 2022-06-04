@@ -18,7 +18,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="reportsBtn" alignment="BASELINE_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#goToReports" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: #9bc98c;" text="Reports" textFill="WHITE">
+            <Button fx:id="reportsBtn" alignment="BASELINE_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#goToReports" prefHeight="50.0" prefWidth="220.0" style="-fx-background-color: #62a74d;" text="Reports" textFill="WHITE">
                <font>
                   <Font size="20.0" />
                </font>

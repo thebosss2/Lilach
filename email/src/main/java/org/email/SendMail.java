@@ -1,6 +1,6 @@
 package org.email;
 
-//import java.awt.*;
+import java.awt.*;
 import java.net.URL;
 import java.util.Properties;
 
@@ -74,13 +74,13 @@ public class SendMail {
 
     }
 
-/*    public static void openWebpage(String urlString) {
+    public static void openWebpage(String urlString) {
         try {
             Desktop.getDesktop().browse(new URL(urlString).toURI());
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
 
 }

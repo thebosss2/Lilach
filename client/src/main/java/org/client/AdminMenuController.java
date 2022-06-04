@@ -4,29 +4,19 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
-public class AdminMenuController extends Controller {
-
-    @FXML
-    private Button editCatalogBtn;
-
-    @FXML
-    private Button logoutBtn;
+public class AdminMenuController extends WorkerMenuController {
 
     @FXML
     private Button manageAccountsBtn;
-
-    @FXML
-    void goToEditCatalog(ActionEvent event) {
-
-    }
 
     @FXML
     void goToManageAccounts(ActionEvent event) {
         this.getSkeleton().changeCenter("ManageAccounts");
     }
 
-    @FXML
-    void logOut(ActionEvent event) {
-
+    protected void coolMenuClick(Button button) throws InterruptedException {
+        manageAccountsBtn.setStyle("-fx-background-color: #9bc98c");
+        button.setStyle("-fx-background-color: #62a74d");
     }
+
 }

@@ -6,6 +6,7 @@ package org.client;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.LinkedList;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
@@ -49,6 +50,14 @@ public class ClientBootController extends Controller{
             sendAlert("Could not connect to server IP","CONNECTION FAILED", Alert.AlertType.ERROR);
             e.printStackTrace();
         }
+        LinkedList<Object> msg = new LinkedList<Object>();
+        msg.add("#PULLSTORES");
+        try {
+            App.client.sendToServer(msg); //Sends a msg contains the command and the controller for the catalog.
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
     }
 

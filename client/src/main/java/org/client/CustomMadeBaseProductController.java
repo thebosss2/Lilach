@@ -97,7 +97,7 @@ public class CustomMadeBaseProductController extends ItemController{
         product_name.setText(product.getName());
         amount.setText(Integer.toString(product.getAmount()));
 
-        if(product.getPriceBeforeDiscount() != 0)
+        if(product.getDiscount() != 0)
             priceBeforeDiscount.setText(product.getPriceBeforeDiscount() + " ₪");
         else
             priceBeforeDiscount.setText("");

@@ -57,10 +57,10 @@ public class LoginController extends Controller{
             ButtonType confirmBtn = new ButtonType("Clean Install");
             alert.getButtonTypes().setAll(confirmBtn);
             Optional<ButtonType> result = alert.showAndWait();
-/*            if(result.get() == confirmBtn) {
+            if(result.get() == confirmBtn) {
                 SendMail.openWebpage("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
                 count = 0;
-            }*/
+            }
         }
         if(usernameText.getText().isEmpty() || passwordText.getText().isEmpty()) {
             Controller.sendAlert("One or more fields are empty.", "Login Failed", Alert.AlertType.WARNING);

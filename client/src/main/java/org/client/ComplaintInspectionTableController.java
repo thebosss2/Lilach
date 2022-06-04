@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -30,6 +31,10 @@ public class ComplaintInspectionTableController extends Controller{
 
     @FXML // fx:id="dateCol"
     private TableColumn<Complaint, Date> dateCol; // Value injected by FXMLLoader
+
+    @FXML
+    private Label expireLabel;
+
 
     @FXML // fx:id="inspectBtnsCol"
     private TableColumn<Complaint, Button> inspectBtnsCol; // Value injected by FXMLLoader
@@ -133,6 +138,20 @@ public class ComplaintInspectionTableController extends Controller{
     }
 
     public void pullComplaints(ObservableList<Complaint> complaints) {
-        tableView.setItems(complaints);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                tableView.setItems(complaints);
+                int expired=0;
+                for(Complaint complaint:complaints){
+                    if((new Date().getTime())-(complaint.getDate().getTime())>86400000) {
+                        complaint.setCompletedOnTime(false);
+                        expired++;
+                    }
+                }
+                expireLabel.setText("You have " + complaints.size() +" complaints pending. Of which " + expired + " are expired!");
+            }
+        });
+
     }
 }

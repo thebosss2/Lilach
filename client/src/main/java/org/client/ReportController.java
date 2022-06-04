@@ -104,7 +104,7 @@ public class ReportController extends AbstractReport{
             int daysNum = numOfDays(getPickedDate(fromDate), getPickedDate(toDate));
             showOrders(orders);
             showIncome(orders, daysNum);
-            showChart(complaints, daysNum);
+            showChart(complaints);
         });
     }
 
@@ -141,7 +141,7 @@ public class ReportController extends AbstractReport{
                 "Average orders: " + String.format("%.2f", avgOrders));
     }
 
-    private void showChart(LinkedList<Complaint> complaints, int daysNum) {
+    private void showChart(LinkedList<Complaint> complaints) {
         complaintChart.getData().clear();
         LinkedList<XYChart.Series<String, Number>> seriesLinkedList = new LinkedList<XYChart.Series<String, Number>>();
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");

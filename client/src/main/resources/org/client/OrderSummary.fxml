@@ -13,7 +13,7 @@
         <content>
           <AnchorPane maxHeight="1.7976931348623157E308" minWidth="444.0" prefHeight="146.0" prefWidth="444.0" style="-fx-background-color: e6b3ff;">
                <children>
-                  <VBox fx:id="vbox" fillWidth="false" minWidth="444.0" prefWidth="444.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <VBox fx:id="vbox" fillWidth="false" minWidth="444.0" prefWidth="444.0" style="-fx-background-color: f2d8ff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children></AnchorPane>
         </content>
       </ScrollPane>
