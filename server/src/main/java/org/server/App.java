@@ -252,14 +252,14 @@ public class App {
         Date date;
         Random rand = new Random();
         //TODO add order time to Order constructor and add date of purchase
-        for(int i=0;i<31;i++){
+        for(int i=0;i<100;i++){
             Date d = new Date();
-            date = new Date(d.getTime() - Duration.ofDays(i).toMillis());
+            date = new Date(d.getTime() - Duration.ofDays(i%31).toMillis());
             Date delivery = new Date(date.getTime()+ Duration.ofDays(1).toMillis());
             int c=rand.nextInt(customers.size());
             customMadeList =(LinkedList<CustomMadeProduct>)getCustomMadeProductList(products);
             preMadeList = (LinkedList<PreMadeProduct>)getPreMadeProductList(products);
-            order = new Order(preMadeList,customMadeList,customers.get(c),totalCost(customMadeList,preMadeList),delivery, customers.get(c).getStore(),Integer.toString(delivery.getHours()),customers.get(c).getStore().getAddress(),"dfgsdfgsnfdf");
+            order = new Order(preMadeList,customMadeList,customers.get(c),totalCost(customMadeList,preMadeList),delivery, customers.get(c).getStore(),Integer.toString(delivery.getHours()),customers.get(c).getStore().getAddress(),"dfgsdfgsnfdf",date);
             orders.add(order);
             App.session.save(order);
             App.session.flush();
