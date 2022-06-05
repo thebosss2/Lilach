@@ -47,5 +47,10 @@
             <Font size="16.0" />
          </font>
       </Text>
+      <Text fx:id="type" layoutX="475.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type: ">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

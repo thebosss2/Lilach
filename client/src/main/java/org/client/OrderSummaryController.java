@@ -36,8 +36,17 @@ public class OrderSummaryController extends Controller {
     @FXML
     private Button cancelOrder;
 
+
+    @FXML
+    private Text delivery_hour;
+
+
     @FXML
     private Text price;
+
+
+    @FXML
+    private Text type;
 
     @FXML
     private VBox vbox;
@@ -69,9 +78,11 @@ public class OrderSummaryController extends Controller {
 
     public void setOrder(Order order) {
         this.order=order;
-        price.setText("Price: " + Integer.toString(order.getPrice()));
+        price.setText("Price: " + Integer.toString(order.getPrice())+ "₪");
         order_time.setText("Order Time: " + order.getOrderTime());
         delivery_date.setText("Delivery Time: " + order.getDeliveryDate().toString());
+        delivery_hour.setText("Delivery Hour: " + order.getDeliveryHour());
+        type.setText("Type: " + order.getDelivery().toString().replace("_"," "));
 
         if(order.getDelivery() == Order.Delivery.SELF_SHIPPING && order.getStore()!= null)
             store.setText("Store:" + order.getStore().getName());
