@@ -13,8 +13,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.*;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 public class App {
     public static Session session;// encapsulation make public function so this can be private
@@ -410,6 +408,19 @@ public class App {
         orderQuery.from(Order.class);
         List<Order> orders = session.createQuery(orderQuery).getResultList();
         return new LinkedList<Order>(orders);
+    }
+
+    static List<Order> getSomeOrders(Customer customer) throws IOException {      //pulls all products from database
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Order> query = builder.createQuery(Order.class);
+        query.from(Order.class);
+        List<Order> data = session.createQuery(query).getResultList();
+        LinkedList<Order> list = new LinkedList<Order>();
+        for (Order order : data) {     //converts arraylist to linkedlist
+            if (order.getOrderedBy().getId()==customer.getId())
+                list.add(order);
+        }
+        return list;
     }
 
     static List<Complaint> getAllOpenComplaints() throws IOException{

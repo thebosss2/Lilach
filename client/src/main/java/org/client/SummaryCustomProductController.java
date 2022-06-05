@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import org.entities.CustomMadeProduct;
+import org.entities.PreMadeProduct;
 
 public class SummaryCustomProductController extends Controller{
 
@@ -40,9 +41,14 @@ public class SummaryCustomProductController extends Controller{
             case BOUQUET:
                 this.type.setText("Bouquet:");
         }
-        for(int i=0; i < (product.getProducts()).size(); i++){
-            this.description.setText(this.description.getText() + product.getProducts().get(i).getName() + ", ");
+//        for(int i=0; i < (product.getProducts()).size(); i++){
+//            this.description.setText(this.description.getText() + product.getProducts().get(i).getName() + ", ");
+//        }
+        for (PreMadeProduct base : product.getProducts()) {
+            String des = this.description.getText();
+            this.description.setText(des + base.getName() + " x " + base.getAmount() + ", ");
         }
+
         this.description.setText(this.description.getText().substring(0,this.description.getText().length()-2));
     }
 
@@ -55,9 +61,6 @@ public class SummaryCustomProductController extends Controller{
     }
 
     public void setProduct(CustomMadeProduct product) {
-        price.setText(Integer.toString(product.getPrice()));
-
-//        if(product.getItemType()== CustomMadeProduct.ItemType.FLOWER_ARRANGEMENT)
-        type.setText(product.getItemType().toString());
+        setSummaryCustomProduct(product);
     }
 }

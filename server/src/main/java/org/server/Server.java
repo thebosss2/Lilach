@@ -133,7 +133,7 @@ public class Server extends AbstractServer {
     }
 
     private void pullOrders(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
-        List<Order> orders = App.getAllOrders();
+        List<Order> orders = App.getSomeOrders((Customer)msg.get(1));
         List<Object> msgToClient = new LinkedList<Object>();
         msgToClient.add(msg.get(0).toString());
         msgToClient.add(orders);
