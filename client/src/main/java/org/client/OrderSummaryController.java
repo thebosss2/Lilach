@@ -85,7 +85,7 @@ public class OrderSummaryController extends Controller {
         type.setText("Type: " + order.getDelivery().toString().replace("_"," "));
 
         if(order.getDelivery() == Order.Delivery.SELF_SHIPPING && order.getStore()!= null)
-            store.setText("Store:" + order.getStore().getName());
+            store.setText("Store: " + order.getStore().getName());
         else
             store.setText("");
         if(order.isDelivered()== Order.Status.CANCELED){
