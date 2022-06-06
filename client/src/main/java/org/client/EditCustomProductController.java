@@ -139,7 +139,7 @@ public class EditCustomProductController extends Controller{
 
         @FXML
         void clickedDelete(ActionEvent event) throws InterruptedException {
-            coolButtonClick((Button) event.getTarget());
+            EditProductController.coolButtonDeleteClick((Button) event.getTarget());
             if(alertMsg("Delete Product","delete this product!" , false)) {
                 deleteProduct();
                 this.globalSkeleton.changeCenter("EditCatalog");

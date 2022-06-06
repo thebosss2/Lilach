@@ -12,6 +12,8 @@ import org.entities.Product;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.regex.Pattern;
 
 public class EditProductController extends Controller {
@@ -120,10 +122,22 @@ public class EditProductController extends Controller {
         }
     }
 
+    protected static void coolButtonDeleteClick(Button button) throws InterruptedException {
+        Executor executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            button.setStyle("-fx-background-color: #8c73ea");
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            button.setStyle("-fx-background-color: #c6acef");
+        });
+    }
 
     @FXML
     void clickedDelete(ActionEvent event) throws InterruptedException {
-        coolButtonClick((Button) event.getTarget());
+        coolButtonDeleteClick((Button) event.getTarget());
         if(alertMsg("Delete Product","delete this product!" , false)) {
             deleteProduct();
             this.globalSkeleton.changeCenter("EditCatalog");
