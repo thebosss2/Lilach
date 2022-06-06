@@ -103,7 +103,7 @@ public class App {
     private static List<PreMadeProduct> generateProducts() throws Exception {       //generates new products
         Random random = new Random();
         List<PreMadeProduct> products = new LinkedList<PreMadeProduct>();
-        String[] flowerNames = new String[]{"SunFlower","Calanit","Shibolet","Rose","Rakefet","Lilach","Lily","Tulip","Pickachu","Charmander","Thanos","PushPush","Runlater","Clean Install","Orchid"};
+        String[] flowerNames = new String[]{"SunFlower","Calanit","Shibolet","Rose","Rakefet","Lilach","Lily","Tulip","Pickachu","Charmander","Thanos","Commit","Runlater","Clean Install","Orchid"};
         for(int i=0;i< flowerNames.length;i++){
             var img = loadImageFromResources(String.format("Flower%s.jpg",i));
             PreMadeProduct p = new PreMadeProduct(flowerNames[i], img, random.nextInt(30)+1,"this is a " + flowerNames[i] +" Flower", 0,false);

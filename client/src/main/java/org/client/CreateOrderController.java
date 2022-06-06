@@ -16,6 +16,8 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class CreateOrderController extends Controller {
 
@@ -273,13 +275,26 @@ public class CreateOrderController extends Controller {
     @FXML
     private void SubmitOrder(ActionEvent event) throws InterruptedException {
         Button b = (Button) event.getTarget();
-        coolButtonClick(b);
+        coolSubmitClick(b);
 
         //checks all that all fields were filled and valid.if not- it lets the user know and fix it.
         if(alertMsg("Submit Order","submit your order!" , checkSaveOrder(b))) {
             saveOrder(b); //if the fields are all valid- save the order
             App.client.getSkeleton().changeCenter("SummaryOrders"); //and head back to catalog
         }
+    }
+
+    private void coolSubmitClick(Button button) throws InterruptedException {
+        Executor executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            button.setStyle("-fx-background-color: #733dba");
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            button.setStyle("-fx-background-color: #c44dff");
+        });
     }
 
     private boolean checkSaveOrder(Button b) {

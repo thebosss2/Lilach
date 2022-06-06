@@ -90,7 +90,7 @@
                                                 </ScrollPane>
                                                 <TextFlow prefHeight="60.0" prefWidth="378.0">
                                                    <children>
-                                                      <TextFlow prefHeight="96.0" prefWidth="263.0">
+                                                      <TextFlow prefHeight="140.0" prefWidth="218.0">
                                                          <children>
                                                             <Label prefHeight="35.0" prefWidth="214.0" text="shipping fee:">
                                                                <font>
@@ -126,7 +126,7 @@
                                                             </Label>
                                                          </children>
                                                       </TextFlow>
-                                                      <TextFlow prefHeight="100.0" prefWidth="90.0">
+                                                      <TextFlow prefHeight="140.0" prefWidth="99.0">
                                                          <children>
                                                             <Label prefHeight="35.0" prefWidth="130.0" text="20">
                                                                <font>
@@ -192,7 +192,7 @@
                                  <children>
                                     <HBox prefHeight="552.0" prefWidth="1050.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
-                                          <HBox prefHeight="553.0" prefWidth="765.0">
+                                          <HBox prefHeight="553.0" prefWidth="820.0">
                                              <children>
                                                 <VBox prefHeight="386.0" prefWidth="700.0" spacing="25.0">
                                                    <children>
@@ -233,11 +233,11 @@
                                                 </VBox>
                                                 <VBox prefHeight="265.0" prefWidth="750.0" spacing="27.0">
                                                    <children>
-                                                      <TextField fx:id="giftReceiverNameText" prefHeight="25.0" prefWidth="237.0" />
-                                                      <TextField fx:id="giftReceiverAddressText" prefWidth="237.0" />
-                                                      <TextField fx:id="giftReceiverPhoneText" prefWidth="237.0" />
-                                                      <DatePicker fx:id="giftShippingDate" onAction="#giftEnableHours" prefHeight="25.0" prefWidth="315.0" style="-fx-background-color: e6b3ff;" />
-                                                      <ComboBox fx:id="giftHourPicker" prefHeight="25.0" prefWidth="319.0" style="-fx-background-color: e6b3ff;" />
+                                                      <TextField fx:id="giftReceiverNameText" maxWidth="300.0" prefHeight="25.0" prefWidth="237.0" />
+                                                      <TextField fx:id="giftReceiverAddressText" maxWidth="300.0" prefWidth="237.0" />
+                                                      <TextField fx:id="giftReceiverPhoneText" maxWidth="300.0" prefWidth="237.0" />
+                                                      <DatePicker fx:id="giftShippingDate" maxWidth="300.0" onAction="#giftEnableHours" prefHeight="25.0" prefWidth="300.0" style="-fx-background-color: e6b3ff;" />
+                                                      <ComboBox fx:id="giftHourPicker" maxWidth="300.0" prefHeight="25.0" prefWidth="300.0" style="-fx-background-color: e6b3ff;" />
                                                    </children>
                                                    <HBox.margin>
                                                       <Insets right="150.0" top="65.0" />
@@ -245,7 +245,7 @@
                                                 </VBox>
                                              </children>
                                           </HBox>
-                                          <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="553.0" prefWidth="470.0" style="-fx-background-color: f2d8ff;">
+                                          <VBox minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: f2d8ff;">
                                              <children>
                                                 <Label alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="170.0" text="Order Summary:">
                                                    <font>
@@ -352,7 +352,7 @@
                                           </VBox>
                                        </children>
                                     </HBox>
-                                    <TextArea fx:id="giftGreetingText" layoutX="18.0" layoutY="365.0" prefHeight="163.0" prefWidth="507.0" style="-fx-background-color: e6b3ff;" />
+                                    <TextArea fx:id="giftGreetingText" layoutX="18.0" layoutY="365.0" prefHeight="163.0" prefWidth="606.0" style="-fx-background-color: e6b3ff;" />
                                     <Label layoutX="19.0" layoutY="325.0" prefHeight="22.0" prefWidth="318.0" text="Add greeting card to the order: (optional)">
                                        <font>
                                           <Font name="Calibri" size="18.0" />
@@ -370,7 +370,7 @@
                                        <children>
                                           <HBox prefHeight="555.0" prefWidth="710.0">
                                              <children>
-                                                <VBox prefHeight="553.0" prefWidth="466.0" spacing="25.0">
+                                                <VBox minWidth="300.0" prefHeight="753.0" prefWidth="596.0" spacing="25.0">
                                                    <children>
                                                       <Label alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="170.0" text="Fill the following fields:">
                                                          <font>
@@ -397,11 +397,11 @@
                                                       <Insets left="20.0" />
                                                    </HBox.margin>
                                                 </VBox>
-                                                <VBox prefHeight="265.0" prefWidth="533.0" spacing="27.0">
+                                                <VBox minWidth="280.0" prefHeight="688.0" prefWidth="836.0" spacing="27.0">
                                                    <children>
-                                                      <ComboBox fx:id="TAStorePicker" prefHeight="22.0" prefWidth="288.0" style="-fx-background-color: e6b3ff;" />
-                                                      <DatePicker fx:id="TADate" onAction="#TAEnableHours" prefHeight="25.0" prefWidth="315.0" style="-fx-background-color: e6b3ff;" />
-                                                      <ComboBox fx:id="TAHourPicker" prefHeight="22.0" prefWidth="288.0" style="-fx-background-color: e6b3ff;" />
+                                                      <ComboBox fx:id="TAStorePicker" prefHeight="22.0" prefWidth="300.0" style="-fx-background-color: e6b3ff;" />
+                                                      <DatePicker fx:id="TADate" onAction="#TAEnableHours" prefHeight="25.0" prefWidth="300.0" style="-fx-background-color: e6b3ff;" />
+                                                      <ComboBox fx:id="TAHourPicker" prefHeight="22.0" prefWidth="300.0" style="-fx-background-color: e6b3ff;" />
                                                    </children>
                                                    <HBox.margin>
                                                       <Insets right="220.0" top="65.0" />
@@ -409,7 +409,7 @@
                                                 </VBox>
                                              </children>
                                           </HBox>
-                                          <VBox prefHeight="555.0" prefWidth="415.0" style="-fx-background-color: f2d8ff;">
+                                          <VBox minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: f2d8ff;">
                                              <children>
                                                 <Label alignment="CENTER_RIGHT" prefHeight="44.0" prefWidth="170.0" text="Order Summary:">
                                                    <font>
@@ -497,7 +497,7 @@
                                           </VBox>
                                        </children>
                                     </HBox>
-                                    <TextArea fx:id="TAGreetingText" layoutX="14.0" layoutY="285.0" prefHeight="167.0" prefWidth="558.0" style="-fx-background-color: e6b3ff;" />
+                                    <TextArea fx:id="TAGreetingText" layoutX="14.0" layoutY="285.0" prefHeight="167.0" prefWidth="589.0" style="-fx-background-color: e6b3ff;" />
                                     <Label layoutX="14.0" layoutY="252.0" prefHeight="22.0" prefWidth="318.0" text="Add greeting card to the order: (optional)">
                                        <font>
                                           <Font name="Calibri" size="18.0" />
