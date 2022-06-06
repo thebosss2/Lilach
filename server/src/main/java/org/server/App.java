@@ -182,7 +182,7 @@ public class App {
                 "Dear Customer Support, I tried to buy with my visa and it didn't work, and then after multiple tries it charged me twice.",
                 "Hello there, I ordered from your chain, and didn't receive what I wanted.",
                 "Hello there, I ordered from your chain, and didn't receive what I desired.",
-                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "aaaaaaaaaaa","aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                 "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
                 "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
                 "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
@@ -250,7 +250,7 @@ public class App {
         Date date;
         Random rand = new Random();
         //TODO add order time to Order constructor and add date of purchase
-        for(int i=0;i<100;i++){
+        for(int i=0;i<50;i++){
             Date d = new Date();
             date = new Date(d.getTime() - Duration.ofDays(i%31).toMillis());
             Date delivery = new Date(date.getTime()+ Duration.ofDays(1).toMillis());
@@ -298,7 +298,7 @@ public class App {
         List<CustomMadeProduct> custom = new LinkedList<CustomMadeProduct>();
         int price = 0;
         Random rand = new Random();
-        int size = rand.nextInt(4)+1;
+        int size = rand.nextInt(2)+1;
         // make 10 customMadeProducts,
         for(int i = 0; i < size; i++) {
             // make a customMadeProduct from 3-10 random baseCustomMadeProducts
@@ -320,7 +320,7 @@ public class App {
         LinkedList<PreMadeProduct> productsForCustom = new LinkedList<PreMadeProduct>();
         Random random = new Random();
         int rand,loopRand;
-        loopRand = random.nextInt(4)+1;
+        loopRand = random.nextInt(2)+1;
         for(int j = 0; j < loopRand; j++) {
             rand = random.nextInt(11);
 
@@ -471,7 +471,7 @@ public class App {
             e.printStackTrace();
         } finally {
             if (session != null) {
-                while (!server.isClosed()) ;
+                while (!server.isClosed());
                 session.close();
                 session.getSessionFactory().close();
             }

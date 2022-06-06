@@ -533,7 +533,6 @@ public class Server extends AbstractServer {
 
     }
 
-
     private void pullManagerReport(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
         try {
             String commandToClient = msg.get(0).toString();
@@ -589,8 +588,6 @@ public class Server extends AbstractServer {
         }
 
     }
-
-
 
     @Override
     protected synchronized void clientDisconnected(ConnectionToClient client) { //is client disconnected

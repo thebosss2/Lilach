@@ -125,13 +125,13 @@ public class EditProductController extends Controller {
     protected static void coolButtonDeleteClick(Button button) throws InterruptedException {
         Executor executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
-            button.setStyle("-fx-background-color: #932828");
+            button.setStyle("-fx-background-color: #e56565");
             try {
-                Thread.sleep(100);
+                Thread.sleep(300);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            button.setStyle("-fx-background-color: #e56565");
+            button.setStyle("-fx-background-color: #eb4034");
         });
     }
 

@@ -2,20 +2,19 @@
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.Lighting?>
-<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyPressed="#enterSignup" prefHeight="700.0" prefWidth="700.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.SignUpController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyPressed="#enterSignup" prefHeight="700.0" prefWidth="700.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.SignUpController">
    <children>
       <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <content>
@@ -128,14 +127,10 @@
                            </VBox.margin>
                            <children>
                               <ChoiceBox fx:id="accountType" layoutX="-2.0" layoutY="11.0" prefWidth="150.0" style="-fx-background-color: #c6acef;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="10.0">
-                                 <effect>
-                                    <Lighting diffuseConstant="1.41" light="$null" specularConstant="0.47" surfaceScale="1.25">
-                                       <bumpInput>
-                                          <Shadow />
-                                       </bumpInput>
-                                    </Lighting>
-                                 </effect></ChoiceBox>
-                              <ComboBox fx:id="storePicker" disable="true" layoutX="154.0" layoutY="11.0" prefWidth="150.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0" />
+                                 <cursor>
+                                    <Cursor fx:constant="DEFAULT" />
+                                 </cursor></ChoiceBox>
+                              <ComboBox fx:id="storePicker" disable="true" layoutX="154.0" layoutY="11.0" prefWidth="150.0" style="-fx-background-color: #c6acef;" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0" />
                            </children>
                         </AnchorPane>
                         <Button fx:id="signUpBtn" mnemonicParsing="false" onAction="#signUpClicked" prefHeight="32.0" prefWidth="107.0" style="-fx-background-color: #c6acef;" text="Sign-Up">
