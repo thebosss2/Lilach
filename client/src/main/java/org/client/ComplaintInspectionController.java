@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -77,26 +78,34 @@ public class ComplaintInspectionController extends Controller{
         {
             Controller.sendAlert("Complaint completed too late","Late Inspection", Alert.AlertType.WARNING);
         }else{
-            complaint.setStatus(true);
-        }
-        if(compensationCheckbox.isSelected()){
-            if(compensationField.getText().isEmpty()){
-                //   TODO sendAlert
-                return;
+            if(compensationCheckbox.isSelected()){
+                if(compensationField.getText().isEmpty()){
+                    sendAlert("No amount entered","No Refund Given", Alert.AlertType.WARNING);
+                    return;
+                }
+                msg.add("COMPENSATED");
+                msg.add(Integer.parseInt(compensationField.getText()));
+            } else {
+                msg.add("NO_COMPENSATION");
             }
-            msg.add("COMPENSATED");
-            msg.add(Integer.parseInt(compensationField.getText()));
-        } else {
-            msg.add("NO_COMPENSATION");
+            complaint.setStatus(true);
         }
         try {
             App.client.sendToServer(msg);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Platform.runLater(() -> {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("Complaint filed, Sending back to table");
+            alert.show();
+            PauseTransition pause = new PauseTransition(javafx.util.Duration.seconds(2.5));
+            pause.setOnFinished((e -> {
+                alert.close();
+                this.getSkeleton().changeCenter("Catalog");}));
+            pause.play();
+        });
         App.client.storeSkeleton.changeCenter("ComplaintInspectionTable");
-
-        //TODO alert says complaint fulfilled and send back to table.
 
     }
 

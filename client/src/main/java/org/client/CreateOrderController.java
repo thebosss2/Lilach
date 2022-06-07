@@ -322,7 +322,7 @@ public class CreateOrderController extends Controller {
                 preList.add(temp);
             } else {
                 for (int i = 0; i < ((CustomMadeProduct) product).getProducts().size(); i++) {
-                    PreMadeProduct temp = new PreMadeProduct(((CustomMadeProduct) product).getProducts().get(i)); //todo check without main color
+                    PreMadeProduct temp = new PreMadeProduct(((CustomMadeProduct) product).getProducts().get(i));
                     temp.setOrdered(true);
                     ((CustomMadeProduct) product).setProduct(i, temp);
                 }

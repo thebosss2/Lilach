@@ -247,8 +247,6 @@ public class Server extends AbstractServer {
     private void updateBalance(Customer customer, int balance){
         App.session.beginTransaction();
         App.session.evict(customer);       //evict current product details from database
-        //customer.setBalance(balance);/////////////////TODO can evict after change because SQL works with primary key
-        ///TODO make this Generic func
         customer.setBalance(balance);
         App.session.merge(customer);           //merge into database with updated info
         App.session.flush();
@@ -368,13 +366,13 @@ public class Server extends AbstractServer {
         List<User> users = App.getAllUsers();
         List<Object> newMsg = new LinkedList<Object>();
         newMsg.add(msg.get(0));
-        for(User user : users){
-            if(user.getUserName().equals(msg.get(1).toString()) || (user.getUserID().equals(msg.get(2)) && (user instanceof Customer))){
+        for(User user : users) {
+            if (user.getUserName().equals(msg.get(1).toString()) || (user.getUserID().equals(msg.get(2)) && (user instanceof Customer))) {
                 newMsg.add("#USER_EXISTS"); //checks if username or user id already exists
                 client.sendToClient(newMsg);
                 return;
             }
-        }//TODO check if ID already exists and email
+        }
         newMsg.add("#USER_DOES_NOT_EXIST");
         client.sendToClient(newMsg);
     }
@@ -464,7 +462,7 @@ public class Server extends AbstractServer {
         App.session.flush();
         App.session.getTransaction().commit();
         List<Object> newMsg = new LinkedList<Object>();
-        newMsg.add("#REFRESH");     // TODO refresh to all users
+        newMsg.add("#REFRESH");
         newMsg.add(App.getAllProducts());
         App.server.sendToAllClients(newMsg);
     }
@@ -596,8 +594,6 @@ public class Server extends AbstractServer {
 
     @Override
     protected synchronized void clientDisconnected(ConnectionToClient client) { //is client disconnected
-        // TODO Auto-generated method stub
-
         System.out.println("Client Disconnected.");
         super.clientDisconnected(client);
     }

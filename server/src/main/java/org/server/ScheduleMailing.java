@@ -18,12 +18,17 @@ public class ScheduleMailing {
     public static void orderMail(Order order){
 
         Customer customer = order.getOrderedBy();
-
         Date current = new Date();
         Server.orderArrived(order, Order.Status.ARRIVED);
         String mail = "Order Arrival";
-        String subject = "Hello there" + customer.getName() + ",\n  your order has arrived";
+        String subject;
+        if(order.getDelivery()== Order.Delivery.SHIPPING_GIFT){
+            subject = "Hello there" + customer.getName() + ",\n  your gift has been received";
+        }else{
+            subject = "Hello there" + customer.getName() + ",\n  your order has arrived";
+        }
         SendMail.main(new String[]{customer.getEmail(), mail, subject});
+        System.out.println("Mail sent");
     }
 
 
@@ -31,10 +36,10 @@ public class ScheduleMailing {
     public static void main(String[] args){
 
         ZonedDateTime now = ZonedDateTime.now();
-        ZonedDateTime nextRun = now.withMinute(0).withSecond(0);
+        ZonedDateTime nextRun = now/*.withMinute(0)*/.withSecond(0);
 
         if(now.compareTo(nextRun) > 0)
-            nextRun = nextRun.plusHours(1);
+            nextRun = nextRun.plusSeconds(60);
 
         Duration duration = Duration.between(now, nextRun);
         long initialDelay = duration.getSeconds();
@@ -60,7 +65,7 @@ public class ScheduleMailing {
                     e.printStackTrace();
                 }
             }
-        }, initialDelay, 3600, TimeUnit.SECONDS);
+        }, initialDelay, 30, TimeUnit.SECONDS);
 
 
 
