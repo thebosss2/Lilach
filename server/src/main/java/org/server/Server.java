@@ -150,7 +150,7 @@ public class Server extends AbstractServer {
         long diffInMillies = Math.abs(date.getTime() - new_date.getTime());
         long diff = TimeUnit.HOURS.convert(diffInMillies, TimeUnit.MILLISECONDS);
 
-        diff += Integer.parseInt(hour.substring(0, 2));
+        diff = Integer.parseInt(hour.substring(0, 2))- diff;
 
 
         String addition;
@@ -176,7 +176,7 @@ public class Server extends AbstractServer {
 
         List<Object> newMsg = new LinkedList<Object>();
         newMsg.add("#DELETEORDER");
-        newMsg.add("Order Cancellation succeeded" + addition);
+        newMsg.add("Order Cancellation succeeded " + addition);
         newMsg.add("The Order Has Been Canceled");
         newMsg.add(App.session.find(Customer.class,customer.getId()));
         try {
