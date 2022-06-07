@@ -86,8 +86,9 @@ public class AddProductController extends Controller {
 
     private boolean isProductInvalid() {
         if(nameText.getText().isEmpty() || priceText.getText().isEmpty() ||
-                discountText.getText().isEmpty() || descriptionText.getText().isEmpty() || imageAdded == 0 || (productTypeBox.getValue().equals("Custom") && colorBox.getSelectionModel().isEmpty()))
+                discountText.getText().isEmpty() || descriptionText.getText().isEmpty() || imageAdded == 0 || productTypeBox.getValue().equals("Product type") || (productTypeBox.getValue().equals("Custom") && colorBox.getSelectionModel().isEmpty()))
             return true;
+
         if(nameText.getText().matches ("^[a-zA-Z0-9_ ]*$")  && priceText.getText().matches("^[0-9]*$") &&
                 discountText.getText().matches("^[0-9]*$"))
             return false;
@@ -144,6 +145,7 @@ public class AddProductController extends Controller {
         colorBox.getItems().addAll("White","Red" ,"Yellow" , "Green","Pink" , "Blue");
         productTypeBox.getItems().addAll("Pre-made", "Custom");
         colorBox.setDisable(true);
+        productTypeBox.setValue("Product type");
 
     }
 

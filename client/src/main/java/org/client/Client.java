@@ -98,6 +98,9 @@ public class Client extends AbstractClient {
                 } else if (msg.get(1).toString().equals("BALANCEUPDATE")) {
                     user = (Customer) msg.get(2);
                     updateBalance((Customer) msg.get(2));
+                }else if(msg.get(1).toString().equals("NOTFROZEN")){
+                    user = (Customer) msg.get(2);
+                    updateBalance((Customer) msg.get(2));
                 }
             }
 
@@ -107,6 +110,9 @@ public class Client extends AbstractClient {
                     Controller.sendAlert("Your account has been frozen by the system Admin", "Banned account", Alert.AlertType.WARNING);
                     user = (Employee) msg.get(2);
                     logOut();
+                }else if (msg.get(1).toString().equals("NOTFROZEN")){
+                    user = (Employee) msg.get(2);
+                    updateNameEmployee((Employee) msg.get(2));
                 }
             }
         }
@@ -257,7 +263,16 @@ public class Client extends AbstractClient {
         ceoReportController.pullData((String) msg.get(1), (LinkedList<Order>) msg.get(2),
                 (LinkedList<Complaint>) msg.get(3));
     }
-  
+
+
+    private void updateNameEmployee(Employee employee) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                storeSkeleton.helloLabel.setText("Hello " + employee.getUserName());
+            }
+        });
+    }
 
     private void updateBalance(Customer customer) {
         Platform.runLater(new Runnable() {
@@ -266,7 +281,6 @@ public class Client extends AbstractClient {
                 storeSkeleton.helloLabel.setText("Hello " + customer.getUserName() + " Your Balance is " + customer.getBalance());
             }
         });
-
     }
 
     private void deletedOrder(LinkedList<Object> msg) {

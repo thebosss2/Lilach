@@ -118,7 +118,7 @@ public class App {
         String[] customerId = new String[]{"123456789","234567891","345678912","456789123","567891234","678912345","789123456","891234567"};
         String[] customerNames = new String[]{"user","Ash Ketchum", "Obi-Wan Kenobi", "Cynthia", "Amity Blight", "Mariette Cheng", "Matt", "Augustus Porter"};
         String[] customerUserNames = new String[]{"user","pokemon_master", "Jedi_master", "Cynthi", "Cotton_Candy", "Ladybug", "Wii1", "TOH"};
-        String[] customerEmails = new String[]{"user67@gmail.com","Ash467@gmail.com","Obi-Wan47@gmail.com","Cynthia5@gmail.com","Amity47@gmail.com","Mariette7@gmail.com","Matt46@gmail.com", "Augustus@gmail.com"};
+        String[] customerEmails = new String[]{"user67@gmail.com","Ash467@gmail.com","Obi-Wan4@gmail.com","Cynthia5@gmail.com","Amity47@gmail.com","Mariette7@gmail.com","Matt46@gmail.com", "Augustus@gmail.com"};
         int storeN;
         for(int i=0;i< customerNames.length;i++) {
             if (i < s.size())
@@ -144,7 +144,7 @@ public class App {
         int storeN;
         for(int i=0;i< employeeNames.length;i++){
             storeN=i%7;
-            Employee emp = new Employee(employeeId[i], employeeNames[i], employeeUserNames[i], employeeUserNames[i], employeeEmails[i], "052224548"+i, Employee.Role.values()[(i%2==0)?0:2], s.get(storeN));
+            Employee emp = new Employee(employeeId[i], employeeNames[i], employeeUserNames[i], employeeUserNames[i], employeeEmails[i], "052224548"+i, Employee.Role.values()[(i%2==1 && s.get(storeN).getStoreManager()==null)?2:0], s.get(storeN));
             if(emp.getRole()== Employee.Role.STORE_EMPLOYEE)
                 emp.getStore().addEmployees(emp);
             else if(emp.getStore().getStoreManager()==null)

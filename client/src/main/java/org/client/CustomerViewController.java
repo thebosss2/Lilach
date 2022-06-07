@@ -66,6 +66,7 @@ public class CustomerViewController extends Controller{
         id.setText(customer.getUserID());
         balance.setText(Integer.toString(customer.getBalance()));
         storePicker.setValue(customer.getStore().getName());
+        typePicker.setValue(customer.getTypeToString());
         if (customer.getFrozen()) setInactive();
         else setActive();
         setStores();
@@ -129,7 +130,6 @@ public class CustomerViewController extends Controller{
         Customer cus = new Customer(this.id.getText(), this.name.getText(), this.username.getText(),
                 this.password.getText(), this.email.getText(), customer.getPhoneNum(), customer.getCreditCard(),
                 customer.getStringToType(this.typePicker.getValue()), store, !this.status.getText().equals("Active"), Integer.parseInt(this.balance.getText()));
-
         List<Object> msg = new LinkedList<Object>();
         msg.add("#SAVECUSTOMER");          // adds #SAVE command for server
         msg.add(customer);       //adds data to msg list

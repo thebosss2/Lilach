@@ -115,15 +115,19 @@ public class EditCustomProductController extends Controller{
             String save = "#SAVE";
             LinkedList<Object> msg = new LinkedList<Object>();  //msg has string message with all data in next nodes
             PreMadeProduct p;
-
+            int dis;
+            if(discountText.getText().isEmpty())
+                dis=0;
+            else
+                dis = Integer.parseInt(discountText.getText());
 
             if (imageChanged > 0)
                 p = new PreMadeProduct(nameText.getText(), newImagePath, Integer.parseInt(priceText.getText()),
-                        Integer.parseInt(discountText.getText()),false,colorBox.getValue());
+                        dis,false,colorBox.getValue());
 
             else
                 p = new PreMadeProduct(nameText.getText(), product.getByteImage(), Integer.parseInt(priceText.getText()),
-                        Integer.parseInt(discountText.getText()),false,colorBox.getValue());
+                        dis,false,colorBox.getValue());
             p.setDescription(p.getDescription());
             msg.add(save);          // adds #SAVE command for server
             msg.add(product);       //adds data to msg list

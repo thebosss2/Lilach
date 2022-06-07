@@ -62,6 +62,7 @@ public class EmployeeViewController extends Controller {
         name.setText(employee.getName());
         id.setText(employee.getUserID());
         storePicker.setValue(employee.getStore().getName());
+        rolePicker.setValue(employee.getRoleToString());
         if (employee.getFrozen()) setInactive();
         else setActive();
         setStores();

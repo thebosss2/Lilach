@@ -90,7 +90,7 @@ public class EditProductController extends Controller {
 
     private boolean checkProduct() {
         if(nameText.getText().isEmpty() || priceText.getText().isEmpty() ||
-                discountText.getText().isEmpty() || descriptionText.getText().isEmpty())
+                descriptionText.getText().isEmpty())
             return true;
         if(nameText.getText().matches ("^[a-zA-Z0-9_ ]*$")  && priceText.getText().matches("^[0-9]*$") &&
                 discountText.getText().matches("^[0-9]*$"))
@@ -102,14 +102,18 @@ public class EditProductController extends Controller {
         String save = "#SAVE";
         LinkedList<Object> msg = new LinkedList<Object>();  //msg has string message with all data in next nodes
         PreMadeProduct p;
-
+        int dis;
+        if(discountText.getText().isEmpty())
+            dis=0;
+        else
+            dis = Integer.parseInt(discountText.getText());
         if (imageChanged > 0)
             p = new PreMadeProduct(nameText.getText(), newImagePath, Integer.parseInt(priceText.getText()),
-                    descriptionText.getText(),Integer.parseInt(discountText.getText()),false);
+                    descriptionText.getText(),dis,false);
 
         else
             p = new PreMadeProduct(nameText.getText(), product.getByteImage(), Integer.parseInt(priceText.getText()),
-                    descriptionText.getText(),Integer.parseInt(discountText.getText()),false);
+                    descriptionText.getText(),dis,false);
 
         msg.add(save);          // adds #SAVE command for server
         msg.add(product);       //adds data to msg list

@@ -75,18 +75,21 @@ public class Server extends AbstractServer {
 
     private void saveCustomer(LinkedList<Object> msg, ConnectionToClient client) {
         App.session.beginTransaction();
-        Customer customerBefore = (Customer) msg.get(1);
+        Customer customerBefore =   App.session.find(Customer.class, ((Customer) msg.get(1)).getId());
         Customer customerAfter = (Customer) msg.get(2);
-
         App.session.evict(customerBefore);       //evict current product details from database
         changeParamCus(customerBefore, customerAfter);   //func changes product to updates details
         App.session.merge(customerBefore);           //merge into database with updated info
         App.session.flush();
         App.session.getTransaction().commit(); // Save everything.
-        if(customerBefore.getFrozen() && customerBefore.getConnected()) {
+        if(customerBefore.getConnected()) {
             List<Object> newMsg = new LinkedList<Object>();
             newMsg.add("#USERREFRESH");
-            newMsg.add("FREEZE");
+            if(customerBefore.getFrozen()){
+                newMsg.add("FREEZE");
+            }else{
+                newMsg.add("NOTFROZEN");
+            }
             newMsg.add(App.session.find(Customer.class, customerBefore.getId()));
             sendToAllClients(newMsg);
         }
@@ -94,7 +97,7 @@ public class Server extends AbstractServer {
 
     private void saveEmployee(LinkedList<Object> msg, ConnectionToClient client) {
         App.session.beginTransaction();
-        Employee employeeBefore = (Employee) msg.get(1);
+        Employee employeeBefore = App.session.find(Employee.class, ((Employee) msg.get(1)).getId());
         Employee employeeAfter = (Employee) msg.get(2);
 
         App.session.evict(employeeBefore);       //evict current product details from database
@@ -102,10 +105,14 @@ public class Server extends AbstractServer {
         App.session.merge(employeeBefore);           //merge into database with updated info
         App.session.flush();
         App.session.getTransaction().commit(); // Save everything.
-        if(((Employee) msg.get(2)).getFrozen()) {
+        if(employeeBefore.getConnected()) {
             List<Object> newMsg = new LinkedList<Object>();
             newMsg.add("#USERREFRESH");
-            newMsg.add("FREEZE");
+            if(employeeBefore.getFrozen()){
+                newMsg.add("FREEZE");
+            }else{
+                newMsg.add("NOTFROZEN");
+            }
             newMsg.add(App.session.find(Employee.class, employeeBefore.getId()));
             sendToAllClients(newMsg);
         }
@@ -426,6 +433,7 @@ public class Server extends AbstractServer {
         c.setAccountType(c2.getAccountType());
         c.setPhoneNum(c2.getPhoneNum());
         c.setCreditCard(c2.getCreditCard());
+        c.setBalance(c2.getBalance());
     }
 
     public static void orderArrived(Order order, Order.Status status){
