@@ -147,7 +147,7 @@ public class Server extends AbstractServer {
         String hour =order.getDeliveryHour() ;
         Customer customer = order.getOrderedBy();
         Date new_date = new Date();
-        long diffInMillies = Math.abs(date.getTime() - new_date.getTime());
+        long diffInMillies =  new_date.getTime() - date.getTime();
         long diff = TimeUnit.HOURS.convert(diffInMillies, TimeUnit.MILLISECONDS);
 
         diff = Integer.parseInt(hour.substring(0, 2))- diff;
