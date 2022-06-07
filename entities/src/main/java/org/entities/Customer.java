@@ -57,17 +57,7 @@ public class Customer extends User implements Serializable {
             memberShipExpire = new Date();
             memberShipExpire.setYear(memberShipExpire.getYear()+1);
         }
-        //TODO add hashing to password if have time.
     }
-
-/*    public Customer(String userID, String name, String userName, String password, String email, String phone, String creditCard, AccountType accountType, Store store) {
-        super(userID, name, userName, password, email, phone);
-        this.creditCard = creditCard;
-        this.accountType = accountType;
-        this.store = store;
-        //TODO add hashing to password if have time.
-    }*/
-
 
     public Customer() {
         super();
@@ -97,7 +87,6 @@ public class Customer extends User implements Serializable {
         return memberShipExpire;
     }
 
-    //TODO delete this method!!
     public void setMemberShipExpireTODELETE(Date date){
         this.memberShipExpire = date;
     }

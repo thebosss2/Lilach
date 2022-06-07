@@ -101,12 +101,10 @@ public class ComplaintInspectionTableController extends Controller{
                 final TableCell<Complaint, Void> cell = new TableCell<>() {
 
                     private final Button btn = new Button("Action");
-
                     {
                         btn.setOnAction((ActionEvent event) -> {
                             Complaint complaint = getTableView().getItems().get(getIndex());
                             goToComplaintInspection(complaint);
-                            //TODO pass complaint given to the ComplaintInspection screen.
                         });
                         btn.setStyle("-fx-background-color:  #c6acef");
                         btn.setText("Inspect");

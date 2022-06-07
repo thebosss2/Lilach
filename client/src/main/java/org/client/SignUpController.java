@@ -115,7 +115,7 @@ public class SignUpController extends Controller{
         List<Object> msg = new LinkedList<Object>();
         msg.add("#SIGNUP_AUTHENTICATION");
         msg.add(usernameText.getText().toString());
-        msg.add(idText.getText().toString());        //TODO add id here for validation check
+        msg.add(idText.getText().toString());
         try {
             coolButtonClick(signUpBtn);
             App.client.sendToServer(msg);
@@ -166,7 +166,7 @@ public class SignUpController extends Controller{
                 phoneNumberText.getText().isEmpty() || (accountType.getValue().equals("Store") && storePicker.getSelectionModel().isEmpty());
     }
 
-    public Customer createNewUser(){    //TODO add id
+    public Customer createNewUser(){
         Customer customer;
         if(accountType.getValue().equals("Store")) {
             customer = new Customer(idText.getText(),fullNameText.getText(),

@@ -57,7 +57,6 @@ public class OrderSummaryController extends Controller {
             LinkedList<Object> msg = new LinkedList<Object>();
             msg.add("#DELETEORDER"); //get stores from db
             msg.add(order.getId());
-            App.client.setController(this);//TODO maybe remove
             try {
                 App.client.sendToServer(msg); //Sends a msg contains the command and the current controller
             } catch (IOException e) {

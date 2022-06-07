@@ -44,7 +44,7 @@ public class Client extends AbstractClient {
 
     public static int[] hourList = {8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18};
 
-    // TODO Maybe delete
+
     private static Client client = null;
 
     public static Client getClient() {
@@ -61,7 +61,7 @@ public class Client extends AbstractClient {
 
     @Override
     protected void handleMessageFromServer(Object msg) {     //function handles message from server
-        try { //TODO cast before here the msg.
+        try {
             switch (((LinkedList<Object>) msg).get(0).toString()) {       //switch with all command options sent between client and server
                 case "#PULLCATALOG" -> pushToCatalog(msg);//function gets all data from server to display to client
                 case "#PULLBASES" -> pushToBases(msg);//function gets all data from server to display to client
@@ -101,7 +101,7 @@ public class Client extends AbstractClient {
                 }
             }
 
-        }else if(user instanceof Employee && msg.get(2) instanceof Employee){ //TODO check that msg sends employee
+        }else if(user instanceof Employee && msg.get(2) instanceof Employee){
             if(((Employee) user).getId() == ((Employee)msg.get(2)).getId()) {
                 if (msg.get(1).toString().equals("FREEZE")) {
                     Controller.sendAlert("Your account has been frozen by the system Admin", "Banned account", Alert.AlertType.WARNING);
@@ -334,31 +334,10 @@ public class Client extends AbstractClient {
                             PauseTransition pause = new PauseTransition(Duration.seconds(1));
                             pause.setOnFinished((e -> alert.close()));
                             pause.play();
-
-                            //TODO now isntead of text, I can create a mini pane with opacity 0.
                         }
                     });
 
                 });
-            /*try {
-                XMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("fadingPopupMessage.fxml"));
-                Scene scene = new Scene(fxmlLoader.load());
-                signUpController.get
-
-                FadeTransition ft = new FadeTransition(Duration.millis(3000), page);
-                ft.setFromValue(0.0);
-                ft.setToValue(1.0);
-                ft.play();
-                ft.setFromValue(1.0);
-                ft.setToValue(0.0);
-                ft.play();
-                Scene scene = new Scene(page);
-
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }*/
-
             } else {
                 Controller.sendAlert("Username already taken. Please try a new one.", "Sign-Up Failed", Alert.AlertType.WARNING);
             }
@@ -429,7 +408,7 @@ public class Client extends AbstractClient {
 
     }
 
-    public void logOut() {   //TODO clean cart
+    public void logOut() {
         List<Object> msg = new LinkedList<Object>();
         msg.add("#LOGOUT");
         msg.add(user);
@@ -463,10 +442,7 @@ public class Client extends AbstractClient {
                         changeMenu();
                     }
                 });
-
-                //TODO add menu switch and "hello {name}".
             }
-            //TODO add response to failure.
         }
     }
 

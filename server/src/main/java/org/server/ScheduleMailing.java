@@ -18,12 +18,17 @@ public class ScheduleMailing {
     public static void orderMail(Order order){
 
         Customer customer = order.getOrderedBy();
-
         Date current = new Date();
         Server.orderArrived(order, Order.Status.ARRIVED);
         String mail = "Order Arrival";
-        String subject = "Hello there" + customer.getName() + ",\n  your order has arrived";
+        String subject;
+        if(order.getDelivery()== Order.Delivery.SHIPPING_GIFT){
+            subject = "Hello there " + customer.getName() + ",\nyour gift has been received";
+        }else{
+            subject = "Hello there " + customer.getName() + ",\nyour order has arrived";
+        }
         SendMail.main(new String[]{customer.getEmail(), mail, subject});
+        System.out.println("Mail sent");
     }
 
 
@@ -48,7 +53,7 @@ public class ScheduleMailing {
                 List<Order> orders;
                 Date date = new Date();
                 date.setSeconds(0);
-                //date.setMinutes(0);
+                date.setMinutes(0);
                 try {
                     orders = App.getAllOrders();
                     for(Order order:orders){

@@ -65,7 +65,6 @@ public class ComplaintSubmissionController extends Controller{
     @FXML
     void sendComplaint(ActionEvent event) {
 
-        //TODO add topic not empty or text.
         if(checkEmpty()){
             List<Object> msg = new LinkedList<>();
             msg.add("#COMPLAINT");
