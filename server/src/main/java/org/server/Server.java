@@ -285,7 +285,12 @@ public class Server extends AbstractServer {
         addNewInstance((Complaint) msg.get(1));
     }
 
-
+    /**
+     * Hello there
+     * @param msg
+     * @param client
+     * @throws IOException
+     */
     private void signUpServer(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
         addNewInstance((Customer) msg.get(1));
         User user = (Customer) msg.get(1);

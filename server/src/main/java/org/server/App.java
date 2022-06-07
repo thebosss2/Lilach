@@ -182,37 +182,40 @@ public class App {
                 "Dear Customer Support, I tried to buy with my visa and it didn't work, and then after multiple tries it charged me twice.",
                 "Hello there, I ordered from your chain, and didn't receive what I wanted.",
                 "Hello there, I ordered from your chain, and didn't receive what I desired.",
-                "aaaaaaaaaaa","aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-                "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
-                "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
-                "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-                "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
-                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
-                "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
-                "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii",
-                "jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj",
-                "kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk",
-                "llllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll",
-                "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm",
-                "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn",
-                "oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo",
-                "pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp",
-                "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq",
-                "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
-                "ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
-                "tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
-                "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu",
-                "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv",
-                "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-                "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-                "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
-                "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"};
+                "aaaaaaaaaaa","aaaaaaaaaaaaaaa","aaaaaaaaaaa","aaaaaaaaaaaaaaaaa","aaaaaaaaaaaaaaaaaaaa",
+                "bbbbbbb","bbbbbbbbb","bbbbbbbbbbbbbbbbb","bbbbbbbbbbbbb","bbbbbbbbbbbbbbbb","bbbbbbbbbbbb",
+                "ccccccccccccccccc","cccccccccccccccc","cccccccccccccccc","ccccccccccccccc","cccccccccc",
+                "dddddddddddddddd","ddddddddddddddd","dddddddddddddddd","dddddddddddddd","ddddddddddddd",
+                "eeeeeeeeeeeeeee","eeeeeeeeeeeeeeeeee","eeeeeeeeeeeeeeeeeee","eeeeeeeeeeeeeeeeeeeeee",
+                "ffffffffffffffff","ffffffffffff","ffffffffffffff","fffffffffffffffffff","fffffffffffff",
+                "gggggggggggggggggg","ggggggggggggg","ggggggggggggggg","ggggggggggggggggg","ggggggggggg",
+                "hhhhhhhhhhhhhhh","hhhhhhhhhhhhhhhhhh","hhhhhhhhhhhhhhhh","hhhhhhhhhhhhhhhhh","hhhhhhhh",
+                "iiiiiiiiiiiiiii","iiiiiiiiiiiiiiii","iiiiiiiiiiiiiiiiiii","iiiiiiiiiiiii","iiiiiiiiiii",
+                "jjjjjjjjjjjjjjjjjj","jjjjjjjjjjjjjjjjj","jjjjjjjjjjjjjj","jjjjjjjjjjjjjj","jjjjjjjjjjj",
+                "kkkkkkkkkkkkkkk","kkkkkkkkkkkkkkkk","kkkkkkkkkkkkkkkkkkkkk","kkkkkkkkkkkkkkkkkkkkkk",
+                "llllllllllllllllllll","lllllllllllllll","lllllllllllllll","llllllllllllllllll","llllll",
+                "mmmmmmmmmmm","mmmmmmmmmmmmmmmmmmmm","mmmmmmmmmmmmmmmmmm","mmmmmmmmmmmmmmmmmm","mmmmmmm",
+                "nnnnnnnnnnnnnnnnnnn","nnnnnnnnnnnnnnnnn","nnnnnnnnnnnnnnn","nnnnnnnnnnnnnn","nnnnnnnnn",
+                "ooooooooooooooooooo","oooooooooooooooooo","oooooooooooooooooooooo","ooooooooooooooo",
+                "pppppppppppppppp","ppppppppppppp","pppppppppppppppppp","pppppppppppppp","ppppppppppppp",
+                "qqqqqqqqqqqqqqqqqqqqq","qqqqqqqqqqqqqqqqqq","qqqqqqqqqqqqqqqqq","qqqqqqqqqqqqqqqqqq",
+                "rrrrrrrrrrrrrrr","rrrrrrrrrrrrrrr","rrrrrrrrrrrrrrrrrrr","rrrrrrrrrrrrrrrrrrr","rrrrrr",
+                "sssssssssssssssss","ssssssssssssss","sssssssssssssssssssssss","sssssssssssssssss","sss",
+                "ttttttttttttttttttt","tttttttttttttttttt","tttttttttttttttt","ttttttttttttt","tttttttt",
+                "uuuuuuuuuuuuuuuuuuuu","uuuuuuuuuuu","uuuuuuuuuuuuuuuuuuuu","uuuuuuuuuuuuuuuuuuuuuuu",
+                "vvvvvvvvvvvvvvvvvv","vvvvvvvvvvvvvvvvvvv","vvvvvvvvvvvvv","vvvvvvvvvvvv","vvvvvvvvvvvv",
+                "wwwwwwwwwwwwww","wwwwwwwwwwwwwwwwwwwwww","wwwwwwwwwwwwwwwwww","wwwwwwwwwwwwwwwwwwww",
+                "xxxxxxxxxxxxxxxxxxxxxxx","xxxxxxxxxxxxxxxxxxxxxx","xxxxxxxxxxxxxxxxx","xxxxxxxxxxxx",
+                "yyyyyyyyyyyyyyyyyy","yyyyyyyyyyyyy","yyyyyyyyyyyyyyyyyyyyyyy","yyyyyyyyyyyyyyyy","yyyy",
+                "zzzzzzzzzzzzzzzzzz","zzzzzzzzzzzzzzzzzzzzzzz","zzzzzzzzzzzzzzzzzzzzzzz","zzzzzzzzzz"};
         for(int i=0;i< complaintsDiscription.length;i++){
             if(i<s.size())
                 storeN=i%s.size();
             if(i< complaintsDiscription.length){
-                Complaint comp = new Complaint(c.get(i%c.size()) ,new Date(),complaintsDiscription[i], Complaint.Topic.values()[i%Complaint.Topic.values().length/*Math.min(i, Complaint.Topic.values().length-1)*/], s.get(i%s.size()));
+                int rand = new Random().nextInt(30)+1;
+                Date d = new Date();
+                Date date = new Date(d.getTime() - Duration.ofDays(i%rand).toMillis());
+                Complaint comp = new Complaint(c.get(i%c.size()) ,date,complaintsDiscription[i], Complaint.Topic.values()[i%Complaint.Topic.values().length/*Math.min(i, Complaint.Topic.values().length-1)*/], s.get(i%s.size()));
                 complaints.add(comp);
                 session.save(comp);
                 session.flush();
