@@ -91,6 +91,11 @@ public class SignUpController extends Controller{
         return pattern3.matcher(change.getControlNewText()).matches() ? change : null;
     });
 
+    TextFormatter<String> formatter4 = new TextFormatter<String>(change-> {
+        change.setText(change.getText().replaceAll("[^[a-zA-Z_ ]]", ""));
+        return pattern3.matcher(change.getControlNewText()).matches() ? change : null;
+    });
+
     @FXML
     void enterSignup(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER)
@@ -139,12 +144,22 @@ public class SignUpController extends Controller{
             sendAlert("username cannot have spaces" ,"Sign-Up Failed" , Alert.AlertType.WARNING);
             return false;
         }
+        if(creditCardText.getText().length()<16){
+            sendAlert("Credit card invalid","Invalid Credit Number", Alert.AlertType.WARNING);
+            return false;
+        }
+        if(phoneNumberText.getText().length()<10){
+            sendAlert("Phone Number is invalid","Invalid Phone Number", Alert.AlertType.WARNING);
+            return false;
+        }
         return true;
     }
 
     private boolean checkFieldsNotEmpty() {
-        if(Integer.parseInt(idText.getText())==69)
-            SendMail.openWebpage((new Random().nextInt()%2==0) ? "https://www.youtube.com/watch?v=TlTb0o2XAyg" : "https://youtu.be/26lZvxwWzY0");
+        if (!idText.getText().isEmpty()) {
+            if(Integer.parseInt(idText.getText())==69)
+                SendMail.openWebpage((new Random().nextInt()%2==0) ? "https://www.youtube.com/watch?v=TlTb0o2XAyg" : "https://youtu.be/26lZvxwWzY0");
+        }
 
         return fullNameText.getText().isEmpty() || usernameText.getText().isEmpty() || passwordText.getText().isEmpty() ||idText.getText().isEmpty()||
                 emailText.getText().isEmpty() || creditCardText.getText().isEmpty() || accountType.getSelectionModel().isEmpty() ||
@@ -213,7 +228,7 @@ public class SignUpController extends Controller{
         phoneNumberText.setTextFormatter(formatter1);
         idText.setTextFormatter(formatter2);
         creditCardText.setTextFormatter(formatter3);
-
+        fullNameText.setTextFormatter(formatter4);
         this.stores = App.client.getStores();
         for (Store s : stores) {
             if(!s.getName().equals("Chain"))

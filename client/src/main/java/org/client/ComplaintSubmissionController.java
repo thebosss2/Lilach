@@ -54,12 +54,19 @@ public class ComplaintSubmissionController extends Controller{
         return pickedStore;
     }
 
+    private boolean checkEmpty(){
+        if(complaintText.getText().isEmpty() || complaintTopic.getValue().equals("Set Complaint Topic") || storePick.getValue().equals("Set Store")){
+            sendAlert("Some fields have not been filled"," Empty or Missing Fields", Alert.AlertType.WARNING);
+            return false;
+        }
+        return true;
+    }
 
     @FXML
     void sendComplaint(ActionEvent event) {
 
         //TODO add topic not empty or text.
-        if(!storePick.getValue().equals("Set Store")){
+        if(checkEmpty()){
             List<Object> msg = new LinkedList<>();
             msg.add("#COMPLAINT");
             Complaint complaint = new Complaint((Customer)App.client.user, new Date(), complaintText.getText(), Complaint.convertToTopic(complaintTopic.getValue()), getSelectedStore());
@@ -74,14 +81,12 @@ public class ComplaintSubmissionController extends Controller{
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setHeaderText("Complaint submitted, moving to catalog.");
                 alert.show();
-                PauseTransition pause = new PauseTransition(Duration.seconds(1));
+                PauseTransition pause = new PauseTransition(Duration.seconds(2.5));
                 pause.setOnFinished((e -> {
                     alert.close();
                     this.getSkeleton().changeCenter("Catalog");}));
                 pause.play();
             });
-        }else{
-            Controller.sendAlert("Did not pick store" ,"Store Pick", Alert.AlertType.WARNING);
         }
     }
     private void getStores() {
@@ -100,6 +105,7 @@ public class ComplaintSubmissionController extends Controller{
         assert storePick != null : "fx:id=\"storePick\" was not injected: check your FXML file 'ComplaintSubmission.fxml'.";
         complaintTopic.getItems().addAll("Bad service", "Order didn't arrive in time",
                     "Defective product/ not what you ordered", "Payment issue", "Other");
+        complaintTopic.setValue("Set Complaint Topic");
         getStores();
 
     }
