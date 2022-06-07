@@ -285,7 +285,12 @@ public class Server extends AbstractServer {
         addNewInstance((Complaint) msg.get(1));
     }
 
-
+    /**
+     * Hello there
+     * @param msg
+     * @param client
+     * @throws IOException
+     */
     private void signUpServer(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
         addNewInstance((Customer) msg.get(1));
         User user = (Customer) msg.get(1);
@@ -533,7 +538,6 @@ public class Server extends AbstractServer {
 
     }
 
-
     private void pullManagerReport(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
         try {
             String commandToClient = msg.get(0).toString();
@@ -589,8 +593,6 @@ public class Server extends AbstractServer {
         }
 
     }
-
-
 
     @Override
     protected synchronized void clientDisconnected(ConnectionToClient client) { //is client disconnected

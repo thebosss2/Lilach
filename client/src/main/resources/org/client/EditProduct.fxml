@@ -49,7 +49,7 @@
                 <Font name="Cambria" size="15.0" />
             </font>
         </Button>
-      <Button fx:id="deleteBtn" layoutX="463.0" layoutY="356.0" mnemonicParsing="false" onAction="#clickedDelete" prefHeight="26.0" prefWidth="123.0" style="-fx-background-color: e56565;" text="Delete product">
+      <Button fx:id="deleteBtn" layoutX="463.0" layoutY="356.0" mnemonicParsing="false" onAction="#clickedDelete" prefHeight="26.0" prefWidth="123.0" style="-fx-background-color: #eb4034;" text="Delete product">
          <font>
             <Font name="Cambria" size="15.0" />
          </font>

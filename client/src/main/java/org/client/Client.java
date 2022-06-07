@@ -407,7 +407,7 @@ public class Client extends AbstractClient {
                 }
                 case STORE_MANAGER -> {
                     storeSkeleton.changeLeft("ManagerMenu");
-                    storeSkeleton.changeCenter("EditCatalog");
+                    storeSkeleton.changeCenter("Report");
                 }
                 case CEO -> {
                     storeSkeleton.changeLeft("ManagerMenu");

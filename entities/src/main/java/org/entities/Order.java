@@ -45,7 +45,6 @@ public class Order implements Serializable {     //Product class entity
     protected String deliveryHour;
     public enum Status {PENDING, ARRIVED, CANCELED}
     protected Status isDelivered;
-
     public enum Delivery {SELF_SHIPPING, SHIPPING_GIFT, TAKEAWAY}
 
     protected Delivery delivery;
@@ -56,6 +55,26 @@ public class Order implements Serializable {     //Product class entity
     protected String address = null;
     protected String greetingCard = null;
 
+    //Order Generation constructor
+    public Order(LinkedList<PreMadeProduct> preMadeProducts, LinkedList<CustomMadeProduct> customMadeProducts,
+                 Customer orderedBy, int price, Date deliveryDate, Store store, String deliveryHour,
+                 String address, String greetingCard, Date orderDate) {
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat simpleformat = new SimpleDateFormat("dd/MMMM/yyyy hh:mm:s");
+        this.orderTime = simpleformat.format(orderDate.getTime());
+        this.delivery = Delivery.SELF_SHIPPING;
+        this.orderDate=orderDate;
+        this.preMadeProducts = preMadeProducts;
+        this.customMadeProducts = customMadeProducts;
+        this.orderedBy = orderedBy;
+        this.price = price;
+        this.deliveryDate = deliveryDate;
+        this.store = store;
+        this.deliveryHour = deliveryHour;
+        this.isDelivered = Status.PENDING;
+        this.address = address;
+        this.greetingCard = greetingCard;
+    }
 
     //SELF_SHIPPING constructor
     public Order(LinkedList<PreMadeProduct> preMadeProducts, LinkedList<CustomMadeProduct> customMadeProducts,

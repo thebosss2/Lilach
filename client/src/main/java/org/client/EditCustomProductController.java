@@ -94,7 +94,7 @@ public class EditCustomProductController extends Controller{
 
         @FXML
         void clickedSave(ActionEvent event) throws InterruptedException {
-            coolButtonClick((Button) event.getTarget());
+            EditProductController.coolButtonDeleteClick((Button) event.getTarget());
             if(!colorBox.getSelectionModel().isEmpty() && alertMsg("Edit Product","change this product!" , checkProduct())) {
                 saveChanges();
                 this.globalSkeleton.changeCenter("EditCatalog");
@@ -139,7 +139,7 @@ public class EditCustomProductController extends Controller{
 
         @FXML
         void clickedDelete(ActionEvent event) throws InterruptedException {
-            coolButtonClick((Button) event.getTarget());
+            EditProductController.coolButtonDeleteClick((Button) event.getTarget());
             if(alertMsg("Delete Product","delete this product!" , false)) {
                 deleteProduct();
                 this.globalSkeleton.changeCenter("EditCatalog");

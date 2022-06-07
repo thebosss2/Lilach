@@ -103,7 +103,7 @@ public class App {
     private static List<PreMadeProduct> generateProducts() throws Exception {       //generates new products
         Random random = new Random();
         List<PreMadeProduct> products = new LinkedList<PreMadeProduct>();
-        String[] flowerNames = new String[]{"SunFlower","Calanit","Shibolet","Rose","Rakefet","Lilach","Lily","Tulip","Pickachu","Charmander","Thanos","PushPush","Runlater","Clean Install","Orchid"};
+        String[] flowerNames = new String[]{"SunFlower","Calanit","Shibolet","Rose","Rakefet","Lilach","Lily","Tulip","Pickachu","Charmander","Thanos","Commit","Runlater","Clean Install","Orchid"};
         for(int i=0;i< flowerNames.length;i++){
             var img = loadImageFromResources(String.format("Flower%s.jpg",i));
             PreMadeProduct p = new PreMadeProduct(flowerNames[i], img, random.nextInt(30)+1,"this is a " + flowerNames[i] +" Flower", 0,false);
@@ -182,37 +182,40 @@ public class App {
                 "Dear Customer Support, I tried to buy with my visa and it didn't work, and then after multiple tries it charged me twice.",
                 "Hello there, I ordered from your chain, and didn't receive what I wanted.",
                 "Hello there, I ordered from your chain, and didn't receive what I desired.",
-                "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
-                "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
-                "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
-                "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-                "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
-                "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
-                "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
-                "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii",
-                "jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj",
-                "kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk",
-                "llllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll",
-                "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm",
-                "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn",
-                "oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo",
-                "pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp",
-                "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq",
-                "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
-                "ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
-                "tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
-                "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu",
-                "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv",
-                "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
-                "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-                "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
-                "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"};
+                "aaaaaaaaaaa","aaaaaaaaaaaaaaa","aaaaaaaaaaa","aaaaaaaaaaaaaaaaa","aaaaaaaaaaaaaaaaaaaa",
+                "bbbbbbb","bbbbbbbbb","bbbbbbbbbbbbbbbbb","bbbbbbbbbbbbb","bbbbbbbbbbbbbbbb","bbbbbbbbbbbb",
+                "ccccccccccccccccc","cccccccccccccccc","cccccccccccccccc","ccccccccccccccc","cccccccccc",
+                "dddddddddddddddd","ddddddddddddddd","dddddddddddddddd","dddddddddddddd","ddddddddddddd",
+                "eeeeeeeeeeeeeee","eeeeeeeeeeeeeeeeee","eeeeeeeeeeeeeeeeeee","eeeeeeeeeeeeeeeeeeeeee",
+                "ffffffffffffffff","ffffffffffff","ffffffffffffff","fffffffffffffffffff","fffffffffffff",
+                "gggggggggggggggggg","ggggggggggggg","ggggggggggggggg","ggggggggggggggggg","ggggggggggg",
+                "hhhhhhhhhhhhhhh","hhhhhhhhhhhhhhhhhh","hhhhhhhhhhhhhhhh","hhhhhhhhhhhhhhhhh","hhhhhhhh",
+                "iiiiiiiiiiiiiii","iiiiiiiiiiiiiiii","iiiiiiiiiiiiiiiiiii","iiiiiiiiiiiii","iiiiiiiiiii",
+                "jjjjjjjjjjjjjjjjjj","jjjjjjjjjjjjjjjjj","jjjjjjjjjjjjjj","jjjjjjjjjjjjjj","jjjjjjjjjjj",
+                "kkkkkkkkkkkkkkk","kkkkkkkkkkkkkkkk","kkkkkkkkkkkkkkkkkkkkk","kkkkkkkkkkkkkkkkkkkkkk",
+                "llllllllllllllllllll","lllllllllllllll","lllllllllllllll","llllllllllllllllll","llllll",
+                "mmmmmmmmmmm","mmmmmmmmmmmmmmmmmmmm","mmmmmmmmmmmmmmmmmm","mmmmmmmmmmmmmmmmmm","mmmmmmm",
+                "nnnnnnnnnnnnnnnnnnn","nnnnnnnnnnnnnnnnn","nnnnnnnnnnnnnnn","nnnnnnnnnnnnnn","nnnnnnnnn",
+                "ooooooooooooooooooo","oooooooooooooooooo","oooooooooooooooooooooo","ooooooooooooooo",
+                "pppppppppppppppp","ppppppppppppp","pppppppppppppppppp","pppppppppppppp","ppppppppppppp",
+                "qqqqqqqqqqqqqqqqqqqqq","qqqqqqqqqqqqqqqqqq","qqqqqqqqqqqqqqqqq","qqqqqqqqqqqqqqqqqq",
+                "rrrrrrrrrrrrrrr","rrrrrrrrrrrrrrr","rrrrrrrrrrrrrrrrrrr","rrrrrrrrrrrrrrrrrrr","rrrrrr",
+                "sssssssssssssssss","ssssssssssssss","sssssssssssssssssssssss","sssssssssssssssss","sss",
+                "ttttttttttttttttttt","tttttttttttttttttt","tttttttttttttttt","ttttttttttttt","tttttttt",
+                "uuuuuuuuuuuuuuuuuuuu","uuuuuuuuuuu","uuuuuuuuuuuuuuuuuuuu","uuuuuuuuuuuuuuuuuuuuuuu",
+                "vvvvvvvvvvvvvvvvvv","vvvvvvvvvvvvvvvvvvv","vvvvvvvvvvvvv","vvvvvvvvvvvv","vvvvvvvvvvvv",
+                "wwwwwwwwwwwwww","wwwwwwwwwwwwwwwwwwwwww","wwwwwwwwwwwwwwwwww","wwwwwwwwwwwwwwwwwwww",
+                "xxxxxxxxxxxxxxxxxxxxxxx","xxxxxxxxxxxxxxxxxxxxxx","xxxxxxxxxxxxxxxxx","xxxxxxxxxxxx",
+                "yyyyyyyyyyyyyyyyyy","yyyyyyyyyyyyy","yyyyyyyyyyyyyyyyyyyyyyy","yyyyyyyyyyyyyyyy","yyyy",
+                "zzzzzzzzzzzzzzzzzz","zzzzzzzzzzzzzzzzzzzzzzz","zzzzzzzzzzzzzzzzzzzzzzz","zzzzzzzzzz"};
         for(int i=0;i< complaintsDiscription.length;i++){
             if(i<s.size())
                 storeN=i%s.size();
             if(i< complaintsDiscription.length){
-                Complaint comp = new Complaint(c.get(i%c.size()) ,new Date(),complaintsDiscription[i], Complaint.Topic.values()[i%Complaint.Topic.values().length/*Math.min(i, Complaint.Topic.values().length-1)*/], s.get(i%s.size()));
+                int rand = new Random().nextInt(30)+1;
+                Date d = new Date();
+                Date date = new Date(d.getTime() - Duration.ofDays(i%rand).toMillis());
+                Complaint comp = new Complaint(c.get(i%c.size()) ,date,complaintsDiscription[i], Complaint.Topic.values()[i%Complaint.Topic.values().length/*Math.min(i, Complaint.Topic.values().length-1)*/], s.get(i%s.size()));
                 complaints.add(comp);
                 session.save(comp);
                 session.flush();
@@ -250,14 +253,14 @@ public class App {
         Date date;
         Random rand = new Random();
         //TODO add order time to Order constructor and add date of purchase
-        for(int i=0;i<31;i++){
+        for(int i=0;i<50;i++){
             Date d = new Date();
-            date = new Date(d.getTime() - Duration.ofDays(i).toMillis());
+            date = new Date(d.getTime() - Duration.ofDays(i%31).toMillis());
             Date delivery = new Date(date.getTime()+ Duration.ofDays(1).toMillis());
             int c=rand.nextInt(customers.size());
             customMadeList =(LinkedList<CustomMadeProduct>)getCustomMadeProductList(products);
             preMadeList = (LinkedList<PreMadeProduct>)getPreMadeProductList(products);
-            order = new Order(preMadeList,customMadeList,customers.get(c),totalCost(customMadeList,preMadeList),delivery, customers.get(c).getStore(),Integer.toString(delivery.getHours()),customers.get(c).getStore().getAddress(),"dfgsdfgsnfdf");
+            order = new Order(preMadeList,customMadeList,customers.get(c),totalCost(customMadeList,preMadeList),delivery, customers.get(c).getStore(),Integer.toString(delivery.getHours()),customers.get(c).getStore().getAddress(),"dfgsdfgsnfdf",date);
             orders.add(order);
             App.session.save(order);
             App.session.flush();
@@ -298,7 +301,7 @@ public class App {
         List<CustomMadeProduct> custom = new LinkedList<CustomMadeProduct>();
         int price = 0;
         Random rand = new Random();
-        int size = rand.nextInt(4)+1;
+        int size = rand.nextInt(2)+1;
         // make 10 customMadeProducts,
         for(int i = 0; i < size; i++) {
             // make a customMadeProduct from 3-10 random baseCustomMadeProducts
@@ -320,7 +323,7 @@ public class App {
         LinkedList<PreMadeProduct> productsForCustom = new LinkedList<PreMadeProduct>();
         Random random = new Random();
         int rand,loopRand;
-        loopRand = random.nextInt(4)+1;
+        loopRand = random.nextInt(2)+1;
         for(int j = 0; j < loopRand; j++) {
             rand = random.nextInt(11);
 
@@ -471,7 +474,7 @@ public class App {
             e.printStackTrace();
         } finally {
             if (session != null) {
-                while (!server.isClosed()) ;
+                while (!server.isClosed());
                 session.close();
                 session.getSessionFactory().close();
             }
