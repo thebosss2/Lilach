@@ -23,9 +23,9 @@ public class ScheduleMailing {
         String mail = "Order Arrival";
         String subject;
         if(order.getDelivery()== Order.Delivery.SHIPPING_GIFT){
-            subject = "Hello there" + customer.getName() + ",\n  your gift has been received";
+            subject = "Hello there " + customer.getName() + ",\nyour gift has been received";
         }else{
-            subject = "Hello there" + customer.getName() + ",\n  your order has arrived";
+            subject = "Hello there " + customer.getName() + ",\nyour order has arrived";
         }
         SendMail.main(new String[]{customer.getEmail(), mail, subject});
         System.out.println("Mail sent");
