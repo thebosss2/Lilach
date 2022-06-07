@@ -36,10 +36,10 @@ public class ScheduleMailing {
     public static void main(String[] args){
 
         ZonedDateTime now = ZonedDateTime.now();
-        ZonedDateTime nextRun = now/*.withMinute(0)*/.withSecond(0);
+        ZonedDateTime nextRun = now.withMinute(0).withSecond(0);
 
         if(now.compareTo(nextRun) > 0)
-            nextRun = nextRun.plusSeconds(60);
+            nextRun = nextRun.plusHours(1);
 
         Duration duration = Duration.between(now, nextRun);
         long initialDelay = duration.getSeconds();
@@ -53,7 +53,7 @@ public class ScheduleMailing {
                 List<Order> orders;
                 Date date = new Date();
                 date.setSeconds(0);
-                //date.setMinutes(0);
+                date.setMinutes(0);
                 try {
                     orders = App.getAllOrders();
                     for(Order order:orders){
@@ -65,7 +65,7 @@ public class ScheduleMailing {
                     e.printStackTrace();
                 }
             }
-        }, initialDelay, 30, TimeUnit.SECONDS);
+        }, initialDelay, 3600, TimeUnit.SECONDS);
 
 
 

@@ -118,7 +118,7 @@ public class App {
         String[] customerId = new String[]{"123456789","234567891","345678912","456789123","567891234","678912345","789123456","891234567"};
         String[] customerNames = new String[]{"user","Ash Ketchum", "Obi-Wan Kenobi", "Cynthia", "Amity Blight", "Mariette Cheng", "Matt", "Augustus Porter"};
         String[] customerUserNames = new String[]{"user","pokemon_master", "Jedi_master", "Cynthi", "Cotton_Candy", "Ladybug", "Wii1", "TOH"};
-        String[] customerEmails = new String[]{"user5674575467@gmail.com","Ash456856767@gmail.com","Obi-Wan456745674567@gmail.com","Cynthia5467456745745@gmail.com","Amity4567456746767@gmail.com","Mariette45674567456747@gmail.com","Matt456745674567@gmail.com", "Augustus2345324534252345@gmail.com"};
+        String[] customerEmails = new String[]{"user67@gmail.com","Ash467@gmail.com","Obi-Wan47@gmail.com","Cynthia5@gmail.com","Amity47@gmail.com","Mariette7@gmail.com","Matt46@gmail.com", "Augustus@gmail.com"};
         int storeN;
         for(int i=0;i< customerNames.length;i++) {
             if (i < s.size())
