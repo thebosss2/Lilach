@@ -6,12 +6,18 @@ package org.client;
 
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import org.entities.Complaint;
 import org.entities.Customer;
@@ -95,11 +101,29 @@ public class ComplaintSubmissionController extends Controller {
                 PauseTransition pause = new PauseTransition(Duration.seconds(2.5));
                 pause.setOnFinished((e -> {
                     alert.close();
-                    this.getSkeleton().changeCenter("Catalog");
+                    goToCatalog();
                 }));
                 pause.play();
             });
         }
+    }
+
+    /**
+     * Changing the screen to Catalog screen.
+     */
+    @FXML
+    void goToCatalog() {
+        ObservableList<Node> buttons = ((VBox)((AnchorPane) this.getSkeleton().mainScreen.getLeft()).getChildren().get(0)).getChildren();
+
+        for (Node node : buttons) {
+            if (node.getId().equals("complaintBtn"))
+                node.setStyle("-fx-background-color: #9bc98c");
+
+            if (node.getId().equals("catalogBtn"))
+                node.setStyle("-fx-background-color: #62a74d");
+        }
+
+        this.getSkeleton().changeCenter("Catalog");
     }
 
     /**
