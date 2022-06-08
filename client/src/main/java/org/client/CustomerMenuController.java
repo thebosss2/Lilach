@@ -4,11 +4,12 @@
 
 package org.client;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class CustomerMenuController extends Controller {
 
@@ -82,7 +83,8 @@ public class CustomerMenuController extends Controller {
 
     }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert cartBtn != null : "fx:id=\"cartBtn\" was not injected: check your FXML file 'CustomerMenu.fxml'.";
         assert catalogBtn != null : "fx:id=\"catalogBtn\" was not injected: check your FXML file 'CustomerMenu.fxml'.";

@@ -1,18 +1,16 @@
 package org.client;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.LinkedList;
-import java.util.ResourceBundle;
-
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.VBox;
-import org.entities.CustomMadeProduct;
 import org.entities.Customer;
 import org.entities.Order;
-import org.entities.PreMadeProduct;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.LinkedList;
+import java.util.ResourceBundle;
 
 public class SummaryOrdersController extends Controller {
 
@@ -31,7 +29,7 @@ public class SummaryOrdersController extends Controller {
 
         LinkedList<Object> msg = new LinkedList<Object>();
         msg.add("#PULLORDERS");
-        msg.add((Customer)App.client.user);
+        msg.add((Customer) App.client.user);
         App.client.setController(this);
         try {
             App.client.sendToServer(msg); //Sends a msg contains the command and the controller for the catalog.
@@ -45,7 +43,7 @@ public class SummaryOrdersController extends Controller {
         Platform.runLater(new Runnable() {      //runlater used to wait for server and client threads to finish
             @Override
             public void run() {
-                for (Order order: Client.orders){
+                for (Order order : Client.orders) {
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("OrderSummary.fxml"));
                     try {
                         vbox.getChildren().add(fxmlLoader.load());  //Adds new product pane to the screen.

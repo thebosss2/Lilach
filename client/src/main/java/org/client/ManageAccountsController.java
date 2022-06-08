@@ -1,17 +1,17 @@
 package org.client;
+
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.FlowPane;
 import org.entities.Customer;
 import org.entities.Employee;
-import org.entities.PreMadeProduct;
 import org.entities.User;
 
 import java.io.IOException;
 import java.util.LinkedList;
 
-public class ManageAccountsController extends Controller{
+public class ManageAccountsController extends Controller {
 
     @FXML
     private FlowPane mainPane;

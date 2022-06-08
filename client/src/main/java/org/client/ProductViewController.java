@@ -1,5 +1,5 @@
 package org.client;
-import org.entities.PreMadeProduct;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -9,8 +9,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import org.entities.PreMadeProduct;
 
-public class ProductViewController extends Controller{
+public class ProductViewController extends Controller {
 
     private PreMadeProduct product;
 
@@ -63,20 +64,20 @@ public class ProductViewController extends Controller{
         mainImage.setImage(image_change);
     }
 
-    public void setProductView (PreMadeProduct product) {
+    public void setProductView(PreMadeProduct product) {
         this.product = product;
         this.productName.setText(product.getName());
         this.mainImage.setImage(product.getImage());
         this.image1.setImage(product.getImage());
         this.description.setText(product.getDescription());
         this.price.setText(Integer.toString(product.getPrice()));
-        if(product.getDiscount() != 0)
+        if (product.getDiscount() != 0)
             this.priceBeforeDiscount.setText(Integer.toString(product.getPriceBeforeDiscount()));
     }
 
     @FXML
     void plusAction(ActionEvent event) throws InterruptedException {
-        coolButtonClick((Button)event.getTarget());
+        coolButtonClick((Button) event.getTarget());
         count++;
         orderCount.setText(Integer.toString(count));
         this.product.setAmount(count);
@@ -84,7 +85,7 @@ public class ProductViewController extends Controller{
 
     @FXML
     void minusAction(ActionEvent event) throws InterruptedException {
-        coolButtonClick((Button)event.getTarget());
+        coolButtonClick((Button) event.getTarget());
         if (count > 1) {
             count--;
             orderCount.setText(Integer.toString(count));
@@ -94,10 +95,10 @@ public class ProductViewController extends Controller{
 
     @FXML
     void addToCart(ActionEvent event) throws InterruptedException {
-        coolButtonClick((Button)event.getTarget());
+        coolButtonClick((Button) event.getTarget());
         this.product.setAmount(Integer.parseInt(orderCount.getText()));
 //        for (int i=0;i<count;i++)
 //            App.client.cart.insertProduct(this.product);
-        App.client.cart.insertSomeProduct(this.product,Integer.parseInt(orderCount.getText()));
+        App.client.cart.insertSomeProduct(this.product, Integer.parseInt(orderCount.getText()));
     }
 }

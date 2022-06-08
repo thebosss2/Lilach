@@ -2,7 +2,8 @@ package org.entities;
 
 import javafx.scene.image.Image;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -71,30 +72,30 @@ public abstract class Product implements Serializable {
         //this.image = image;
     }
 
-    public Product() {}
-
-    public void setPrice(int price) {
-        this.price = price;
+    public Product() {
     }
 
     public int getPrice() {
         return price;
     }
 
-    public Image getImage() {
-        return new Image(new ByteArrayInputStream(this.image));
+    public void setPrice(int price) {
+        this.price = price;
     }
 
-    public byte[] getByteImage() {
-        return image;
+    public Image getImage() {
+        return new Image(new ByteArrayInputStream(this.image));
     }
 
     public void setImage(byte[] image) {
         this.image = image;
     }
 
-    public int getAmount()
-    {
+    public byte[] getByteImage() {
+        return image;
+    }
+
+    public int getAmount() {
         return this.amount;
     }
 

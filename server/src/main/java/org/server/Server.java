@@ -1,12 +1,10 @@
 package org.server;
 
-import javafx.scene.control.Alert;
 import org.email.SendMail;
 import org.entities.*;
 import org.server.ocsf.AbstractServer;
 import org.server.ocsf.ConnectionToClient;
 
-import javax.naming.NamingEnumeration;
 import java.io.IOException;
 import java.util.Date;
 import java.util.LinkedList;
@@ -19,364 +17,11 @@ public class Server extends AbstractServer {
         super(port);
     }
 
-    @Override
-    /**
-     * Msg contains at least a command (string) for the switch to handle.
-     */
-    protected void handleMessageFromClient(Object msg, ConnectionToClient client) {     //handles commands from client for info
-
-        try {
-            switch (((LinkedList<Object>) msg).get(0).toString()) {   //switch to see what client wants from server
-                case "#PULLCATALOG" -> pullProducts(((LinkedList<Object>) msg), client);  //display updated catalog version
-                case "#PULLBASES" -> pullProducts(((LinkedList<Object>) msg), client);  //display updated catalog version
-                case "#SAVE" -> updateProduct((LinkedList<Object>) msg);           //save change to product details
-                case "#ADD" -> addProduct((LinkedList<Object>) msg);           // add product to the DB
-                case "#LOGIN" -> loginServer((LinkedList<Object>)msg,client);
-                case "#SIGNUP_AUTHENTICATION" -> authinticateUser((LinkedList<Object>) msg, client);
-                case "#CHECK_USER_AUTHENTICATION" -> checkUser((LinkedList<Object>) msg, client);
-                case "#SIGNUP" -> signUpServer(((LinkedList<Object>)msg),client);
-                case "#PULLSTORES" -> pullStores(((LinkedList<Object>) msg), client);  //display updated catalog version
-                case "#SAVEORDER" -> saveOrderServer(((LinkedList<Object>)msg),client);
-                case "#LOGOUT" -> logoutServer((LinkedList<Object>) msg, client);
-                case "#COMPLAINT" -> addComplaint((LinkedList<Object>) msg);
-                case "#PULL_COMPLAINTS" -> pullOpenComplaints(client);
-                case "#CLOSE_COMPLAINT" -> closeComplaintAndCompensate((LinkedList<Object>) msg/*,client*/);
-                case "#UPDATE_CUSTOMER_ACCOUNT" -> updateCustomerAccount((LinkedList<Object>) msg, client);
-                case "#DELETEORDER" -> deleteOrder((LinkedList<Object>) msg, client);
-                case "#PULLORDERS" -> pullOrders((LinkedList<Object>) msg, client);
-                case "#PULLUSERS" -> pullUsers((LinkedList<Object>) msg, client);
-                case "#DELETEPRODUCT" -> deleteProduct((LinkedList<Object>) msg, client);
-                case "#PULL_MANAGER_REPORT" -> pullManagerReport((LinkedList<Object>) msg, client);
-                case "#PULL_CEO_REPORT" -> pullCeoReport((LinkedList<Object>) msg, client);
-                case "#SAVEEMPLOYEE" -> saveEmployee((LinkedList<Object>) msg, client);
-                case "#SAVECUSTOMER" -> saveCustomer((LinkedList<Object>) msg, client);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void clientUserUpdate(String msg, User user){
-        User user1=null;
-        if(user instanceof Customer){
-            user1 = App.session.find(Customer.class,user.getId());
-        }else if(user instanceof Employee){
-            user1 = App.session.find(Employee.class,user.getId());
-        }
-
-        if(user1.getConnected()){
-            List<Object> newMsg = new LinkedList<Object>();
-            newMsg.add("#USERREFRESH");
-            newMsg.add(msg);
-            newMsg.add(user1);
-            sendToAllClients(newMsg);
-        }
-    }
-
-    private void saveCustomer(LinkedList<Object> msg, ConnectionToClient client) {
-        App.session.beginTransaction();
-        Customer customerBefore = (Customer) msg.get(1);
-        Customer customerAfter = (Customer) msg.get(2);
-
-        App.session.evict(customerBefore);       //evict current product details from database
-        changeParamCus(customerBefore, customerAfter);   //func changes product to updates details
-        App.session.merge(customerBefore);           //merge into database with updated info
-        App.session.flush();
-        App.session.getTransaction().commit(); // Save everything.
-        if(customerBefore.getFrozen() && customerBefore.getConnected()) {
-            List<Object> newMsg = new LinkedList<Object>();
-            newMsg.add("#USERREFRESH");
-            newMsg.add("FREEZE");
-            newMsg.add(App.session.find(Customer.class, customerBefore.getId()));
-            sendToAllClients(newMsg);
-        }
-    }
-
-    private void saveEmployee(LinkedList<Object> msg, ConnectionToClient client) {
-        App.session.beginTransaction();
-        Employee employeeBefore = (Employee) msg.get(1);
-        Employee employeeAfter = (Employee) msg.get(2);
-
-        App.session.evict(employeeBefore);       //evict current product details from database
-        changeParamEmp(employeeBefore, employeeAfter);   //func changes product to updates details
-        App.session.merge(employeeBefore);           //merge into database with updated info
-        App.session.flush();
-        App.session.getTransaction().commit(); // Save everything.
-        if(((Employee) msg.get(2)).getFrozen()) {
-            List<Object> newMsg = new LinkedList<Object>();
-            newMsg.add("#USERREFRESH");
-            newMsg.add("FREEZE");
-            newMsg.add(App.session.find(Employee.class, employeeBefore.getId()));
-            sendToAllClients(newMsg);
-        }
-    }
-
-    private void deleteProduct(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
-        App.session.beginTransaction();
-        PreMadeProduct product = (PreMadeProduct) (msg).get(1);
-        App.session.delete(App.session.find(PreMadeProduct.class, product.getId()));       //evict current product details from database
-        App.session.flush();
-        App.session.getTransaction().commit(); // Save everything.
-        List<Object> newMsg = new LinkedList<Object>();
-        newMsg.add("#REFRESH");
-        newMsg.add(App.getAllProducts());
-        App.server.sendToAllClients(newMsg);
-    }
-
-
-    private void pullUsers(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
-        List<User> users = App.getAllUsers();
-        List<Object>  msgToClient = new LinkedList<Object>();
-        msgToClient.add(msg.get(0).toString());
-        msgToClient.add(users);
-        client.sendToClient(msgToClient);
-    }
-
-    private void pullOrders(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
-        List<Order> orders = App.getSomeOrders((Customer)msg.get(1));
-        List<Object> msgToClient = new LinkedList<Object>();
-        msgToClient.add(msg.get(0).toString());
-        msgToClient.add(orders);
-        client.sendToClient(msgToClient);
-    }
-
-    private void changeBalance(Order order, ConnectionToClient client) {
-        int refund = 0;
-        int price = order.getPrice();
-        Date date = order.getDeliveryDate();
-        String hour =order.getDeliveryHour() ;
-        Customer customer = order.getOrderedBy();
-        Date new_date = new Date();
-        long diffInMillies = Math.abs(date.getTime() - new_date.getTime());
-        long diff = TimeUnit.HOURS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-
-        diff = Integer.parseInt(hour.substring(0, 2))- diff;
-
-
-        String addition;
-/*        //alert+ change refund
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText("Order Cancellation succeeded");
-        alert.setTitle("The Order Has Been Canceled");*/
-
-        if (diff > 3)
-        {
-            refund = price;
-            addition="You have received a full refund";
-        }
-        else if (diff>1)
-        {
-            refund = price/2;
-            addition="The refund is half the order price";
-        }
-        else
-            addition="I'm sorry, but according to the policy you do not deserve a refund";
-
-        updateBalance(customer,App.session.find(Customer.class,customer.getId()).getBalance() + refund);
-
-        List<Object> newMsg = new LinkedList<Object>();
-        newMsg.add("#DELETEORDER");
-        newMsg.add("Order Cancellation succeeded " + addition);
-        newMsg.add("The Order Has Been Canceled");
-        newMsg.add(App.session.find(Customer.class,customer.getId()));
-        try {
-            client.sendToClient(newMsg);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    private void deleteOrder(LinkedList<Object> msg, ConnectionToClient client) {
-        int id = (int) msg.get(1);
-        Order order = App.session.find(Order.class, id);
-
-        App.session.beginTransaction();
-        App.session.evict(order);       //evict current product details from database
-        order.setDelivered(Order.Status.CANCELED);
-        App.session.merge(order);           //merge into database with updated info
-        App.session.flush();
-        App.session.getTransaction().commit(); // Save everything.
-        changeBalance(order,client);
-    }
-
-    private void updateCustomerAccount(LinkedList<Object> msg, ConnectionToClient client) {
-        Customer customer = (Customer) msg.get(1);
-        if(msg.get(2).toString().equals("CONFIRMED")){
-            updateAccount(customer, Customer.AccountType.MEMBERSHIP);
-            updateBalance(customer, (int) msg.get(3));
-        } else{
-            updateAccount(customer, Customer.AccountType.CHAIN);
-        }
-
-        List<Object> newMsg = new LinkedList<>();
-        newMsg.add("#UPDATE_CUSTOMER");
-        newMsg.add(customer);
-        try {
-            client.sendToClient(newMsg);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void updateAccount(Customer customer, Customer.AccountType type) {
-        App.session.beginTransaction();
-        App.session.evict(customer);       //evict current product details from database
-        if(type == Customer.AccountType.MEMBERSHIP)
-            customer.setMemberShipExpire();
-        else
-            customer.setAccountType(type);
-        App.session.merge(customer);           //merge into database with updated info
-        App.session.flush();
-        App.session.getTransaction().commit(); // Save everything.
-    }
-
-    private void closeComplaintAndCompensate(LinkedList<Object> msg/*,ConnectionToClient client*/) {
-        Complaint complaint = (Complaint) msg.get(1);
-        closeComplaint(complaint);
-        if(msg.get(2).equals("COMPENSATED")) {
-            updateBalance(App.session.find(Customer.class, complaint.getCustomer().getId()), App.session.find(Customer.class, complaint.getCustomer().getId()).getBalance() + (int) msg.get(3));
-            clientUserUpdate("BALANCEUPDATE", App.session.find(Customer.class, complaint.getCustomer().getId()));
-            SendMail.main(new String[]{complaint.getCustomer().getEmail(),"your complaint has been processed and you have been compensated in the amount of " + (int)msg.get(3) + "₪\n","complaint processed"});
-        }else{
-            SendMail.main(new String[]{complaint.getCustomer().getEmail(),"your complaint has been processed and no refund has been issued","complaint processed"});
-        }
-
-    }
-
-    private void updateBalance(Customer customer, int balance){
-        App.session.beginTransaction();
-        App.session.evict(customer);       //evict current product details from database
-        //customer.setBalance(balance);/////////////////TODO can evict after change because SQL works with primary key
-        ///TODO make this Generic func
-        customer.setBalance(balance);
-        App.session.merge(customer);           //merge into database with updated info
-        App.session.flush();
-        App.session.getTransaction().commit(); // Save everything.
-    }
-
-    private void closeComplaint(Complaint complaint) {
-        App.session.beginTransaction();
-        App.session.evict(complaint);       //evict current product details from database
-        complaint.setStatus(false);
-        App.session.merge(complaint);           //merge into database with updated info
-        App.session.flush();
-        App.session.getTransaction().commit(); // Save everything.
-    }
-
-
-    private void pullOpenComplaints(ConnectionToClient client) throws IOException {
-        List<Complaint> complaints = App.getAllOpenComplaints();
-        List<Object> msg = new LinkedList<>();
-        msg.add("#PULL_COMPLAINTS");
-        msg.add(complaints);
-        client.sendToClient(msg);
-    }
-
-    private static <T> void addNewInstance(T obj){
+    private static <T> void addNewInstance(T obj) {
         App.session.beginTransaction();
         App.session.save(obj);
         App.session.flush();
         App.session.getTransaction().commit();
-    }
-
-
-    private void addComplaint(LinkedList<Object> msg) {
-        addNewInstance((Complaint) msg.get(1));
-    }
-
-    /**
-     * Hello there
-     * @param msg
-     * @param client
-     * @throws IOException
-     */
-    private void signUpServer(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
-        addNewInstance((Customer) msg.get(1));
-        User user = (Customer) msg.get(1);
-        msg.clear();
-        msg.add("#LOGIN");
-        msg.add(user.getUserName());
-        msg.add(user.getPassword());
-        loginServer(msg,client);
-    }
-
-    private void saveOrderServer(LinkedList<Object> msg, ConnectionToClient client) {
-        Order order = (Order) msg.get(1);
-        App.session.beginTransaction();
-        for(PreMadeProduct p : order.getPreMadeProducts()) {
-            App.session.save(p);   //saves and flushes to database
-            App.session.flush();
-        }
-        for(CustomMadeProduct p : order.getCustomMadeProducts()) {
-            for (PreMadeProduct pre : p.getProducts()) {
-                App.session.save(pre);   //saves and flushes to database
-                App.session.flush();
-            }
-            App.session.save(p);
-        }
-        App.session.save(order);
-        App.session.flush();
-        App.session.getTransaction().commit();
-        updateBalance(order.getOrderedBy(), order.getOrderedBy().getBalance());
-        msg.clear();
-        msg.add("#UPDATEBALANCE");
-        msg.add(order.getOrderedBy());
-        try {
-            client.sendToClient(msg);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void checkUser(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
-        List<User> users = App.getAllUsers();
-        List<Object> newMsg = new LinkedList<Object>();
-        newMsg.add("#SIGNUP_AUTHENTICATION");
-        for(User user : users) {
-            if(user.getId()!=(int)msg.get(3)) {
-                if((msg.get(4)) instanceof Employee){ //user is employee
-                    if(msg.get(5).equals("Store Manager") && (user instanceof Employee) &&
-                    ((Employee) user).getRole() == Employee.Role.STORE_MANAGER && (msg.get(6).equals(user.getStore().getName()))) {
-                        newMsg.add("#STORE_INVALID"); //checks if username or user id already exists
-                        client.sendToClient(newMsg);
-                        return;
-                    }
-                    else if (user.getUserName().equals(msg.get(1).toString()) || (user.getUserID().equals(msg.get(2)) && (user instanceof Employee))){
-                            newMsg.add("#USER_EXISTS"); //checks if username or user id already exists
-                            client.sendToClient(newMsg);
-                            return;
-                    }
-                }
-                else {
-                    if (user.getUserName().equals(msg.get(1).toString()) || (user.getUserID().equals(msg.get(2)) && (user instanceof Customer))) {
-                        newMsg.add("#USER_EXISTS"); //checks if username or user id already exists
-                        client.sendToClient(newMsg);
-                        return;
-                    }
-                }
-
-            }
-        }
-        newMsg.add("#USER_DOES_NOT_EXIST");
-        client.sendToClient(newMsg);
-    }
-
-
-    //Checks if the username asked by new signup exists.
-    private void authinticateUser(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
-        List<User> users = App.getAllUsers();
-        List<Object> newMsg = new LinkedList<Object>();
-        newMsg.add(msg.get(0));
-        for(User user : users){
-            if(user.getUserName().equals(msg.get(1).toString()) || (user.getUserID().equals(msg.get(2)) && (user instanceof Customer))){
-                newMsg.add("#USER_EXISTS"); //checks if username or user id already exists
-                client.sendToClient(newMsg);
-                return;
-            }
-        }//TODO check if ID already exists and email
-        newMsg.add("#USER_DOES_NOT_EXIST");
-        client.sendToClient(newMsg);
     }
 
     private static void updateProduct(Object msg) throws IOException {        //update product details func
@@ -401,10 +46,11 @@ public class Server extends AbstractServer {
         p.setDiscount(p2.getDiscount());
         p.setImage(p2.getByteImage());
         p.setPriceBeforeDiscount(p2.getPriceBeforeDiscount());
-        if(p.getType()== PreMadeProduct.ProductType.CUSTOM_CATALOG){
+        if (p.getType() == PreMadeProduct.ProductType.CUSTOM_CATALOG) {
             p.setMainColor(p2.getMainColor());
         }
     }
+
     private static void changeParamEmp(Employee e, Employee e2) {     //changes details
         e.setName(e2.getName());
         e.setFrozen(e2.getFrozen());
@@ -428,9 +74,13 @@ public class Server extends AbstractServer {
         c.setAccountType(c2.getAccountType());
         c.setPhoneNum(c2.getPhoneNum());
         c.setCreditCard(c2.getCreditCard());
+        c.setBalance(c2.getBalance());
+        if (c2.getTypeToString() == Customer.getAllTypes()[2] && c.getMemberShipExpire() == null) {
+            c.setMemberShipExpire();
+        }
     }
 
-    public static void orderArrived(Order order, Order.Status status){
+    public static void orderArrived(Order order, Order.Status status) {
         App.session.beginTransaction();
         App.session.evict(order);
         order.setDelivered(status);
@@ -457,6 +107,368 @@ public class Server extends AbstractServer {
         client.sendToClient(msgToClient);
     }
 
+    public static void main(String[] args) throws IOException {
+
+
+        if (args.length != 1) {
+            System.out.println("Required argument: <port>");
+        } else {
+
+            Server server = new Server(Integer.parseInt(args[0]));
+            server.listen();
+        }
+    }
+
+    @Override
+    /**
+     * Msg contains at least a command (string) for the switch to handle.
+     */
+    protected void handleMessageFromClient(Object msg, ConnectionToClient client) {     //handles commands from client for info
+
+        try {
+            switch (((LinkedList<Object>) msg).get(0).toString()) {   //switch to see what client wants from server
+                case "#PULLCATALOG" -> pullProducts(((LinkedList<Object>) msg), client);  //display updated catalog version
+                case "#PULLBASES" -> pullProducts(((LinkedList<Object>) msg), client);  //display updated catalog version
+                case "#SAVE" -> updateProduct((LinkedList<Object>) msg);           //save change to product details
+                case "#ADD" -> addProduct((LinkedList<Object>) msg);           // add product to the DB
+                case "#LOGIN" -> loginServer((LinkedList<Object>) msg, client);
+                case "#SIGNUP_AUTHENTICATION" -> authinticateUser((LinkedList<Object>) msg, client);
+                case "#CHECK_USER_AUTHENTICATION" -> checkUser((LinkedList<Object>) msg, client);
+                case "#SIGNUP" -> signUpServer(((LinkedList<Object>) msg), client);
+                case "#PULLSTORES" -> pullStores(((LinkedList<Object>) msg), client);  //display updated catalog version
+                case "#SAVEORDER" -> saveOrderServer(((LinkedList<Object>) msg), client);
+                case "#LOGOUT" -> logoutServer((LinkedList<Object>) msg, client);
+                case "#COMPLAINT" -> addComplaint((LinkedList<Object>) msg);
+                case "#PULL_COMPLAINTS" -> pullOpenComplaints(client);
+                case "#CLOSE_COMPLAINT" -> closeComplaintAndCompensate((LinkedList<Object>) msg/*,client*/);
+                case "#UPDATE_CUSTOMER_ACCOUNT" -> updateCustomerAccount((LinkedList<Object>) msg, client);
+                case "#DELETEORDER" -> deleteOrder((LinkedList<Object>) msg, client);
+                case "#PULLORDERS" -> pullOrders((LinkedList<Object>) msg, client);
+                case "#PULLUSERS" -> pullUsers((LinkedList<Object>) msg, client);
+                case "#DELETEPRODUCT" -> deleteProduct((LinkedList<Object>) msg, client);
+                case "#PULL_MANAGER_REPORT" -> pullManagerReport((LinkedList<Object>) msg, client);
+                case "#PULL_CEO_REPORT" -> pullCeoReport((LinkedList<Object>) msg, client);
+                case "#SAVEEMPLOYEE" -> saveEmployee((LinkedList<Object>) msg, client);
+                case "#SAVECUSTOMER" -> saveCustomer((LinkedList<Object>) msg, client);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void clientUserUpdate(String msg, User user) {
+        User user1 = null;
+        if (user instanceof Customer) {
+            user1 = App.session.find(Customer.class, user.getId());
+        } else if (user instanceof Employee) {
+            user1 = App.session.find(Employee.class, user.getId());
+        }
+
+        if (user1.getConnected()) {
+            List<Object> newMsg = new LinkedList<Object>();
+            newMsg.add("#USERREFRESH");
+            newMsg.add(msg);
+            newMsg.add(user1);
+            sendToAllClients(newMsg);
+        }
+    }
+
+    private void saveCustomer(LinkedList<Object> msg, ConnectionToClient client) {
+        App.session.beginTransaction();
+        Customer customerBefore = App.session.find(Customer.class, ((Customer) msg.get(1)).getId());
+        Customer customerAfter = (Customer) msg.get(2);
+        App.session.evict(customerBefore);       //evict current product details from database
+        changeParamCus(customerBefore, customerAfter);   //func changes product to updates details
+        App.session.merge(customerBefore);           //merge into database with updated info
+        App.session.flush();
+        App.session.getTransaction().commit(); // Save everything.
+        if (customerBefore.getConnected()) {
+            List<Object> newMsg = new LinkedList<Object>();
+            newMsg.add("#USERREFRESH");
+            if (customerBefore.getFrozen()) {
+                newMsg.add("FREEZE");
+            } else {
+                newMsg.add("NOTFROZEN");
+            }
+            newMsg.add(App.session.find(Customer.class, customerBefore.getId()));
+            sendToAllClients(newMsg);
+        }
+    }
+
+    private void saveEmployee(LinkedList<Object> msg, ConnectionToClient client) {
+        App.session.beginTransaction();
+        Employee employeeBefore = App.session.find(Employee.class, ((Employee) msg.get(1)).getId());
+        Employee employeeAfter = (Employee) msg.get(2);
+
+        App.session.evict(employeeBefore);       //evict current product details from database
+        changeParamEmp(employeeBefore, employeeAfter);   //func changes product to updates details
+        App.session.merge(employeeBefore);           //merge into database with updated info
+        App.session.flush();
+        App.session.getTransaction().commit(); // Save everything.
+        if (employeeBefore.getConnected()) {
+            List<Object> newMsg = new LinkedList<Object>();
+            newMsg.add("#USERREFRESH");
+            if (employeeBefore.getFrozen()) {
+                newMsg.add("FREEZE");
+            } else {
+                newMsg.add("NOTFROZEN");
+            }
+            newMsg.add(App.session.find(Employee.class, employeeBefore.getId()));
+            sendToAllClients(newMsg);
+        }
+    }
+
+    private void deleteProduct(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
+        App.session.beginTransaction();
+        PreMadeProduct product = (PreMadeProduct) (msg).get(1);
+        App.session.delete(App.session.find(PreMadeProduct.class, product.getId()));       //evict current product details from database
+        App.session.flush();
+        App.session.getTransaction().commit(); // Save everything.
+        List<Object> newMsg = new LinkedList<Object>();
+        newMsg.add("#REFRESH");
+        newMsg.add(App.getAllProducts());
+        App.server.sendToAllClients(newMsg);
+    }
+
+    private void pullUsers(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
+        List<User> users = App.getAllUsers();
+        List<Object> msgToClient = new LinkedList<Object>();
+        msgToClient.add(msg.get(0).toString());
+        msgToClient.add(users);
+        client.sendToClient(msgToClient);
+    }
+
+    private void pullOrders(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
+        List<Order> orders = App.getSomeOrders((Customer) msg.get(1));
+        List<Object> msgToClient = new LinkedList<Object>();
+        msgToClient.add(msg.get(0).toString());
+        msgToClient.add(orders);
+        client.sendToClient(msgToClient);
+    }
+
+    private void changeBalance(Order order, ConnectionToClient client) {
+        int refund = 0;
+        int price = order.getPrice();
+        Date date = order.getDeliveryDate();
+        String hour = order.getDeliveryHour();
+        Customer customer = order.getOrderedBy();
+        Date new_date = new Date();
+        long diffInMillies = new_date.getTime() - date.getTime();
+        long diff = TimeUnit.HOURS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+
+        diff = Integer.parseInt(hour.substring(0, 2)) - diff;
+
+
+        String addition;
+/*        //alert+ change refund
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("Order Cancellation succeeded");
+        alert.setTitle("The Order Has Been Canceled");*/
+
+        if (diff > 3) {
+            refund = price;
+            addition = "You have received a full refund";
+        } else if (diff > 1) {
+            refund = price / 2;
+            addition = "The refund is half the order price";
+        } else
+            addition = "I'm sorry, but according to the policy you do not deserve a refund";
+
+        updateBalance(customer, App.session.find(Customer.class, customer.getId()).getBalance() + refund);
+
+        List<Object> newMsg = new LinkedList<Object>();
+        newMsg.add("#DELETEORDER");
+        newMsg.add("Order Cancellation succeeded " + addition);
+        newMsg.add("The Order Has Been Canceled");
+        newMsg.add(App.session.find(Customer.class, customer.getId()));
+        try {
+            client.sendToClient(newMsg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void deleteOrder(LinkedList<Object> msg, ConnectionToClient client) {
+        int id = (int) msg.get(1);
+        Order order = App.session.find(Order.class, id);
+
+        App.session.beginTransaction();
+        App.session.evict(order);       //evict current product details from database
+        order.setDelivered(Order.Status.CANCELED);
+        App.session.merge(order);           //merge into database with updated info
+        App.session.flush();
+        App.session.getTransaction().commit(); // Save everything.
+        changeBalance(order, client);
+    }
+
+    private void updateCustomerAccount(LinkedList<Object> msg, ConnectionToClient client) {
+        Customer customer = (Customer) msg.get(1);
+        if (msg.get(2).toString().equals("CONFIRMED")) {
+            updateAccount(customer, Customer.AccountType.MEMBERSHIP);
+            updateBalance(customer, (int) msg.get(3));
+        } else {
+            updateAccount(customer, Customer.AccountType.CHAIN);
+        }
+
+        List<Object> newMsg = new LinkedList<>();
+        newMsg.add("#USERREFRESH");
+        newMsg.add("BALANCEUPDATE");
+        newMsg.add(customer);
+        try {
+            client.sendToClient(newMsg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateAccount(Customer customer, Customer.AccountType type) {
+        App.session.beginTransaction();
+        App.session.evict(customer);       //evict current product details from database
+        if (type == Customer.AccountType.MEMBERSHIP)
+            customer.setMemberShipExpire();
+        else
+            customer.setAccountType(type);
+        App.session.merge(customer);           //merge into database with updated info
+        App.session.flush();
+        App.session.getTransaction().commit(); // Save everything.
+    }
+
+    private void closeComplaintAndCompensate(LinkedList<Object> msg/*,ConnectionToClient client*/) {
+        Complaint complaint = (Complaint) msg.get(1);
+        closeComplaint(complaint);
+        if (msg.get(2).equals("COMPENSATED")) {
+            updateBalance(App.session.find(Customer.class, complaint.getCustomer().getId()), App.session.find(Customer.class, complaint.getCustomer().getId()).getBalance() + (int) msg.get(3));
+            clientUserUpdate("BALANCEUPDATE", App.session.find(Customer.class, complaint.getCustomer().getId()));
+            SendMail.main(new String[]{complaint.getCustomer().getEmail(), "your complaint has been processed and you have been compensated in the amount of " + (int) msg.get(3) + "₪\n", "complaint processed"});
+        } else {
+            SendMail.main(new String[]{complaint.getCustomer().getEmail(), "your complaint has been processed and no refund has been issued", "complaint processed"});
+        }
+
+    }
+
+    private void updateBalance(Customer customer, int balance) {
+        App.session.beginTransaction();
+        App.session.evict(customer);       //evict current product details from database
+        customer.setBalance(balance);
+        App.session.merge(customer);           //merge into database with updated info
+        App.session.flush();
+        App.session.getTransaction().commit(); // Save everything.
+    }
+
+    private void closeComplaint(Complaint complaint) {
+        App.session.beginTransaction();
+        App.session.evict(complaint);       //evict current product details from database
+        complaint.setStatus(false);
+        App.session.merge(complaint);           //merge into database with updated info
+        App.session.flush();
+        App.session.getTransaction().commit(); // Save everything.
+    }
+
+    private void pullOpenComplaints(ConnectionToClient client) throws IOException {
+        List<Complaint> complaints = App.getAllOpenComplaints();
+        List<Object> msg = new LinkedList<>();
+        msg.add("#PULL_COMPLAINTS");
+        msg.add(complaints);
+        client.sendToClient(msg);
+    }
+
+    private void addComplaint(LinkedList<Object> msg) {
+        addNewInstance((Complaint) msg.get(1));
+    }
+
+    /**
+     * Hello there
+     *
+     * @param msg
+     * @param client
+     * @throws IOException
+     */
+    private void signUpServer(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
+        addNewInstance((Customer) msg.get(1));
+        User user = (Customer) msg.get(1);
+        msg.clear();
+        msg.add("#LOGIN");
+        msg.add(user.getUserName());
+        msg.add(user.getPassword());
+        loginServer(msg, client);
+    }
+
+    private void saveOrderServer(LinkedList<Object> msg, ConnectionToClient client) {
+        Order order = (Order) msg.get(1);
+        App.session.beginTransaction();
+        for (PreMadeProduct p : order.getPreMadeProducts()) {
+            App.session.save(p);   //saves and flushes to database
+            App.session.flush();
+        }
+        for (CustomMadeProduct p : order.getCustomMadeProducts()) {
+            for (PreMadeProduct pre : p.getProducts()) {
+                App.session.save(pre);   //saves and flushes to database
+                App.session.flush();
+            }
+            App.session.save(p);
+        }
+        App.session.save(order);
+        App.session.flush();
+        App.session.getTransaction().commit();
+        updateBalance(order.getOrderedBy(), order.getOrderedBy().getBalance());
+        msg.clear();
+        msg.add("#UPDATEBALANCE");
+        msg.add(order.getOrderedBy());
+        try {
+            client.sendToClient(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void checkUser(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
+        List<User> users = App.getAllUsers();
+        List<Object> newMsg = new LinkedList<Object>();
+        newMsg.add("#SIGNUP_AUTHENTICATION");
+        for (User user : users) {
+            if (user.getId() != (int) msg.get(3)) {
+                if ((msg.get(4)) instanceof Employee) { //user is employee
+                    if (msg.get(5).equals("Store Manager") && (user instanceof Employee) &&
+                            ((Employee) user).getRole() == Employee.Role.STORE_MANAGER && (msg.get(6).equals(user.getStore().getName()))) {
+                        newMsg.add("#STORE_INVALID"); //checks if username or user id already exists
+                        client.sendToClient(newMsg);
+                        return;
+                    } else if (user.getUserName().equals(msg.get(1).toString()) || (user.getUserID().equals(msg.get(2)) && (user instanceof Employee))) {
+                        newMsg.add("#USER_EXISTS"); //checks if username or user id already exists
+                        client.sendToClient(newMsg);
+                        return;
+                    }
+                } else {
+                    if (user.getUserName().equals(msg.get(1).toString()) || (user.getUserID().equals(msg.get(2)) && (user instanceof Customer))) {
+                        newMsg.add("#USER_EXISTS"); //checks if username or user id already exists
+                        client.sendToClient(newMsg);
+                        return;
+                    }
+                }
+
+            }
+        }
+        newMsg.add("#USER_DOES_NOT_EXIST");
+        client.sendToClient(newMsg);
+    }
+
+    //Checks if the username asked by new signup exists.
+    private void authinticateUser(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
+        List<User> users = App.getAllUsers();
+        List<Object> newMsg = new LinkedList<Object>();
+        newMsg.add(msg.get(0));
+        for (User user : users) {
+            if (user.getUserName().equals(msg.get(1).toString()) || (user.getUserID().equals(msg.get(2)) && (user instanceof Customer))) {
+                newMsg.add("#USER_EXISTS"); //checks if username or user id already exists
+                client.sendToClient(newMsg);
+                return;
+            }
+        }
+        newMsg.add("#USER_DOES_NOT_EXIST");
+        client.sendToClient(newMsg);
+    }
+
     private void addProduct(LinkedList<Object> msg) throws IOException {
         App.session.beginTransaction();
         PreMadeProduct product = (PreMadeProduct) ((LinkedList<Object>) msg).get(1);
@@ -464,12 +476,12 @@ public class Server extends AbstractServer {
         App.session.flush();
         App.session.getTransaction().commit();
         List<Object> newMsg = new LinkedList<Object>();
-        newMsg.add("#REFRESH");     // TODO refresh to all users
+        newMsg.add("#REFRESH");
         newMsg.add(App.getAllProducts());
         App.server.sendToAllClients(newMsg);
     }
 
-    private void updateConnected(User user,Boolean connected){
+    private void updateConnected(User user, Boolean connected) {
         App.session.beginTransaction();
         App.session.evict(user);       //evict current product details from database
         user.setConnected(connected);
@@ -478,7 +490,7 @@ public class Server extends AbstractServer {
         App.session.getTransaction().commit(); // Save everything.
     }
 
-    private void loginServer(LinkedList<Object> msg,ConnectionToClient client) throws IOException {
+    private void loginServer(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
         List<User> users = App.getAllUsers();
         for (User user : users) {
             if (user.getUserName().equals(msg.get(1)) && user.getPassword().equals(msg.get(2))) {
@@ -497,7 +509,7 @@ public class Server extends AbstractServer {
                             msg.add(user);
                             client.sendToClient(msg);
                             return;
-                        }else{
+                        } else {
                             msg.clear();
                             msg.add("#LOGIN");
                             msg.add("ALREADYCONNECTED");
@@ -505,10 +517,10 @@ public class Server extends AbstractServer {
                             return;
                         }
                     }
-                }else {
+                } else {
                     List<Object> newMsg = new LinkedList<Object>();
                     newMsg.add("#ERROR");
-                    newMsg.add( "User was FROZEN by system Admin" );
+                    newMsg.add("User was FROZEN by system Admin");
                     newMsg.add("Frozen User");
                     client.sendToClient(newMsg);
                     return;
@@ -517,14 +529,14 @@ public class Server extends AbstractServer {
         }
         List<Object> newMsg = new LinkedList<Object>();
         newMsg.add("#ERROR");
-        newMsg.add( "UserName or Password do not match");
+        newMsg.add("UserName or Password do not match");
         newMsg.add("Login Error");
         client.sendToClient(newMsg);
     }
 
-    private void logoutServer(LinkedList<Object> msg, ConnectionToClient client){
+    private void logoutServer(LinkedList<Object> msg, ConnectionToClient client) {
 
-        updateConnected((User) msg.get(1),false);
+        updateConnected((User) msg.get(1), false);
         msg.remove(1);
         msg.remove(0);
         msg.add("#LOGIN");
@@ -553,7 +565,7 @@ public class Server extends AbstractServer {
 
             orders.removeIf(order -> order.getStore().getId() != rightStore.getId()
                     || order.getOrderDate().compareTo(fromDate) < 0 || order.getOrderDate().compareTo(toDate) > 0
-                        || order.isDelivered() == Order.Status.CANCELED);
+                    || order.isDelivered() == Order.Status.CANCELED);
 
             complaints.removeIf(complaint -> complaint.getStore().getId() != rightStore.getId()
                     || complaint.getDate().compareTo(fromDate) < 0 || complaint.getDate().compareTo(toDate) > 0);
@@ -596,8 +608,6 @@ public class Server extends AbstractServer {
 
     @Override
     protected synchronized void clientDisconnected(ConnectionToClient client) { //is client disconnected
-        // TODO Auto-generated method stub
-
         System.out.println("Client Disconnected.");
         super.clientDisconnected(client);
     }
@@ -606,18 +616,6 @@ public class Server extends AbstractServer {
     protected void clientConnected(ConnectionToClient client) {     //is client connected
         super.clientConnected(client);
         System.out.println("Client connected: " + client.getInetAddress());
-    }
-
-    public static void main(String[] args) throws IOException {
-
-
-        if (args.length != 1) {
-            System.out.println("Required argument: <port>");
-        } else {
-
-            Server server = new Server(Integer.parseInt(args[0]));
-            server.listen();
-        }
     }
 }
 

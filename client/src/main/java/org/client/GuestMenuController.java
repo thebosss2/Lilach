@@ -3,7 +3,6 @@ package org.client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
 
 public class GuestMenuController extends Controller {
 
@@ -18,7 +17,6 @@ public class GuestMenuController extends Controller {
 
     @FXML
     private Button order;
-
 
 
     @FXML // fx:id="loginBtn"
@@ -68,21 +66,6 @@ public class GuestMenuController extends Controller {
         this.getSkeleton().changeCenter("CreateCustomMade");
     }
 
-    @FXML
-    void goToOrder(ActionEvent event) throws InterruptedException {
-        coolMenuClick((Button) event.getTarget());
-        this.getSkeleton().changeCenter("SummaryOrders");
-    }
-
-    @FXML
-    void mouseOffBtn(MouseEvent event) {
-        //TODO
-    }
-
-    @FXML
-    void mouseOnBtn(MouseEvent event) {
-        //TODO
-    }
 
     protected void coolMenuClick(Button button) throws InterruptedException {
         cartBtn.setStyle("-fx-background-color: #9bc98c");

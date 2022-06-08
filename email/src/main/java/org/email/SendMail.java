@@ -1,16 +1,11 @@
 package org.email;
 
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.awt.*;
 import java.net.URL;
 import java.util.Properties;
-
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 
 public class SendMail {
 
@@ -39,7 +34,7 @@ public class SendMail {
 
             protected PasswordAuthentication getPasswordAuthentication() {
 
-                return new PasswordAuthentication("noreplylilach@gmail.com", "Lilach100");
+                return new PasswordAuthentication("noreplylilach@gmail.com", "wcjdlbashflbisva");
 
             }
 

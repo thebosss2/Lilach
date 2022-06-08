@@ -4,13 +4,6 @@
 
 package org.client;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ResourceBundle;
-
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.ObservableList;
@@ -21,7 +14,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import org.entities.Complaint;
 
-public class ComplaintInspectionTableController extends Controller{
+import java.io.IOException;
+import java.net.URL;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ResourceBundle;
+
+public class ComplaintInspectionTableController extends Controller {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -54,7 +54,8 @@ public class ComplaintInspectionTableController extends Controller{
     @FXML
     private TableColumn<Complaint, Void> btnCol;
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert dateCol != null : "fx:id=\"dateCol\" was not injected: check your FXML file 'ComplaintInspectionTable.fxml'.";
         assert inspectBtnsCol != null : "fx:id=\"inspectBtnsCol\" was not injected: check your FXML file 'ComplaintInspectionTable.fxml'.";
@@ -90,7 +91,7 @@ public class ComplaintInspectionTableController extends Controller{
             e.printStackTrace();
         }
 
-   }
+    }
 
     private void addButtonToTable() {
         btnCol = new TableColumn("Inspect complaint");
@@ -106,7 +107,6 @@ public class ComplaintInspectionTableController extends Controller{
                         btn.setOnAction((ActionEvent event) -> {
                             Complaint complaint = getTableView().getItems().get(getIndex());
                             goToComplaintInspection(complaint);
-                            //TODO pass complaint given to the ComplaintInspection screen.
                         });
                         btn.setStyle("-fx-background-color:  #c6acef");
                         btn.setText("Inspect");
@@ -142,14 +142,14 @@ public class ComplaintInspectionTableController extends Controller{
             @Override
             public void run() {
                 tableView.setItems(complaints);
-                int expired=0;
-                for(Complaint complaint:complaints){
-                    if((new Date().getTime())-(complaint.getDate().getTime())>86400000) {
+                int expired = 0;
+                for (Complaint complaint : complaints) {
+                    if ((new Date().getTime()) - (complaint.getDate().getTime()) > 86400000) {
                         complaint.setCompletedOnTime(false);
                         expired++;
                     }
                 }
-                expireLabel.setText("You have " + complaints.size() +" complaints pending. Of which " + expired + " are expired!");
+                expireLabel.setText("You have " + complaints.size() + " complaints pending. Of which " + expired + " are expired!");
             }
         });
 

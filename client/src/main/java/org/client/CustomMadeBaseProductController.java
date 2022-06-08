@@ -1,7 +1,5 @@
 package org.client;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -11,7 +9,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import org.entities.PreMadeProduct;
 
-public class CustomMadeBaseProductController extends ItemController{
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class CustomMadeBaseProductController extends ItemController {
 
     @FXML
     private ResourceBundle resources;
@@ -48,8 +49,8 @@ public class CustomMadeBaseProductController extends ItemController{
 
     @FXML
     void addProduct(ActionEvent event) {
-        product.setAmount(Integer.parseInt(amount.getText())+1);
-        amount.setText(Integer.toString(Integer.parseInt(amount.getText())+1));
+        product.setAmount(Integer.parseInt(amount.getText()) + 1);
+        amount.setText(Integer.toString(Integer.parseInt(amount.getText()) + 1));
     }
 
     @FXML
@@ -59,8 +60,8 @@ public class CustomMadeBaseProductController extends ItemController{
 
     @FXML
     void minusProduct(ActionEvent event) {
-        if(Integer.parseInt(amount.getText()) > 0) {
-            product.setAmount(Integer.parseInt(amount.getText())-1);
+        if (Integer.parseInt(amount.getText()) > 0) {
+            product.setAmount(Integer.parseInt(amount.getText()) - 1);
             amount.setText(Integer.toString(Integer.parseInt(amount.getText()) - 1));
         }
     }
@@ -87,7 +88,6 @@ public class CustomMadeBaseProductController extends ItemController{
         assert product_name != null : "fx:id=\"product_name\" was not injected: check your FXML file 'CustomMadeBaseProduct.fxml'.";
 
 
-
     }
 
     public void setProduct(PreMadeProduct product) {
@@ -97,7 +97,7 @@ public class CustomMadeBaseProductController extends ItemController{
         product_name.setText(product.getName());
         amount.setText(Integer.toString(product.getAmount()));
 
-        if(product.getDiscount() != 0)
+        if (product.getDiscount() != 0)
             priceBeforeDiscount.setText(product.getPriceBeforeDiscount() + " ₪");
         else
             priceBeforeDiscount.setText("");

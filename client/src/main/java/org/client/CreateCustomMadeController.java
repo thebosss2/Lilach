@@ -1,12 +1,5 @@
 package org.client;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
-import java.util.ResourceBundle;
-
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,7 +12,14 @@ import javafx.scene.layout.FlowPane;
 import org.entities.CustomMadeProduct;
 import org.entities.PreMadeProduct;
 
-public class CreateCustomMadeController extends Controller{
+import java.io.IOException;
+import java.net.URL;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
+import java.util.ResourceBundle;
+
+public class CreateCustomMadeController extends Controller {
 
 
     @FXML
@@ -50,32 +50,37 @@ public class CreateCustomMadeController extends Controller{
     private ComboBox<String> sortColor;
 
     @FXML
-    private ComboBox<String> sortType;      
+    private ComboBox<String> sortType;
 
     private List<PreMadeProduct> bases;
 
     private CustomMadeProduct.ItemType itemType;
 
+    public static byte[] loadImageFromResources(String imageName) throws IOException {
+        var stream = org.client.App.class.getClassLoader().getResourceAsStream(String.format("Icons/%s", imageName));
+
+        return Objects.requireNonNull(stream).readAllBytes();
+    }
+
     @FXML
     void addToCart(ActionEvent event) throws InterruptedException, IOException {
         boolean flagToAdd = false;
-        coolButtonClick((Button)event.getTarget());
+        coolButtonClick((Button) event.getTarget());
         int price = 0;
         String description = "";
-        if(bases == null)
+        if (bases == null)
             bases = new LinkedList<>();
         else
             bases.clear();
         for (PreMadeProduct product : Client.products) {
-            if(product.getType()== PreMadeProduct.ProductType.CUSTOM_CATALOG && product.getAmount()>0)
-            {
+            if (product.getType() == PreMadeProduct.ProductType.CUSTOM_CATALOG && product.getAmount() > 0) {
                 flagToAdd = true;
                 bases.add(product);
                 price += product.getPrice() * product.getAmount();
                 description += product.getName() + " x " + product.getAmount() + ", ";
             }
         }
-        if(flagToAdd) {
+        if (flagToAdd) {
             description = description.substring(0, description.length() - 2);
             CustomMadeProduct customMadeProduct = new CustomMadeProduct(bases, price);
             customMadeProduct.setAmount(1);
@@ -108,18 +113,22 @@ public class CreateCustomMadeController extends Controller{
         }
     }
 
-    public static byte[] loadImageFromResources(String imageName) throws IOException {
-        var stream = org.client.App.class.getClassLoader().getResourceAsStream(String.format("Icons/%s", imageName));
-
-        return Objects.requireNonNull(stream).readAllBytes();
-    }
-
     @FXML
     void sort(ActionEvent event) {
-        int low_price =Integer.parseInt(min_price.getText());
-        int high_price =Integer.parseInt(max_price.getText());
+        int low_price;
+        if (min_price.getText().isEmpty()) {
+            low_price = 0;
+        } else {
+            low_price = Integer.parseInt(min_price.getText());
+        }
+        int high_price;
+        if (max_price.getText().isEmpty()) {
+            high_price = 10000;
+        } else {
+            high_price = Integer.parseInt(max_price.getText());
+        }
 
-        if(sortColor.getSelectionModel().isSelected(0)) //All colors - sort only by price
+        if (sortColor.getSelectionModel().isSelected(0)) //All colors - sort only by price
         {
             CreateCustomMadeController createCustomMadeController = this;
             Platform.runLater(new Runnable() {      //runlater used to wait for server and client threads to finish
@@ -128,7 +137,7 @@ public class CreateCustomMadeController extends Controller{
                     mainPane.getChildren().clear();
                     for (PreMadeProduct product : Client.products) {
                         try {
-                            if(product.getType()== PreMadeProduct.ProductType.CUSTOM_CATALOG && product.getPrice()>=low_price && product.getPrice()<=high_price)
+                            if (product.getType() == PreMadeProduct.ProductType.CUSTOM_CATALOG && product.getPrice() >= low_price && product.getPrice() <= high_price)
                                 displayProduct(product, createCustomMadeController);
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -136,9 +145,7 @@ public class CreateCustomMadeController extends Controller{
                     }
                 }
             });
-        }
-        else
-        {
+        } else {
             CreateCustomMadeController createCustomMadeController = this;
             Platform.runLater(new Runnable() {      //runlater used to wait for server and client threads to finish
                 @Override
@@ -146,7 +153,7 @@ public class CreateCustomMadeController extends Controller{
                     mainPane.getChildren().clear();
                     for (PreMadeProduct product : Client.products) {
                         try {
-                            if(product.getType()== PreMadeProduct.ProductType.CUSTOM_CATALOG && product.getPrice()>=low_price && product.getPrice()<=high_price && product.getMainColor().equals(sortColor.getValue()))
+                            if (product.getType() == PreMadeProduct.ProductType.CUSTOM_CATALOG && product.getPrice() >= low_price && product.getPrice() <= high_price && product.getMainColor().equals(sortColor.getValue()))
                                 displayProduct(product, createCustomMadeController);
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -166,9 +173,6 @@ public class CreateCustomMadeController extends Controller{
         assert sort != null : "fx:id=\"sort\" was not injected: check your FXML file 'CreateCustomMade.fxml'.";
         assert sortColor != null : "fx:id=\"sortColor\" was not injected: check your FXML file 'CreateCustomMade.fxml'.";
         assert sortType != null : "fx:id=\"sortType\" was not injected: check your FXML file 'CreateCustomMade.fxml'.";
-
-        min_price.setText("0");
-        max_price.setText("15");
 
         sortType.getItems().add("Flower Arrangement");
         sortType.getItems().add("Blooming Pot");
@@ -197,7 +201,7 @@ public class CreateCustomMadeController extends Controller{
 
     }
 
-    public void setCustomProductView (List<PreMadeProduct> bases) {
+    public void setCustomProductView(List<PreMadeProduct> bases) {
         this.bases = bases;
     }
 
@@ -220,7 +224,7 @@ public class CreateCustomMadeController extends Controller{
                 mainPane.getChildren().clear();
                 for (PreMadeProduct product : Client.products) {
                     try {
-                        if(product.getType()== PreMadeProduct.ProductType.CUSTOM_CATALOG)
+                        if (product.getType() == PreMadeProduct.ProductType.CUSTOM_CATALOG)
                             displayProduct(product, createCustomMadeController);
                     } catch (IOException e) {
                         e.printStackTrace();

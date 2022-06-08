@@ -1,12 +1,13 @@
 package org.client;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
-public class SummaryProductController extends Controller{
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class SummaryProductController extends Controller {
 
     @FXML
     private ResourceBundle resources;

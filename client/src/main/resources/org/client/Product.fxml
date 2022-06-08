@@ -4,10 +4,10 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.*?>
-<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-      onMouseClicked="#goToProductView" onMouseEntered="#mouseOnProduct" onMouseExited="#mouseOffProduct"
-      prefHeight="285.0" prefWidth="234.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/17"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.client.ProductController">
+<Pane xmlns:fx="http://javafx.com/fxml/1" fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+      minWidth="-Infinity" onMouseClicked="#goToProductView" onMouseEntered="#mouseOnProduct"
+      onMouseExited="#mouseOffProduct" prefHeight="285.0" prefWidth="234.0" style="-fx-background-color: #ffffff;"
+      xmlns="http://javafx.com/javafx/17" fx:controller="org.client.ProductController">
     <children>
         <ImageView fx:id="image" fitHeight="199.0" fitWidth="199.0" layoutX="18.0" layoutY="36.0"
                    onMouseClicked="#goToProductView" pickOnBounds="true" preserveRatio="true"/>

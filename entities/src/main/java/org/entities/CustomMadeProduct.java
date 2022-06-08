@@ -16,17 +16,20 @@ public class CustomMadeProduct extends Product {
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Fetch(FetchMode.SELECT)
-    @Column(name= "products")
+    @Column(name = "products")
     private List<PreMadeProduct> products = new LinkedList<PreMadeProduct>();
-
-
-    public enum ItemType {FLOWER_ARRANGEMENT, BLOOMING_POT, BRIDES_BOUQUET, BOUQUET}
     private ItemType itemType;
-
     private String description;
 
-    public ItemType getItemType() {
-        return itemType;
+    public CustomMadeProduct(List<PreMadeProduct> products, int price, String path, ItemType itemType) {
+        super(path, price);
+        this.products = products;
+        this.itemType = itemType;
+    }
+
+    public CustomMadeProduct(List<PreMadeProduct> p, int price, byte[] image) {
+        super(image, price);
+        products = p;
     }
 
     // this is called when on custom made page
@@ -34,53 +37,48 @@ public class CustomMadeProduct extends Product {
     // when they are done they select create customProduct (when added to cart)
     //then and only then is the constructor called
 
-    public CustomMadeProduct(List<PreMadeProduct> products, int price, String path, ItemType itemType){
-        super(path,price);
-        this.products=products;
-        this.itemType = itemType;
-    }
-
-    public CustomMadeProduct(List<PreMadeProduct> p, int price, byte[] image){
-        super(image,price);
-        products=p;
-    }
-
-    public CustomMadeProduct(List<PreMadeProduct> p, int price){
+    public CustomMadeProduct(List<PreMadeProduct> p, int price) {
         super(price);
-        products=p;
+        products = p;
     }
 
     public CustomMadeProduct() {
 
     }
 
-    public List<PreMadeProduct> getProducts(){
+    public ItemType getItemType() {
+        return itemType;
+    }
+
+    public List<PreMadeProduct> getProducts() {
         return this.products;
     }
 
-    public void setProduct(int i, PreMadeProduct p) {this.products.set(i,p);}
-
-    public void setDescription(String description)
-    {
-        this.description = description;
+    public void setProduct(int i, PreMadeProduct p) {
+        this.products.set(i, p);
     }
 
-    public String getDescription()
-    {
+    public String getDescription() {
         return this.description;
     }
 
-    public ItemType getItemTypeCustom()
-    {
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public ItemType getItemTypeCustom() {
         return this.itemType;
     }
 
-    public void setItemTypeCustom(ItemType itemType)
-    {
+    public void setItemTypeCustom(ItemType itemType) {
         this.itemType = itemType;
     }
 
     @Override
-    public int getId() { return id; }
+    public int getId() {
+        return id;
+    }
+
+    public enum ItemType {FLOWER_ARRANGEMENT, BLOOMING_POT, BRIDES_BOUQUET, BOUQUET}
 
 }

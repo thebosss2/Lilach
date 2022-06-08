@@ -4,11 +4,12 @@
 
 package org.client;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class CustomerServiceMenuController extends WorkerMenuController {
 
@@ -29,6 +30,7 @@ public class CustomerServiceMenuController extends WorkerMenuController {
         coolMenuClick((Button) event.getTarget());
         this.getSkeleton().changeCenter("ComplaintInspectionTable");
     }
+
     @Override
     protected void coolMenuClick(Button button) throws InterruptedException {
         complaintsBtn.setStyle("-fx-background-color: #9bc98c");
@@ -36,8 +38,8 @@ public class CustomerServiceMenuController extends WorkerMenuController {
     }
 
 
-
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert complaintsBtn != null : "fx:id=\"complaintsBtn\" was not injected: check your FXML file 'CustomerServiceMenu.fxml'.";
         assert logoutBtn != null : "fx:id=\"logoutBtn\" was not injected: check your FXML file 'CustomerServiceMenu.fxml'.";
