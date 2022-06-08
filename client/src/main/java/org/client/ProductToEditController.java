@@ -5,7 +5,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import org.entities.PreMadeProduct;
 
-public class ProductToEditController extends ItemController{
+public class ProductToEditController extends ItemController {
 
     private PreMadeProduct product;
 
@@ -19,12 +19,11 @@ public class ProductToEditController extends ItemController{
     void goToEditProduct(MouseEvent event) throws InterruptedException {
         clickOnProductEffect(event);
         Controller controller = null;
-        if(this.product.getType() == PreMadeProduct.ProductType.CATALOG) {
+        if (this.product.getType() == PreMadeProduct.ProductType.CATALOG) {
             controller = this.getSkeleton().changeCenter("EditProduct");
             EditProductController editProduct = (EditProductController) controller;
             editProduct.setProductView(this.product);
-        }
-        else {
+        } else {
             controller = this.getSkeleton().changeCenter("EditCustomProduct");
             EditCustomProductController editProduct = (EditCustomProductController) controller;
             editProduct.setProductView(this.product);
@@ -39,7 +38,7 @@ public class ProductToEditController extends ItemController{
         price.setText(product.getPrice() + "₪");
         name.setText(product.getName());
 
-        if(product.getDiscount() != 0)
+        if (product.getDiscount() != 0)
             priceBeforeDiscount.setText(product.getPriceBeforeDiscount() + " ₪");
         else
             priceBeforeDiscount.setText("");

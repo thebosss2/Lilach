@@ -17,7 +17,7 @@ public class Guest implements Serializable {
     }
 
     public Guest() {
-        this.name="Guest";
+        this.name = "Guest";
     }
 
     public String getName() {

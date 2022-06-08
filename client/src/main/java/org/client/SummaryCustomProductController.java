@@ -6,7 +6,7 @@ import javafx.scene.text.Text;
 import org.entities.CustomMadeProduct;
 import org.entities.PreMadeProduct;
 
-public class SummaryCustomProductController extends Controller{
+public class SummaryCustomProductController extends Controller {
 
     @FXML
     private Label count;
@@ -28,7 +28,7 @@ public class SummaryCustomProductController extends Controller{
         this.price.setText(String.valueOf(product.getPrice()));
         this.count.setText(String.valueOf(product.getAmount()));
         this.totalPrice.setText(String.valueOf(product.getAmount() * product.getPrice()));
-        switch(product.getItemType()) {
+        switch (product.getItemType()) {
             case FLOWER_ARRANGEMENT:
                 this.type.setText("Flower arrangement:");
                 break;
@@ -49,7 +49,7 @@ public class SummaryCustomProductController extends Controller{
             this.description.setText(des + base.getName() + " x " + base.getAmount() + ", ");
         }
 
-        this.description.setText(this.description.getText().substring(0,this.description.getText().length()-2));
+        this.description.setText(this.description.getText().substring(0, this.description.getText().length() - 2));
     }
 
     public Text getDescription() {

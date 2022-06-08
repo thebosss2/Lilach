@@ -2,12 +2,14 @@ package org.client;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import org.entities.PreMadeProduct;
-import org.entities.Product;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,44 +20,47 @@ import java.util.regex.Pattern;
 
 public class EditProductController extends Controller {
 
-    private PreMadeProduct product;
-
     FileChooser fileChooser = new FileChooser();
-
-    private String newImagePath = null;
-
-    private int imageChanged = 0;
-
-    @FXML
-    private Button changeImageBtn;
-
-    @FXML
-    private TextArea descriptionText;
-
-    @FXML
-    private ImageView mainImage;
-
-    @FXML
-    private TextField nameText;
-
-    @FXML
-    private TextField discountText;
-
-    @FXML
-    private TextField priceText;
-
-    @FXML
-    private Button saveBtn;
     Pattern pattern1 = Pattern.compile(".{0,2}");
-    TextFormatter<String> formatter1 = new TextFormatter<String>(change-> {
+    TextFormatter<String> formatter1 = new TextFormatter<String>(change -> {
         change.setText(change.getText().replaceAll("[^0-9]", ""));
         return pattern1.matcher(change.getControlNewText()).matches() ? change : null;
     });
-
-    TextFormatter<String> formatter2 = new TextFormatter<String>(change-> {
+    TextFormatter<String> formatter2 = new TextFormatter<String>(change -> {
         change.setText(change.getText().replaceAll("[^0-9]", ""));
         return change;
     });
+    private PreMadeProduct product;
+    private String newImagePath = null;
+    private int imageChanged = 0;
+    @FXML
+    private Button changeImageBtn;
+    @FXML
+    private TextArea descriptionText;
+    @FXML
+    private ImageView mainImage;
+    @FXML
+    private TextField nameText;
+    @FXML
+    private TextField discountText;
+    @FXML
+    private TextField priceText;
+    @FXML
+    private Button saveBtn;
+
+    protected static void coolButtonDeleteClick(Button button) throws InterruptedException {
+        Executor executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            button.setStyle("-fx-background-color: #e56565");
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            button.setStyle("-fx-background-color: #eb4034");
+        });
+    }
+
     void setProductView(PreMadeProduct product) {
         this.product = product;
         this.nameText.setText(product.getName());
@@ -82,17 +87,17 @@ public class EditProductController extends Controller {
     @FXML
     void clickedSave(ActionEvent event) throws InterruptedException {
         coolButtonClick((Button) event.getTarget());
-        if(alertMsg("Edit Product","change this product!" , checkProduct())) {
+        if (alertMsg("Edit Product", "change this product!", checkProduct())) {
             saveChanges();
             this.globalSkeleton.changeCenter("EditCatalog");
         }
     }
 
     private boolean checkProduct() {
-        if(nameText.getText().isEmpty() || priceText.getText().isEmpty() ||
+        if (nameText.getText().isEmpty() || priceText.getText().isEmpty() ||
                 descriptionText.getText().isEmpty())
             return true;
-        if(nameText.getText().matches ("^[a-zA-Z0-9_ ]*$")  && priceText.getText().matches("^[0-9]*$") &&
+        if (nameText.getText().matches("^[a-zA-Z0-9_ ]*$") && priceText.getText().matches("^[0-9]*$") &&
                 discountText.getText().matches("^[0-9]*$"))
             return false;
         return true;
@@ -103,17 +108,17 @@ public class EditProductController extends Controller {
         LinkedList<Object> msg = new LinkedList<Object>();  //msg has string message with all data in next nodes
         PreMadeProduct p;
         int dis;
-        if(discountText.getText().isEmpty())
-            dis=0;
+        if (discountText.getText().isEmpty())
+            dis = 0;
         else
             dis = Integer.parseInt(discountText.getText());
         if (imageChanged > 0)
             p = new PreMadeProduct(nameText.getText(), newImagePath, Integer.parseInt(priceText.getText()),
-                    descriptionText.getText(),dis,false);
+                    descriptionText.getText(), dis, false);
 
         else
             p = new PreMadeProduct(nameText.getText(), product.getByteImage(), Integer.parseInt(priceText.getText()),
-                    descriptionText.getText(),dis,false);
+                    descriptionText.getText(), dis, false);
 
         msg.add(save);          // adds #SAVE command for server
         msg.add(product);       //adds data to msg list
@@ -126,29 +131,17 @@ public class EditProductController extends Controller {
         }
     }
 
-    protected static void coolButtonDeleteClick(Button button) throws InterruptedException {
-        Executor executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
-            button.setStyle("-fx-background-color: #e56565");
-            try {
-                Thread.sleep(300);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            button.setStyle("-fx-background-color: #eb4034");
-        });
-    }
-
     @FXML
     void clickedDelete(ActionEvent event) throws InterruptedException {
         coolButtonDeleteClick((Button) event.getTarget());
-        if(alertMsg("Delete Product","delete this product!" , false)) {
+        if (alertMsg("Delete Product", "delete this product!", false)) {
             deleteProduct();
             this.globalSkeleton.changeCenter("EditCatalog");
         }
     }
+
     @FXML
-    void deleteProduct(){
+    void deleteProduct() {
         String delete = "#DELETEPRODUCT";
         LinkedList<Object> msg = new LinkedList<Object>();  //msg has string message with all data in next nodes
         msg.add(delete);          // adds #SAVE command for server

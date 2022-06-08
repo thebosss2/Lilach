@@ -13,14 +13,12 @@ import java.util.ResourceBundle;
 
 
 public class CatalogController extends Controller {
-    @FXML // ResourceBundle that was given to the FXMLLoader
-    private ResourceBundle resources;
-
-    @FXML // URL location of the FXML file that was given to the FXMLLoader
-    private URL location;
-
     @FXML // fx:id="mainPane"
     protected FlowPane mainPane; // Value injected by FXMLLoader
+    @FXML // ResourceBundle that was given to the FXMLLoader
+    private ResourceBundle resources;
+    @FXML // URL location of the FXML file that was given to the FXMLLoader
+    private URL location;
 
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
@@ -66,7 +64,7 @@ public class CatalogController extends Controller {
             @Override
             public void run() {
                 mainPane.getChildren().clear();
-                if(catalogController instanceof EditCatalogController){
+                if (catalogController instanceof EditCatalogController) {
                     try {
                         ((EditCatalogController) catalogController).displayAddItem();
                     } catch (IOException e) {
@@ -74,10 +72,10 @@ public class CatalogController extends Controller {
                     }
                 }
                 for (PreMadeProduct product : Client.products) {
-                    if(!product.isOrdered()) {
+                    if (!product.isOrdered()) {
                         try {
                             //if (product.getType() == PreMadeProduct.ProductType.CATALOG)
-                                displayProduct(product, catalogController);
+                            displayProduct(product, catalogController);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

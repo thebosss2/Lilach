@@ -1,9 +1,7 @@
 package org.client;
 
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
@@ -13,43 +11,32 @@ import org.entities.Employee;
 import org.entities.Store;
 import org.entities.User;
 
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
 public class UserPreviewController extends ItemController {
 
     @FXML
+    protected Text store;
+    protected List<Store> stores;
+    @FXML
     private Text id;
-
     @FXML
     private Text name;
-
     @FXML
     private Pane pane;
-
     @FXML
     private Text type;
-
     @FXML
     private Text username;
-
     @FXML
     private Text email;
-
-    @FXML
-    protected Text store;
-
     @FXML
     private Text status;
-
     private User user;
 
-    protected List<Store> stores;
-
-
     @FXML
-    void initialize(){
+    void initialize() {
         LinkedList<Object> msg = new LinkedList<Object>();
         this.stores = App.client.getStores();
     }
@@ -58,19 +45,17 @@ public class UserPreviewController extends ItemController {
     void goToCustomerView(MouseEvent event) {
         Controller controller;
 
-        if(user instanceof Employee) {
+        if (user instanceof Employee) {
             controller = this.getSkeleton().changeCenter("EmployeeView");
             EmployeeViewController employeeViewController = (EmployeeViewController) controller;
-            Platform.runLater(()->{
+            Platform.runLater(() -> {
                 employeeViewController.setEmployee((Employee) this.user);
             });
 
-        }
-
-        else {
+        } else {
             controller = this.getSkeleton().changeCenter("CustomerView");
             CustomerViewController customerViewController = (CustomerViewController) controller;
-            Platform.runLater(()->{
+            Platform.runLater(() -> {
                 customerViewController.setCustomer((Customer) this.user);
             });
 
@@ -106,11 +91,11 @@ public class UserPreviewController extends ItemController {
             setActive();
         this.store.setText(user.getStore().getName());
 
-        if(user instanceof Customer)
+        if (user instanceof Customer)
             this.type.setText(((Customer) user).getTypeToString());
 
         else
-            this.type.setText(((Employee) user).getRoleToString() );
+            this.type.setText(((Employee) user).getRoleToString());
 
     }
 

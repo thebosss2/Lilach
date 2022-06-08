@@ -4,12 +4,6 @@
 
 package org.client;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.LinkedList;
-import java.util.ResourceBundle;
-import java.util.regex.Pattern;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -19,24 +13,25 @@ import javafx.scene.control.TextFormatter;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-public class ClientBootController extends Controller{
+import java.io.IOException;
+import java.net.URL;
+import java.util.LinkedList;
+import java.util.ResourceBundle;
 
-    @FXML // ResourceBundle that was given to the FXMLLoader
-    private ResourceBundle resources;
-
-    @FXML // URL location of the FXML file that was given to the FXMLLoader
-    private URL location;
-
-    @FXML // fx:id="IPText"
-    private TextField IPText; // Value injected by FXMLLoader
-
-    @FXML // fx:id="connect"
-    private Button connect; // Value injected by FXMLLoader
+public class ClientBootController extends Controller {
 
     TextFormatter<String> formatter1 = new TextFormatter<String>(change -> {
         change.setText(change.getText().replaceAll("[^0-9.]", ""));
         return change;
     });
+    @FXML // ResourceBundle that was given to the FXMLLoader
+    private ResourceBundle resources;
+    @FXML // URL location of the FXML file that was given to the FXMLLoader
+    private URL location;
+    @FXML // fx:id="IPText"
+    private TextField IPText; // Value injected by FXMLLoader
+    @FXML // fx:id="connect"
+    private Button connect; // Value injected by FXMLLoader
 
     @FXML
     void connectToServer(ActionEvent event) {
@@ -47,7 +42,7 @@ public class ClientBootController extends Controller{
             App.client.storeSkeleton.changeCenter("Catalog");
             App.client.storeSkeleton.changeLeft("GuestMenu");
         } catch (IOException e) {
-            sendAlert("Could not connect to server IP","CONNECTION FAILED", Alert.AlertType.ERROR);
+            sendAlert("Could not connect to server IP", "CONNECTION FAILED", Alert.AlertType.ERROR);
             e.printStackTrace();
         }
         LinkedList<Object> msg = new LinkedList<Object>();
@@ -67,7 +62,8 @@ public class ClientBootController extends Controller{
             connectToServer(new ActionEvent());
     }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert IPText != null : "fx:id=\"IPText\" was not injected: check your FXML file 'ClientBoot.fxml'.";
         assert connect != null : "fx:id=\"connect\" was not injected: check your FXML file 'ClientBoot.fxml'.";

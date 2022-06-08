@@ -17,41 +17,33 @@ import java.util.concurrent.Executors;
 
 public class Client extends AbstractClient {
 
-    public StoreSkeleton storeSkeleton;
-
-    protected static LinkedList<PreMadeProduct> products = new LinkedList<PreMadeProduct>();//(LinkedList<Product>) Catalog.getProducts();
+    public static int[] hourList = {8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18};
+    protected static LinkedList<PreMadeProduct> products = new LinkedList<PreMadeProduct>();
 
     protected static LinkedList<Order> orders = new LinkedList<Order>();
-
-    private Controller controller;
-
+    private static Client client = null;
+    public StoreSkeleton storeSkeleton;
     public Cart cart = new Cart();
-
     protected Guest user;
-
+    private Controller controller;
     private List<Store> stores;
 
     public Client(String localhost, int i) {
         super(localhost, i);
     }
 
-    public void setController(Controller controller) {
-        this.controller = controller;
-    }
-
     public static void main(String[] args) {
     }
-
-    public static int[] hourList = {8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18};
-
-
-    private static Client client = null;
 
     public static Client getClient() {
         if (client == null) {
             client = new Client("localhost", 3000);
         }
         return client;
+    }
+
+    public void setController(Controller controller) {
+        this.controller = controller;
     }
 
     public StoreSkeleton getSkeleton() {
@@ -72,11 +64,11 @@ public class Client extends AbstractClient {
                 case "#PULL_COMPLAINTS" -> pushComplaints((LinkedList<Object>) msg);
                 case "#PULL_MANAGER_REPORT" -> pushManagerReport((LinkedList<Object>) msg);
                 case "#PULL_CEO_REPORT" -> pushCeoReport((LinkedList<Object>) msg, client);
-                case "#DELETEORDER" -> deletedOrder((LinkedList<Object>)msg);//function gets all data from server to display to client
+                case "#DELETEORDER" -> deletedOrder((LinkedList<Object>) msg);//function gets all data from server to display to client
                 case "#PULLUSERS" -> pushUsers(msg);
-                case "#ERROR" -> errorMsg((LinkedList<Object>)msg);
-                case "#UPDATEBALANCE"-> updateBalance((Customer) ((LinkedList<Object>) msg).get(1));
-                case "#USERREFRESH"-> clientUserRefresh((LinkedList<Object>) msg);
+                case "#ERROR" -> errorMsg((LinkedList<Object>) msg);
+                case "#UPDATEBALANCE" -> updateBalance((Customer) ((LinkedList<Object>) msg).get(1));
+                case "#USERREFRESH" -> clientUserRefresh((LinkedList<Object>) msg);
                 case "#REFRESH" -> refresh((LinkedList<Object>) msg);
             }
         } catch (Exception e) {
@@ -86,10 +78,11 @@ public class Client extends AbstractClient {
             e.getStackTrace();
         }
     }
-    private void clientUserRefresh(List<Object> msg){
 
-        if(user instanceof Customer && msg.get(2) instanceof Customer){
-            if(((Customer) user).getId() == ((Customer)msg.get(2)).getId()) {
+    private void clientUserRefresh(List<Object> msg) {
+
+        if (user instanceof Customer && msg.get(2) instanceof Customer) {
+            if (((Customer) user).getId() == ((Customer) msg.get(2)).getId()) {
                 if (msg.get(1).toString().equals("FREEZE")) {
                     Controller.sendAlert("Your account has been frozen by the system Admin", "Banned account", Alert.AlertType.WARNING);
                     user = (Customer) msg.get(2);
@@ -97,19 +90,19 @@ public class Client extends AbstractClient {
                 } else if (msg.get(1).toString().equals("BALANCEUPDATE")) {
                     user = (Customer) msg.get(2);
                     updateBalance((Customer) msg.get(2));
-                }else if(msg.get(1).toString().equals("NOTFROZEN")){
+                } else if (msg.get(1).toString().equals("NOTFROZEN")) {
                     user = (Customer) msg.get(2);
                     updateBalance((Customer) msg.get(2));
                 }
             }
 
-        }else if(user instanceof Employee && msg.get(2) instanceof Employee){
-            if(((Employee) user).getId() == ((Employee)msg.get(2)).getId()) {
+        } else if (user instanceof Employee && msg.get(2) instanceof Employee) {
+            if (((Employee) user).getId() == ((Employee) msg.get(2)).getId()) {
                 if (msg.get(1).toString().equals("FREEZE")) {
                     Controller.sendAlert("Your account has been frozen by the system Admin", "Banned account", Alert.AlertType.WARNING);
                     user = (Employee) msg.get(2);
                     logOut();
-                }else if (msg.get(1).toString().equals("NOTFROZEN")){
+                } else if (msg.get(1).toString().equals("NOTFROZEN")) {
                     user = (Employee) msg.get(2);
                     logOut();
                     /*updateNameEmployee((Employee) msg.get(2));*/
@@ -170,7 +163,7 @@ public class Client extends AbstractClient {
 
         List<Product> cartProducts = this.cart.getProducts();
         boolean preExists, cusExists;
-        int i =0;
+        int i = 0;
 
         while (i < cartProducts.size()) { //for every cart product
             cusExists = true; //unless any base product was deleted- dont delete the custom made
@@ -189,11 +182,10 @@ public class Client extends AbstractClient {
                     if (!isExists(base, newBases)) //if any base product was deleted
                         cusExists = false; //remove from cart soon
                 }
-                if (!cusExists){
+                if (!cusExists) {
                     this.cart.removeProduct(p.getId());
                     i--;
-                }
-                else {
+                } else {
                     //reset products.description and price:
                     p.setPrice(0);
                     ((CustomMadeProduct) p).setDescription("");

@@ -10,7 +10,9 @@ import javafx.scene.Node;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import org.entities.*;
+import org.entities.Complaint;
+import org.entities.Order;
+import org.entities.Store;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -22,8 +24,8 @@ import java.util.Map;
 public class CEOReportController extends AbstractReport {
 
     final static int SCREEN = 0, FROM_DATE = 1, TO_DATE = 2, COMPLAINT_CHART = 3, INCOME_COMPANY = 4, ORDERS_COMPANY = 5,
-        ORDERS_COMPANY_CHART = 6, SALES_COMPANY = 7, INCOME_STORE = 8, ORDERS_STORE = 9, ORDERS_STORE_CHART = 10,
-        SALES_STORE = 11;
+            ORDERS_COMPANY_CHART = 6, SALES_COMPANY = 7, INCOME_STORE = 8, ORDERS_STORE = 9, ORDERS_STORE_CHART = 10,
+            SALES_STORE = 11;
 
     @FXML
     private StackedBarChart<String, Number> complaintChart1;
@@ -128,7 +130,7 @@ public class CEOReportController extends AbstractReport {
         createList1();
         createList2();
         displayDates(fromDate1, LocalDate.now(), true);
-        displayDates(fromDate2, LocalDate.now(),true);
+        displayDates(fromDate2, LocalDate.now(), true);
         this.stores = App.client.getStores();
         storePicker.getItems().add("Set Store");
         storePicker.setValue("Set Store");
@@ -145,13 +147,13 @@ public class CEOReportController extends AbstractReport {
         DatePicker toDate = (DatePicker) list.get(TO_DATE), fromDate = (DatePicker) list.get(FROM_DATE);
         String screen = (String) list.get(SCREEN);
 
-        if(isInvalid(toDate))
+        if (isInvalid(toDate))
             sendAlert("Must pick time interval to make a report!", "Date Missing", Alert.AlertType.ERROR);
 
-        else if(storePicker.getValue().equals("Set Store"))
+        else if (storePicker.getValue().equals("Set Store"))
             sendAlert("Must pick a store to make a report!", "Store Missing", Alert.AlertType.ERROR);
 
-        else{   // send request to server to pull data for report, with store and date interval
+        else {   // send request to server to pull data for report, with store and date interval
             LinkedList<Object> msg = new LinkedList<Object>();
             msg.add("#PULL_CEO_REPORT"); //get stores from db
             msg.add(screen);
@@ -167,19 +169,19 @@ public class CEOReportController extends AbstractReport {
         }
     }
 
-    public void changedFromDate (ActionEvent event) throws InterruptedException {
+    public void changedFromDate(ActionEvent event) throws InterruptedException {
         List<Object> list = getScreen(event);
         DatePicker toDate = (DatePicker) list.get(TO_DATE), fromDate = (DatePicker) list.get(FROM_DATE);
         toDate.setDisable(false);
 
-        if(numOfDays(fromDate.getValue(), LocalDate.now()) <= 31)
+        if (numOfDays(fromDate.getValue(), LocalDate.now()) <= 31)
             displayDates(toDate, fromDate.getValue(), LocalDate.now());
 
         else
-            displayDates(toDate ,fromDate.getValue(), addLocalDate(fromDate, 30));
+            displayDates(toDate, fromDate.getValue(), addLocalDate(fromDate, 30));
     }
 
-    public void changedToDate (ActionEvent event) throws InterruptedException {
+    public void changedToDate(ActionEvent event) throws InterruptedException {
         List<Object> list = getScreen(event);
         DatePicker toDate = (DatePicker) list.get(TO_DATE), fromDate = (DatePicker) list.get(FROM_DATE);
         toDate.setDisable(false);
@@ -193,7 +195,7 @@ public class CEOReportController extends AbstractReport {
         companyOrders = new LinkedList<>(orders);
         storeOrders = getStoreOrders(orders);
 
-        Platform.runLater(()-> {
+        Platform.runLater(() -> {
             int daysNum = numOfDays(getPickedDate(fromDate), getPickedDate(toDate));
             showStoreOrders(storeOrders, list);
             showCompanyOrders(companyOrders, list);
@@ -210,15 +212,15 @@ public class CEOReportController extends AbstractReport {
         Label salesNum = (Label) list.get(SALES_STORE);
 
         for (Map.Entry<String, Integer> entry : productMap.entrySet())
-            if(entry.getValue() > 0)
+            if (entry.getValue() > 0)
                 pieChartData.add(new PieChart.Data(entry.getKey(), entry.getValue()));
 
         ordersChart.setData(pieChartData);
-        for(final PieChart.Data data : ordersChart.getData()){
+        for (final PieChart.Data data : ordersChart.getData()) {
             data.getNode().addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    salesNum.setText(data.getName() + " number of sales: " + String.valueOf((int)data.getPieValue()));
+                    salesNum.setText(data.getName() + " number of sales: " + String.valueOf((int) data.getPieValue()));
                 }
             });
         }
@@ -231,26 +233,26 @@ public class CEOReportController extends AbstractReport {
         Label salesNum = (Label) list.get(SALES_COMPANY);
 
         for (Map.Entry<String, Integer> entry : productMap.entrySet())
-            if(entry.getValue() > 0)
+            if (entry.getValue() > 0)
                 pieChartData.add(new PieChart.Data(entry.getKey(), entry.getValue()));
 
         ordersChart.setData(pieChartData);
-        for(final PieChart.Data data : ordersChart.getData()){
+        for (final PieChart.Data data : ordersChart.getData()) {
             data.getNode().addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    salesNum.setText(data.getName() + " number of sales: " + String.valueOf((int)data.getPieValue()));
+                    salesNum.setText(data.getName() + " number of sales: " + String.valueOf((int) data.getPieValue()));
                 }
             });
         }
     }
 
-    private void showStoreIncome(LinkedList<Order> orders, int daysNum , List<Object> list) {
+    private void showStoreIncome(LinkedList<Order> orders, int daysNum, List<Object> list) {
         int totalPrice = 0;
         float avgPrice = 0, avgOrders = (float) orders.size() / daysNum;
         Label incomeReport = (Label) list.get(INCOME_STORE), ordersReport = (Label) list.get(ORDERS_STORE);
 
-        for(Order order : orders)
+        for (Order order : orders)
             totalPrice += order.getPrice();
 
         avgPrice = (float) totalPrice / daysNum;
@@ -261,12 +263,12 @@ public class CEOReportController extends AbstractReport {
                 "Average orders: " + String.format("%.2f", avgOrders));
     }
 
-    private void showCompanyIncome(LinkedList<Order> orders, int daysNum , List<Object> list) {
+    private void showCompanyIncome(LinkedList<Order> orders, int daysNum, List<Object> list) {
         int totalPrice = 0;
         float avgPrice = 0, avgOrders = (float) orders.size() / daysNum;
         Label incomeReport = (Label) list.get(INCOME_COMPANY), ordersReport = (Label) list.get(ORDERS_COMPANY);
 
-        for(Order order : orders)
+        for (Order order : orders)
             totalPrice += order.getPrice();
 
         avgPrice = (float) totalPrice / daysNum;
@@ -285,14 +287,14 @@ public class CEOReportController extends AbstractReport {
         LinkedList<XYChart.Series<String, Number>> seriesLinkedList = new LinkedList<XYChart.Series<String, Number>>();
         SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 
-        for(Complaint.Topic topic : Complaint.getAllTopics() ){
+        for (Complaint.Topic topic : Complaint.getAllTopics()) {
             XYChart.Series<String, Number> series = new XYChart.Series<String, Number>();
             series.setName(Complaint.topicToString(topic));
             seriesLinkedList.add(series);
 
-            for(LocalDate date : getDatesBetween(fromDate.getValue(), toDate.getValue())){
+            for (LocalDate date : getDatesBetween(fromDate.getValue(), toDate.getValue())) {
                 int numOfComp = 0;
-                for(Complaint complaint : complaints) {
+                for (Complaint complaint : complaints) {
                     if (dateAreEqual(dateToLocalDate(complaint.getDate()), date) &&
                             complaint.getTopic() == topic)
                         numOfComp += 1;
@@ -306,7 +308,7 @@ public class CEOReportController extends AbstractReport {
     }
 
 
-    public boolean isInvalid(DatePicker dp){
+    public boolean isInvalid(DatePicker dp) {
         return dp.isDisabled() || dp.getValue() == null;
     }
 
@@ -354,9 +356,9 @@ public class CEOReportController extends AbstractReport {
         screenList2.add(salesStore2);
     }
 
-    public List<Object> getScreen(ActionEvent event){
+    public List<Object> getScreen(ActionEvent event) {
         Node node = (Node) event.getTarget();
-        if(node.getId().equals("toDate1") || node.getId().equals("fromDate1")
+        if (node.getId().equals("toDate1") || node.getId().equals("fromDate1")
                 || node.getId().equals("makeReportBtn1"))
             return screenList1;
 
@@ -365,7 +367,7 @@ public class CEOReportController extends AbstractReport {
     }
 
     public List<Object> getScreen(String screen) {
-        if(screen.equals("FirstScreen"))
+        if (screen.equals("FirstScreen"))
             return screenList1;
 
         else

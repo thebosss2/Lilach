@@ -1,6 +1,5 @@
 package org.client;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -82,10 +81,10 @@ public class EmployeeViewController extends Controller {
     }
 
     private void setStores() {
-            for (Store s : stores) {
-                storePicker.getItems().add(s.getName());
-            }
-            storePicker.setValue(employee.getStore().getName());
+        for (Store s : stores) {
+            storePicker.getItems().add(s.getName());
+        }
+        storePicker.setValue(employee.getStore().getName());
 
     }
 
@@ -128,10 +127,10 @@ public class EmployeeViewController extends Controller {
     }
 
     private boolean storeInvalid() {
-        if(!this.storePicker.getValue().equals("Chain")) {
+        if (!this.storePicker.getValue().equals("Chain")) {
             return this.rolePicker.getValue().equals("CEO") || this.rolePicker.getValue().equals("Customer Service");
         }
-            return false;
+        return false;
     }
 
     protected boolean isEmployeeInvalid() {

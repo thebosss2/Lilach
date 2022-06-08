@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import org.entities.PreMadeProduct;
 
-public class SummaryPreProductController extends Controller{
+public class SummaryPreProductController extends Controller {
 
     @FXML
     private Label count;
@@ -43,8 +43,8 @@ public class SummaryPreProductController extends Controller{
 
     public void setProduct(PreMadeProduct product) {
         name.setText(product.getName());
-        price.setText(""+Integer.toString(product.getPrice()));
-        totalPrice.setText(""+Integer.toString(product.getPrice()*product.getAmount()));
-        count.setText(""+Integer.toString(product.getAmount()));
+        price.setText("" + Integer.toString(product.getPrice()));
+        totalPrice.setText("" + Integer.toString(product.getPrice() * product.getAmount()));
+        count.setText("" + Integer.toString(product.getAmount()));
     }
 }

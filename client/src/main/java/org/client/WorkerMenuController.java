@@ -30,7 +30,8 @@ public class WorkerMenuController extends Controller {
     }
 
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert editCatalogBtn != null : "fx:id=\"editCatalogBtn\" was not injected: check your FXML file 'WorkerMenu.fxml'.";
         assert logoutBtn != null : "fx:id=\"logoutBtn\" was not injected: check your FXML file 'WorkerMenu.fxml'.";

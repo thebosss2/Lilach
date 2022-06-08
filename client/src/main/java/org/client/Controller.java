@@ -14,13 +14,27 @@ public abstract class Controller {
 
     protected StoreSkeleton globalSkeleton;
 
-    public void setSkeleton(StoreSkeleton skeleton) {
-        this.globalSkeleton = skeleton;
-    } //set skeleton
+    public static void sendAlert(String error, String title, Alert.AlertType type) {
+        Platform.runLater(() -> {
+            try {
+                Alert alert = new Alert(type);
+                alert.setTitle(title);
+                alert.setHeaderText(error);
+                //alert.setContentText("Are you sure?");
+                alert.showAndWait().get();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        });
+    }
 
     public StoreSkeleton getSkeleton() {
         return this.globalSkeleton;
     } //returns skeleton information
+
+    public void setSkeleton(StoreSkeleton skeleton) {
+        this.globalSkeleton = skeleton;
+    } //set skeleton
 
     protected void coolButtonClick(Button button) throws InterruptedException {
         Executor executor = Executors.newSingleThreadExecutor();
@@ -40,7 +54,7 @@ public abstract class Controller {
         dp.setDayCellFactory(picker -> new DateCell() {
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
-                if(past)
+                if (past)
                     setDisable(empty || date.compareTo(day) > 0);
                 else // display future
                     setDisable(empty || date.compareTo(day) < 0);
@@ -57,7 +71,6 @@ public abstract class Controller {
             }
         });
     }
-
 
     //this function checks that all fields were filled and valid.if not- it lets the user know and fix it and return false
     // if all fields are valid, it shows alert and return true
@@ -78,20 +91,8 @@ public abstract class Controller {
             if (alert.showAndWait().get() == ButtonType.OK) {
                 return true;
             }
-        } return false;
-    }
-    public static void sendAlert(String error, String title, Alert.AlertType type) {
-        Platform.runLater(() -> {
-            try{
-                Alert alert = new Alert(type);
-                alert.setTitle(title);
-                alert.setHeaderText(error);
-                //alert.setContentText("Are you sure?");
-                alert.showAndWait().get();
-            }catch (Exception e){
-                System.out.println(e.getMessage());
-            }
-        });
+        }
+        return false;
     }
 
     protected Date getPickedDate(DatePicker dp) { //get the picked localDate and convert it to Date

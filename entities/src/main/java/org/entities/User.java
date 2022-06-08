@@ -1,46 +1,48 @@
 package org.entities;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 
 @MappedSuperclass
 public abstract class User extends Guest implements Serializable {
 
+    protected Boolean frozen = false;
+    @ManyToOne
+    protected Store store = null;
     @Column(name = " Identification")
     private String userID;
     @Column(name = "user_name")
     private String userName;
     @Column(name = "pass_word")
     private String password;
-    @Column(name="usermail")
+    @Column(name = "usermail")
     private String email;
     private String phoneNum;
-    protected Boolean frozen=false;
     private Boolean connected;
-    @ManyToOne
-    protected Store store = null; 
 
 
-    public User(String userID, String name, String userName, String password, String email, String phoneNum ,Store store) {
+    public User(String userID, String name, String userName, String password, String email, String phoneNum, Store store) {
         super(name);
-        this.userID=userID;
+        this.userID = userID;
         this.userName = userName;
         this.password = password;
         this.email = email;
-        this.phoneNum=phoneNum;
-        this.connected=false;
-        this.store=store;
+        this.phoneNum = phoneNum;
+        this.connected = false;
+        this.store = store;
     }
-    public User(String userID, String name, String userName, String password, String email, String phoneNum ,Store store, boolean frozen) {
+
+    public User(String userID, String name, String userName, String password, String email, String phoneNum, Store store, boolean frozen) {
         super(name);
-        this.userID=userID;
+        this.userID = userID;
         this.userName = userName;
         this.password = password;
         this.email = email;
-        this.phoneNum=phoneNum;
-        this.connected=false;
-        this.store=store;
+        this.phoneNum = phoneNum;
+        this.connected = false;
+        this.store = store;
         this.frozen = frozen;
     }
 
@@ -98,12 +100,12 @@ public abstract class User extends Guest implements Serializable {
         this.phoneNum = phoneNum;
     }
 
-    public void setFrozen(Boolean frozen) {
-        this.frozen = frozen;
-    }
-
     public Boolean getFrozen() {
         return frozen;
+    }
+
+    public void setFrozen(Boolean frozen) {
+        this.frozen = frozen;
     }
 
     public Store getStore() {

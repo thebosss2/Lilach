@@ -3,7 +3,6 @@ package org.client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
 
 public class GuestMenuController extends Controller {
 
@@ -18,7 +17,6 @@ public class GuestMenuController extends Controller {
 
     @FXML
     private Button order;
-
 
 
     @FXML // fx:id="loginBtn"

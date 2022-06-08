@@ -1,10 +1,5 @@
 package org.client;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.LinkedList;
-import java.util.ResourceBundle;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +9,11 @@ import javafx.scene.text.Text;
 import org.entities.CustomMadeProduct;
 import org.entities.Order;
 import org.entities.PreMadeProduct;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.LinkedList;
+import java.util.ResourceBundle;
 
 public class OrderSummaryController extends Controller {
     private Order order;
@@ -76,21 +76,21 @@ public class OrderSummaryController extends Controller {
 
 
     public void setOrder(Order order) {
-        this.order=order;
-        price.setText("Price: " + Integer.toString(order.getPrice())+ "₪");
+        this.order = order;
+        price.setText("Price: " + Integer.toString(order.getPrice()) + "₪");
         order_time.setText("Order Time: " + order.getOrderTime());
         delivery_date.setText("Delivery Time: " + order.getDeliveryDate().toString());
         delivery_hour.setText("Delivery Hour: " + order.getDeliveryHour());
-        type.setText("Type: " + order.getDelivery().toString().replace("_"," "));
+        type.setText("Type: " + order.getDelivery().toString().replace("_", " "));
 
-        if(order.getDelivery() == Order.Delivery.SELF_SHIPPING && order.getStore()!= null)
+        if (order.getDelivery() == Order.Delivery.SELF_SHIPPING && order.getStore() != null)
             store.setText("Store: " + order.getStore().getName());
         else
             store.setText("");
-        if(order.isDelivered()== Order.Status.CANCELED){
+        if (order.isDelivered() == Order.Status.CANCELED) {
             cancelOrder.setDisable(true);
             cancelOrder.setText("Canceled");
-        }else if(order.isDelivered()==Order.Status.ARRIVED){
+        } else if (order.isDelivered() == Order.Status.ARRIVED) {
             cancelOrder.setDisable(true);
             cancelOrder.setText("Arrived");
         }

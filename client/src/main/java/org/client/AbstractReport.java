@@ -15,28 +15,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public abstract class AbstractReport extends Controller{
-
-    public Map<String,Integer> getMap(LinkedList<Order> orders) {
-        Map<String, Integer> map = new HashMap<String, Integer>();
-
-        for(Product product : Client.products)
-            map.put(((PreMadeProduct) product).getName(), 0);
-
-        for(Order order : orders) {
-            for(PreMadeProduct product : order.getPreMadeProducts())
-                map.put(product.getName(), map.get(product.getName()) + product.getAmount());
-
-            for(CustomMadeProduct customProduct : order.getCustomMadeProducts())
-                for(PreMadeProduct baseProduct : customProduct.getProducts())
-                    map.put(baseProduct.getName(), map.get(baseProduct.getName()) + baseProduct.getAmount());
-        }
-        return map;
-    }
+public abstract class AbstractReport extends Controller {
 
     static int numOfDays(Date d1, Date d2) {
         long difference_In_Time = d2.getTime() - d1.getTime();
-        return  ((int) TimeUnit.MILLISECONDS.toDays(difference_In_Time) % 365) + 1;
+        return ((int) TimeUnit.MILLISECONDS.toDays(difference_In_Time) % 365) + 1;
     }
 
     static int numOfDays(LocalDate d1, LocalDate d2) {
@@ -66,12 +49,7 @@ public abstract class AbstractReport extends Controller{
         return pickedDate;
     }
 
-    public boolean dateAreEqual(LocalDate date1, LocalDate date2) {
-        return date1.atStartOfDay().isEqual(date2.atStartOfDay());
-    }
-
-    public static Date addDays(Date date, int daysToAdd)
-    {
+    public static Date addDays(Date date, int daysToAdd) {
         Date d;
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
@@ -86,5 +64,26 @@ public abstract class AbstractReport extends Controller{
 
     public static LocalDate addLocalDate(LocalDate toDate, int daysToAdd) {
         return dateToLocalDate(addDays(localDateToDate(toDate), daysToAdd));
+    }
+
+    public Map<String, Integer> getMap(LinkedList<Order> orders) {
+        Map<String, Integer> map = new HashMap<String, Integer>();
+
+        for (Product product : Client.products)
+            map.put(((PreMadeProduct) product).getName(), 0);
+
+        for (Order order : orders) {
+            for (PreMadeProduct product : order.getPreMadeProducts())
+                map.put(product.getName(), map.get(product.getName()) + product.getAmount());
+
+            for (CustomMadeProduct customProduct : order.getCustomMadeProducts())
+                for (PreMadeProduct baseProduct : customProduct.getProducts())
+                    map.put(baseProduct.getName(), map.get(baseProduct.getName()) + baseProduct.getAmount());
+        }
+        return map;
+    }
+
+    public boolean dateAreEqual(LocalDate date1, LocalDate date2) {
+        return date1.atStartOfDay().isEqual(date2.atStartOfDay());
     }
 }

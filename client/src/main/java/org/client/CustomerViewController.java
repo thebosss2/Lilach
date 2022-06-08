@@ -9,14 +9,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import org.entities.Customer;
-import org.entities.Employee;
 import org.entities.Store;
 
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CustomerViewController extends Controller{
+public class CustomerViewController extends Controller {
 
     @FXML
     private TextField balance;
@@ -98,6 +97,7 @@ public class CustomerViewController extends Controller{
             sendAlert("Store is invalid! ", "Saving failed", Alert.AlertType.WARNING);
         else usernameInvalid();
     }
+
     private void usernameInvalid() {
         App.client.setController(this);
         List<Object> msg = new LinkedList<Object>();
@@ -114,7 +114,7 @@ public class CustomerViewController extends Controller{
     }
 
     private boolean storeInvalid() {
-        if(this.storePicker.getValue().equals("Chain"))
+        if (this.storePicker.getValue().equals("Chain"))
             return this.typePicker.getValue().equals("Store Customer");
         else  //store is normal store
             return !this.typePicker.getValue().equals("Store Customer");//so if the type is chain or member this is invalid
@@ -171,7 +171,6 @@ public class CustomerViewController extends Controller{
         }
         storePicker.setValue(customer.getStore().getName());
     }
-
 
 
     private void setTypes() {
