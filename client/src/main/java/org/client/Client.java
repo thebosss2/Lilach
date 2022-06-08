@@ -290,6 +290,10 @@ public class Client extends AbstractClient {
         manageAccountsController.pullUsersToClient((LinkedList<User>) ((LinkedList<Object>) msg).get(1));
     }
 
+    /**
+     * gets orders from server
+     * @param msg
+     */
     private void pushToOrders(Object msg) {
         orders = (LinkedList<Order>) ((LinkedList<Object>) msg).get(1);
         SummaryOrdersController summaryOrdersController = (SummaryOrdersController) controller;
@@ -307,6 +311,11 @@ public class Client extends AbstractClient {
         catalogController.pullProductsToClient();       //calls static function in client for display
     }
 
+    /**
+     * gets base products from server
+     * @param msg
+     * @throws IOException
+     */
     private void pushToBases(Object msg) throws IOException { // takes data received and sends to display function
         products = (LinkedList<PreMadeProduct>) ((LinkedList<Object>) msg).get(1);
         CreateCustomMadeController createCustomMadeController = (CreateCustomMadeController) controller;
