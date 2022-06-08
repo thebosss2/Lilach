@@ -393,7 +393,7 @@ public class CEOReportController extends AbstractReport {
 
     private void createList2() {
         screenList2.add("SecondScreen");
-        screenList2.add(fromDate1);
+        screenList2.add(fromDate2);
         screenList2.add(toDate2);
         screenList2.add(complaintChart2);
         screenList2.add(incomeCompany2);
