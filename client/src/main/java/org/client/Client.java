@@ -3,9 +3,13 @@ package org.client;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import org.client.ocsf.AbstractClient;
 import org.entities.*;
@@ -142,13 +146,21 @@ public class Client extends AbstractClient {
                 } else if (this.controller instanceof CreateOrderController) {
                     try {
                         if (this.cart.getProducts().isEmpty()) { // if no more products- we dont want to stay in create order so head back to cart
-                            this.getSkeleton().changeCenter("Catalog");
+                            //this.getSkeleton().changeCenter("Catalog");
+                            goToCatalog();
                             errorMsg = "We are sorry for the inconvenience, your products are no longer available! check out the catalog :)";
                         } else {
                             ((CreateOrderController) this.controller).displaySummary(); //refresh order summery
                             ((CreateOrderController) this.controller).setPrices();
                             errorMsg = "We are sorry for the inconvenience, we made some changes in our catalog so notice that your cart is updated now! hope you like it :)";
                         }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } if (this.controller instanceof CreateCustomMadeController) {
+                    try {
+                        ((CreateCustomMadeController) this.controller).pullProductsToClient();//pull all products for updated data
+                        errorMsg = "We are sorry for the inconvenience, we made some changes in our catalog and updated your cart too! hope you like it :)";
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -207,6 +219,19 @@ public class Client extends AbstractClient {
         }
 
     }
+
+    void goToCatalog() {
+        ObservableList<Node> buttons = ((VBox)((AnchorPane) this.getSkeleton().mainScreen.getLeft()).getChildren().get(0)).getChildren();
+
+        for (Node node : buttons) {
+            node.setStyle("-fx-background-color: #9bc98c");
+            if (node.getId().equals("catalogBtn"))
+                node.setStyle("-fx-background-color: #62a74d");
+        }
+
+        this.getSkeleton().changeCenter("Catalog");
+    }
+
 
     //this function finds if our cart catalog product is in the updated products list.
     // if it is- fix it and return true, else return false cause it was deleted
