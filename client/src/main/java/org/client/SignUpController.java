@@ -75,12 +75,20 @@ public class SignUpController extends Controller {
     private TextField phoneNumberText; // Value injected by FXMLLoader
     private List<Store> stores = new LinkedList<Store>();
 
+    /**
+     * Calling signUpClicked when pressed enter.
+     * @param event
+     */
     @FXML
     void enterSignup(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER)
             signUpClicked(new ActionEvent());
     }
 
+    /**
+     * Sending the server to authenticate the new user request and add it if needed.
+     * @param event
+     */
     @FXML
     void signUpClicked(ActionEvent event) {
         if (checkFieldsNotEmpty()) {
@@ -103,7 +111,10 @@ public class SignUpController extends Controller {
         }
     }
 
-
+    /**
+     * Checking if fields are valid.
+     * @return
+     */
     private boolean idAndEmailCheck() {
         String email = emailText.getText().toString();
         String compMail = email;
@@ -132,6 +143,10 @@ public class SignUpController extends Controller {
         return true;
     }
 
+    /**
+     * Checking if all fields are not empty.
+     * @return
+     */
     private boolean checkFieldsNotEmpty() {
         if (!idText.getText().isEmpty()) {
             if (Integer.parseInt(idText.getText()) == 69)
@@ -143,6 +158,10 @@ public class SignUpController extends Controller {
                 phoneNumberText.getText().isEmpty() || (accountType.getValue().equals("Store") && storePicker.getSelectionModel().isEmpty());
     }
 
+    /**
+     * Create new customer from the given data.
+     * @return new customer.
+     */
     public Customer createNewUser() {
         Customer customer;
         if (accountType.getValue().equals("Store")) {
@@ -167,6 +186,11 @@ public class SignUpController extends Controller {
         return customer;
     }
 
+    /**
+     * Converting a string from the combobox to accountType.
+     * @param accountType
+     * @return accountType.
+     */
     private Customer.AccountType convertToAccountType(String accountType) {
         return switch (accountType) {
             case "Store" -> Customer.AccountType.STORE;
@@ -175,6 +199,9 @@ public class SignUpController extends Controller {
         };
     }
 
+    /**
+     * Enabling and disabling the store picker.
+     */
     @FXML
     void enableStorePicker() {
         if (accountType.getValue().equals("Store"))

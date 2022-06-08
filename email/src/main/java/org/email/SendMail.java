@@ -8,7 +8,10 @@ import java.net.URL;
 import java.util.Properties;
 
 public class SendMail {
-
+    /**
+     * Main to send email from Lilach store gmail account.
+     * @param args 0- receiver email, 1- email subject, 2- email content.
+     */
     public static void main(String[] args) {
 
         // Recipient's email ID needs to be mentioned.

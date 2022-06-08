@@ -46,6 +46,10 @@ public class LoginController extends Controller {
 
     private int count = 0;
 
+    /**
+     * Sending the server to log into the site.
+     * @param event
+     */
     @FXML
     void login(ActionEvent event) {
         count++;
@@ -80,7 +84,10 @@ public class LoginController extends Controller {
         }
     }
 
-
+    /**
+     * Changing the screen to signUp screen.
+     * @param event
+     */
     @FXML
     void goToSignup(MouseEvent event) {
         ObservableList<Node> buttons = ((VBox) this.getSkeleton().mainScreen.getLeft()).getChildren();
@@ -99,6 +106,10 @@ public class LoginController extends Controller {
     }
 
 
+    /**
+     * Calling login when pressed enter.
+     * @param event
+     */
     @FXML
     void enterLogin(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER)

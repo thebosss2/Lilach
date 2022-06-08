@@ -46,6 +46,10 @@ public class ComplaintSubmissionController extends Controller {
 
     private List<Store> stores = new LinkedList<Store>();
 
+    /**
+     * Getting the selected store in the combobox.
+     * @return
+     */
     Store getSelectedStore() {
         Store pickedStore = new Store();
         for (Store s : stores)
@@ -54,6 +58,10 @@ public class ComplaintSubmissionController extends Controller {
         return pickedStore;
     }
 
+    /**
+     * Checking if one of the fields is empty.
+     * @return
+     */
     private boolean checkEmpty() {
         if (complaintText.getText().isEmpty() || complaintTopic.getValue().equals("Set Complaint Topic") || storePick.getValue().equals("Set Store")) {
             sendAlert("Some fields have not been filled", " Empty or Missing Fields", Alert.AlertType.WARNING);
@@ -62,6 +70,10 @@ public class ComplaintSubmissionController extends Controller {
         return true;
     }
 
+    /**
+     * Sending the complaint to the server.
+     * @param event
+     */
     @FXML
     void sendComplaint(ActionEvent event) {
 
@@ -90,6 +102,9 @@ public class ComplaintSubmissionController extends Controller {
         }
     }
 
+    /**
+     * Setting the stores to the fxml.
+     */
     private void getStores() {
         this.stores = App.client.getStores();
         storePick.getItems().add("Set Store");

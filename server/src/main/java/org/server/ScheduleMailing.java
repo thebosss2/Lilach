@@ -15,23 +15,30 @@ import java.util.concurrent.TimeUnit;
 
 public class ScheduleMailing {
 
+    /**
+     * Once the order arrives, sending email to the customer
+     * @param order
+     */
     public static void orderMail(Order order) {
 
         Customer customer = order.getOrderedBy();
         Date current = new Date();
         Server.orderArrived(order, Order.Status.ARRIVED);
-        String mail = "Order Arrival";
-        String subject;
+        String subject = "Order Arrival";
+        String mail;
         if (order.getDelivery() == Order.Delivery.SHIPPING_GIFT) {
-            subject = "Hello there " + customer.getName() + ",\nyour gift has been received";
+            mail = "Hello there " + customer.getName() + ",\nyour gift has been received";
         } else {
-            subject = "Hello there " + customer.getName() + ",\nyour order has arrived";
+            mail = "Hello there " + customer.getName() + ",\nyour order has arrived";
         }
         SendMail.main(new String[]{customer.getEmail(), mail, subject});
         System.out.println("Mail sent");
     }
 
-
+    /**
+     * Main to check every hour if orders arrived to send emails to customers.
+     * @param args
+     */
     public static void main(String[] args) {
 
         ZonedDateTime now = ZonedDateTime.now();

@@ -22,9 +22,10 @@ import java.util.regex.Pattern;
 
 public class ComplaintInspectionController extends Controller {
 
+    // Pattern for the text field not to consist more then five numbers and to consist only numbers.
     Pattern pattern1 = Pattern.compile(".{0,5}");
     TextFormatter<String> formatter1 = new TextFormatter<String>(change -> {
-        change.setText(change.getText().replaceAll("[^0-9.,]", ""));
+        change.setText(change.getText().replaceAll("[^0-9]", ""));
         return pattern1.matcher(change.getControlNewText()).matches() ? change : null;
     });
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -51,6 +52,10 @@ public class ComplaintInspectionController extends Controller {
         this.complaint = complaint;
     }
 
+    /**
+     * Enabling and disabling the refund field.
+     * @param event
+     */
     @FXML
     void compensationMode(ActionEvent event) {
         compensationField.setEditable(compensationCheckbox.isSelected());
@@ -62,6 +67,10 @@ public class ComplaintInspectionController extends Controller {
         }
     }
 
+    /**
+     * Closing the complaint and asking the server to refund accordingly.
+     * @param event
+     */
     @FXML
     void submitInspection(ActionEvent event) {
         List<Object> msg = new LinkedList<>();

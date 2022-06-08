@@ -17,6 +17,11 @@ public class Server extends AbstractServer {
         super(port);
     }
 
+    /**
+     * Adding a new instance to the database.
+     * @param obj instance of an entity.
+     * @param <T> entity class supported by the database.
+     */
     private static <T> void addNewInstance(T obj) {
         App.session.beginTransaction();
         App.session.save(obj);
@@ -24,6 +29,11 @@ public class Server extends AbstractServer {
         App.session.getTransaction().commit();
     }
 
+    /**
+     * Update products in the database.
+     * @param msg consists of past product, new copy of product with new parameters.
+     * @throws IOException
+     */
     private static void updateProduct(Object msg) throws IOException {        //update product details func
         App.session.beginTransaction();
         PreMadeProduct productBefore = (PreMadeProduct) ((LinkedList<Object>) msg).get(1);
@@ -40,6 +50,11 @@ public class Server extends AbstractServer {
         App.server.sendToAllClients(newMsg);
     }
 
+    /**
+     * Setting product2 attributes into product.
+     * @param p
+     * @param p2
+     */
     private static void changeParam(PreMadeProduct p, PreMadeProduct p2) {     //changes details
         p.setName(p2.getName());
         p.setPrice(p2.getPrice());
@@ -51,6 +66,11 @@ public class Server extends AbstractServer {
         }
     }
 
+    /**
+     * Setting employee2 attributes into employee.
+     * @param e
+     * @param e2
+     */
     private static void changeParamEmp(Employee e, Employee e2) {     //changes details
         e.setName(e2.getName());
         e.setFrozen(e2.getFrozen());
@@ -63,6 +83,11 @@ public class Server extends AbstractServer {
         e.setPhoneNum(e2.getPhoneNum());
     }
 
+    /**
+     * Setting customer2 attributes into customer.
+     * @param c
+     * @param c2
+     */
     private static void changeParamCus(Customer c, Customer c2) {     //changes details
         c.setName(c2.getName());
         c.setFrozen(c2.getFrozen());
@@ -80,6 +105,11 @@ public class Server extends AbstractServer {
         }
     }
 
+    /**
+     * Setting orders' status to status and updating the database.
+     * @param order
+     * @param status order new status.
+     */
     public static void orderArrived(Order order, Order.Status status) {
         App.session.beginTransaction();
         App.session.evict(order);
@@ -89,7 +119,13 @@ public class Server extends AbstractServer {
         App.session.getTransaction().commit();
     }
 
-    private static void pullProducts(List<Object> msg, ConnectionToClient client) throws IOException {       //func pulls products from server
+    /**
+     * Func pulls products from server.
+     * @param msg
+     * @param client
+     * @throws IOException
+     */
+    private static void pullProducts(List<Object> msg, ConnectionToClient client) throws IOException {
         List<PreMadeProduct> products = App.getAllProducts();
         String commandToClient = msg.get(0).toString();
         List<Object> msgToClient = new LinkedList<Object>();
@@ -98,7 +134,13 @@ public class Server extends AbstractServer {
         client.sendToClient(msgToClient);
     }
 
-    private static void pullStores(List<Object> msg, ConnectionToClient client) throws IOException {       //func pulls products from server
+    /**
+     * Func pulls products from server.
+     * @param msg
+     * @param client
+     * @throws IOException
+     */
+    private static void pullStores(List<Object> msg, ConnectionToClient client) throws IOException {
         List<Store> stores = App.getAllStores();
         String commandToClient = "#PULLSTORES";
         List<Object> msgToClient = new LinkedList<Object>();
@@ -119,10 +161,12 @@ public class Server extends AbstractServer {
         }
     }
 
-    @Override
     /**
-     * Msg contains at least a command (string) for the switch to handle.
+     * Server handling requests from the client according to command given on the first object in the message.
+     * @param msg consists at least a command string.
+     * @param client the connection connected to the client that.
      */
+    @Override
     protected void handleMessageFromClient(Object msg, ConnectionToClient client) {     //handles commands from client for info
 
         try {
@@ -156,6 +200,11 @@ public class Server extends AbstractServer {
         }
     }
 
+    /**
+     * Sending a message to all clients to update a relevant connected customer.
+     * @param msg kind of update the client needs to do.
+     * @param user the user we are looking to update.
+     */
     private void clientUserUpdate(String msg, User user) {
         User user1 = null;
         if (user instanceof Customer) {
@@ -173,6 +222,11 @@ public class Server extends AbstractServer {
         }
     }
 
+    /**
+     * Updating customer's attributes if changed.
+     * @param msg
+     * @param client
+     */
     private void saveCustomer(LinkedList<Object> msg, ConnectionToClient client) {
         App.session.beginTransaction();
         Customer customerBefore = App.session.find(Customer.class, ((Customer) msg.get(1)).getId());
@@ -195,6 +249,11 @@ public class Server extends AbstractServer {
         }
     }
 
+    /**
+     * Updating employee's attributes if changed.
+     * @param msg
+     * @param client
+     */
     private void saveEmployee(LinkedList<Object> msg, ConnectionToClient client) {
         App.session.beginTransaction();
         Employee employeeBefore = App.session.find(Employee.class, ((Employee) msg.get(1)).getId());
@@ -218,6 +277,12 @@ public class Server extends AbstractServer {
         }
     }
 
+    /**
+     * Updating the database to delete given product in the message.
+     * @param msg
+     * @param client
+     * @throws IOException
+     */
     private void deleteProduct(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
         App.session.beginTransaction();
         PreMadeProduct product = (PreMadeProduct) (msg).get(1);
@@ -230,6 +295,12 @@ public class Server extends AbstractServer {
         App.server.sendToAllClients(newMsg);
     }
 
+    /**
+     * Function to return to the client all users.
+     * @param msg
+     * @param client client asked
+     * @throws IOException
+     */
     private void pullUsers(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
         List<User> users = App.getAllUsers();
         List<Object> msgToClient = new LinkedList<Object>();
@@ -238,6 +309,12 @@ public class Server extends AbstractServer {
         client.sendToClient(msgToClient);
     }
 
+    /**
+     * Function to return to the client all orders.
+     * @param msg
+     * @param client client asked.
+     * @throws IOException
+     */
     private void pullOrders(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
         List<Order> orders = App.getSomeOrders((Customer) msg.get(1));
         List<Object> msgToClient = new LinkedList<Object>();
@@ -246,6 +323,11 @@ public class Server extends AbstractServer {
         client.sendToClient(msgToClient);
     }
 
+    /**
+     * Updating user's balance after canceling an order.
+     * @param order
+     * @param client
+     */
     private void changeBalance(Order order, ConnectionToClient client) {
         int refund = 0;
         int price = order.getPrice();
@@ -289,6 +371,11 @@ public class Server extends AbstractServer {
 
     }
 
+    /**
+     * Updating the database to delete an order.
+     * @param msg
+     * @param client
+     */
     private void deleteOrder(LinkedList<Object> msg, ConnectionToClient client) {
         int id = (int) msg.get(1);
         Order order = App.session.find(Order.class, id);
@@ -302,6 +389,11 @@ public class Server extends AbstractServer {
         changeBalance(order, client);
     }
 
+    /**
+     * Updating a customer in the database.
+     * @param msg
+     * @param client
+     */
     private void updateCustomerAccount(LinkedList<Object> msg, ConnectionToClient client) {
         Customer customer = (Customer) msg.get(1);
         if (msg.get(2).toString().equals("CONFIRMED")) {
@@ -322,6 +414,11 @@ public class Server extends AbstractServer {
         }
     }
 
+    /**
+     * Updating a customers' account type.
+     * @param customer
+     * @param type
+     */
     private void updateAccount(Customer customer, Customer.AccountType type) {
         App.session.beginTransaction();
         App.session.evict(customer);       //evict current product details from database
@@ -334,6 +431,10 @@ public class Server extends AbstractServer {
         App.session.getTransaction().commit(); // Save everything.
     }
 
+    /**
+     * Closing a complaint and refunding the customer who submitted the complaint (if refunded).
+     * @param msg
+     */
     private void closeComplaintAndCompensate(LinkedList<Object> msg/*,ConnectionToClient client*/) {
         Complaint complaint = (Complaint) msg.get(1);
         closeComplaint(complaint);
@@ -347,6 +448,11 @@ public class Server extends AbstractServer {
 
     }
 
+    /**
+     * Updating users' balance in the database according to the new given balance.
+     * @param customer
+     * @param balance
+     */
     private void updateBalance(Customer customer, int balance) {
         App.session.beginTransaction();
         App.session.evict(customer);       //evict current product details from database
@@ -356,6 +462,10 @@ public class Server extends AbstractServer {
         App.session.getTransaction().commit(); // Save everything.
     }
 
+    /**
+     * Updating the complaint status to closed.
+     * @param complaint
+     */
     private void closeComplaint(Complaint complaint) {
         App.session.beginTransaction();
         App.session.evict(complaint);       //evict current product details from database
@@ -365,6 +475,11 @@ public class Server extends AbstractServer {
         App.session.getTransaction().commit(); // Save everything.
     }
 
+    /**
+     * Function to return to the client all complaints.
+     * @param client
+     * @throws IOException
+     */
     private void pullOpenComplaints(ConnectionToClient client) throws IOException {
         List<Complaint> complaints = App.getAllOpenComplaints();
         List<Object> msg = new LinkedList<>();
@@ -373,13 +488,16 @@ public class Server extends AbstractServer {
         client.sendToClient(msg);
     }
 
+    /**
+     * Adding new complaint to the database.
+     * @param msg
+     */
     private void addComplaint(LinkedList<Object> msg) {
         addNewInstance((Complaint) msg.get(1));
     }
 
     /**
-     * Hello there
-     *
+     * Adding new customer to the database and login in the customer.
      * @param msg
      * @param client
      * @throws IOException
@@ -394,6 +512,11 @@ public class Server extends AbstractServer {
         loginServer(msg, client);
     }
 
+    /**
+     * Adding a new order to the server.
+     * @param msg
+     * @param client
+     */
     private void saveOrderServer(LinkedList<Object> msg, ConnectionToClient client) {
         Order order = (Order) msg.get(1);
         App.session.beginTransaction();
@@ -422,6 +545,12 @@ public class Server extends AbstractServer {
         }
     }
 
+    /**
+     * Checking if the given user already exits (relevant for signing up and admin screen).
+     * @param msg
+     * @param client
+     * @throws IOException
+     */
     private void checkUser(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
         List<User> users = App.getAllUsers();
         List<Object> newMsg = new LinkedList<Object>();
@@ -453,7 +582,12 @@ public class Server extends AbstractServer {
         client.sendToClient(newMsg);
     }
 
-    //Checks if the username asked by new signup exists.
+    /**
+     * Checks if the username asked by new signup exists.
+     * @param msg
+     * @param client
+     * @throws IOException
+     */
     private void authinticateUser(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
         List<User> users = App.getAllUsers();
         List<Object> newMsg = new LinkedList<Object>();
@@ -469,6 +603,11 @@ public class Server extends AbstractServer {
         client.sendToClient(newMsg);
     }
 
+    /**
+     * Adding new product to the database.
+     * @param msg
+     * @throws IOException
+     */
     private void addProduct(LinkedList<Object> msg) throws IOException {
         App.session.beginTransaction();
         PreMadeProduct product = (PreMadeProduct) ((LinkedList<Object>) msg).get(1);
@@ -481,6 +620,11 @@ public class Server extends AbstractServer {
         App.server.sendToAllClients(newMsg);
     }
 
+    /**
+     * Update given user to connected (in the database).
+     * @param user
+     * @param connected
+     */
     private void updateConnected(User user, Boolean connected) {
         App.session.beginTransaction();
         App.session.evict(user);       //evict current product details from database
@@ -490,6 +634,12 @@ public class Server extends AbstractServer {
         App.session.getTransaction().commit(); // Save everything.
     }
 
+    /**
+     * Checking if the user isn't logged in yet / or frozen, and if so logging the user.
+     * @param msg
+     * @param client
+     * @throws IOException
+     */
     private void loginServer(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
         List<User> users = App.getAllUsers();
         for (User user : users) {
@@ -534,6 +684,11 @@ public class Server extends AbstractServer {
         client.sendToClient(newMsg);
     }
 
+    /**
+     * Logging out the user, updating in the database.
+     * @param msg
+     * @param client
+     */
     private void logoutServer(LinkedList<Object> msg, ConnectionToClient client) {
 
         updateConnected((User) msg.get(1), false);
@@ -606,12 +761,20 @@ public class Server extends AbstractServer {
 
     }
 
+    /**
+     * OCSF function
+     * @param client the connection with the client.
+     */
     @Override
     protected synchronized void clientDisconnected(ConnectionToClient client) { //is client disconnected
         System.out.println("Client Disconnected.");
         super.clientDisconnected(client);
     }
 
+    /**
+     * OCSF function
+     * @param client the connection connected to the client.
+     */
     @Override
     protected void clientConnected(ConnectionToClient client) {     //is client connected
         super.clientConnected(client);
