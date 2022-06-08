@@ -102,6 +102,11 @@ public class EmployeeViewController extends Controller {
         else setActive();
     }
 
+    /**
+     * clickedSaveEmployee function activates when clicked on save changes button, then it checks the validity of the store
+     * if the store is valid it sends to the server request to confirm that there is no such id for another user
+     */
+
     @FXML
     void clickedSaveEmployee(ActionEvent event) {
         if (storeInvalid())
@@ -109,6 +114,9 @@ public class EmployeeViewController extends Controller {
         else userInvalid();
     }
 
+    /**
+     * sends to the server request to confirm that there is no such id for another user
+     */
     private void userInvalid() {
         App.client.setController(this);
         List<Object> msg = new LinkedList<Object>();
@@ -127,12 +135,15 @@ public class EmployeeViewController extends Controller {
     }
 
     private boolean storeInvalid() {
-        if (!this.storePicker.getValue().equals("Chain")) {
+        if (!this.storePicker.getValue().equals("Chain")) { //the ceo and customer service cant belong to store
             return this.rolePicker.getValue().equals("CEO") || this.rolePicker.getValue().equals("Customer Service");
         }
         return false;
     }
 
+    /**
+     * a function from Client calls isEmployeeInvalid which checks the validity of all fields for last confirmation
+     */
     protected boolean isEmployeeInvalid() {
         return !emailValid() ||
                 this.username.getText().isEmpty() ||
@@ -150,9 +161,12 @@ public class EmployeeViewController extends Controller {
         String email = this.email.getText();
         String compMail = email;
         int countAt = compMail.length() - compMail.replace("@", "").length();
-        return countAt == 1 && email.indexOf("@") != 0 && !this.email.getText().isEmpty();
+        return countAt == 1 && email.indexOf("@") != 0 && !this.email.getText().isEmpty(); //makes sure that there is some text and then @
     }
 
+    /**
+     * a function from Client calls saveChanges which sends a new instance of employee to the server that will replace the former
+     */
     @FXML
     protected void saveChanges() {
         Store store = new Store();
@@ -170,12 +184,12 @@ public class EmployeeViewController extends Controller {
         msg.add(emp);             //
         App.client.setController(this);
         try {
-            App.client.sendToServer(msg); //Sends a msg contains the command and the controller for the catalog.
+            App.client.sendToServer(msg); //Sends a msg contains the command and the controller
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        App.client.getSkeleton().changeCenter("ManageAccounts"); //and head back to catalog
+        App.client.getSkeleton().changeCenter("ManageAccounts"); //and head back
 
     }
 
