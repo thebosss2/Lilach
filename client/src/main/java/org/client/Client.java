@@ -112,7 +112,8 @@ public class Client extends AbstractClient {
                     logOut();
                 }else if (msg.get(1).toString().equals("NOTFROZEN")){
                     user = (Employee) msg.get(2);
-                    updateNameEmployee((Employee) msg.get(2));
+                    logOut();
+                    /*updateNameEmployee((Employee) msg.get(2));*/
                 }
             }
         }
