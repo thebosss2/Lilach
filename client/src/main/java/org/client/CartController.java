@@ -37,13 +37,20 @@ public class CartController extends Controller {
     @FXML
     private Text total_price;
 
+    /**
+     * cleans the cart
+     * @param event
+     */
     @FXML
     void cleanCart(ActionEvent event) {
         App.client.cart.emptyProducts();
-
         App.client.storeSkeleton.changeCenter("Cart");
     }
 
+    /**
+     * creates an order
+     * @param event
+     */
     @FXML
     void createOrder(ActionEvent event) {
         if (App.client.cart.getTotalCost() > 0) {

@@ -8,6 +8,9 @@ public class Cart {
     private List<Product> products = new LinkedList<>();
     private int totalCost;
 
+    /**
+     * C'tor
+     */
     public Cart() {
         this.products = new LinkedList<Product>();
         this.totalCost = 0;
@@ -26,6 +29,7 @@ public class Cart {
         return this.products;
     }
 
+    // remove product according to the id to the cart
     public void removeProduct(int id) {
         for (int i = 0; i < this.products.size(); i++) {
             if (this.products.get(i).getId() == id) {
@@ -64,6 +68,7 @@ public class Cart {
         refreshTotalCost();
     }
 
+    //get product and his amount and add it to the cart
     public void insertSomeProduct(Product product, int amount) {
         boolean flag_here = false;
         int index = 0;
@@ -88,11 +93,13 @@ public class Cart {
         refreshTotalCost();
     }
 
+    // add custom-made product to the cart
     public void insertCustomMade(CustomMadeProduct product) {
         this.products.add(product);
         refreshTotalCost();
     }
 
+    // changing the total cost of the cart
     public void refreshTotalCost() {
         totalCost = 0;
         for (int i = 0; i < this.products.size(); i++) {
@@ -100,6 +107,7 @@ public class Cart {
         }
     }
 
+    // delete all the products 
     public void emptyProducts() {
         this.products = new LinkedList<Product>();
         this.totalCost = 0;

@@ -38,6 +38,9 @@ public class SummaryOrdersController extends Controller {
         }
     }
 
+    /**
+     * gets and displays orders
+     */
     public void pullOrdersToClient() {
         SummaryOrdersController summaryOrdersController = this;
         Platform.runLater(new Runnable() {      //runlater used to wait for server and client threads to finish

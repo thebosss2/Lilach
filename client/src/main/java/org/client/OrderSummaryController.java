@@ -52,6 +52,7 @@ public class OrderSummaryController extends Controller {
     private VBox vbox;
 
     @FXML
+    //cancel the order
     void cancel(ActionEvent event) {
         if (this.alertMsg("Cancel", "cancel your order", false)) {
             LinkedList<Object> msg = new LinkedList<Object>();
@@ -74,9 +75,13 @@ public class OrderSummaryController extends Controller {
 
     }
 
-
+    /**
+     * puts order parameters in display
+     * @param order
+     */
     public void setOrder(Order order) {
         this.order = order;
+        //all the meta-data of the order
         price.setText("Price: " + Integer.toString(order.getPrice()) + "₪");
         order_time.setText("Order Time: " + order.getOrderTime());
         delivery_date.setText("Delivery Time: " + order.getDeliveryDate().toString());
@@ -113,6 +118,12 @@ public class OrderSummaryController extends Controller {
         }
     }
 
+    /**
+     * displays CustomProduct to screen
+     * @param product
+     * @param orderSummaryController
+     * @throws IOException
+     */
     private void displayCustomProduct(CustomMadeProduct product, OrderSummaryController orderSummaryController) throws IOException {
         FXMLLoader fxmlLoader;
         fxmlLoader = new FXMLLoader(getClass().getResource("SummaryCustomProduct.fxml"));
@@ -122,6 +133,12 @@ public class OrderSummaryController extends Controller {
         controller.setProduct(product);
     }
 
+    /**
+     * displays PreProduct to screen
+     * @param product
+     * @param orderSummaryController
+     * @throws IOException
+     */
     private void displayPreProduct(PreMadeProduct product, OrderSummaryController orderSummaryController) throws IOException {
         FXMLLoader fxmlLoader;
         fxmlLoader = new FXMLLoader(getClass().getResource("SummaryPreProduct.fxml"));

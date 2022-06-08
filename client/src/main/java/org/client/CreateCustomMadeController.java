@@ -63,6 +63,7 @@ public class CreateCustomMadeController extends Controller {
     }
 
     @FXML
+    //create the customMade and add it to the cart
     void addToCart(ActionEvent event) throws InterruptedException, IOException {
         boolean flagToAdd = false;
         coolButtonClick((Button) event.getTarget());
@@ -72,7 +73,9 @@ public class CreateCustomMadeController extends Controller {
             bases = new LinkedList<>();
         else
             bases.clear();
+        // go over all the products
         for (PreMadeProduct product : Client.products) {
+            // if this product is custom-made and his amount > 0
             if (product.getType() == PreMadeProduct.ProductType.CUSTOM_CATALOG && product.getAmount() > 0) {
                 flagToAdd = true;
                 bases.add(product);
@@ -80,6 +83,7 @@ public class CreateCustomMadeController extends Controller {
                 description += product.getName() + " x " + product.getAmount() + ", ";
             }
         }
+        // switch on the type
         if (flagToAdd) {
             description = description.substring(0, description.length() - 2);
             CustomMadeProduct customMadeProduct = new CustomMadeProduct(bases, price);
@@ -114,6 +118,7 @@ public class CreateCustomMadeController extends Controller {
     }
 
     @FXML
+    // sort the custom-made according to the price and color
     void sort(ActionEvent event) {
         int low_price;
         if (min_price.getText().isEmpty()) {

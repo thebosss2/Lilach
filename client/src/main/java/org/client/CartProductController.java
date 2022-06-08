@@ -80,6 +80,10 @@ public class CartProductController extends Controller {
 
     }
 
+    /**
+     * adds another product of the same type
+     * @param event
+     */
     @FXML
     void addProduct(ActionEvent event) {
         amount.setText(Integer.toString(Integer.parseInt(amount.getText()) + 1));
@@ -89,6 +93,10 @@ public class CartProductController extends Controller {
         App.client.storeSkeleton.changeCenter("Cart");
     }
 
+    /**
+     * adds another product of the same type
+     * @param event
+     */
     @FXML
     void minusProduct(ActionEvent event) {
         if (Integer.parseInt(amount.getText()) > 1) {
@@ -102,6 +110,11 @@ public class CartProductController extends Controller {
 
     }
 
+    /**
+     *
+     * Puts parameters in the prodact
+     * @param product
+     */
     public void setCartProduct(Product product) {
         this.product = product;
         //if(!(product instanceof CustomMadeProduct))

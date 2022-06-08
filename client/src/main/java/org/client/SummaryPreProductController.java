@@ -18,6 +18,10 @@ public class SummaryPreProductController extends Controller {
     @FXML
     private Label totalPrice;
 
+    /**
+     * sets parameters according to pre-made product
+     * @param product
+     */
     public void setSummaryPreProduct(PreMadeProduct product) {
         this.name.setText(product.getName());
         this.price.setText(String.valueOf(product.getPrice()));
@@ -41,6 +45,10 @@ public class SummaryPreProductController extends Controller {
         this.price.setText(String.valueOf(price));
     }
 
+    /**
+     * sets parameters to product
+     * @param product
+     */
     public void setProduct(PreMadeProduct product) {
         name.setText(product.getName());
         price.setText("" + Integer.toString(product.getPrice()));
