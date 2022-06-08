@@ -52,6 +52,7 @@ public class OrderSummaryController extends Controller {
     private VBox vbox;
 
     @FXML
+    //cancel the order
     void cancel(ActionEvent event) {
         if (this.alertMsg("Cancel", "cancel your order", false)) {
             LinkedList<Object> msg = new LinkedList<Object>();
@@ -77,6 +78,7 @@ public class OrderSummaryController extends Controller {
 
     public void setOrder(Order order) {
         this.order = order;
+        //all the meta-data of the order
         price.setText("Price: " + Integer.toString(order.getPrice()) + "₪");
         order_time.setText("Order Time: " + order.getOrderTime());
         delivery_date.setText("Delivery Time: " + order.getDeliveryDate().toString());

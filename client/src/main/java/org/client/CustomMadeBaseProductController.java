@@ -48,6 +48,7 @@ public class CustomMadeBaseProductController extends ItemController {
     private PreMadeProduct product;
 
     @FXML
+    // add custom-made
     void addProduct(ActionEvent event) {
         product.setAmount(Integer.parseInt(amount.getText()) + 1);
         amount.setText(Integer.toString(Integer.parseInt(amount.getText()) + 1));
