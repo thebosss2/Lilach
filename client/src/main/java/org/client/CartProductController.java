@@ -81,7 +81,7 @@ public class CartProductController extends Controller {
     }
 
     /**
-     * adds another prodact of the same type
+     * adds another product of the same type
      * @param event
      */
     @FXML
@@ -94,7 +94,7 @@ public class CartProductController extends Controller {
     }
 
     /**
-     * adds another prodact of the same type
+     * adds another product of the same type
      * @param event
      */
     @FXML
