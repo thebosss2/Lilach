@@ -337,8 +337,11 @@ public class Server extends AbstractServer {
         Date new_date = new Date();
         long diffInMillies = new_date.getTime() - date.getTime();
         long diff = TimeUnit.HOURS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-
-        diff = Integer.parseInt(hour.substring(0, 2)) - diff;
+        if(hour.charAt(1)==':') {
+            diff = Integer.parseInt(hour.substring(0, 1)) - diff;
+        }else{
+            diff = Integer.parseInt(hour.substring(0, 2)) - diff;
+        }
 
 
         String addition;
