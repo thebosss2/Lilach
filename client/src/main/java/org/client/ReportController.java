@@ -59,6 +59,15 @@ public class ReportController extends AbstractReport {
         displayDates(fromDate, LocalDate.now(), true);
     }
 
+    /**
+     * makeReport function activates if pressing the make report button, first it makes
+     * sure that a valid time interval and store has been inserted, and then sends to the server
+     * a request for all orders and complaints that are relevant for the request.
+     * (sends to the server the time interval and store)
+     * @param event irrelevant
+     * @throws InterruptedException
+     */
+
     @FXML
     void makeReport(ActionEvent event) throws InterruptedException {
         coolButtonClick((Button) event.getTarget());
@@ -81,6 +90,11 @@ public class ReportController extends AbstractReport {
         }
     }
 
+    /**
+     * changedFromDate and changedToDate functions activates when the user changes the DatePicker value,
+     * then they display the right data that the user could choose from on the other DatePicker.
+     */
+
     public void changedFromDate(ActionEvent event) throws InterruptedException {
         toDate.setDisable(false);
         if (numOfDays(fromDate.getValue(), LocalDate.now()) <= 31)
@@ -95,6 +109,13 @@ public class ReportController extends AbstractReport {
         displayDates(fromDate, addLocalDate(toDate, -30), toDate.getValue());
     }
 
+    /**
+     * pullData function called after server sends the orders and complaints to make the report,
+     * then it calls other functions to display each component of the report.
+     * @param orders all the relevant orders from server
+     * @param complaints all the relevant complaints from server
+     */
+
     public void pullData(LinkedList<Order> orders, LinkedList<Complaint> complaints) {
         Platform.runLater(() -> {
             int daysNum = numOfDays(getPickedDate(fromDate), getPickedDate(toDate));
@@ -103,6 +124,14 @@ public class ReportController extends AbstractReport {
             showChart(complaints);
         });
     }
+
+    /**
+     * showOrders function gets all relevant orders, then it gets a map from getMap that maps from product name
+     * to the amount the store sold, and from that data, displaying it with the PieChart.
+     * also add a "handle" function to the chart that displays the amount that the product sold when clicking
+     * on the PieChart.
+     * @param orders orders from server
+     */
 
     private void showOrders(LinkedList<Order> orders) {
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
@@ -122,6 +151,10 @@ public class ReportController extends AbstractReport {
         }
     }
 
+    /**
+     * showIncome function calculates number pf orders and average and displays it.
+     */
+
     private void showIncome(LinkedList<Order> orders, int daysNum) {
         int totalPrice = 0;
         float avgPrice = 0, avgOrders = (float) orders.size() / daysNum;
@@ -136,6 +169,12 @@ public class ReportController extends AbstractReport {
         ordersReport.setText("Total orders: " + orders.size() + "\n" +
                 "Average orders: " + String.format("%.2f", avgOrders));
     }
+
+    /**
+     * the showChart function gets all relevant complaints, then sorting them by complaint type and
+     * displays it on the XYChart
+     * @param complaints
+     */
 
     private void showChart(LinkedList<Complaint> complaints) {
         complaintChart.getData().clear();
@@ -161,6 +200,10 @@ public class ReportController extends AbstractReport {
         complaintChart.getData().addAll(seriesLinkedList.get(0), seriesLinkedList.get(1), seriesLinkedList.get(2)
                 , seriesLinkedList.get(3), seriesLinkedList.get(4));
     }
+
+    /**
+     * @return if the time interval data filled validly
+     */
 
     public boolean isInvalid() {
         return toDate.isDisabled() || toDate.getValue() == null;

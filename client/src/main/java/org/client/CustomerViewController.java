@@ -91,6 +91,10 @@ public class CustomerViewController extends Controller {
         else setActive();
     }
 
+    /**
+     * clickedSaveCustomer function activates when clicked on save changes button, then it checks the validity of the store
+     * if the store is valid it sends to the server request to confirm that there is no such id for another user
+     */
     @FXML
     void clickedSaveCustomer(ActionEvent event) {
         if (storeInvalid())
@@ -98,6 +102,9 @@ public class CustomerViewController extends Controller {
         else usernameInvalid();
     }
 
+    /**
+     * sends to the server request to confirm that there is no such id for another user
+     */
     private void usernameInvalid() {
         App.client.setController(this);
         List<Object> msg = new LinkedList<Object>();
@@ -114,12 +121,15 @@ public class CustomerViewController extends Controller {
     }
 
     private boolean storeInvalid() {
-        if (this.storePicker.getValue().equals("Chain"))
+        if (this.storePicker.getValue().equals("Chain"))//store customer cant belong to chain
             return this.typePicker.getValue().equals("Store Customer");
         else  //store is normal store
             return !this.typePicker.getValue().equals("Store Customer");//so if the type is chain or member this is invalid
     }
 
+    /**
+     * a function from Client calls saveChanges which sends a new instance of customer to the server that will replace the former
+     */
     @FXML
     void saveChanges() {
         Store store = new Store();
@@ -136,15 +146,17 @@ public class CustomerViewController extends Controller {
         msg.add(cus);             //
         App.client.setController(this);
         try {
-            App.client.sendToServer(msg); //Sends a msg contains the command and the controller for the catalog.
+            App.client.sendToServer(msg); //Sends a msg contains the command and the controller
         } catch (IOException e) {
             e.printStackTrace();
         }
-        App.client.getSkeleton().changeCenter("ManageAccounts"); //and head back to catalog
+        App.client.getSkeleton().changeCenter("ManageAccounts"); //and head back
 
     }
 
-
+    /**
+     * a function from Client calls isCustomerInvalid which checks the validity of all fields for last confirmation
+     */
     protected boolean isCustomerInvalid() {
         return !emailValid() ||
                 this.username.getText().isEmpty() ||

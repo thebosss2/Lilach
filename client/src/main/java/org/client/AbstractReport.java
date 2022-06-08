@@ -15,7 +15,20 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * this class made for making a generic report controller, by implementing
+ * function that helps to provide a report, like getting the number of days between
+ * two dates, converting from Date object to LocalDate, etc.
+ */
+
 public abstract class AbstractReport extends Controller {
+
+    /**
+     *
+     * @param d1 first date
+     * @param d2 second date
+     * @return number of days between two dates
+     */
 
     static int numOfDays(Date d1, Date d2) {
         long difference_In_Time = d2.getTime() - d1.getTime();
@@ -29,6 +42,13 @@ public abstract class AbstractReport extends Controller {
     static int numOfDays(DatePicker d1, DatePicker d2) {
         return numOfDays(localDateToDate(d1.getValue()), localDateToDate(d2.getValue()));
     }
+
+    /**
+     *
+     * @param startDate first date
+     * @param endDate second date
+     * @return list of all dates between startDate and endDate
+     */
 
     public static List<LocalDate> getDatesBetween(LocalDate startDate, LocalDate endDate) {
 
@@ -65,6 +85,13 @@ public abstract class AbstractReport extends Controller {
     public static LocalDate addLocalDate(LocalDate toDate, int daysToAdd) {
         return dateToLocalDate(addDays(localDateToDate(toDate), daysToAdd));
     }
+
+    /**
+     * getMap function making a map from all orders that it receives
+     * @param orders all relevant orders
+     * @return a Map object that his key is the name of product and
+     * his value is the number of products that sold
+     */
 
     public Map<String, Integer> getMap(LinkedList<Order> orders) {
         Map<String, Integer> map = new HashMap<String, Integer>();
