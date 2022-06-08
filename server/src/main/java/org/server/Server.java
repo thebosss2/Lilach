@@ -238,6 +238,12 @@ public class Server extends AbstractServer {
         client.sendToClient(msgToClient);
     }
 
+    /**
+     * sends orders to client
+     * @param msg
+     * @param client
+     * @throws IOException
+     */
     private void pullOrders(LinkedList<Object> msg, ConnectionToClient client) throws IOException {
         List<Order> orders = App.getSomeOrders((Customer) msg.get(1));
         List<Object> msgToClient = new LinkedList<Object>();
@@ -289,6 +295,11 @@ public class Server extends AbstractServer {
 
     }
 
+    /**
+     * cancels the order
+     * @param msg
+     * @param client
+     */
     private void deleteOrder(LinkedList<Object> msg, ConnectionToClient client) {
         int id = (int) msg.get(1);
         Order order = App.session.find(Order.class, id);
