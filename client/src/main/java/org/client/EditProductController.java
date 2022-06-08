@@ -18,6 +18,9 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.regex.Pattern;
 
+/**
+ * Same documentation as for EditCustomProduct.
+ */
 public class EditProductController extends Controller {
 
     FileChooser fileChooser = new FileChooser();

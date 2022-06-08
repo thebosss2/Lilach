@@ -18,7 +18,12 @@ public class App {
     public static Session session;// encapsulation make public function so this can be private
     protected static Server server;
 
-    private static SessionFactory getSessionFactory() throws HibernateException {       //creates session factory for database use
+    /**
+     * Creates session factory for database use
+     * @return session factory.
+     * @throws HibernateException
+     */
+    private static SessionFactory getSessionFactory() throws HibernateException {
         Configuration configuration = new Configuration();
         // Add ALL of your entities here. You can also try adding a whole package.
         configuration.addAnnotatedClass(Product.class);
@@ -39,6 +44,10 @@ public class App {
         return configuration.buildSessionFactory(serviceRegistry);
     }
 
+    /**
+     * Generating all the data for the database.
+     * @throws Exception
+     */
     private static void generateEntities() throws Exception {       //generates all entities
         //--------------------STORES-----------------------------------------------------
         List<Store> stores = new LinkedList<Store>();
@@ -83,6 +92,11 @@ public class App {
         //--------------------END-OF-EXAMPLE-FOR-EMAIL-DELIVERY--------------------------
     }
 
+    /**
+     * Generating all stores.
+     * @return list of all stores.
+     * @throws Exception
+     */
     private static List<Store> generateStores() throws Exception {       //generates new products
         List<Store> stores = new LinkedList<Store>();
         String[] storeNames = new String[]{"Lilac Haifa", "Lilac Tel-Aviv", "Lilac Be'er Sheva", "Lilac Rehovot", "Lilac Jerusalem", "Lilac Eilat"};
@@ -101,6 +115,11 @@ public class App {
         return stores;
     }
 
+    /**
+     * Generating all catalog products.
+     * @return list of all catalog products.
+     * @throws Exception
+     */
     private static List<PreMadeProduct> generateProducts() throws Exception {       //generates new products
         Random random = new Random();
         List<PreMadeProduct> products = new LinkedList<PreMadeProduct>();
@@ -115,6 +134,12 @@ public class App {
         return products;
     }
 
+    /**
+     * Generating all customers.
+     * @param s stores.
+     * @return list of all customers.
+     * @throws Exception
+     */
     private static List<Customer> generateCustomers(List<Store> s) throws Exception {       //generates new products
         List<Customer> customers = new LinkedList<Customer>();
         String[] customerId = new String[]{"123456789", "234567891", "345678912", "456789123", "567891234", "678912345", "789123456", "891234567"};
@@ -151,6 +176,12 @@ public class App {
         return customers;
     }
 
+    /**
+     * Generating all employees.
+     * @param s stores.
+     * @return list of all employees.
+     * @throws Exception
+     */
     private static List<Employee> generateEmployees(List<Store> s) throws Exception {       //generates new products
         List<Employee> employees = new LinkedList<Employee>();
         String[] employeeId = new String[]{"987654321", "876543219", "765432198", "654321987", "543219876", "432198765", "321987654", "219876543", "334574567", "345234556",
@@ -190,6 +221,13 @@ public class App {
         return employees;
     }
 
+    /**
+     * Generating all complaints.
+     * @param s stores.
+     * @param c customers.
+     * @return list of all complaints.
+     * @throws Exception
+     */
     private static List<Complaint> generateComplaints(List<Store> s, List<Customer> c) throws Exception {       //generates new products
         List<Complaint> complaints = new LinkedList<Complaint>();
         int storeN;
@@ -246,6 +284,12 @@ public class App {
         return complaints;
     }
 
+    /**
+     * Calculates cost of an order.
+     * @param customMadeList list of custom made products.
+     * @param preMadeList list of products.
+     * @return price.
+     */
     public static int totalCost(List<CustomMadeProduct> customMadeList, List<PreMadeProduct> preMadeList) {
         int totalCost = 0, customPrice = 0;
         for (CustomMadeProduct custom : customMadeList) {
@@ -263,6 +307,14 @@ public class App {
         return totalCost;
     }
 
+    /**
+     * Generating all orders.
+     * @param products all products.
+     * @param customers all customers.
+     * @param stores all stores.
+     * @return list of all orders.
+     * @throws IOException
+     */
     private static List<Order> generateOrders(List<PreMadeProduct> products, LinkedList<Customer> customers, List<Store> stores) throws IOException {
         LinkedList<CustomMadeProduct> customMadeList = new LinkedList<CustomMadeProduct>();
         LinkedList<PreMadeProduct> preMadeList = new LinkedList<PreMadeProduct>();
@@ -289,6 +341,11 @@ public class App {
 
     }
 
+    /**
+     * Generates all base products.
+     * @return list of all base products.
+     * @throws Exception
+     */
     private static List<PreMadeProduct> generateBaseCustomMadeProduct() throws Exception {       //generates new base products
         Random random = new Random();
         List<PreMadeProduct> customProducts = new LinkedList<PreMadeProduct>();
@@ -306,6 +363,12 @@ public class App {
         return customProducts;
     }
 
+    /**
+     * Extracts all base products.
+     * @param productsList all products.
+     * @return list of base products.
+     * @throws IOException
+     */
     private static List<PreMadeProduct> getAllBaseCustomMadeProduct(List<PreMadeProduct> productsList) throws IOException {
         List<PreMadeProduct> products = productsList, baseProducts = new LinkedList<PreMadeProduct>();
         for (PreMadeProduct product : products)
@@ -315,6 +378,12 @@ public class App {
         return baseProducts;
     }
 
+    /**
+     * Randomizing custom made products.
+     * @param products all products.
+     * @return list of custom made products.
+     * @throws IOException
+     */
     private static List<CustomMadeProduct> getCustomMadeProductList(List<PreMadeProduct> products) throws IOException {
         List<CustomMadeProduct> custom = new LinkedList<CustomMadeProduct>();
         int price = 0;
@@ -335,6 +404,12 @@ public class App {
         return custom;
     }
 
+    /**
+     * Randomizing list of base products.
+     * @param products all products.
+     * @return list of base products randomized.
+     * @throws IOException
+     */
     private static List<PreMadeProduct> getBaseProductList(List<PreMadeProduct> products) throws IOException {
         List<PreMadeProduct> baseProducts = getAllBaseCustomMadeProduct(products);
         LinkedList<Integer> randomNumbers = new LinkedList<Integer>();
@@ -355,6 +430,12 @@ public class App {
         return productsForCustom;
     }
 
+    /**
+     * Randomizing list of catalog products.
+     * @param products all products.
+     * @return list of catalog products randomized.
+     * @throws IOException
+     */
     private static List<PreMadeProduct> getPreMadeProductList(List<PreMadeProduct> products) throws IOException {
         LinkedList<Integer> randomNumbers = new LinkedList<Integer>();
         LinkedList<PreMadeProduct> productsList = new LinkedList<PreMadeProduct>();
@@ -378,6 +459,11 @@ public class App {
         return productsList;
     }
 
+    /**
+     *
+     * @return all products in the database.
+     * @throws IOException
+     */
     static List<PreMadeProduct> getAllProducts() throws IOException {      //pulls all products from database
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<PreMadeProduct> query = builder.createQuery(PreMadeProduct.class);
@@ -387,6 +473,11 @@ public class App {
         return new LinkedList<>(list);
     }
 
+    /**
+     *
+     * @return all stores in the database.
+     * @throws IOException
+     */
     static List<Store> getAllStores() throws IOException {      //pulls all stores from database
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Store> query = builder.createQuery(Store.class);
@@ -399,6 +490,10 @@ public class App {
         return list;
     }
 
+    /**
+     * @return all users in the database.
+     * @throws IOException
+     */
     static List<User> getAllUsers() throws IOException {      //pulls all products from database
         LinkedList<User> list = new LinkedList<>();
         list.addAll(getAllCustomers());
@@ -406,6 +501,10 @@ public class App {
         return list;
     }
 
+    /**
+     * @return all customers in the database.
+     * @throws IOException
+     */
     static List<Customer> getAllCustomers() throws IOException {
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Customer> customerQuery = builder.createQuery(Customer.class);
@@ -414,6 +513,11 @@ public class App {
         return new LinkedList<>(customers);
     }
 
+    /**
+     *
+     * @return all employees in the database.
+     * @throws IOException
+     */
     static List<Employee> getAllEmployees() throws IOException {
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Employee> customerQuery = builder.createQuery(Employee.class);
@@ -422,6 +526,11 @@ public class App {
         return new LinkedList<>(employees);
     }
 
+    /**
+     *
+     * @return all orders in the database.
+     * @throws IOException
+     */
     static List<Order> getAllOrders() throws IOException {
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Order> orderQuery = builder.createQuery(Order.class);
@@ -430,6 +539,12 @@ public class App {
         return new LinkedList<Order>(orders);
     }
 
+    /**
+     *
+     * @param customer
+     * @return all customer orders in the database.
+     * @throws IOException
+     */
     static List<Order> getSomeOrders(Customer customer) throws IOException {      //pulls all products from database
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Order> query = builder.createQuery(Order.class);
@@ -443,6 +558,11 @@ public class App {
         return list;
     }
 
+    /**
+     *
+     * @return all opened complaints in the database.
+     * @throws IOException
+     */
     static List<Complaint> getAllOpenComplaints() throws IOException {
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Complaint> customerQuery = builder.createQuery(Complaint.class);
@@ -452,6 +572,11 @@ public class App {
         return new LinkedList<>(complaints);
     }
 
+    /**
+     *
+     * @return all complaints in the database.
+     * @throws IOException
+     */
     static List<Complaint> getAllComplaints() throws IOException {
         CriteriaBuilder builder = session.getCriteriaBuilder();
         CriteriaQuery<Complaint> customerQuery = builder.createQuery(Complaint.class);
@@ -460,6 +585,12 @@ public class App {
         return new LinkedList<>(complaints);
     }
 
+    /**
+     * Loads image from resources file
+     * @param imageName
+     * @return image bytecode.
+     * @throws IOException
+     */
     public static byte[] loadImageFromResources(String imageName) throws IOException {
         var stream = App.class.getClassLoader().getResourceAsStream(String.format("Images/%s", imageName));
 

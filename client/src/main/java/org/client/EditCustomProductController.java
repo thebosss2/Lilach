@@ -53,6 +53,10 @@ public class EditCustomProductController extends Controller {
     @FXML
     private Button saveBtn;
 
+    /**
+     * Setting the product details in the fields.
+     * @param product
+     */
     void setProductView(PreMadeProduct product) {
         this.product = product;
         this.nameText.setText(product.getName());
@@ -66,6 +70,11 @@ public class EditCustomProductController extends Controller {
             this.discountText.setText(Integer.toString(product.getDiscount()));
     }
 
+    /**
+     * Setting new image from computer.
+     * @param event
+     * @throws InterruptedException
+     */
     @FXML
     void changeImage(ActionEvent event) throws InterruptedException {
         coolButtonClick((Button) event.getTarget());
@@ -77,6 +86,11 @@ public class EditCustomProductController extends Controller {
         }
     }
 
+    /**
+     * Sending the server to update the product.
+     * @param event
+     * @throws InterruptedException
+     */
     @FXML
     void clickedSave(ActionEvent event) throws InterruptedException {
         coolButtonClick((Button) event.getTarget());
@@ -86,6 +100,10 @@ public class EditCustomProductController extends Controller {
         }
     }
 
+    /**
+     * Checking the fields.
+     * @return returns true if everything is fine
+     */
     private boolean checkProduct() {
         if (nameText.getText().isEmpty() || priceText.getText().isEmpty() ||
                 discountText.getText().isEmpty())
@@ -96,6 +114,9 @@ public class EditCustomProductController extends Controller {
         return true;
     }
 
+    /**
+     * Sending the server to update the product.
+     */
     void saveChanges() {     //function creates new product and sends save command to server
         String save = "#SAVE";
         LinkedList<Object> msg = new LinkedList<Object>();  //msg has string message with all data in next nodes
@@ -125,7 +146,11 @@ public class EditCustomProductController extends Controller {
         }
     }
 
-
+    /**
+     * User decided to delete the product.
+     * @param event
+     * @throws InterruptedException
+     */
     @FXML
     void clickedDelete(ActionEvent event) throws InterruptedException {
         EditProductController.coolButtonDeleteClick((Button) event.getTarget());
@@ -135,6 +160,9 @@ public class EditCustomProductController extends Controller {
         }
     }
 
+    /**
+     * Sending the server to delete the product
+     */
     @FXML
     void deleteProduct() {
         String delete = "#DELETEPRODUCT";
