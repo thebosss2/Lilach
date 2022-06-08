@@ -21,8 +21,15 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * in this controller, we have two screens for each report,  and at a start of each fucntion,
+ * it figures which screen to display or refer to.
+ */
+
 public class CEOReportController extends AbstractReport {
 
+    //those static integers were made as MACROS - each variable represents the location of the report component
+    //on a list (the controller have two lists), each list consists all the report components.
     final static int SCREEN = 0, FROM_DATE = 1, TO_DATE = 2, COMPLAINT_CHART = 3, INCOME_COMPANY = 4, ORDERS_COMPANY = 5,
             ORDERS_COMPANY_CHART = 6, SALES_COMPANY = 7, INCOME_STORE = 8, ORDERS_STORE = 9, ORDERS_STORE_CHART = 10,
             SALES_STORE = 11;
@@ -114,6 +121,7 @@ public class CEOReportController extends AbstractReport {
     @FXML
     private DatePicker toDate2;
 
+    //those two lists- screenList1 & screenList2 consists all report screen components.
     private LinkedList<Object> screenList1 = new LinkedList<>();
 
     private LinkedList<Object> screenList2 = new LinkedList<>();
@@ -138,6 +146,14 @@ public class CEOReportController extends AbstractReport {
             storePicker.getItems().add(s.getName());
     }
 
+    /**
+     * makeReport function activates if pressing the make report button, first it makes
+     * sure that a valid time interval and store has been inserted, and then sends to the server
+     * a request for all orders and complaints that are relevant for the request.
+     * (sends to the server the time interval and store)
+     * @param event irrelevant
+     * @throws InterruptedException
+     */
 
     @FXML
     void makeReport(ActionEvent event) throws InterruptedException {
@@ -169,6 +185,11 @@ public class CEOReportController extends AbstractReport {
         }
     }
 
+    /**
+     * changedFromDate and changedToDate functions activates when the user changes the DatePicker value,
+     * then they display the right data that the user could choose from on the other DatePicker.
+     */
+
     public void changedFromDate(ActionEvent event) throws InterruptedException {
         List<Object> list = getScreen(event);
         DatePicker toDate = (DatePicker) list.get(TO_DATE), fromDate = (DatePicker) list.get(FROM_DATE);
@@ -188,6 +209,13 @@ public class CEOReportController extends AbstractReport {
         displayDates(fromDate, addLocalDate(toDate, -30), toDate.getValue());
     }
 
+    /**
+     * pullData function called after server sends the orders and complaints to make the report,
+     * then it calls other functions to display each component of the report.
+     * @param orders all the relevant orders from server
+     * @param complaints all the relevant complaints from server
+     */
+
     public void pullData(String screen, LinkedList<Order> orders, LinkedList<Complaint> complaints) {
         List<Object> list = getScreen(screen);
         DatePicker toDate = (DatePicker) list.get(TO_DATE), fromDate = (DatePicker) list.get(FROM_DATE);
@@ -204,6 +232,15 @@ public class CEOReportController extends AbstractReport {
             showChart(complaints, list);
         });
     }
+
+    /**
+     * showStoreOrders and showCompanyOrders functions gets all relevant orders,
+     * then it gets a map from getMap that maps from product name to the amount the store sold,
+     * and from that data, displaying it with the PieChart.
+     * also add a "handle" function to the chart that displays the amount that the product sold when clicking
+     * on the PieChart.
+     * @param orders orders from server
+     */
 
     private void showStoreOrders(LinkedList<Order> orders, List<Object> list) {
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
@@ -247,6 +284,10 @@ public class CEOReportController extends AbstractReport {
         }
     }
 
+    /**
+     * showStoreIncome and show CompanyIncome function calculates number pf orders and average and displays it.
+     */
+
     private void showStoreIncome(LinkedList<Order> orders, int daysNum, List<Object> list) {
         int totalPrice = 0;
         float avgPrice = 0, avgOrders = (float) orders.size() / daysNum;
@@ -279,6 +320,12 @@ public class CEOReportController extends AbstractReport {
                 "Average orders: " + String.format("%.2f", avgOrders));
     }
 
+    /**
+     * the showChart function gets all relevant complaints, then sorting them by complaint type and
+     * displays it on the XYChart
+     * @param complaints
+     */
+
     private void showChart(LinkedList<Complaint> complaints, List<Object> list) {
         StackedBarChart<String, Number> complaintChart = (StackedBarChart<String, Number>) list.get(COMPLAINT_CHART);
         DatePicker toDate = (DatePicker) list.get(TO_DATE), fromDate = (DatePicker) list.get(FROM_DATE);
@@ -307,6 +354,9 @@ public class CEOReportController extends AbstractReport {
                 , seriesLinkedList.get(3), seriesLinkedList.get(4));
     }
 
+    /**
+     * @return if the time interval data filled validly
+     */
 
     public boolean isInvalid(DatePicker dp) {
         return dp.isDisabled() || dp.getValue() == null;

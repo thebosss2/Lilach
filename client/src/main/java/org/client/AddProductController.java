@@ -20,6 +20,8 @@ public class AddProductController extends Controller {
     FileChooser fileChooser = new FileChooser();
 
     String newImagePath = null;
+
+    // the patterns help with filtering the fields to be numbers only
     Pattern pattern1 = Pattern.compile(".{0,2}");
     TextFormatter<String> formatter1 = new TextFormatter<String>(change -> {
         change.setText(change.getText().replaceAll("[^0-9]", ""));
@@ -53,9 +55,9 @@ public class AddProductController extends Controller {
         coolButtonClick((Button) event.getTarget());
         File selectedFile = fileChooser.showOpenDialog(null);
         if (selectedFile != null) {
-            imageAdded++;
+            imageAdded++; //flag in order to know if image was added
             newImagePath = selectedFile.getAbsolutePath();
-            mainImage.setImage(new Image(newImagePath));
+            mainImage.setImage(new Image(newImagePath)); //make a image out of the path
         }
     }
 
@@ -63,13 +65,16 @@ public class AddProductController extends Controller {
     void clickedAdd(ActionEvent event) throws InterruptedException {
         coolButtonClick((Button) event.getTarget());
 
-        if (alertMsg("Add Product", "add a product!", isProductInvalid())) {
+        if (alertMsg("Add Product", "add a product!", isProductInvalid())) { //if the fields valid add the product
             addProduct();
-            globalSkeleton.changeCenter("EditCatalog");
+            globalSkeleton.changeCenter("EditCatalog"); //head back
         }
 
     }
 
+    /**
+     * checks for product validity
+     */
     private boolean isProductInvalid() {
         if (nameText.getText().isEmpty() || priceText.getText().isEmpty() ||
                 descriptionText.getText().isEmpty() || imageAdded == 0 || productTypeBox.getValue().equals("Product type") || (productTypeBox.getValue().equals("Custom") && colorBox.getSelectionModel().isEmpty()))

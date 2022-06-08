@@ -111,21 +111,24 @@ public class Client extends AbstractClient {
         }
     }
 
+    /**
+     * refresh current screen and cart live
+     */
     private void refresh(LinkedList<Object> msg) throws IOException {
 
         Client.products = new LinkedList<>((List<PreMadeProduct>) msg.get(1));
-        refreshCart();
+        refreshCart(); //this function refresh the cart
         Platform.runLater(() -> {
             try {
-                String errorMsg;
-                if (this.user instanceof Employee)
+                String errorMsg; //defines which alert the user will get
+                if (this.user instanceof Employee) //only send alert
                     errorMsg = "Notice that there were made some changes in the catalog! have a nice shift :)";
                 else
                     errorMsg = "We are sorry for the inconvenience, we made some changes in our catalog and updated your cart too! hope you like it :)";
 
                 if (this.controller instanceof CatalogController) {
                     try {
-                        ((CatalogController) this.controller).pullProductsToClient();
+                        ((CatalogController) this.controller).pullProductsToClient();//pull all products for updated data
                         if (this.user instanceof Employee)
                             errorMsg = "Notice that there were made some changes in the catalog! have a nice shift :)";
                         else
@@ -135,14 +138,14 @@ public class Client extends AbstractClient {
                     }
                 } else if (this.controller instanceof CartController) {
                     errorMsg = "We are sorry for the inconvenience, we made some changes in our catalog so notice that your cart is updated now! hope you like it :)";
-                    this.getSkeleton().changeCenter("Cart");
+                    this.getSkeleton().changeCenter("Cart"); //refresh the page for updated cart data
                 } else if (this.controller instanceof CreateOrderController) {
                     try {
-                        if (this.cart.getProducts().isEmpty()) {
+                        if (this.cart.getProducts().isEmpty()) { // if no more products- we dont want to stay in create order so head back to cart
                             this.getSkeleton().changeCenter("Catalog");
                             errorMsg = "We are sorry for the inconvenience, your products are no longer available! check out the catalog :)";
                         } else {
-                            ((CreateOrderController) this.controller).displaySummary();
+                            ((CreateOrderController) this.controller).displaySummary(); //refresh order summery
                             ((CreateOrderController) this.controller).setPrices();
                             errorMsg = "We are sorry for the inconvenience, we made some changes in our catalog so notice that your cart is updated now! hope you like it :)";
                         }
@@ -243,13 +246,14 @@ public class Client extends AbstractClient {
         p.setPriceBeforeDiscount(newP.getPriceBeforeDiscount());
     }
 
-
+    //send the data for reports to the right controller
     private void pushManagerReport(LinkedList<Object> msg) {
         ReportController reportController = (ReportController) controller;
         reportController.pullData((LinkedList<Order>) msg.get(1),
                 (LinkedList<Complaint>) msg.get(2));
     }
 
+    //send the data for reports to the right controller
     private void pushCeoReport(LinkedList<Object> msg, Client client) {
         CEOReportController ceoReportController = (CEOReportController) controller;
         ceoReportController.pullData((String) msg.get(1), (LinkedList<Order>) msg.get(2),
@@ -285,6 +289,7 @@ public class Client extends AbstractClient {
         Controller.sendAlert(msg.get(1).toString(), msg.get(2).toString(), Alert.AlertType.WARNING);
     }
 
+    //send the users for the admin to the right controller
     private void pushUsers(Object msg) {
         ManageAccountsController manageAccountsController = (ManageAccountsController) controller;
         manageAccountsController.pullUsersToClient((LinkedList<User>) ((LinkedList<Object>) msg).get(1));
@@ -356,12 +361,13 @@ public class Client extends AbstractClient {
             } else {
                 Controller.sendAlert("Username already taken. Please try a new one.", "Sign-Up Failed", Alert.AlertType.WARNING);
             }
-        } else {
+        } else { //if this is the user management and not sign up
             if (msg.get(1).toString().equals("#STORE_INVALID")) {
                 this.controller.sendAlert("Store already has a manager! ", "Saving failed", Alert.AlertType.WARNING);
-            } else if (msg.get(1).toString().equals("#USER_DOES_NOT_EXIST")) {
+            } else if (msg.get(1).toString().equals("#USER_DOES_NOT_EXIST")) { //if user is good to go
                 if (this.controller instanceof EmployeeViewController)
                     Platform.runLater(() -> {
+                        //if the fields are valid - call saveChanges
                         if (((EmployeeViewController) this.controller).alertMsg("Save User", "save an employee's account", ((EmployeeViewController) this.controller).isEmployeeInvalid())) {
                             ((EmployeeViewController) (this.controller)).saveChanges();
                         }
@@ -369,16 +375,18 @@ public class Client extends AbstractClient {
 
                 else
                     Platform.runLater(() -> {
+                        //if the fields are valid - call saveChanges
                         if (((CustomerViewController) this.controller).alertMsg("Save User", "save an employee's account", ((CustomerViewController) this.controller).isCustomerInvalid())) {
                             ((CustomerViewController) (this.controller)).saveChanges();
                         }
                     });
-            } else
+            } else //user is taken
                 this.controller.sendAlert("Username or ID are already taken! ", "Saving failed", Alert.AlertType.WARNING);
         }
     }
 
-    private void pushStores(Object msg) throws IOException { // takes data received and sends to display function
+    //save stores on client for the use of all functions
+    private void pushStores(Object msg) throws IOException {
         this.stores = (LinkedList<Store>) (((LinkedList<Object>) msg).get(1));
     }
 

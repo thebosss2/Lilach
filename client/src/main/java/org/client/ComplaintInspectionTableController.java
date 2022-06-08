@@ -93,6 +93,9 @@ public class ComplaintInspectionTableController extends Controller {
 
     }
 
+    /**
+     * Adding button to each instance in the table.
+     */
     private void addButtonToTable() {
         btnCol = new TableColumn("Inspect complaint");
 
@@ -131,12 +134,20 @@ public class ComplaintInspectionTableController extends Controller {
         tableView.getColumns().add(btnCol);
     }
 
+    /**
+     * Changing the screen to complaint inspection relative to the complaint chosen.
+     * @param complaint
+     */
     private void goToComplaintInspection(Complaint complaint) {
         ComplaintInspectionController controller = (ComplaintInspectionController)
                 this.getSkeleton().changeCenter("ComplaintInspection");
         controller.setComplaint(complaint);
     }
 
+    /**
+     * Displaying all the complaints in the table.
+     * @param complaints
+     */
     public void pullComplaints(ObservableList<Complaint> complaints) {
         Platform.runLater(new Runnable() {
             @Override

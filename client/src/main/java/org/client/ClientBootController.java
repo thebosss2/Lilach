@@ -33,6 +33,10 @@ public class ClientBootController extends Controller {
     @FXML // fx:id="connect"
     private Button connect; // Value injected by FXMLLoader
 
+    /**
+     * Connecting to the server according to the IP typed in.
+     * @param event
+     */
     @FXML
     void connectToServer(ActionEvent event) {
         String ip = IPText.getText();
@@ -56,6 +60,10 @@ public class ClientBootController extends Controller {
 
     }
 
+    /**
+     * If pressed enter sends to connectToServer.
+     * @param event
+     */
     @FXML
     void enterConnection(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER)
