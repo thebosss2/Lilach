@@ -119,18 +119,34 @@ public class App {
         String[] customerNames = new String[]{"user","Ash Ketchum", "Obi-Wan Kenobi", "Cynthia", "Amity Blight", "Mariette Cheng", "Matt", "Augustus Porter"};
         String[] customerUserNames = new String[]{"user","pokemon_master", "Jedi_master", "Cynthi", "Cotton_Candy", "Ladybug", "Wii1", "TOH"};
         String[] customerEmails = new String[]{"user67@gmail.com","Ash467@gmail.com","Obi-Wan4@gmail.com","Cynthia5@gmail.com","Amity47@gmail.com","Mariette7@gmail.com","Matt46@gmail.com", "Augustus@gmail.com"};
-        int storeN;
-        for(int i=0;i< customerNames.length;i++) {
-            if (i < s.size())
-                storeN = i;
-            else
-                storeN = s.size()-1;
-            Customer cust = new Customer(customerId[i], customerNames[i], customerUserNames[i], "pass", customerEmails[i], "0522245484", "5434456321581234", Customer.AccountType.MEMBERSHIP, s.get(storeN));
+        int storeN=0;
+        for(int i=0;i< customerNames.length-3;i++) {
+            storeN = i%(s.size()-1);
+            Customer cust = new Customer(customerId[i], customerNames[i], customerUserNames[i], "pass", customerEmails[i], "052224548"+i, "543445632158123"+i%10, Customer.AccountType.values()[0], s.get(storeN));
             cust.setBalance(50*(new Random().nextInt(10)));
             customers.add(cust);
             session.save(cust);
             session.flush();
         }
+
+        Customer cust = new Customer(customerId[5], customerNames[5], customerUserNames[5], "pass", customerEmails[5], "052224548"+5, "543445632158123"+6, Customer.AccountType.values()[1], s.get(s.size()-1));
+        cust.setBalance(50*(new Random().nextInt(10)));
+        customers.add(cust);
+        session.save(cust);
+        session.flush();
+        cust = new Customer(customerId[6], customerNames[6], customerUserNames[6], "pass", customerEmails[6], "052224548"+6, "543445632158123"+5, Customer.AccountType.values()[1], s.get(s.size()-1));
+        cust.setBalance(50*(new Random().nextInt(10)));
+        customers.add(cust);
+        session.save(cust);
+        session.flush();
+        cust = new Customer(customerId[7], customerNames[7], customerUserNames[7], "pass", customerEmails[7], "052224548"+7, "543445632158123"+7, Customer.AccountType.values()[2], s.get(s.size()-1));
+        cust.setBalance(50*(new Random().nextInt(10)));
+        customers.add(cust);
+        session.save(cust);
+        session.flush();
+
+
+
         return customers;
     }
     private static List<Employee> generateEmployees(List<Store> s) throws Exception {       //generates new products
