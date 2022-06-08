@@ -41,6 +41,10 @@ public class SummaryPreProductController extends Controller {
         this.price.setText(String.valueOf(price));
     }
 
+    /**
+     * sets parameters to product
+     * @param product
+     */
     public void setProduct(PreMadeProduct product) {
         name.setText(product.getName());
         price.setText("" + Integer.toString(product.getPrice()));
