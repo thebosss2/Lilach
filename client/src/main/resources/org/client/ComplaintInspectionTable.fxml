@@ -21,7 +21,7 @@
                   <Insets bottom="10.0" />
                </padding>
                <children>
-                  <Label fx:id="expireLabel" text="You have 10 complaints, and 4 expired.">
+                  <Label fx:id="expireLabel" text="Loading....">
                      <font>
                         <Font size="20.0" />
                      </font>

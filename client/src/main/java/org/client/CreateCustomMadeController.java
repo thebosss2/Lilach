@@ -116,8 +116,18 @@ public class CreateCustomMadeController extends Controller{
 
     @FXML
     void sort(ActionEvent event) {
-        int low_price =Integer.parseInt(min_price.getText());
-        int high_price =Integer.parseInt(max_price.getText());
+        int low_price;
+        if(min_price.getText().isEmpty()){
+            low_price=0;
+        }else{
+            low_price =Integer.parseInt(min_price.getText());
+        }
+        int high_price;
+        if(max_price.getText().isEmpty()){
+            high_price=10000;
+        }else{
+            high_price =Integer.parseInt(max_price.getText());
+        }
 
         if(sortColor.getSelectionModel().isSelected(0)) //All colors - sort only by price
         {
@@ -166,9 +176,6 @@ public class CreateCustomMadeController extends Controller{
         assert sort != null : "fx:id=\"sort\" was not injected: check your FXML file 'CreateCustomMade.fxml'.";
         assert sortColor != null : "fx:id=\"sortColor\" was not injected: check your FXML file 'CreateCustomMade.fxml'.";
         assert sortType != null : "fx:id=\"sortType\" was not injected: check your FXML file 'CreateCustomMade.fxml'.";
-
-        min_price.setText("0");
-        max_price.setText("15");
 
         sortType.getItems().add("Flower Arrangement");
         sortType.getItems().add("Blooming Pot");

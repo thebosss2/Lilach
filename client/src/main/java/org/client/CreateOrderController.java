@@ -155,7 +155,10 @@ public class CreateOrderController extends Controller {
 
     private void getStores() {
         if (((Customer) (App.client.user)).getAccountType() == Customer.AccountType.STORE)  //if there is certain store for this costumer
+        {
             TAStorePicker.setDisable(true); //disable the combobox
+            TAStorePicker.setValue(((Customer) (App.client.user)).getStore().getName());
+        }
 
         else { //get stores for the combobox from db
             this.stores = App.client.getStores();

@@ -117,7 +117,7 @@ public class App {
         List<Customer> customers = new LinkedList<Customer>();
         String[] customerId = new String[]{"123456789","234567891","345678912","456789123","567891234","678912345","789123456","891234567"};
         String[] customerNames = new String[]{"user","Ash Ketchum", "Obi-Wan Kenobi", "Cynthia", "Amity Blight", "Mariette Cheng", "Matt", "Augustus Porter"};
-        String[] customerUserNames = new String[]{"user","pokemon_master", "Jedi_master", "Cynthi", "Cotton_Candy", "Ladybug", "Wii1", "TOH"};
+        String[] customerUserNames = new String[]{"user","pokemon", "Jedi_master", "Cynthi", "Cotton", "Ladybug", "Wii1", "TOH"};
         String[] customerEmails = new String[]{"user67@gmail.com","Ash467@gmail.com","Obi-Wan4@gmail.com","Cynthia5@gmail.com","Amity47@gmail.com","Mariette7@gmail.com","Matt46@gmail.com", "Augustus@gmail.com"};
         int storeN=0;
         for(int i=0;i< customerNames.length-3;i++) {
@@ -154,9 +154,9 @@ public class App {
         String[] employeeId = new String[]{"987654321","876543219","765432198","654321987","543219876","432198765","321987654","219876543","334574567","345234556",
         "534563456","345634564","332141234","567856786","653294462","870767907","567944332"};
         String[] employeeNames = new String[]{"Itai","Sagi","Gal","Tahel","Yahav","May", "Lillian", "Nellie", "Chantelle", "Tia", "Christine", "Hayley", "Alice", "Wanda", "Tara", "Rose", "Ruby"};
-        String[] employeeUserNames = new String[]{"itai","sagi","gal","tahel","yahav","may", "lilly", "nella", "chantelle", "tia", "christa", "tookYourChildren", "Halle", "Ali", "Scarlet", "Tara", "Rose"};
+        String[] employeeUserNames = new String[]{"itai","sagi","gal","tahel","yahav","may", "lilly", "nella", "chantelle", "tia", "christa", "took", "Halle", "Ali", "Scarlet", "Tara", "Rose"};
         String[] employeeEmails = new String[]{"Itai@gmail.com", "Sagi@gmail.com", "Gal@gmail.com", "Tahel@gmail.com", "Yahav@gmail.com", "May@gmail.com",
-        "Lillian@gmail.com", "Nellie@gmail.com", "Chantelle@gmail.com", "Tia@gmail.com", "Christa@gmail.com", "tookYourChildren@gmail.com", "Halle@gmail.com", "Ali@gmail.com", "Scarlet@gmail.com", "Tara@gmail.com", "Rose@gmail.com"};
+        "Lillian@gmail.com", "Nellie@gmail.com", "Chantelle@gmail.com", "Tia@gmail.com", "Christa@gmail.com", "took@gmail.com", "Halle@gmail.com", "Ali@gmail.com", "Scarlet@gmail.com", "Tara@gmail.com", "Rose@gmail.com"};
         int storeN;
         for(int i=0;i< employeeNames.length;i++){
             storeN=i%7;
@@ -171,7 +171,7 @@ public class App {
         }
 
 
-        Employee cService = new Employee("465364524", "Karen", "karen", "karen", "KarenAnakin@gmail.com", "0522245342", Employee.Role.values()[1], s.get(s.size()-1));
+        Employee cService = new Employee("465364524", "Karen", "karen", "karen", "Karen@gmail.com", "0522245342", Employee.Role.values()[1], s.get(s.size()-1));
         employees.add(cService);
         session.save(cService);
         session.flush();
@@ -179,7 +179,7 @@ public class App {
         employees.add(ceo);
         session.save(ceo);
         session.flush();
-        Employee admin = new Employee("796079534", "Anakin Skywalker", "younglingSlayer", "younglingSlayer", "Anakin@gmail.com", "0522245483", Employee.Role.values()[4], s.get(s.size()-1));
+        Employee admin = new Employee("796079534", "Anakin Skywalker", "slayer", "slayer", "Anakin@gmail.com", "0522245483", Employee.Role.values()[4], s.get(s.size()-1));
         employees.add(admin);
         session.save(admin);
         session.flush();
@@ -276,6 +276,10 @@ public class App {
             customMadeList =(LinkedList<CustomMadeProduct>)getCustomMadeProductList(products);
             preMadeList = (LinkedList<PreMadeProduct>)getPreMadeProductList(products);
             order = new Order(preMadeList,customMadeList,customers.get(c),totalCost(customMadeList,preMadeList),delivery, customers.get(c).getStore(),Integer.toString(delivery.getHours()),customers.get(c).getStore().getAddress(),"dfgsdfgsnfdf",date);
+            if(delivery.getTime()<new Date().getTime())
+            {
+                order.setDelivered(Order.Status.ARRIVED);
+            }
             orders.add(order);
             App.session.save(order);
             App.session.flush();
@@ -295,7 +299,7 @@ public class App {
         String[] names = {"Red Rose","Pink Plants", "Sunflower","White Plants","Pink Rose","White Rose","White Flower","Leaves1","Blue Flower","Leaves2","Leaves3"};
         for (int i = 0; i <= num_products; i++) {
             var img = loadImageFromResources(String.format("base%s.jpg", i));
-            PreMadeProduct p = new PreMadeProduct(names[i], img, price = random.nextInt(15)+1,price+random.nextInt(15),false,colors[i]);
+            PreMadeProduct p = new PreMadeProduct(names[i], img, price = random.nextInt(15)+5,random.nextInt(5)*10,false,colors[i]);
             customProducts.add(p);
             session.save(p);   //saves and flushes to database
             session.flush();

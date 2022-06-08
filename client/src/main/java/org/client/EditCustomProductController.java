@@ -94,7 +94,7 @@ public class EditCustomProductController extends Controller{
 
         @FXML
         void clickedSave(ActionEvent event) throws InterruptedException {
-            EditProductController.coolButtonDeleteClick((Button) event.getTarget());
+            coolButtonClick((Button) event.getTarget());
             if(!colorBox.getSelectionModel().isEmpty() && alertMsg("Edit Product","change this product!" , checkProduct())) {
                 saveChanges();
                 this.globalSkeleton.changeCenter("EditCatalog");

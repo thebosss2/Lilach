@@ -217,7 +217,8 @@ public class Server extends AbstractServer {
         }
 
         List<Object> newMsg = new LinkedList<>();
-        newMsg.add("#UPDATE_CUSTOMER");
+        newMsg.add("#USERREFRESH");
+        newMsg.add("BALANCEUPDATE");
         newMsg.add(customer);
         try {
             client.sendToClient(newMsg);
@@ -434,6 +435,9 @@ public class Server extends AbstractServer {
         c.setPhoneNum(c2.getPhoneNum());
         c.setCreditCard(c2.getCreditCard());
         c.setBalance(c2.getBalance());
+        if(c2.getTypeToString()==Customer.getAllTypes()[2] && c.getMemberShipExpire()==null){
+            c.setMemberShipExpire();
+        }
     }
 
     public static void orderArrived(Order order, Order.Status status){

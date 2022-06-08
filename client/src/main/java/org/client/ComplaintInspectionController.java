@@ -77,19 +77,18 @@ public class ComplaintInspectionController extends Controller{
         if(!b)
         {
             Controller.sendAlert("Complaint completed too late","Late Inspection", Alert.AlertType.WARNING);
-        }else{
-            if(compensationCheckbox.isSelected()){
-                if(compensationField.getText().isEmpty()){
-                    sendAlert("No amount entered","No Refund Given", Alert.AlertType.WARNING);
-                    return;
-                }
-                msg.add("COMPENSATED");
-                msg.add(Integer.parseInt(compensationField.getText()));
-            } else {
-                msg.add("NO_COMPENSATION");
-            }
-            complaint.setStatus(true);
         }
+        if(compensationCheckbox.isSelected()){
+            if(compensationField.getText().isEmpty()){
+                sendAlert("No amount entered","No Refund Given", Alert.AlertType.WARNING);
+                return;
+            }
+            msg.add("COMPENSATED");
+            msg.add(Integer.parseInt(compensationField.getText()));
+        } else {
+            msg.add("NO_COMPENSATION");
+        }
+        complaint.setStatus(true);
         try {
             App.client.sendToServer(msg);
         } catch (IOException e) {
@@ -102,7 +101,7 @@ public class ComplaintInspectionController extends Controller{
             PauseTransition pause = new PauseTransition(javafx.util.Duration.seconds(2.5));
             pause.setOnFinished((e -> {
                 alert.close();
-                this.getSkeleton().changeCenter("Catalog");}));
+                this.getSkeleton().changeCenter("ComplaintInspectionTable");}));
             pause.play();
         });
         App.client.storeSkeleton.changeCenter("ComplaintInspectionTable");

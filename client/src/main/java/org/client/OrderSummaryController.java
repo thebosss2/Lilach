@@ -90,6 +90,9 @@ public class OrderSummaryController extends Controller {
         if(order.isDelivered()== Order.Status.CANCELED){
             cancelOrder.setDisable(true);
             cancelOrder.setText("Canceled");
+        }else if(order.isDelivered()==Order.Status.ARRIVED){
+            cancelOrder.setDisable(true);
+            cancelOrder.setText("Arrived");
         }
 
         OrderSummaryController orderSummaryController = this;
