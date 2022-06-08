@@ -79,7 +79,7 @@ public class Client extends AbstractClient {
         }
     }
 
-    private void clientUserRefresh(List<Object> msg) {
+    private void clientUserRefresh(List<Object> msg) {      //Active refresh when user info is updated while connected(Admin and such)
 
         if (user instanceof Customer && msg.get(2) instanceof Customer) {
             if (((Customer) user).getId() == ((Customer) msg.get(2)).getId()) {
@@ -96,7 +96,7 @@ public class Client extends AbstractClient {
                 }
             }
 
-        } else if (user instanceof Employee && msg.get(2) instanceof Employee) {
+        } else if (user instanceof Employee && msg.get(2) instanceof Employee) {// Same update but for Employee info
             if (((Employee) user).getId() == ((Employee) msg.get(2)).getId()) {
                 if (msg.get(1).toString().equals("FREEZE")) {
                     Controller.sendAlert("Your account has been frozen by the system Admin", "Banned account", Alert.AlertType.WARNING);
@@ -114,7 +114,7 @@ public class Client extends AbstractClient {
     /**
      * refresh current screen and cart live
      */
-    private void refresh(LinkedList<Object> msg) throws IOException {
+    private void refresh(LinkedList<Object> msg) throws IOException {       ///Active refresh function
 
         Client.products = new LinkedList<>((List<PreMadeProduct>) msg.get(1));
         refreshCart(); //this function refresh the cart
@@ -327,7 +327,7 @@ public class Client extends AbstractClient {
         createCustomMadeController.pullProductsToClient();       //calls static function in client for display
     }
 
-    private void authenticationReply(LinkedList<Object> msg) {
+    private void authenticationReply(LinkedList<Object> msg) {      //replys from server authentication that sign up possible
         SignUpController signUpController;
 
         if (this.controller instanceof SignUpController) {
@@ -391,7 +391,7 @@ public class Client extends AbstractClient {
     }
 
 
-    private void changeMenu() {
+    private void changeMenu() {     ///FXML menu change for each type of user
 
         if (this.user instanceof Customer) {
             storeSkeleton.changeLeft("CustomerMenu");
@@ -431,7 +431,7 @@ public class Client extends AbstractClient {
 
     }
 
-    public void logOut() {
+    public void logOut() {      //logout msg sent to server
         List<Object> msg = new LinkedList<Object>();
         msg.add("#LOGOUT");
         msg.add(user);
@@ -442,7 +442,7 @@ public class Client extends AbstractClient {
         }
     }
 
-    private void loginClient(LinkedList<Object> msg) {
+    private void loginClient(LinkedList<Object> msg) {  ///connects client to server and saves info on client
         if (msg.get(1).equals("ALREADYCONNECTED")) {
             Controller.sendAlert("User already connected to server", "Double connection restricted", Alert.AlertType.WARNING);
         } else {
@@ -470,7 +470,7 @@ public class Client extends AbstractClient {
     }
 
     @FXML
-    private void updateAccountType(Customer customer) {
+    private void updateAccountType(Customer customer) {     /// updates account type from non-member to member
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Membership expired");
         alert.setHeaderText("Your membership has expired. Would you like to renew your subscription?");
