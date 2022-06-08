@@ -23,7 +23,10 @@ public class SummaryCustomProductController extends Controller {
     @FXML
     private Label totalPrice;
 
-
+    /**
+     * put Custom Product parameters
+     * @param product
+     */
     public void setSummaryCustomProduct(CustomMadeProduct product) {
         this.price.setText(String.valueOf(product.getPrice()));
         this.count.setText(String.valueOf(product.getAmount()));
@@ -51,6 +54,7 @@ public class SummaryCustomProductController extends Controller {
 
         this.description.setText(this.description.getText().substring(0, this.description.getText().length() - 2));
     }
+
 
     public Text getDescription() {
         return description;

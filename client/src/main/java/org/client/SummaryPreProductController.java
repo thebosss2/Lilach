@@ -18,6 +18,10 @@ public class SummaryPreProductController extends Controller {
     @FXML
     private Label totalPrice;
 
+    /**
+     * sets parameters according to pre-made product
+     * @param product
+     */
     public void setSummaryPreProduct(PreMadeProduct product) {
         this.name.setText(product.getName());
         this.price.setText(String.valueOf(product.getPrice()));
